@@ -285,6 +285,39 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         parsedText should include(messages("notification.aboutYou.sautr"))
         parsedText should include("Some SAUTR")
       }
+
+      "the user has entered the full about you section with values set to Unsure" in {
+        val background = Background (
+          haveYouReceivedALetter = Some(false),
+          letterReferenceNumber = None,
+          disclosureEntity = Some(DisclosureEntity(Individual, Some(true))),
+          offshoreLiabilities = Some(false),
+          onshoreLiabilities = Some(true)
+        )
+        val aboutYou = AboutYou(
+          fullName = Some("Some name"),
+          telephoneNumber = Some("+44 012345678"),
+          doYouHaveAEmailAddress = Some(true),
+          emailAddress = Some("some.email@address.com"),
+          dateOfBirth = Some(new Date()),
+          mainOccupation = Some("Some occupation"),
+          doYouHaveANino = Some(YesNoOrUnsure.Unsure),
+          registeredForVAT = Some(YesNoOrUnsure.Unsure),
+          registeredForSA = Some(YesNoOrUnsure.Unsure),
+          address = Some("Some address")
+        )
+        val notification = Notification(background, aboutYou)
+        val parsedText = stripPDFToString(notification)
+
+        baseNotificationTests(parsedText)
+        testFullAboutYouQuestions(parsedText)
+        
+        parsedText should not include(messages("notification.aboutYou.nino"))
+        parsedText should not include(messages("notification.aboutYou.vatRegNumber"))
+        parsedText should not include(messages("notification.aboutYou.sautr"))
+
+        parsedText should include("I am not sure")
+      }
       
     }  
 
