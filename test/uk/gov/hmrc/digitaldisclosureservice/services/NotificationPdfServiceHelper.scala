@@ -27,18 +27,18 @@ import models._
 trait NotificationPdfServiceHelper extends AnyWordSpecLike
   with Matchers
   with OptionValues {
+  
+  def testPdfService: NotificationPdfService
 
   implicit val messages: Messages 
 
   def baseNotificationTests(parsedText: String) = {
-    parsedText should include("Digital Disclosure Service")
-    parsedText should include("Notification of intent")
+    parsedText should include(messages("service.name"))
+    parsedText should include(messages("notification.h1"))
 
-    parsedText should include("Your submission details")
-    parsedText should include("Your reference number")
-    parsedText should include("D61-ABCDE-ABC")
-    parsedText should include("Your submission was sent on")
-    parsedText should include("Monday 24th October 2022")
+    parsedText should include(messages("notification.heading.metadata"))
+    parsedText should include(messages("notification.metadata.reference"))
+    parsedText should include(messages("notification.metadata.submissionTime"))
 
     parsedText should include(messages("notification.heading.background"))
     parsedText should include(messages("notification.background.haveYouReceivedALetter"))
@@ -140,9 +140,8 @@ trait NotificationPdfServiceHelper extends AnyWordSpecLike
   }
 
   def stripPDFToString(notification: Notification): String = {
-    val testPdfGenerator = new NotificationPdfService
     val pdfStripper = new PDFTextStripper()
-    val pdDoc = PDDocument.load(testPdfGenerator.createPdf(notification).toByteArray)
+    val pdDoc = PDDocument.load(testPdfService.createPdf(notification).toByteArray)
     pdfStripper.getText(pdDoc)
   }
 

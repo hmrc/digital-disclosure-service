@@ -18,7 +18,8 @@ object AppDependencies {
     "org.apache.xmlgraphics" %     "batik-codec"                % "1.14",
     "com.openhtmltopdf"      %     "openhtmltopdf-core"         % openHtmlVersion,
     "com.openhtmltopdf"      %     "openhtmltopdf-pdfbox"       % openHtmlVersion,
-    "com.openhtmltopdf"      %     "openhtmltopdf-svg-support"  % openHtmlVersion
+    "com.openhtmltopdf"      %     "openhtmltopdf-svg-support"  % openHtmlVersion,
+    "uk.gov.hmrc"            %% "play-frontend-hmrc"            % "3.32.0-play-28"
   )
 
   val test = Seq(

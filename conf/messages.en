@@ -7,6 +7,8 @@ service.unsure = I am not sure
 #===================================================
 #  Notification headings
 #===================================================
+notification.h1 = Notification of intent
+notification.heading.metadata = Your submission details
 notification.heading.background = Background
 notification.heading.aboutYou = About You
 notification.heading.aboutTheIndividual = About the individual
@@ -14,6 +16,11 @@ notification.heading.aboutTheCompany = About the company
 notification.heading.aboutTheTrust = About the trust
 notification.heading.aboutTheLLP = About the limited liability partnership
 
+#===================================================
+#  Metadata
+#===================================================
+notification.metadata.reference = Your reference number
+notification.metadata.submissionTime = Your submission was sent on
 
 #===================================================
 #  Background

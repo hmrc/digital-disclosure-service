@@ -18,7 +18,9 @@ package models
 
 import java.util.Date
 
+
 final case class Notification (
+  metadata: Metadata,
   background: Background,
   aboutYou: AboutYou,
   aboutTheIndividual: Option[AboutTheIndividual] = None,
@@ -31,6 +33,11 @@ final case class Notification (
     case _ => false
   }
 }
+
+final case class Metadata (
+  reference: Option[String] = None,
+  submissionTime: Option[Date] = None
+)
 
 final case class Background (
   haveYouReceivedALetter: Option[Boolean] = None,
