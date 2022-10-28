@@ -33,7 +33,7 @@ trait PdfGenerationService {
       .useFont(new File(getClass.getResource("/resources/ArialMT.ttf").toURI), "arial")
       .usePdfUaAccessbility(true)
       .usePdfAConformance(PdfRendererBuilder.PdfAConformance.PDFA_2_B)
-      .withHtmlContent(html)
+      .withHtmlContent(html, "/")
       .useFastMode
       .useSVGDrawer(new BatikSVGDrawer())
       .toStream(os)
