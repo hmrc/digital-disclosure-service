@@ -43,6 +43,8 @@ final case class Background (
   haveYouReceivedALetter: Option[Boolean] = None,
   letterReferenceNumber: Option[String] = None,
   disclosureEntity: Option[DisclosureEntity] = None,
+  areYouRepresetingAnOrganisation: Option[Boolean] = None,
+  organisationName: Option[String] = None,
   offshoreLiabilities: Option[Boolean] = None,
   onshoreLiabilities: Option[Boolean] = None  
 )

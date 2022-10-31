@@ -65,6 +65,8 @@ object NotificationViewModel extends SummaryListFluency {
       background.letterReferenceNumber.map(_ => SummaryListRowViewModel(s"$backgroundKey.letterReferenceNumber", ValueViewModel(background.letterReferenceNumber))),
       Some(SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(background.disclosureEntity.map(de => messages(s"notification.background.${de.entity.toString}"))))),
       background.disclosureEntity.map(de => SummaryListRowViewModel(s"notification.background.areYouThe${de.entity.toString}", ValueViewModel(de.areYouTheEntity))),
+      background.areYouRepresetingAnOrganisation.map(_ => SummaryListRowViewModel(s"$backgroundKey.areYouRepresetingAnOrganisation", ValueViewModel(background.areYouRepresetingAnOrganisation))),
+      background.organisationName.map(_ => SummaryListRowViewModel(s"$backgroundKey.organisationName", ValueViewModel(background.organisationName))),
       Some(SummaryListRowViewModel(s"$backgroundKey.offshoreLiabilities", ValueViewModel(background.offshoreLiabilities))),
       Some(SummaryListRowViewModel(s"$backgroundKey.onshoreLiabilities", ValueViewModel(background.onshoreLiabilities)))
     ).flatten

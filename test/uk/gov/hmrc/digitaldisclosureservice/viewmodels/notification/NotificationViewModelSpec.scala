@@ -117,6 +117,20 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with GuiceOneA
       ))
       NotificationViewModel.backgroundList(background) shouldEqual expected
     }
+
+    "return organisation information where it's populated" in {
+      val background = Background (None, None, Some(DisclosureEntity(Individual, Some(false))), Some(true), Some("Some organisation"))
+      val expected = SummaryListViewModel(Seq(
+        SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
+        SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
+        SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.no"))),
+        SummaryListRowViewModel("notification.background.areYouRepresetingAnOrganisation", ValueViewModel(messages("service.yes"))),
+        SummaryListRowViewModel("notification.background.organisationName", ValueViewModel("Some organisation")),
+        SummaryListRowViewModel("notification.background.offshoreLiabilities", ValueViewModel("-")),
+        SummaryListRowViewModel("notification.background.onshoreLiabilities", ValueViewModel("-"))
+      ))
+      NotificationViewModel.backgroundList(background) shouldEqual expected
+    }
   }
 
   "aboutTheIndividualList" should {

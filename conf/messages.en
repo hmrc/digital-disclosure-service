@@ -39,6 +39,8 @@ notification.background.areYouTheIndividual = Are you the individual this disclo
 notification.background.areYouTheCompany = Are you an officer of the company this disclosure relates to?
 notification.background.areYouTheLLP = Are you a designated member of the limited liability partnership that the disclosure will be about?
 notification.background.areYouTheTrust = Are you the trustee of the trust this disclosure relates to?
+notification.background.areYouRepresetingAnOrganisation = Are you representing an organisation?
+notification.background.organisationName = The name of the organisation you represent
 
 #===================================================
 #  About you
