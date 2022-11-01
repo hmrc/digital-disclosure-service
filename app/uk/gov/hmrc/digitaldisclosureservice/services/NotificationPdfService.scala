@@ -14,13 +14,26 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.digitaldisclosureservice.config
+package services
 
-import javax.inject.{Inject, Singleton}
-import play.api.Configuration
+import play.api.i18n.Messages
+import java.io.{ByteArrayOutputStream}
+import javax.inject.{Singleton, Inject}
+
+import models._
+import uk.gov.hmrc.digitaldisclosureservice.views.html.NotificationView
+import viewmodels.govuk.SummaryListFluency
+import viewmodels.NotificationViewModel
+
 
 @Singleton
-class AppConfig @Inject()(config: Configuration) {
+class NotificationPdfService @Inject()(view: NotificationView) extends PdfGenerationService with SummaryListFluency {
 
-  val appName: String = config.get[String]("appName")
+  def createPdf(notification: Notification)(implicit messages: Messages): ByteArrayOutputStream = {
+
+    val viewModel = NotificationViewModel(notification)
+
+    buildPdf(view(viewModel).toString)
+  }
+
 }

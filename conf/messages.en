@@ -1,0 +1,98 @@
+service.name = Digital Disclosure Service
+
+service.yes = Yes
+service.no = No
+service.unsure = I am not sure
+
+#===================================================
+#  Notification headings
+#===================================================
+notification.h1 = Notification of intent
+notification.heading.metadata = Your submission details
+notification.heading.background = Background
+notification.heading.aboutYou = About You
+notification.heading.aboutTheIndividual = About the individual
+notification.heading.aboutTheCompany = About the company
+notification.heading.aboutTheTrust = About the trust
+notification.heading.aboutTheLLP = About the limited liability partnership
+
+#===================================================
+#  Metadata
+#===================================================
+notification.metadata.reference = Your reference number
+notification.metadata.submissionTime = Your submission was sent on
+
+#===================================================
+#  Background
+#===================================================
+
+notification.background.haveYouReceivedALetter = Will you be making a disclosure because you received a letter from HMRC?
+notification.background.letterReferenceNumber = Letter reference number
+notification.background.offshoreLiabilities = Do you want to disclose offshore liabilities?
+notification.background.onshoreLiabilities = Do you want to disclose onshore liabilities?
+notification.background.disclosureEntity = Who this disclosure is for?
+notification.background.Individual = An individual
+notification.background.Company = A company
+notification.background.LLP = A limited liability partnership
+notification.background.Trust = A trust
+notification.background.areYouTheIndividual = Are you the individual this disclosure relates to?
+notification.background.areYouTheCompany = Are you an officer of the company this disclosure relates to?
+notification.background.areYouTheLLP = Are you a designated member of the limited liability partnership that the disclosure will be about?
+notification.background.areYouTheTrust = Are you the trustee of the trust this disclosure relates to?
+notification.background.areYouRepresetingAnOrganisation = Are you representing an organisation?
+notification.background.organisationName = The name of the organisation you represent
+
+#===================================================
+#  About you
+#===================================================
+
+notification.aboutYou.fullName = Your full name
+notification.aboutYou.telephoneNumber = Your telephone number
+notification.aboutYou.doYouHaveAEmailAddress = Do you have an email address that you are happy to be contacted on by HMRC?
+notification.aboutYou.emailAddress = Your email address
+notification.aboutYou.dateOfBirth = Your date of birth
+notification.aboutYou.mainOccupation = Your main occupation
+notification.aboutYou.doYouHaveANino = Do you have a National Insurance number?
+notification.aboutYou.nino = Your National Insurance number
+notification.aboutYou.registeredForVAT = Are you registered for VAT?
+notification.aboutYou.vatRegNumber = Your VAT registration number
+notification.aboutYou.registeredForSA = Are you registered for Self Assessment?
+notification.aboutYou.sautr = Your Unique Taxpayer Reference
+notification.aboutYou.address = Your address
+
+#===================================================
+#  About the individual
+#===================================================
+
+notification.aboutTheIndividual.fullName = Individual’s full name
+notification.aboutTheIndividual.dateOfBirth = Individual’s date of birth
+notification.aboutTheIndividual.mainOccupation = Individual’s main occupation
+notification.aboutTheIndividual.doYouHaveANino = Does the individual have a National Insurance number, as far as you’re aware?
+notification.aboutTheIndividual.nino = Individual’s National Insurance number
+notification.aboutTheIndividual.registeredForVAT = Is the individual registered for VAT, as far you’re aware?
+notification.aboutTheIndividual.vatRegNumber = Individual’s VAT registration number
+notification.aboutTheIndividual.registeredForSA = Is the individual registered for Self Assessment, as far as you’re aware?
+notification.aboutTheIndividual.sautr = Individual’s Unique Taxpayer Reference
+notification.aboutTheIndividual.address = Individual’s address
+
+#===================================================
+#  About the company
+#===================================================
+
+notification.aboutTheCompany.name = Company’s name
+notification.aboutTheCompany.registrationNumber =  Company registration number
+notification.aboutTheCompany.address = Company’s address
+
+#===================================================
+#  About the trust
+#===================================================
+
+notification.aboutTheTrust.name = Trust’s name
+notification.aboutTheTrust.address = Trust’s address
+
+#===================================================
+#  About the LLP
+#===================================================
+
+notification.aboutTheLLP.name = Limited Liability Partnership’s name
+notification.aboutTheLLP.address = Limited Liability Partnership’s address

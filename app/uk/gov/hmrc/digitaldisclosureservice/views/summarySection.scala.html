@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,15 +12,13 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package uk.gov.hmrc.digitaldisclosureservice.config
+@this(
+    govukSummaryList: GovukSummaryList
+)
 
-import javax.inject.{Inject, Singleton}
-import play.api.Configuration
+@(headingKey: String, list: SummaryList)(implicit messages: Messages)
 
-@Singleton
-class AppConfig @Inject()(config: Configuration) {
-
-  val appName: String = config.get[String]("appName")
-}
+<h2 class="govuk-heading-l">@messages(headingKey)</h2>
+@govukSummaryList(list)

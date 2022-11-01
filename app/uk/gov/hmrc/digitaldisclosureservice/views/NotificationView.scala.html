@@ -1,0 +1,64 @@
+@*
+ * Copyright 2022 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import uk.gov.hmrc.hmrcfrontend.config.AssetsConfig
+@import viewmodels.NotificationViewModel
+
+@this(
+    govukSummaryList: GovukSummaryList,
+    summarySection: summarySection,
+    styles: styles,
+    assetsConfig: AssetsConfig
+)
+
+@(notification: NotificationViewModel)(implicit messages: Messages)
+
+<!DOCTYPE html>
+<html lang="${messages.lang.code}">
+
+    <head>
+        <title>@messages("service.name")</title>
+        <meta name="Lang" content="${messages.lang.code}"/>
+        <meta name="subject" content="Test subject"/>
+        <meta name="about" content="HMRC PDFA Document"/>
+
+        <!-- <link href="@uk.gov.hmrc.hmrcfrontend.controllers.routes.Assets.at("hmrc-frontend-5.11.1.min.css")" media="all" rel="stylesheet" type="text/css"/> -->
+
+        @styles()
+    
+    </head>
+
+    <body>
+
+        <div style="padding-bottom: 0.3em; margin-top: -1em;">
+            <p style="padding-left: 0.5em; display: inline-block; font-size: 16pt; vertical-align: middle;">@messages("service.name")</p>
+        </div>
+        <hr/>
+
+        <h1 style="padding-top: 1em;">@messages("notification.h1")</h1>
+
+        @summarySection("notification.heading.metadata", notification.metadataList)
+        @summarySection("notification.heading.background", notification.backgroundList)
+
+        @notification.aboutTheIndividualList.map(list => summarySection("notification.heading.aboutTheIndividual", list))
+        @notification.aboutTheCompanyList.map(list => summarySection("notification.heading.aboutTheCompany", list))
+        @notification.aboutTheTrustList.map(list => summarySection("notification.heading.aboutTheTrust", list))
+        @notification.aboutTheLLPList.map(list => summarySection("notification.heading.aboutTheLLP", list))
+
+        @summarySection("notification.heading.aboutYou", notification.aboutYouList)
+
+    </body>
+</html>

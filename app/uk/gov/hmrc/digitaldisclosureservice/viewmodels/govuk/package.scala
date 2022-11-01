@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.digitaldisclosureservice.config
+package viewmodels
 
-import javax.inject.{Inject, Singleton}
-import play.api.Configuration
+package object govuk {
 
-@Singleton
-class AppConfig @Inject()(config: Configuration) {
-
-  val appName: String = config.get[String]("appName")
+  object all
+    extends ImplicitConversions
+      with SummaryListFluency
 }
