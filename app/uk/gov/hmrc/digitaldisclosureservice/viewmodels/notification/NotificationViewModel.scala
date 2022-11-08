@@ -17,7 +17,7 @@
 package viewmodels
 
 import viewmodels.govuk.SummaryListFluency
-import models._
+import models.notification._
 import viewmodels.implicits._
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist._
 import play.api.i18n.Messages

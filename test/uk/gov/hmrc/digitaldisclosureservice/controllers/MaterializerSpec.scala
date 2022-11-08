@@ -14,23 +14,25 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.digitaldisclosureservice.controllers
+package controllers
 
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpec
-import play.api.http.Status
+import akka.actor.ActorSystem
+import akka.stream.testkit.NoMaterializer
+import org.scalatest.{BeforeAndAfterAll, Suite}
 import play.api.test.Helpers._
-import play.api.test.{FakeRequest, Helpers}
 
-class MicroserviceHelloWorldControllerSpec extends AnyWordSpec with Matchers {
+/**
+  * Provides an implicit Materializer for use in tests. Note that if your test
+  * is starting an app (e.g. via OneAppPerSuite or OneAppPerTest) then you
+  * should probably use the app's Materializer instead.
+  */
+trait MaterializerSpec extends BeforeAndAfterAll { this: Suite =>
 
-  private val fakeRequest = FakeRequest("GET", "/")
-  private val controller = new MicroserviceHelloWorldController(Helpers.stubControllerComponents())
+  implicit lazy val actorSystem = ActorSystem()
+  implicit lazy val materializer = NoMaterializer
 
-  "GET /" should {
-    "return 200" in {
-      val result = controller.hello()(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
+  override protected def afterAll(): Unit = {
+    super.afterAll()
+    await(actorSystem.terminate())
   }
 }

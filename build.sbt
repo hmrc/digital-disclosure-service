@@ -21,6 +21,7 @@ lazy val microservice = Project("digital-disclosure-service", file("."))
       "uk.gov.hmrc.hmrcfrontend.views.html.helpers._",
       "uk.gov.hmrc.hmrcfrontend.views.config._"
     ),
+    PlayKeys.playDefaultPort := 15004
   )
   .settings(publishingSettings: _*)
   .configs(IntegrationTest)

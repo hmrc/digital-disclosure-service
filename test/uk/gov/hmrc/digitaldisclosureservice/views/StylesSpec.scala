@@ -42,7 +42,7 @@ class StylesSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with
     val view = createView()
 
     "contain styling" in {
-      Option(view.select("style")) shouldBe 'defined
+      Option(view.select("style")) shouldBe (defined)
     }
 
   }

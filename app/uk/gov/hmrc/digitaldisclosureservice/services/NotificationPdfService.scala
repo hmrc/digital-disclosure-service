@@ -20,7 +20,7 @@ import play.api.i18n.Messages
 import java.io.{ByteArrayOutputStream}
 import javax.inject.{Singleton, Inject}
 
-import models._
+import models.notification.Notification
 import uk.gov.hmrc.digitaldisclosureservice.views.html.NotificationView
 import viewmodels.govuk.SummaryListFluency
 import viewmodels.NotificationViewModel

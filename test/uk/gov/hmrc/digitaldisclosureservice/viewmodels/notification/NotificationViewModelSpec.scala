@@ -25,6 +25,7 @@ import play.api.i18n.{MessagesApi, Messages}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.test.FakeRequest
 import models._
+import models.notification._
 
 class NotificationViewModelSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with SummaryListFluency {
 

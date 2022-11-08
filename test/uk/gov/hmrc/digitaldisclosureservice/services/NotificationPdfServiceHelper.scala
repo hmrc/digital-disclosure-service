@@ -22,7 +22,7 @@ import org.scalatest.OptionValues
 import play.api.i18n.Messages
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.text.PDFTextStripper
-import models._
+import models.notification._
 
 trait NotificationPdfServiceHelper extends AnyWordSpecLike
   with Matchers
@@ -141,8 +141,11 @@ trait NotificationPdfServiceHelper extends AnyWordSpecLike
 
   def stripPDFToString(notification: Notification): String = {
     val pdfStripper = new PDFTextStripper()
-    val pdDoc = PDDocument.load(testPdfService.createPdf(notification).toByteArray)
-    pdfStripper.getText(pdDoc)
+    val doc = PDDocument.load(testPdfService.createPdf(notification).toByteArray)
+    val pdfString = pdfStripper.getText(doc)
+    doc.close()
+
+    pdfString
   }
 
 }
