@@ -20,13 +20,14 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import play.api.i18n.{MessagesApi, Messages}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import models._
+import models.notification._
 import viewmodels._
 import play.twirl.api.Html
 import play.api.test.FakeRequest
 import uk.gov.hmrc.digitaldisclosureservice.views.html.NotificationView
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import java.time.Instant
 
 class NotificationViewSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite {
 
@@ -37,7 +38,7 @@ class NotificationViewSpec extends AnyWordSpec with Matchers with GuiceOneAppPer
 
   private def createView(notification: NotificationViewModel): Html = sut.render(notification, messages)
   
-  val viewModel = NotificationViewModel(Notification(Metadata(), Background(), AboutYou()))
+  val viewModel = NotificationViewModel(Notification("userId", "id", Instant.now(), Metadata(), Background(), AboutYou()))
   
   "NotificationView" should {
 
