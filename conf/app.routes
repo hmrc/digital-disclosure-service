@@ -4,6 +4,7 @@
 
 GET         /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
 
-GET         /notification/store/user/:userId/id/:id      controllers.NotificationStoreController.get(userId, id)
-GET         /notification/store/user/:userId             controllers.NotificationStoreController.getAll(userId)
+GET         /notification/user/:userId/id/:id            controllers.NotificationStoreController.get(userId, id)
+GET         /notification/user/:userId                   controllers.NotificationStoreController.getAll(userId)
 PUT         /notification                                controllers.NotificationStoreController.set()
+DELETE      /notification/user/:userId/id/:id            controllers.NotificationStoreController.delete(userId, id)

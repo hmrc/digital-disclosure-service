@@ -97,4 +97,14 @@ class NotificationStoreControllerSpec extends AnyWordSpec with Matchers with Moc
       status(result) shouldBe Status.NO_CONTENT
     }
   }
+
+  "DELETE /notification/user/:userId/id/:id" should {
+    "return 204" in {
+      when(mockNotificationStoreConnector.deleteNotification(refEq("123"), refEq("456"))(any())) thenReturn Future.successful(NoContent)
+
+      val fakeRequest = FakeRequest(method = "DELETE", uri = "/notification", headers = FakeHeaders(Seq.empty), body = Json.toJson(testNotification))
+      val result = controller.delete("123", "456")(fakeRequest)
+      status(result) shouldBe Status.NO_CONTENT
+    }
+  }
 }

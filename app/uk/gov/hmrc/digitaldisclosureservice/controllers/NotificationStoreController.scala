@@ -53,4 +53,9 @@ class NotificationStoreController @Inject()(
     }
   }
 
+  def delete(userId: String, notificationId: String): Action[JsValue] = Action.async(parse.json) { implicit request =>
+    implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+    connector.deleteNotification(userId, notificationId)
+  }
+
 }

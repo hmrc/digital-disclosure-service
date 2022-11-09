@@ -88,6 +88,20 @@ class NotificationStoreConnector @Inject() (
         }
       }
   }
+
+  def deleteNotification(userId: String, notificationId: String)(implicit hc: HeaderCarrier): Future[Result] = {
+    httpClient
+      .delete(url"${service.baseUrl}/notification/userId/$userId/id/$notificationId")
+      .execute
+      .flatMap { response =>
+        if (response.status == NO_CONTENT) {
+          Future.successful(NoContent)
+        } else {
+          Future.failed(NotificationStoreConnector.UnexpectedResponseException(response.status, response.body))
+        }
+      }
+  }
+
 }
 
 object NotificationStoreConnector {

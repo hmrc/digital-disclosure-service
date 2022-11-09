@@ -221,5 +221,47 @@ class NotificationStoreConnectorSpec extends AnyFreeSpec with Matchers with Scal
     }
 
   }
+
+  "deleteNotification" - {
+
+    val hc = HeaderCarrier()
+    val url = "/notification/userId/123/id/456"
+
+    "must return a successful future when the store responds with NO_CONTENT" in {
+
+      server.stubFor(
+        delete(urlMatching(url))
+          .willReturn(
+            aResponse()
+              .withStatus(NO_CONTENT)
+          )
+      )
+
+      connector.deleteNotification("123", "456")(hc).futureValue mustEqual NoContent
+    }
+
+
+    "must return a failed future when the store responds with anything else" in {
+
+      server.stubFor(
+        delete(urlMatching(url))
+          .willReturn(aResponse().withBody("body").withStatus(INTERNAL_SERVER_ERROR))
+      )
+
+      val exception = connector.deleteNotification("123", "456")(hc).failed.futureValue
+      exception mustEqual NotificationStoreConnector.UnexpectedResponseException(500, "body")
+    }
+
+    "must return a failed future when there is a connection error" in {
+
+      server.stubFor(
+        delete(urlMatching(url))
+          .willReturn(aResponse().withFault(Fault.RANDOM_DATA_THEN_CLOSE))
+      )
+
+      connector.deleteNotification("123", "456")(hc).failed.futureValue
+    }
+
+  }
   
 }
