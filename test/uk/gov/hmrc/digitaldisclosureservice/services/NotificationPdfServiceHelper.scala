@@ -23,6 +23,8 @@ import play.api.i18n.Messages
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.text.PDFTextStripper
 import models.notification._
+import models.address._
+import models.address.Address.AddressOps
 
 trait NotificationPdfServiceHelper extends AnyWordSpecLike
   with Matchers
@@ -31,6 +33,9 @@ trait NotificationPdfServiceHelper extends AnyWordSpecLike
   def testPdfService: NotificationPdfService
 
   implicit val messages: Messages 
+
+  def address(line1: String) = Address(line1, None, None, "line3", "postcode", Country("GBR"))
+  def addressString(address: Address) = AddressOps(address).getAddressLines.mkString(", ")
 
   def baseNotificationTests(parsedText: String) = {
     parsedText should include(messages("service.name"))
@@ -77,7 +82,7 @@ trait NotificationPdfServiceHelper extends AnyWordSpecLike
     parsedText should include(messages("notification.aboutTheIndividual.fullName"))
     parsedText should include(messages("notification.aboutTheIndividual.dateOfBirth"))
     parsedText should include(messages("notification.aboutTheIndividual.mainOccupation"))
-    parsedText should include(messages("notification.aboutTheIndividual.doYouHaveANino"))
+    parsedText should include(messages("notification.aboutTheIndividual.doTheyHaveANino"))
     parsedText should include(messages("notification.aboutTheIndividual.registeredForVAT"))
     parsedText should include(messages("notification.aboutTheIndividual.registeredForSA"))
     parsedText should include(messages("notification.aboutTheIndividual.address"))
@@ -89,7 +94,7 @@ trait NotificationPdfServiceHelper extends AnyWordSpecLike
     parsedText should not include(messages("notification.aboutTheIndividual.fullName"))
     parsedText should not include(messages("notification.aboutTheIndividual.dateOfBirth"))
     parsedText should not include(messages("notification.aboutTheIndividual.mainOccupation"))
-    parsedText should not include(messages("notification.aboutTheIndividual.doYouHaveANino"))
+    parsedText should not include(messages("notification.aboutTheIndividual.doTheyHaveANino"))
     parsedText should not include(messages("notification.aboutTheIndividual.registeredForVAT"))
     parsedText should not include(messages("notification.aboutTheIndividual.registeredForSA"))
     parsedText should not include(messages("notification.aboutTheIndividual.address"))

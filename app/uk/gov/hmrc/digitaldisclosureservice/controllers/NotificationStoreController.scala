@@ -47,7 +47,7 @@ class NotificationStoreController @Inject()(
     }}
   }
 
-  def set(): Action[JsValue] = Action.async(parse.json) { implicit request =>
+  def set: Action[JsValue] = Action.async(parse.json) { implicit request =>
     withValidJson[Notification]{ notification =>
       connector.setNotification(notification)
     }

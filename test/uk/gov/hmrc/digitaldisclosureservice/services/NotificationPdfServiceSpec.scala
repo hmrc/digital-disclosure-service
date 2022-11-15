@@ -27,14 +27,13 @@ import models.notification._
 import uk.gov.hmrc.digitaldisclosureservice.views.html.NotificationView
 import java.time.Instant
 
-import java.util.Date
+import java.time.LocalDate
 
 class NotificationPdfServiceSpec extends AnyWordSpecLike
   with Matchers
   with OptionValues
   with GuiceOneAppPerSuite
   with NotificationPdfServiceHelper {
-
 
   implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
   val view = app.injector.instanceOf[NotificationView]
@@ -176,12 +175,12 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           telephoneNumber = Some("+44 012345678"),
           doYouHaveAEmailAddress = Some(true),
           emailAddress = Some("some.email@address.com"),
-          dateOfBirth = Some(new Date()),
+          dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some occupation"),
           doYouHaveANino = Some(YesNoOrUnsure.No),
           registeredForVAT = Some(YesNoOrUnsure.No),
           registeredForSA = Some(YesNoOrUnsure.No),
-          address = Some("Some address")
+          address = Some(address("you"))
         )
         val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou)
         val parsedText = stripPDFToString(notification)
@@ -196,7 +195,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         parsedText should include("+44 012345678")
         parsedText should include("some.email@address.com")
         parsedText should include("Some occupation")
-        parsedText should include("Some address")
+        parsedText should include(addressString(address("you")))
       }
 
       "the user has entered the full about you section with nino" in {
@@ -212,13 +211,13 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           telephoneNumber = Some("+44 012345678"),
           doYouHaveAEmailAddress = Some(true),
           emailAddress = Some("some.email@address.com"),
-          dateOfBirth = Some(new Date()),
+          dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some occupation"),
           doYouHaveANino = Some(YesNoOrUnsure.Yes),
           nino = Some("Some nino"),
           registeredForVAT = Some(YesNoOrUnsure.No),
           registeredForSA = Some(YesNoOrUnsure.No),
-          address = Some("Some address")
+          address = Some(address("you"))
         )
         val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou)
         val parsedText = stripPDFToString(notification)
@@ -243,13 +242,13 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           telephoneNumber = Some("+44 012345678"),
           doYouHaveAEmailAddress = Some(true),
           emailAddress = Some("some.email@address.com"),
-          dateOfBirth = Some(new Date()),
+          dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some occupation"),
           doYouHaveANino = Some(YesNoOrUnsure.No),
           registeredForVAT = Some(YesNoOrUnsure.Yes),
           vatRegNumber = Some("Some VAT reg number"),
           registeredForSA = Some(YesNoOrUnsure.No),
-          address = Some("Some address")
+          address = Some(address("you"))
         )
         val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou)
         val parsedText = stripPDFToString(notification)
@@ -274,13 +273,13 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           telephoneNumber = Some("+44 012345678"),
           doYouHaveAEmailAddress = Some(true),
           emailAddress = Some("some.email@address.com"),
-          dateOfBirth = Some(new Date()),
+          dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some occupation"),
           doYouHaveANino = Some(YesNoOrUnsure.No),
           registeredForVAT = Some(YesNoOrUnsure.No),
           registeredForSA = Some(YesNoOrUnsure.Yes),
           sautr = Some("Some SAUTR"),
-          address = Some("Some address")
+          address = Some(address("you"))
         )
         val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou)
         val parsedText = stripPDFToString(notification)
@@ -305,12 +304,12 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           telephoneNumber = Some("+44 012345678"),
           doYouHaveAEmailAddress = Some(true),
           emailAddress = Some("some.email@address.com"),
-          dateOfBirth = Some(new Date()),
+          dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some occupation"),
           doYouHaveANino = Some(YesNoOrUnsure.Unsure),
           registeredForVAT = Some(YesNoOrUnsure.Unsure),
           registeredForSA = Some(YesNoOrUnsure.Unsure),
-          address = Some("Some address")
+          address = Some(address("you"))
         )
         val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou)
         val parsedText = stripPDFToString(notification)
@@ -341,7 +340,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           doYouHaveAEmailAddress = Some(false),
-          address = Some("Some address")
+          address = Some(address("you"))
         )
         val aboutTheIndividual = AboutTheIndividual()
         val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, Some(aboutTheIndividual))
@@ -371,16 +370,16 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           doYouHaveAEmailAddress = Some(false),
-          address = Some("Some address")
+          address = Some(address("you"))
         )
         val aboutTheIndividual = AboutTheIndividual(  
           fullName = Some("Some individual's name"),
-          dateOfBirth = Some(new Date()),
+          dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some individual's occupation"),
-          doYouHaveANino = Some(YesNoOrUnsure.No),
+          doTheyHaveANino = Some(YesNoOrUnsure.No),
           registeredForVAT = Some(YesNoOrUnsure.No),
           registeredForSA = Some(YesNoOrUnsure.No),
-          address = Some("Some individual's address")
+          address = Some(address("individual"))
         )
         val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, Some(aboutTheIndividual))
         val parsedText = stripPDFToString(notification)
@@ -391,7 +390,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
 
         parsedText should include(messages("Some individual's name"))
         parsedText should include(messages("Some individual's occupation"))
-        parsedText should include(messages("Some individual's address"))
+        parsedText should include(addressString(address("individual")))
 
       }
 
@@ -407,17 +406,17 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           doYouHaveAEmailAddress = Some(false),
-          address = Some("Some address")
+          address = Some(address("you"))
         )
         val aboutTheIndividual = AboutTheIndividual(  
           fullName = Some("Some individual's name"),
-          dateOfBirth = Some(new Date()),
+          dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some individual's occupation"),
-          doYouHaveANino = Some(YesNoOrUnsure.Yes),
+          doTheyHaveANino = Some(YesNoOrUnsure.Yes),
           nino = Some("Some individual's nino"),
           registeredForVAT = Some(YesNoOrUnsure.No),
           registeredForSA = Some(YesNoOrUnsure.No),
-          address = Some("Some individual's address")
+          address = Some(address("individual"))
         )
         val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, Some(aboutTheIndividual))
         val parsedText = stripPDFToString(notification)
@@ -442,17 +441,17 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           doYouHaveAEmailAddress = Some(false),
-          address = Some("Some address")
+          address = Some(address("you"))
         )
         val aboutTheIndividual = AboutTheIndividual(  
           fullName = Some("Some individual's name"),
-          dateOfBirth = Some(new Date()),
+          dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some individual's occupation"),
-          doYouHaveANino = Some(YesNoOrUnsure.No),
+          doTheyHaveANino = Some(YesNoOrUnsure.No),
           registeredForVAT = Some(YesNoOrUnsure.Yes),
           vatRegNumber = Some("Some individual's VAT number"),
           registeredForSA = Some(YesNoOrUnsure.No),
-          address = Some("Some individual's address")
+          address = Some(address("individual"))
         )
         val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, Some(aboutTheIndividual))
         val parsedText = stripPDFToString(notification)
@@ -477,17 +476,17 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           doYouHaveAEmailAddress = Some(false),
-          address = Some("Some address")
+          address = Some(address("you"))
         )
         val aboutTheIndividual = AboutTheIndividual(  
           fullName = Some("Some individual's name"),
-          dateOfBirth = Some(new Date()),
+          dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some individual's occupation"),
-          doYouHaveANino = Some(YesNoOrUnsure.No),
+          doTheyHaveANino = Some(YesNoOrUnsure.No),
           registeredForVAT = Some(YesNoOrUnsure.No),
           registeredForSA = Some(YesNoOrUnsure.Yes),
           sautr = Some("Some individual's SAUTR"),
-          address = Some("Some individual's address")
+          address = Some(address("individual"))
         )
         val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, Some(aboutTheIndividual))
         val parsedText = stripPDFToString(notification)
@@ -516,7 +515,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           doYouHaveAEmailAddress = Some(false),
-          address = Some("Some address")
+          address = Some(address("you"))
         )
         val aboutTheCompany = AboutTheCompany()
         val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, aboutTheCompany = Some(aboutTheCompany))
@@ -543,12 +542,12 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           doYouHaveAEmailAddress = Some(false),
-          address = Some("Some address")
+          address = Some(address("you"))
         )
         val aboutTheCompany = AboutTheCompany(
           name = Some("Some company name"),
           registrationNumber = Some("Some company registration number"),
-          address = Some("Some company address")
+          address = Some(address("company"))
         )
         val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, aboutTheCompany = Some(aboutTheCompany))
         val parsedText = stripPDFToString(notification)
@@ -558,7 +557,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
 
         parsedText should include(messages("Some company name"))
         parsedText should include(messages("Some company registration number"))
-        parsedText should include(messages("Some company address"))
+        parsedText should include(messages(addressString(address("you"))))
 
       }
 
@@ -578,7 +577,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           doYouHaveAEmailAddress = Some(false),
-          address = Some("Some address")
+          address = Some(address("you"))
         )
         val aboutTheTrust = AboutTheTrust()
         val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, aboutTheTrust = Some(aboutTheTrust))
@@ -605,11 +604,11 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           doYouHaveAEmailAddress = Some(false),
-          address = Some("Some address")
+          address = Some(address("you"))
         )
         val aboutTheTrust = AboutTheTrust(
           name = Some("Some trust name"),
-          address = Some("Some trust address")
+          address = Some(address("trust"))
         )
         val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, aboutTheTrust = Some(aboutTheTrust))
         val parsedText = stripPDFToString(notification)
@@ -618,7 +617,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         testTrustQuestions(parsedText)
 
         parsedText should include(messages("Some trust name"))
-        parsedText should include(messages("Some trust address"))
+        parsedText should include(messages(addressString(address("trust"))))
       }
 
     }
@@ -637,7 +636,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           doYouHaveAEmailAddress = Some(false),
-          address = Some("Some address")
+          address = Some(address("you"))
         )
         val aboutTheLLP = AboutTheLLP()
         val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, aboutTheLLP = Some(aboutTheLLP))
@@ -664,11 +663,11 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           doYouHaveAEmailAddress = Some(false),
-          address = Some("Some address")
+          address = Some(address("you"))
         )
         val aboutTheLLP = AboutTheLLP(
           name = Some("Some LLP name"),
-          address = Some("Some LLP address")
+          address = Some(address("LLP"))
         )
         val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, aboutTheLLP = Some(aboutTheLLP))
         val parsedText = stripPDFToString(notification)
@@ -677,7 +676,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         testLLPQuestions(parsedText)
 
         parsedText should include(messages("Some LLP name"))
-        parsedText should include(messages("Some LLP address"))
+        parsedText should include(messages(addressString(address("LLP"))))
       }
 
     }

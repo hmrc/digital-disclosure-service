@@ -21,6 +21,7 @@ import models.notification._
 import viewmodels.implicits._
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist._
 import play.api.i18n.Messages
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 
 final case class NotificationViewModel(
   metadataList: SummaryList,
@@ -77,13 +78,13 @@ object NotificationViewModel extends SummaryListFluency {
       Some(SummaryListRowViewModel(s"$individualKey.fullName", ValueViewModel(aboutTheIndividual.fullName))),
       Some(SummaryListRowViewModel(s"$individualKey.dateOfBirth", ValueViewModel(aboutTheIndividual.dateOfBirth.map(_.toString)))),
       Some(SummaryListRowViewModel(s"$individualKey.mainOccupation", ValueViewModel(aboutTheIndividual.mainOccupation))),
-      Some(SummaryListRowViewModel(s"$individualKey.doYouHaveANino", ValueViewModel(aboutTheIndividual.doYouHaveANino))),
+      Some(SummaryListRowViewModel(s"$individualKey.doTheyHaveANino", ValueViewModel(aboutTheIndividual.doTheyHaveANino))),
       aboutTheIndividual.nino.map(_ => SummaryListRowViewModel(s"$individualKey.nino", ValueViewModel(aboutTheIndividual.nino))),
       Some(SummaryListRowViewModel(s"$individualKey.registeredForVAT", ValueViewModel(aboutTheIndividual.registeredForVAT))),
       aboutTheIndividual.vatRegNumber.map(_ => SummaryListRowViewModel(s"$individualKey.vatRegNumber", ValueViewModel(aboutTheIndividual.vatRegNumber))),
       Some(SummaryListRowViewModel(s"$individualKey.registeredForSA", ValueViewModel(aboutTheIndividual.registeredForSA))),
       aboutTheIndividual.sautr.map(_ => SummaryListRowViewModel(s"$individualKey.sautr", ValueViewModel(aboutTheIndividual.sautr))),
-      Some(SummaryListRowViewModel(s"$individualKey.address", ValueViewModel(aboutTheIndividual.address)))
+      Some(SummaryListRowViewModel(s"$individualKey.address", ValueViewModel(Text(aboutTheIndividual.address.map(_.toSeparatedString).getOrElse("-")))))
     ).flatten
   )
 
@@ -91,21 +92,21 @@ object NotificationViewModel extends SummaryListFluency {
     rows = Seq(
       SummaryListRowViewModel("notification.aboutTheCompany.name", ValueViewModel(aboutTheCompany.name)),
       SummaryListRowViewModel("notification.aboutTheCompany.registrationNumber", ValueViewModel(aboutTheCompany.registrationNumber)),
-      SummaryListRowViewModel("notification.aboutTheCompany.address", ValueViewModel(aboutTheCompany.address))
+      SummaryListRowViewModel("notification.aboutTheCompany.address", ValueViewModel(Text(aboutTheCompany.address.map(_.toSeparatedString).getOrElse("-"))))
     )
   )
 
   def aboutTheTrustList(aboutTheTrust: AboutTheTrust)(implicit messages: Messages): SummaryList = SummaryListViewModel(
     rows = Seq(
       SummaryListRowViewModel("notification.aboutTheTrust.name", ValueViewModel(aboutTheTrust.name)),
-      SummaryListRowViewModel("notification.aboutTheTrust.address", ValueViewModel(aboutTheTrust.address))
+      SummaryListRowViewModel("notification.aboutTheTrust.address", ValueViewModel(Text(aboutTheTrust.address.map(_.toSeparatedString).getOrElse("-"))))
     )
   )
   
   def aboutTheLLPList(aboutTheLLP: AboutTheLLP)(implicit messages: Messages): SummaryList = SummaryListViewModel(
     rows = Seq(
       SummaryListRowViewModel("notification.aboutTheLLP.name", ValueViewModel(aboutTheLLP.name)),
-      SummaryListRowViewModel("notification.aboutTheLLP.address", ValueViewModel(aboutTheLLP.address))
+      SummaryListRowViewModel("notification.aboutTheLLP.address", ValueViewModel(Text(aboutTheLLP.address.map(_.toSeparatedString).getOrElse("-"))))
     )
   )
 
@@ -116,7 +117,7 @@ object NotificationViewModel extends SummaryListFluency {
       Some(SummaryListRowViewModel(s"$aboutYouKey.telephoneNumber", ValueViewModel(aboutYou.telephoneNumber))),
       Some(SummaryListRowViewModel(s"$aboutYouKey.doYouHaveAEmailAddress", ValueViewModel(aboutYou.doYouHaveAEmailAddress))),
       aboutYou.emailAddress.map(_ => SummaryListRowViewModel(s"$aboutYouKey.emailAddress", ValueViewModel(aboutYou.emailAddress))),
-      Some(SummaryListRowViewModel(s"$aboutYouKey.address", ValueViewModel(aboutYou.address))),
+      Some(SummaryListRowViewModel(s"$aboutYouKey.address", ValueViewModel(Text(aboutYou.address.map(_.toSeparatedString).getOrElse("-")))))
     ).flatten
 
     lazy val youAreTheIndiviudalRows = Seq(

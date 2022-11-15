@@ -16,12 +16,12 @@
 
 package models.notification
 
-import java.util.Date
+import java.time.LocalDate
 import play.api.libs.json.{Json, OFormat}
 
 final case class Metadata (
   reference: Option[String] = None,
-  submissionTime: Option[Date] = None
+  submissionTime: Option[LocalDate] = None
 )
 
 object Metadata {
