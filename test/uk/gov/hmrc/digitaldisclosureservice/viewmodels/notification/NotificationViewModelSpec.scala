@@ -19,21 +19,25 @@ package viewmodels
 import org.scalatest.matchers.should.Matchers
 import viewmodels.govuk.SummaryListFluency
 import org.scalatest.wordspec.AnyWordSpec
-import java.util.Date
+import java.time.LocalDate
 import viewmodels.implicits._
 import play.api.i18n.{MessagesApi, Messages}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.test.FakeRequest
 import models._
+import models.address._
+import models.address.Address._
 import models.notification._
 
 class NotificationViewModelSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with SummaryListFluency {
 
   implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
+  val address = Address("line1", None, None, "line3", "postcode", Country("GBR"))
+  val addressString = AddressOps(address).getAddressLines.mkString(", ")
   
   "metadataList" should {
     "return populated values as rows" in {
-      val date = new Date()
+      val date = LocalDate.now()
       val metadata = Metadata(Some("Some reference"), Some(date))
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.metadata.reference", ValueViewModel("Some reference")),
@@ -136,30 +140,30 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with GuiceOneA
 
   "aboutTheIndividualList" should {
     "return populated values as rows" in {
-      val date = new Date()
+      val date = LocalDate.now()
       val aboutTheIndividual = AboutTheIndividual(
         fullName = Some("Some full name"),
         dateOfBirth = Some(date),
         mainOccupation = Some("Some occupation"),
-        doYouHaveANino = Some(YesNoOrUnsure.Yes),
+        doTheyHaveANino = Some(YesNoOrUnsure.Yes),
         nino = Some("Some nino"),
         registeredForVAT = Some(YesNoOrUnsure.No),
         vatRegNumber = Some("Some reg number"),
         registeredForSA = Some(YesNoOrUnsure.Unsure),
         sautr = Some("Some SAUTR"),
-        address = Some("Some address")
+        address = Some(address)
       )
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.aboutTheIndividual.fullName", ValueViewModel("Some full name")),
         SummaryListRowViewModel("notification.aboutTheIndividual.dateOfBirth", ValueViewModel(date.toString)),
         SummaryListRowViewModel("notification.aboutTheIndividual.mainOccupation", ValueViewModel("Some occupation")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.doYouHaveANino", ValueViewModel(messages("service.yes"))),
+        SummaryListRowViewModel("notification.aboutTheIndividual.doTheyHaveANino", ValueViewModel(messages("service.yes"))),
         SummaryListRowViewModel("notification.aboutTheIndividual.nino", ValueViewModel("Some nino")),
         SummaryListRowViewModel("notification.aboutTheIndividual.registeredForVAT", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.aboutTheIndividual.vatRegNumber", ValueViewModel("Some reg number")),
         SummaryListRowViewModel("notification.aboutTheIndividual.registeredForSA", ValueViewModel(messages("service.unsure"))),
         SummaryListRowViewModel("notification.aboutTheIndividual.sautr", ValueViewModel("Some SAUTR")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.address", ValueViewModel("Some address"))
+        SummaryListRowViewModel("notification.aboutTheIndividual.address", ValueViewModel(addressString))
       ))
       NotificationViewModel.aboutTheIndividualList(aboutTheIndividual) shouldEqual expected
     }
@@ -170,7 +174,7 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with GuiceOneA
         SummaryListRowViewModel("notification.aboutTheIndividual.fullName", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutTheIndividual.dateOfBirth", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutTheIndividual.mainOccupation", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.doYouHaveANino", ValueViewModel("-")),
+        SummaryListRowViewModel("notification.aboutTheIndividual.doTheyHaveANino", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutTheIndividual.registeredForVAT", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutTheIndividual.registeredForSA", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutTheIndividual.address", ValueViewModel("-"))
@@ -181,7 +185,7 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with GuiceOneA
 
   "aboutYouList" should {
     "return populated values as rows when disclosing as the individual" in {
-      val date = new Date()
+      val date = LocalDate.now()
       val aboutYou = AboutYou(
         fullName = Some("Some full name"),
         telephoneNumber = Some("Some phone number"),
@@ -195,14 +199,14 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with GuiceOneA
         vatRegNumber = Some("Some reg number"),
         registeredForSA = Some(YesNoOrUnsure.Unsure),
         sautr = Some("Some SAUTR"),
-        address = Some("Some address")
+        address = Some(address)
       )
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("Some full name")),
         SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
         SummaryListRowViewModel("notification.aboutYou.doYouHaveAEmailAddress", ValueViewModel(messages("service.yes"))),
         SummaryListRowViewModel("notification.aboutYou.emailAddress", ValueViewModel("Some email address")),
-        SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel("Some address")),
+        SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel(addressString)),
         SummaryListRowViewModel("notification.aboutYou.dateOfBirth", ValueViewModel(date.toString)),
         SummaryListRowViewModel("notification.aboutYou.mainOccupation", ValueViewModel("Some occupation")),
         SummaryListRowViewModel("notification.aboutYou.doYouHaveANino", ValueViewModel(messages("service.yes"))),
@@ -216,7 +220,7 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with GuiceOneA
     }
 
     "return populated values as rows when disclosing on behalf of the individual" in {
-      val date = new Date()
+      val date = LocalDate.now()
       val aboutYou = AboutYou(
         fullName = Some("Some full name"),
         telephoneNumber = Some("Some phone number"),
@@ -230,14 +234,14 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with GuiceOneA
         vatRegNumber = Some("Some reg number"),
         registeredForSA = Some(YesNoOrUnsure.Unsure),
         sautr = Some("Some SAUTR"),
-        address = Some("Some address")
+        address = Some(address)
       )
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("Some full name")),
         SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
         SummaryListRowViewModel("notification.aboutYou.doYouHaveAEmailAddress", ValueViewModel(messages("service.yes"))),
         SummaryListRowViewModel("notification.aboutYou.emailAddress", ValueViewModel("Some email address")),
-        SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel("Some address"))
+        SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel(addressString))
       ))
       NotificationViewModel.aboutYouList(aboutYou, false) shouldEqual expected
     }
@@ -272,11 +276,11 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with GuiceOneA
 
   "companyList" should {
     "return populated values as rows" in {
-      val aboutTheCompany = AboutTheCompany(Some("Some company name"), Some("Some reg number"), Some("Some address"))
+      val aboutTheCompany = AboutTheCompany(Some("Some company name"), Some("Some reg number"), Some(address))
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.aboutTheCompany.name", ValueViewModel("Some company name")),
         SummaryListRowViewModel("notification.aboutTheCompany.registrationNumber", ValueViewModel("Some reg number")),
-        SummaryListRowViewModel("notification.aboutTheCompany.address", ValueViewModel("Some address"))
+        SummaryListRowViewModel("notification.aboutTheCompany.address", ValueViewModel(addressString))
       ))
       NotificationViewModel.aboutTheCompanyList(aboutTheCompany) shouldEqual expected
     }
@@ -294,10 +298,10 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with GuiceOneA
 
   "aboutTheTrustList" should {
     "return populated values as rows" in {
-      val aboutTheTrust = AboutTheTrust(Some("Some trust name"), Some("Some address"))
+      val aboutTheTrust = AboutTheTrust(Some("Some trust name"), Some(address))
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.aboutTheTrust.name", ValueViewModel("Some trust name")),
-        SummaryListRowViewModel("notification.aboutTheTrust.address", ValueViewModel("Some address"))
+        SummaryListRowViewModel("notification.aboutTheTrust.address", ValueViewModel(addressString))
       ))
       NotificationViewModel.aboutTheTrustList(aboutTheTrust) shouldEqual expected
     }
@@ -314,10 +318,10 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with GuiceOneA
 
   "aboutTheLLPList" should {
     "return populated values as rows" in {
-      val aboutTheLLP = AboutTheLLP(Some("Some LLP name"), Some("Some address"))
+      val aboutTheLLP = AboutTheLLP(Some("Some LLP name"), Some(address))
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.aboutTheLLP.name", ValueViewModel("Some LLP name")),
-        SummaryListRowViewModel("notification.aboutTheLLP.address", ValueViewModel("Some address"))
+        SummaryListRowViewModel("notification.aboutTheLLP.address", ValueViewModel(addressString))
       ))
       NotificationViewModel.aboutTheLLPList(aboutTheLLP) shouldEqual expected
     }

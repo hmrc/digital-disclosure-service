@@ -6,5 +6,5 @@ GET         /assets/*file                                controllers.Assets.vers
 
 GET         /notification/user/:userId/id/:id            controllers.NotificationStoreController.get(userId, id)
 GET         /notification/user/:userId                   controllers.NotificationStoreController.getAll(userId)
-PUT         /notification                                controllers.NotificationStoreController.set()
+PUT         /notification                                controllers.NotificationStoreController.set
 DELETE      /notification/user/:userId/id/:id            controllers.NotificationStoreController.delete(userId, id)

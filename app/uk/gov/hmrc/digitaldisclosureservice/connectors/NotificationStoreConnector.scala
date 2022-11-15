@@ -38,10 +38,11 @@ class NotificationStoreConnector @Inject() (
                               )(implicit ec: ExecutionContext) {
 
   private val service: Service = configuration.get[Service]("microservice.services.digital-disclosure-service-store")
+  private val baseUrl = s"${service.baseUrl}/digital-disclosure-service-store"
 
   def getNotification(userId: String, notificationId: String)(implicit hc: HeaderCarrier): Future[Option[Notification]] = {
     httpClient
-      .get(url"${service.baseUrl}/notification/userId/$userId/id/$notificationId")
+      .get(url"$baseUrl/notification/user/$userId/id/$notificationId")
       .execute
       .flatMap { response =>
         if (response.status == OK) {
@@ -59,7 +60,7 @@ class NotificationStoreConnector @Inject() (
 
   def getAllNotifications(userId: String)(implicit hc: HeaderCarrier): Future[Seq[Notification]] = {
     httpClient
-      .get(url"${service.baseUrl}/notification/userId/$userId")
+      .get(url"$baseUrl/notification/user/$userId")
       .execute
       .flatMap { response =>
         if (response.status == OK) {
@@ -77,7 +78,7 @@ class NotificationStoreConnector @Inject() (
 
   def setNotification(notification: Notification)(implicit hc: HeaderCarrier): Future[Result] = {
     httpClient
-      .put(url"${service.baseUrl}/notification")
+      .put(url"$baseUrl/notification")
       .withBody(Json.toJson(notification))
       .execute
       .flatMap { response =>
@@ -91,7 +92,7 @@ class NotificationStoreConnector @Inject() (
 
   def deleteNotification(userId: String, notificationId: String)(implicit hc: HeaderCarrier): Future[Result] = {
     httpClient
-      .delete(url"${service.baseUrl}/notification/userId/$userId/id/$notificationId")
+      .delete(url"$baseUrl/notification/user/$userId/id/$notificationId")
       .execute
       .flatMap { response =>
         if (response.status == NO_CONTENT) {
