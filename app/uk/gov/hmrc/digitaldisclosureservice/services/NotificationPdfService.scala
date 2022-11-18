@@ -17,7 +17,7 @@
 package services
 
 import play.api.i18n.Messages
-import java.io.{ByteArrayOutputStream}
+import java.io.ByteArrayOutputStream
 import javax.inject.{Singleton, Inject}
 
 import models.notification.Notification

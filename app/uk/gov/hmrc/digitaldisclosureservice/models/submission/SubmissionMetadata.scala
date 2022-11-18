@@ -14,16 +14,24 @@
  * limitations under the License.
  */
 
-package models.notification
+package models.submission
 
-import java.time.LocalDateTime
 import play.api.libs.json.{Json, OFormat}
+import java.time.LocalDateTime
 
-final case class Metadata (
-  reference: Option[String] = None,
-  submissionTime: Option[LocalDateTime] = None
-)
+final case class SubmissionMetadata(
+  timeOfReceipt: LocalDateTime,
+  numberOfPages: Int,
+  customerId: String,
+  submissionMark: String
+) {
+  val store = true
+  val formId = "DO4SUB"
+  val businessArea = "EC"
+  val classificationType = "EC-CCO-Digital Disclosure Serv"
+  val casKey = ""
+}
 
-object Metadata {
-  implicit val format: OFormat[Metadata] = Json.format[Metadata]
+object SubmissionMetadata {
+  implicit lazy val format: OFormat[SubmissionMetadata] = Json.format
 }

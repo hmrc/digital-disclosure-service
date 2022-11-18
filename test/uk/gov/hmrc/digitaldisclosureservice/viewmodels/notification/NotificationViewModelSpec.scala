@@ -19,7 +19,7 @@ package viewmodels
 import org.scalatest.matchers.should.Matchers
 import viewmodels.govuk.SummaryListFluency
 import org.scalatest.wordspec.AnyWordSpec
-import java.time.LocalDate
+import java.time.{LocalDate, LocalDateTime}
 import viewmodels.implicits._
 import play.api.i18n.{MessagesApi, Messages}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
@@ -37,7 +37,7 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with GuiceOneA
   
   "metadataList" should {
     "return populated values as rows" in {
-      val date = LocalDate.now()
+      val date = LocalDateTime.now()
       val metadata = Metadata(Some("Some reference"), Some(date))
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.metadata.reference", ValueViewModel("Some reference")),

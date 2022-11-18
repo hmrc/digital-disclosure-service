@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-package models.notification
+package models.submission
 
-import java.time.LocalDateTime
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{Format, Json}
 
-final case class Metadata (
-  reference: Option[String] = None,
-  submissionTime: Option[LocalDateTime] = None
-)
+final case class SubmissionRequest(
+  id: Option[String],
+  metadata: SubmissionMetadata
+) 
 
-object Metadata {
-  implicit val format: OFormat[Metadata] = Json.format[Metadata]
+object SubmissionRequest {
+  implicit lazy val formats: Format[SubmissionRequest] = Json.format
 }

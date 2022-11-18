@@ -14,16 +14,23 @@
  * limitations under the License.
  */
 
-package models.notification
+package models.submission
 
-import java.time.LocalDateTime
 import play.api.libs.json.{Json, OFormat}
 
-final case class Metadata (
-  reference: Option[String] = None,
-  submissionTime: Option[LocalDateTime] = None
-)
+sealed trait SubmissionResponse extends Product with Serializable
 
-object Metadata {
-  implicit val format: OFormat[Metadata] = Json.format[Metadata]
+object SubmissionResponse {
+
+  final case class Success(id: String) extends SubmissionResponse
+
+  object Success {
+    implicit lazy val format: OFormat[Success] = Json.format[Success]
+  }
+
+  final case class Failure(errors: Seq[String]) extends SubmissionResponse
+
+  object Failure {
+    implicit lazy val format: OFormat[Failure] = Json.format[Failure]
+  }
 }
