@@ -17,7 +17,6 @@
 package connectors
 
 import com.github.tomakehurst.wiremock.client.WireMock._
-import com.github.tomakehurst.wiremock.http.Fault
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
@@ -53,15 +52,11 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
     val localDate = LocalDateTime.now() 
     val submissionRequest = SubmissionRequest(
       id = None,
-      callbackUrl = "/some/url",
       SubmissionMetadata(
-        store = true,
-        source = "some source",
         timeOfReceipt = localDate,
         numberOfPages = 3,
         customerId = "customer Id",
         submissionMark = "mark",
-        casKey = "key"
       )
     )
 
@@ -73,13 +68,13 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
         post(urlMatching(url))
           .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing("/some/url")))
           .withMultipartRequestBody(aMultipart().withName("metadata.store").withBody(containing("true")))
-          .withMultipartRequestBody(aMultipart().withName("metadata.source").withBody(containing("some source")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.source").withBody(containing("DO4SUB")))
           .withMultipartRequestBody(aMultipart().withName("metadata.timeOfReceipt").withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate))))
           .withMultipartRequestBody(aMultipart().withName("metadata.formId").withBody(containing("DO4SUB")))
           .withMultipartRequestBody(aMultipart().withName("metadata.numberOfPages").withBody(containing("3")))
           .withMultipartRequestBody(aMultipart().withName("metadata.customerId").withBody(containing("customer Id")))
           .withMultipartRequestBody(aMultipart().withName("metadata.submissionMark").withBody(containing("mark")))
-          .withMultipartRequestBody(aMultipart().withName("metadata.casKey").withBody(containing("key")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.casKey").withBody(containing("")))
           .withMultipartRequestBody(aMultipart().withName("metadata.classificationType").withBody(containing("EC-CCO-Digital Disclosure Serv")))
           .withMultipartRequestBody(aMultipart().withName("metadata.businessArea").withBody(containing("EC")))
           .withMultipartRequestBody(aMultipart().withName("form").withBody(binaryEqualTo(pdf)))
@@ -100,13 +95,13 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
         post(urlMatching(url))
           .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing("/some/url")))
           .withMultipartRequestBody(aMultipart().withName("metadata.store").withBody(containing("true")))
-          .withMultipartRequestBody(aMultipart().withName("metadata.source").withBody(containing("some source")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.source").withBody(containing("DO4SUB")))
           .withMultipartRequestBody(aMultipart().withName("metadata.timeOfReceipt").withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate))))
           .withMultipartRequestBody(aMultipart().withName("metadata.formId").withBody(containing("DO4SUB")))
           .withMultipartRequestBody(aMultipart().withName("metadata.numberOfPages").withBody(containing("3")))
           .withMultipartRequestBody(aMultipart().withName("metadata.customerId").withBody(containing("customer Id")))
           .withMultipartRequestBody(aMultipart().withName("metadata.submissionMark").withBody(containing("mark")))
-          .withMultipartRequestBody(aMultipart().withName("metadata.casKey").withBody(containing("key")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.casKey").withBody(containing("")))
           .withMultipartRequestBody(aMultipart().withName("metadata.classificationType").withBody(containing("EC-CCO-Digital Disclosure Serv")))
           .withMultipartRequestBody(aMultipart().withName("metadata.businessArea").withBody(containing("EC")))
           .withMultipartRequestBody(aMultipart().withName("form").withBody(binaryEqualTo(pdf)))
@@ -123,13 +118,13 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
         post(urlMatching(url))
           .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing("/some/url")))
           .withMultipartRequestBody(aMultipart().withName("metadata.store").withBody(containing("true")))
-          .withMultipartRequestBody(aMultipart().withName("metadata.source").withBody(containing("some source")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.source").withBody(containing("DO4SUB")))
           .withMultipartRequestBody(aMultipart().withName("metadata.timeOfReceipt").withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate))))
           .withMultipartRequestBody(aMultipart().withName("metadata.formId").withBody(containing("DO4SUB")))
           .withMultipartRequestBody(aMultipart().withName("metadata.numberOfPages").withBody(containing("3")))
           .withMultipartRequestBody(aMultipart().withName("metadata.customerId").withBody(containing("customer Id")))
           .withMultipartRequestBody(aMultipart().withName("metadata.submissionMark").withBody(containing("mark")))
-          .withMultipartRequestBody(aMultipart().withName("metadata.casKey").withBody(containing("key")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.casKey").withBody(containing("")))
           .withMultipartRequestBody(aMultipart().withName("metadata.classificationType").withBody(containing("EC-CCO-Digital Disclosure Serv")))
           .withMultipartRequestBody(aMultipart().withName("metadata.businessArea").withBody(containing("EC")))
           .withMultipartRequestBody(aMultipart().withName("form").withBody(binaryEqualTo(pdf)))
@@ -150,13 +145,13 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
         post(urlMatching(url))
           .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing("/some/url")))
           .withMultipartRequestBody(aMultipart().withName("metadata.store").withBody(containing("true")))
-          .withMultipartRequestBody(aMultipart().withName("metadata.source").withBody(containing("some source")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.source").withBody(containing("DO4SUB")))
           .withMultipartRequestBody(aMultipart().withName("metadata.timeOfReceipt").withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate))))
           .withMultipartRequestBody(aMultipart().withName("metadata.formId").withBody(containing("DO4SUB")))
           .withMultipartRequestBody(aMultipart().withName("metadata.numberOfPages").withBody(containing("3")))
           .withMultipartRequestBody(aMultipart().withName("metadata.customerId").withBody(containing("customer Id")))
           .withMultipartRequestBody(aMultipart().withName("metadata.submissionMark").withBody(containing("mark")))
-          .withMultipartRequestBody(aMultipart().withName("metadata.casKey").withBody(containing("key")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.casKey").withBody(containing("")))
           .withMultipartRequestBody(aMultipart().withName("metadata.classificationType").withBody(containing("EC-CCO-Digital Disclosure Serv")))
           .withMultipartRequestBody(aMultipart().withName("metadata.businessArea").withBody(containing("EC")))
           .withMultipartRequestBody(aMultipart().withName("form").withBody(binaryEqualTo(pdf)))

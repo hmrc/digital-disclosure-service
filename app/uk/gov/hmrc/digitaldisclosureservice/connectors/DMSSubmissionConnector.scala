@@ -35,7 +35,7 @@ import play.mvc.Http.HeaderNames.AUTHORIZATION
 class DMSSubmissionConnectorImpl @Inject() (
   val wsClient: WSClient,
   configuration: Configuration
-)(implicit ec: ExecutionContext) {
+)(implicit ec: ExecutionContext) extends DMSSubmissionConnector {
 
   private val service: Service = configuration.get[Service]("microservice.services.dms-submission")
   val clientAuthToken = configuration.get[String]("internal-auth.token")
@@ -65,7 +65,7 @@ class DMSSubmissionConnectorImpl @Inject() (
 
   private def constructMultipartFormData(submissionRequest: SubmissionRequest, pdf: Array[Byte]): Source[Part[Source[ByteString, Any]], Any] =
     Source(Seq(
-      DataPart("callbackUrl", ???),
+      DataPart("callbackUrl", "/some/url"),
       DataPart("metadata.store", submissionRequest.metadata.store.toString),
       DataPart("metadata.source", submissionRequest.metadata.formId),
       DataPart("metadata.timeOfReceipt", DateTimeFormatter.ISO_DATE_TIME.format(submissionRequest.metadata.timeOfReceipt)),
