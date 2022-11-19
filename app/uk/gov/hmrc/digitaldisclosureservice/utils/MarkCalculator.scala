@@ -29,8 +29,8 @@ import com.sun.org.apache.xml.internal.security.Init
 @Singleton
 class MarkCalculatorImpl extends MarkCalculator {
 
-  def getSfMark(formData: Array[Byte]): String = {
-    createMark(new ByteArrayInputStream(formData))
+  def getSfMark(xml: String): String = {
+    createMark(new ByteArrayInputStream(xml.getBytes))
   }
 
   final val DEFAULT_SEC_HASH_ALGORITHM: String = "SHA1"
@@ -77,5 +77,5 @@ class MarkCalculatorImpl extends MarkCalculator {
 
 @ImplementedBy(classOf[MarkCalculatorImpl])
 trait MarkCalculator {
-  def getSfMark(formData: Array[Byte]): String
+  def getSfMark(xml: String): String
 }

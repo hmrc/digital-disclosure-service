@@ -30,6 +30,7 @@ import akka.stream.scaladsl.Source
 import java.time.format.DateTimeFormatter
 import akka.util.ByteString
 import play.mvc.Http.HeaderNames.AUTHORIZATION
+import controllers.routes
 
 @Singleton
 class DMSSubmissionConnectorImpl @Inject() (
@@ -38,7 +39,11 @@ class DMSSubmissionConnectorImpl @Inject() (
 )(implicit ec: ExecutionContext) extends DMSSubmissionConnector {
 
   private val service: Service = configuration.get[Service]("microservice.services.dms-submission")
-  val clientAuthToken = configuration.get[String]("internal-auth.token")
+  private val clientAuthToken = configuration.get[String]("internal-auth.token")
+
+  private val selfUrl = configuration.get[String]("self.url")
+  private val callbackControllerUrl = routes.SubmissionCallbackController.callback.url
+  private val callbackUrl = s"${selfUrl}/digital-disclosure-service${callbackControllerUrl}"
 
   def submit(submissionRequest: SubmissionRequest, pdf: Array[Byte]): Future[SubmissionResponse] = {
 
@@ -65,7 +70,7 @@ class DMSSubmissionConnectorImpl @Inject() (
 
   private def constructMultipartFormData(submissionRequest: SubmissionRequest, pdf: Array[Byte]): Source[Part[Source[ByteString, Any]], Any] =
     Source(Seq(
-      DataPart("callbackUrl", "/some/url"),
+      DataPart("callbackUrl", callbackUrl),
       DataPart("metadata.store", submissionRequest.metadata.store.toString),
       DataPart("metadata.source", submissionRequest.metadata.formId),
       DataPart("metadata.timeOfReceipt", DateTimeFormatter.ISO_DATE_TIME.format(submissionRequest.metadata.timeOfReceipt)),

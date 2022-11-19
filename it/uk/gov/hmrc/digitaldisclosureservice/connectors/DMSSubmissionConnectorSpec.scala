@@ -43,6 +43,8 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
       )
       .build()
 
+  val expectedCallbackUrl = "http://localhost:15004/digital-disclosure-service/dms-submission/callback"
+
   private lazy val connector = app.injector.instanceOf[DMSSubmissionConnector]
 
   "submit" - {
@@ -66,7 +68,7 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
 
       server.stubFor(
         post(urlMatching(url))
-          .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing("/some/url")))
+          .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing(expectedCallbackUrl)))
           .withMultipartRequestBody(aMultipart().withName("metadata.store").withBody(containing("true")))
           .withMultipartRequestBody(aMultipart().withName("metadata.source").withBody(containing("DO4SUB")))
           .withMultipartRequestBody(aMultipart().withName("metadata.timeOfReceipt").withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate))))
@@ -93,7 +95,7 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
 
       server.stubFor(
         post(urlMatching(url))
-          .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing("/some/url")))
+          .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing(expectedCallbackUrl)))
           .withMultipartRequestBody(aMultipart().withName("metadata.store").withBody(containing("true")))
           .withMultipartRequestBody(aMultipart().withName("metadata.source").withBody(containing("DO4SUB")))
           .withMultipartRequestBody(aMultipart().withName("metadata.timeOfReceipt").withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate))))
@@ -116,7 +118,7 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
 
       server.stubFor(
         post(urlMatching(url))
-          .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing("/some/url")))
+          .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing(expectedCallbackUrl)))
           .withMultipartRequestBody(aMultipart().withName("metadata.store").withBody(containing("true")))
           .withMultipartRequestBody(aMultipart().withName("metadata.source").withBody(containing("DO4SUB")))
           .withMultipartRequestBody(aMultipart().withName("metadata.timeOfReceipt").withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate))))
@@ -143,7 +145,7 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
 
       server.stubFor(
         post(urlMatching(url))
-          .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing("/some/url")))
+          .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing(expectedCallbackUrl)))
           .withMultipartRequestBody(aMultipart().withName("metadata.store").withBody(containing("true")))
           .withMultipartRequestBody(aMultipart().withName("metadata.source").withBody(containing("DO4SUB")))
           .withMultipartRequestBody(aMultipart().withName("metadata.timeOfReceipt").withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate))))
@@ -167,7 +169,7 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
 
       server.stubFor(
         post(urlMatching(url))
-          .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing("/some/url")))
+          .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing(expectedCallbackUrl)))
           .withMultipartRequestBody(aMultipart().withName("metadata.store").withBody(containing("true")))
           .withMultipartRequestBody(aMultipart().withName("metadata.source").withBody(containing("DO4SUB")))
           .withMultipartRequestBody(aMultipart().withName("metadata.timeOfReceipt").withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate))))

@@ -10,3 +10,5 @@ PUT         /notification                                controllers.Notificatio
 DELETE      /notification/user/:userId/id/:id            controllers.NotificationStoreController.delete(userId, id)
 
 POST        /notification/submit                         controllers.NotificationSubmissionController.submit
+
+POST        /dms-submission/callback                     controllers.SubmissionCallbackController.callback  

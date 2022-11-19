@@ -18,6 +18,8 @@ package models.notification
 
 import play.api.libs.json.{Json, OFormat}
 import java.time.Instant
+import com.thoughtworks.xstream._
+import com.thoughtworks.xstream.io.xml.DomDriver
 
 final case class Notification (
   userId: String,
@@ -35,6 +37,11 @@ final case class Notification (
   def disclosingAboutThemselves: Boolean = background.disclosureEntity match {
     case Some(DisclosureEntity(Individual, Some(true))) => true
     case _ => false
+  }
+
+  def toXml: String = {
+    val xstream = new XStream(new DomDriver)
+    xstream.toXML(this)
   }
 }
 

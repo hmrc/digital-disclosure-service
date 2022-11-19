@@ -61,10 +61,11 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
       .expects(notification, *, *)
       .returning(response)
 
-  def mockGetSfMark(response: String): CallHandler1[Array[Byte], String] =
+  def mockGetSfMark(xml: String)
+  (response: String): CallHandler1[String, String] =
     (mockMarkCalculator
-      .getSfMark(_: Array[Byte]))
-      .expects(*)
+      .getSfMark(_: String))
+      .expects(xml)
       .returning(response)
 
   def mockSubmit(submissionRequest: SubmissionRequest)(
@@ -101,7 +102,7 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
       )
 
       mockCreatePdf(notification)(Future.successful(PDF(stream, 3)))
-      mockGetSfMark(submissionMark)
+      mockGetSfMark(notification.toXml)(submissionMark)
       mockSubmit(submissionRequest)(Future.successful(SubmissionResponse.Success("123")))
 
       val result = sut.submitNotification(notification).futureValue

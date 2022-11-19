@@ -33,7 +33,7 @@ class DMSSubmissionServiceImpl @Inject()(dmsConnector: DMSSubmissionConnector, p
   def submitNotification(notification: Notification)(implicit messages: Messages, ec: ExecutionContext): Future[SubmissionResponse] = {
 
     pdfService.createPdf(notification: Notification).flatMap { generatedPdf =>
-      val submissionMark = markCalculator.getSfMark(generatedPdf.byteArray)
+      val submissionMark = markCalculator.getSfMark(notification.toXml)
 
       val submissionMetadata = SubmissionMetadata(
         timeOfReceipt = notification.metadata.submissionTime.getOrElse(LocalDateTime.now()),
