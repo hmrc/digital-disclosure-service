@@ -162,6 +162,30 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
       val exception = connector.submit(submissionRequest, pdf).failed.futureValue
       exception mustEqual NotificationStoreConnector.UnexpectedResponseException(400, """{"name": "SomeId"}""")
     }
+
+    "must return a failed future when a different response is returned" in {
+
+      server.stubFor(
+        post(urlMatching(url))
+          .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing("/some/url")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.store").withBody(containing("true")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.source").withBody(containing("DO4SUB")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.timeOfReceipt").withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate))))
+          .withMultipartRequestBody(aMultipart().withName("metadata.formId").withBody(containing("DO4SUB")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.numberOfPages").withBody(containing("3")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.customerId").withBody(containing("customer Id")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.submissionMark").withBody(containing("mark")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.casKey").withBody(containing("")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.classificationType").withBody(containing("EC-CCO-Digital Disclosure Serv")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.businessArea").withBody(containing("EC")))
+          .withMultipartRequestBody(aMultipart().withName("form").withBody(binaryEqualTo(pdf)))
+          .withHeader(AUTHORIZATION, containing("authToken"))
+          .willReturn(aResponse().withBody("""{"name": "SomeId"}""").withStatus(NOT_FOUND))
+      )
+
+      val exception = connector.submit(submissionRequest, pdf).failed.futureValue
+      exception mustEqual NotificationStoreConnector.UnexpectedResponseException(404, """{"name": "SomeId"}""")
+    }
     
   }
 

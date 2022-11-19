@@ -17,19 +17,19 @@
 package services
 
 import play.api.i18n.Messages
-import java.io.ByteArrayOutputStream
 import javax.inject.{Singleton, Inject}
 
 import models.notification.Notification
 import uk.gov.hmrc.digitaldisclosureservice.views.html.NotificationView
 import viewmodels.govuk.SummaryListFluency
 import viewmodels.NotificationViewModel
-
+import models.PDF
+import scala.concurrent.{Future, ExecutionContext}
 
 @Singleton
 class NotificationPdfService @Inject()(view: NotificationView) extends PdfGenerationService with SummaryListFluency {
 
-  def createPdf(notification: Notification)(implicit messages: Messages): ByteArrayOutputStream = {
+  def createPdf(notification: Notification)(implicit messages: Messages, ec: ExecutionContext): Future[PDF] = {
 
     val viewModel = NotificationViewModel(notification)
 

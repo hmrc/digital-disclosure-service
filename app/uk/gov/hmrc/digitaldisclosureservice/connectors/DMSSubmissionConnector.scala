@@ -90,7 +90,7 @@ class DMSSubmissionConnectorImpl @Inject() (
 object DMSSubmissionConnector {
 
   final case class UnexpectedResponseException(status: Int, body: String) extends Exception with NoStackTrace {
-    override def getMessage: String = s"Unexpected response from DDS Store, status: $status, body: $body"
+    override def getMessage: String = s"Unexpected response from DMS Submission service, status: $status, body: $body"
   }
   
 }

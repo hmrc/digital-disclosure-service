@@ -25,34 +25,34 @@ import services.NotificationPdfService
 import models.submission.{SubmissionMetadata, SubmissionRequest, SubmissionResponse}
 import java.time.LocalDateTime
 import utils.MarkCalculator
-import scala.concurrent.Future
+import scala.concurrent.{Future, ExecutionContext}
 
 @Singleton
 class DMSSubmissionServiceImpl @Inject()(dmsConnector: DMSSubmissionConnector, pdfService: NotificationPdfService, markCalculator: MarkCalculator) extends DMSSubmissionService {
 
-  def submitNotification(notification: Notification)(implicit messages: Messages): Future[SubmissionResponse] = {
+  def submitNotification(notification: Notification)(implicit messages: Messages, ec: ExecutionContext): Future[SubmissionResponse] = {
 
-    val pdf: Array[Byte] = pdfService.createPdf(notification: Notification).toByteArray
-    val submissionMark = markCalculator.getSfMark(pdf)
+    pdfService.createPdf(notification: Notification).flatMap { generatedPdf =>
+      val submissionMark = markCalculator.getSfMark(generatedPdf.byteArray)
 
-    val submissionMetadata = SubmissionMetadata(
-      timeOfReceipt = notification.metadata.submissionTime.getOrElse(LocalDateTime.now()),
-      //TODO number of pages
-      numberOfPages = 3, // Something to be determined in pdfService
-      customerId = notification.customerId, // NINO or SAUTR/CTUTR/ARN
-      submissionMark = submissionMark
-    )
-    val submissionRequest = SubmissionRequest(
-      id = None,
-      metadata = submissionMetadata
-    )
+      val submissionMetadata = SubmissionMetadata(
+        timeOfReceipt = notification.metadata.submissionTime.getOrElse(LocalDateTime.now()),
+        numberOfPages = generatedPdf.pageCount,
+        customerId = notification.customerId, // NINO or SAUTR/CTUTR/ARN
+        submissionMark = submissionMark
+      )
+      val submissionRequest = SubmissionRequest(
+        id = None,
+        metadata = submissionMetadata
+      )
 
-    dmsConnector.submit(submissionRequest, pdf)
+      dmsConnector.submit(submissionRequest, generatedPdf.byteArray)
+    }
   }
 
 }
 
 @ImplementedBy(classOf[DMSSubmissionServiceImpl])
 trait DMSSubmissionService {
-  def submitNotification(notification: Notification)(implicit messages: Messages): Future[SubmissionResponse]
+  def submitNotification(notification: Notification)(implicit messages: Messages, ec: ExecutionContext): Future[SubmissionResponse]
 }

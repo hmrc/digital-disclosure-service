@@ -51,7 +51,7 @@ class NotificationSubmissionControllerSpec extends AnyWordSpec with Matchers wit
   
   "POST /notification/submit" should {
     "return 202 where the service returns a Success" in {
-      when(mockSubmissionService.submitNotification(refEq(testNotification))(any())) thenReturn Future.successful(SubmissionResponse.Success("id"))
+      when(mockSubmissionService.submitNotification(refEq(testNotification))(any(), any())) thenReturn Future.successful(SubmissionResponse.Success("id"))
 
       val fakeRequest = FakeRequest(method = "GET", uri = "/notification", headers = FakeHeaders(Seq.empty), body = Json.toJson(testNotification))
       val result = controller.submit()(fakeRequest)
@@ -63,7 +63,7 @@ class NotificationSubmissionControllerSpec extends AnyWordSpec with Matchers wit
 
   "POST /notification/submit" should {
     "return 500 where the service returns a Failure" in {
-      when(mockSubmissionService.submitNotification(refEq(testNotification))(any())) thenReturn Future.successful(SubmissionResponse.Failure(Seq("error1", "error2")))
+      when(mockSubmissionService.submitNotification(refEq(testNotification))(any(), any())) thenReturn Future.successful(SubmissionResponse.Failure(Seq("error1", "error2")))
 
       val fakeRequest = FakeRequest(method = "GET", uri = "/notification", headers = FakeHeaders(Seq.empty), body = Json.toJson(testNotification))
       val result = controller.submit()(fakeRequest)

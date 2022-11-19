@@ -22,13 +22,19 @@ import com.openhtmltopdf.pdfboxout.PdfRendererBuilder
 import com.openhtmltopdf.svgsupport.BatikSVGDrawer
 
 import org.apache.commons.io.IOUtils
+import services.PageNumberListener
+import models.PDF
+import scala.concurrent.{ExecutionContext, Future}
 
 trait PdfGenerationService { 
 
-  def buildPdf(html: String): ByteArrayOutputStream = {
+  def buildPdf(html: String)(implicit ec: ExecutionContext): Future[PDF] = {
+
+    val listener = new PageNumberListener 
+
     val os = new ByteArrayOutputStream()
     val builder = new PdfRendererBuilder
-    builder
+    val renderer = builder
       .useColorProfile(IOUtils.toByteArray(getClass.getResourceAsStream("/resources/sRGB-Color-Space-Profile.icm")))
       .useFont(new File(getClass.getResource("/resources/ArialMT.ttf").toURI), "arial")
       .usePdfUaAccessbility(true)
@@ -37,8 +43,14 @@ trait PdfGenerationService {
       .useFastMode
       .useSVGDrawer(new BatikSVGDrawer())
       .toStream(os)
-      .run()
-    os
+      .buildPdfRenderer()
+    renderer.setListener(listener)
+    renderer.createPDF()
+
+    listener.countFuture.map( count =>
+      PDF(os, count)
+    )
+    
   }
 
 }
