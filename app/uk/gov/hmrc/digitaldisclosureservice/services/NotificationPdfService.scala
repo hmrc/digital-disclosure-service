@@ -24,12 +24,11 @@ import uk.gov.hmrc.digitaldisclosureservice.views.html.NotificationView
 import viewmodels.govuk.SummaryListFluency
 import viewmodels.NotificationViewModel
 import models.PDF
-import scala.concurrent.{Future, ExecutionContext}
 
 @Singleton
 class NotificationPdfService @Inject()(view: NotificationView) extends PdfGenerationService with SummaryListFluency {
 
-  def createPdf(notification: Notification)(implicit messages: Messages, ec: ExecutionContext): Future[PDF] = {
+  def createPdf(notification: Notification)(implicit messages: Messages): PDF = {
 
     val viewModel = NotificationViewModel(notification)
 

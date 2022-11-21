@@ -32,22 +32,21 @@ class DMSSubmissionServiceImpl @Inject()(dmsConnector: DMSSubmissionConnector, p
 
   def submitNotification(notification: Notification)(implicit messages: Messages, ec: ExecutionContext): Future[SubmissionResponse] = {
 
-    pdfService.createPdf(notification: Notification).flatMap { generatedPdf =>
-      val submissionMark = markCalculator.getSfMark(notification.toXml)
+    val generatedPdf = pdfService.createPdf(notification: Notification)
+    val submissionMark = markCalculator.getSfMark(notification.toXml)
 
-      val submissionMetadata = SubmissionMetadata(
-        timeOfReceipt = notification.metadata.submissionTime.getOrElse(LocalDateTime.now()),
-        numberOfPages = generatedPdf.pageCount,
-        customerId = notification.customerId, // NINO or SAUTR/CTUTR/ARN
-        submissionMark = submissionMark
-      )
-      val submissionRequest = SubmissionRequest(
-        id = None,
-        metadata = submissionMetadata
-      )
+    val submissionMetadata = SubmissionMetadata(
+      timeOfReceipt = notification.metadata.submissionTime.getOrElse(LocalDateTime.now()),
+      customerId = notification.customerId,
+      submissionMark = submissionMark
+    )
+    val submissionRequest = SubmissionRequest(
+      id = None,
+      metadata = submissionMetadata
+    )
 
-      dmsConnector.submit(submissionRequest, generatedPdf.byteArray)
-    }
+    dmsConnector.submit(submissionRequest, generatedPdf.byteArray)
+  
   }
 
 }

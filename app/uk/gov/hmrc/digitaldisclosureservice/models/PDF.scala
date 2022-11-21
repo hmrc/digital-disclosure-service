@@ -18,6 +18,6 @@ package models
 
 import java.io.ByteArrayOutputStream
 
-final case class PDF(byteStream: ByteArrayOutputStream, pageCount: Int) {
+final case class PDF(byteStream: ByteArrayOutputStream) {
   def byteArray = byteStream.toByteArray
 }

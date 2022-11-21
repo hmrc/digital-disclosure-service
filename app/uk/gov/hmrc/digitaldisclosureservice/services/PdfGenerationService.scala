@@ -22,15 +22,11 @@ import com.openhtmltopdf.pdfboxout.PdfRendererBuilder
 import com.openhtmltopdf.svgsupport.BatikSVGDrawer
 
 import org.apache.commons.io.IOUtils
-import services.PageNumberListener
 import models.PDF
-import scala.concurrent.{ExecutionContext, Future}
 
 trait PdfGenerationService { 
 
-  def buildPdf(html: String)(implicit ec: ExecutionContext): Future[PDF] = {
-
-    val listener = new PageNumberListener 
+  def buildPdf(html: String): PDF = {
 
     val os = new ByteArrayOutputStream()
     val builder = new PdfRendererBuilder
@@ -44,12 +40,9 @@ trait PdfGenerationService {
       .useSVGDrawer(new BatikSVGDrawer())
       .toStream(os)
       .buildPdfRenderer()
-    renderer.setListener(listener)
     renderer.createPDF()
 
-    listener.countFuture.map( count =>
-      PDF(os, count)
-    )
+    PDF(os)
     
   }
 

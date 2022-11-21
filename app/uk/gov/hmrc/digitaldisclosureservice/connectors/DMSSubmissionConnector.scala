@@ -29,7 +29,7 @@ import play.api.mvc.MultipartFormData.{FilePart, DataPart, Part}
 import akka.stream.scaladsl.Source
 import java.time.format.DateTimeFormatter
 import akka.util.ByteString
-import play.mvc.Http.HeaderNames.AUTHORIZATION
+import play.mvc.Http.HeaderNames.{USER_AGENT, AUTHORIZATION}
 import controllers.routes
 
 @Singleton
@@ -40,6 +40,7 @@ class DMSSubmissionConnectorImpl @Inject() (
 
   private val service: Service = configuration.get[Service]("microservice.services.dms-submission")
   private val clientAuthToken = configuration.get[String]("internal-auth.token")
+  private val appName: String = configuration.get[String]("appName")
 
   private val selfUrl = configuration.get[String]("self.url")
   private val callbackControllerUrl = routes.SubmissionCallbackController.callback.url
@@ -50,7 +51,7 @@ class DMSSubmissionConnectorImpl @Inject() (
     val multipartFormData = constructMultipartFormData(submissionRequest, pdf)
 
     wsClient.url(s"${service.baseUrl}/dms-submission/submit")
-      .withHttpHeaders(AUTHORIZATION -> clientAuthToken)
+      .withHttpHeaders(AUTHORIZATION -> clientAuthToken, USER_AGENT -> appName)
       .post(multipartFormData)
       .flatMap { response =>
         response.status match {
@@ -75,7 +76,6 @@ class DMSSubmissionConnectorImpl @Inject() (
       DataPart("metadata.source", submissionRequest.metadata.formId),
       DataPart("metadata.timeOfReceipt", DateTimeFormatter.ISO_DATE_TIME.format(submissionRequest.metadata.timeOfReceipt)),
       DataPart("metadata.formId", submissionRequest.metadata.formId),
-      DataPart("metadata.numberOfPages", submissionRequest.metadata.numberOfPages.toString),
       DataPart("metadata.customerId", submissionRequest.metadata.customerId),
       DataPart("metadata.submissionMark", submissionRequest.metadata.submissionMark),
       DataPart("metadata.casKey", submissionRequest.metadata.casKey),

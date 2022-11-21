@@ -20,8 +20,8 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.concurrent.ScalaFutures
-import scala.concurrent.{Future, ExecutionContext}
-import org.scalamock.handlers.{CallHandler1, CallHandler2, CallHandler3}
+import scala.concurrent.Future
+import org.scalamock.handlers.{CallHandler1, CallHandler2}
 import java.time.{Instant, LocalDateTime}
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.test.FakeRequest
@@ -54,11 +54,11 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
   val sut = new DMSSubmissionServiceImpl(mockDmsConnector, mockPdfService, mockMarkCalculator)
 
   def mockCreatePdf(notification: Notification)(
-    response: Future[PDF]
-  ): CallHandler3[Notification, Messages, ExecutionContext, Future[PDF]] =
+    response: PDF
+  ): CallHandler2[Notification, Messages, PDF] =
     (mockPdfService
-      .createPdf(_: Notification)(_: Messages, _: ExecutionContext))
-      .expects(notification, *, *)
+      .createPdf(_: Notification)(_: Messages))
+      .expects(notification, *)
       .returning(response)
 
   def mockGetSfMark(xml: String)
@@ -92,7 +92,6 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
 
       val submissionMetadata = SubmissionMetadata(
         timeOfReceipt = submissionTime,
-        numberOfPages = 3,
         customerId = "customerId123",
         submissionMark = submissionMark
       )
@@ -101,7 +100,38 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
         metadata = submissionMetadata
       )
 
-      mockCreatePdf(notification)(Future.successful(PDF(stream, 3)))
+      mockCreatePdf(notification)(PDF(stream))
+      mockGetSfMark(notification.toXml)(submissionMark)
+      mockSubmit(submissionRequest)(Future.successful(SubmissionResponse.Success("123")))
+
+      val result = sut.submitNotification(notification).futureValue
+      result shouldEqual SubmissionResponse.Success("123")
+    }
+
+    "default the timestamp where it's not populated" in {
+      val stream = new ByteArrayOutputStream()
+      val submissionTime = LocalDateTime.now()
+      val notification = Notification(  
+        userId = "userId",
+        notificationId = "notificationId",
+        lastUpdated = Instant.now,
+        metadata = Metadata(submissionTime = Some(submissionTime)),
+        background = Background(),
+        aboutYou = AboutYou(),
+        customerId = "customerId123")
+      val submissionMark = "mark"
+
+      val submissionMetadata = SubmissionMetadata(
+        timeOfReceipt = None,
+        customerId = "customerId123",
+        submissionMark = submissionMark
+      )
+      val submissionRequest = SubmissionRequest(
+        id = None,
+        metadata = submissionMetadata
+      )
+
+      mockCreatePdf(notification)(PDF(stream))
       mockGetSfMark(notification.toXml)(submissionMark)
       mockSubmit(submissionRequest)(Future.successful(SubmissionResponse.Success("123")))
 

@@ -25,7 +25,6 @@ import org.apache.pdfbox.text.PDFTextStripper
 import models.notification._
 import models.address._
 import models.address.Address.AddressOps
-import scala.concurrent.ExecutionContext.Implicits.global
 import org.scalatest.concurrent.ScalaFutures
 
 trait NotificationPdfServiceHelper extends AnyWordSpecLike
@@ -149,7 +148,7 @@ trait NotificationPdfServiceHelper extends AnyWordSpecLike
 
   def stripPDFToString(notification: Notification): String = {
     val pdfStripper = new PDFTextStripper()
-    val response = testPdfService.createPdf(notification).futureValue
+    val response = testPdfService.createPdf(notification)
     val doc = PDDocument.load(response.byteArray)
     val pdfString = pdfStripper.getText(doc)
     doc.close()

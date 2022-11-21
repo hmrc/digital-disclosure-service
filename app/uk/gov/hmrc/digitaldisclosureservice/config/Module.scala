@@ -14,14 +14,22 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.digitaldisclosureservice.config
+package config
 
-import com.google.inject.AbstractModule
+import play.api.inject.Binding
 
-class Module extends AbstractModule {
+import play.api.{Configuration, Environment}
 
-  override def configure(): Unit = {
+class Module extends play.api.inject.Module  {
 
-    bind(classOf[AppConfig]).asEagerSingleton()
+  override def bindings(environment: Environment, configuration: Configuration): Seq[Binding[_]] = {
+
+    val authTokenInitialiserBindings: Seq[Binding[_]] =
+      if (configuration.get[Boolean]("create-internal-auth-token-on-start")) {
+        Seq(bind[InternalAuthTokenInitialiser].to[InternalAuthTokenInitialiserImpl].eagerly())
+      } else Seq(bind[InternalAuthTokenInitialiser].to[NoOpInternalAuthTokenInitialiser].eagerly())
+
+    Seq(bind[AppConfig].toSelf.eagerly()) ++ authTokenInitialiserBindings
   }
+
 }

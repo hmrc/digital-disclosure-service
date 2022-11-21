@@ -21,7 +21,6 @@ import java.time.LocalDateTime
 
 final case class SubmissionMetadata(
   timeOfReceipt: LocalDateTime,
-  numberOfPages: Int,
   customerId: String,
   submissionMark: String
 ) {

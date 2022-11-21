@@ -14,20 +14,7 @@
  * limitations under the License.
  */
 
-package services
+package models
 
-import scala.concurrent.Promise
-import com.openhtmltopdf.pdfboxout.{PDFCreationListener, PdfBoxRenderer}
-
-class PageNumberListener extends PDFCreationListener {
-
-  val countP = Promise[Int]()
-  val countFuture = countP.future
-
-  def preWrite(renderer: PdfBoxRenderer, pageCount: Int): Unit = {
-    countP.success(pageCount)
-  }
-  def onClose(renderer: PdfBoxRenderer): Unit = ()
-  def preOpen(renderer: PdfBoxRenderer): Unit = ()
-
-}
+sealed abstract class Done
+object Done extends Done
