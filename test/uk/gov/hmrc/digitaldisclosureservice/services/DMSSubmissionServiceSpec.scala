@@ -76,6 +76,13 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
       .expects(submissionRequest, *)
       .returning(response)
 
+  def mockSubmitAny(response: Future[SubmissionResponse]): CallHandler2[SubmissionRequest, Array[Byte], Future[SubmissionResponse]] =
+    (mockDmsConnector
+      .submit(_: SubmissionRequest, _: Array[Byte]))
+      .expects(*, *)
+      .returning(response)
+
+
   "submitNotification" should {
     "create the pdf, generate a Mark, populate a request and send it to the connector" in {
       val stream = new ByteArrayOutputStream()
@@ -103,6 +110,26 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
       mockCreatePdf(notification)(PDF(stream))
       mockGetSfMark(notification.toXml)(submissionMark)
       mockSubmit(submissionRequest)(Future.successful(SubmissionResponse.Success("123")))
+
+      val result = sut.submitNotification(notification).futureValue
+      result shouldEqual SubmissionResponse.Success("123")
+    }
+
+    "succeed when the time isnt supplied" in {
+      val stream = new ByteArrayOutputStream()
+      val notification = Notification(  
+        userId = "userId",
+        notificationId = "notificationId",
+        lastUpdated = Instant.now,
+        metadata = Metadata(submissionTime = None),
+        background = Background(),
+        aboutYou = AboutYou(),
+        customerId = "customerId123")
+      val submissionMark = "mark"
+
+      mockCreatePdf(notification)(PDF(stream))
+      mockGetSfMark(notification.toXml)(submissionMark)
+      mockSubmitAny(Future.successful(SubmissionResponse.Success("123")))
 
       val result = sut.submitNotification(notification).futureValue
       result shouldEqual SubmissionResponse.Success("123")
