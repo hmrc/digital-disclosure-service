@@ -108,36 +108,6 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
       result shouldEqual SubmissionResponse.Success("123")
     }
 
-    "default the timestamp where it's not populated" in {
-      val stream = new ByteArrayOutputStream()
-      val submissionTime = LocalDateTime.now()
-      val notification = Notification(  
-        userId = "userId",
-        notificationId = "notificationId",
-        lastUpdated = Instant.now,
-        metadata = Metadata(submissionTime = Some(submissionTime)),
-        background = Background(),
-        aboutYou = AboutYou(),
-        customerId = "customerId123")
-      val submissionMark = "mark"
-
-      val submissionMetadata = SubmissionMetadata(
-        timeOfReceipt = None,
-        customerId = "customerId123",
-        submissionMark = submissionMark
-      )
-      val submissionRequest = SubmissionRequest(
-        id = None,
-        metadata = submissionMetadata
-      )
-
-      mockCreatePdf(notification)(PDF(stream))
-      mockGetSfMark(notification.toXml)(submissionMark)
-      mockSubmit(submissionRequest)(Future.successful(SubmissionResponse.Success("123")))
-
-      val result = sut.submitNotification(notification).futureValue
-      result shouldEqual SubmissionResponse.Success("123")
-    }
   }
 
 }
