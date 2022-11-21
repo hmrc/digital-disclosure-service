@@ -19,20 +19,20 @@ package services
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
 import org.scalatest.OptionValues
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.test.FakeRequest
 import models._
 import models.notification._
 import uk.gov.hmrc.digitaldisclosureservice.views.html.NotificationView
 import java.time.Instant
+import utils.BaseSpec
 
 import java.time.LocalDate
 
 class NotificationPdfServiceSpec extends AnyWordSpecLike
   with Matchers
   with OptionValues
-  with GuiceOneAppPerSuite
+  with BaseSpec
   with NotificationPdfServiceHelper {
 
   implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())

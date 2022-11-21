@@ -36,7 +36,8 @@ class HealthEndpointIntegrationSpec
 
   override def fakeApplication(): Application =
     GuiceApplicationBuilder()
-      .configure("metrics.enabled" -> false)
+      .configure("metrics.enabled" -> false,
+        "create-internal-auth-token-on-start" -> false)
       .build()
 
   "service health endpoint" should {

@@ -47,7 +47,7 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
     bind[DMSSubmissionConnector].toInstance(mockDmsConnector),
     bind[NotificationPdfService].toInstance(mockPdfService),
     bind[MarkCalculator].toInstance(mockMarkCalculator)
-  ).build()
+  ).configure("create-internal-auth-token-on-start" -> false).build()
 
   implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
 

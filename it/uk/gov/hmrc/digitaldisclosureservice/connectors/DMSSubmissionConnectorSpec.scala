@@ -39,7 +39,8 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
         "microservice.services.dms-submission.port" -> server.port(),
         "microservice.services.dms-submission.host" -> "localhost",
         "microservice.services.dms-submission.protocol" -> "http",
-        "internal-auth.token" -> "authToken"
+        "internal-auth.token" -> "authToken",
+        "create-internal-auth-token-on-start" -> false
       )
       .build()
 
