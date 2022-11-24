@@ -19,7 +19,6 @@ package views
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import play.api.i18n.{MessagesApi, Messages}
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.twirl.api.Html
 import play.api.test.FakeRequest
 import uk.gov.hmrc.digitaldisclosureservice.views.html.summarySection
@@ -27,8 +26,9 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import viewmodels.govuk.SummaryListFluency
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist._
+import utils.BaseSpec
 
-class SummarySectionSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with SummaryListFluency {
+class SummarySectionSpec extends AnyWordSpec with Matchers with BaseSpec with SummaryListFluency {
 
   implicit protected def htmlBodyOf(html: Html): Document = Jsoup.parse(html.toString())
 

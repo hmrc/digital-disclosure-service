@@ -19,7 +19,6 @@ package views
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import play.api.i18n.{MessagesApi, Messages}
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import models.notification._
 import viewmodels._
 import play.twirl.api.Html
@@ -28,8 +27,9 @@ import uk.gov.hmrc.digitaldisclosureservice.views.html.NotificationView
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.time.Instant
+import utils.BaseSpec
 
-class NotificationViewSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite {
+class NotificationViewSpec extends AnyWordSpec with Matchers with BaseSpec {
 
   implicit protected def htmlBodyOf(html: Html): Document = Jsoup.parse(html.toString())
 

@@ -14,13 +14,23 @@
  * limitations under the License.
  */
 
-package config
+package models.submission
 
-import javax.inject.{Inject, Singleton}
-import play.api.Configuration
+import play.api.libs.json.{Json, OFormat}
 
-@Singleton
-class AppConfig @Inject()(config: Configuration) {
+sealed trait SubmissionResponse extends Product with Serializable
 
-  val appName: String = config.get[String]("appName")
+object SubmissionResponse {
+
+  final case class Success(id: String) extends SubmissionResponse
+
+  object Success {
+    implicit lazy val format: OFormat[Success] = Json.format[Success]
+  }
+
+  final case class Failure(errors: Seq[String]) extends SubmissionResponse
+
+  object Failure {
+    implicit lazy val format: OFormat[Failure] = Json.format[Failure]
+  }
 }

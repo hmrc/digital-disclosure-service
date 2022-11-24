@@ -14,13 +14,20 @@
  * limitations under the License.
  */
 
-package config
+package models.callback
 
-import javax.inject.{Inject, Singleton}
-import play.api.Configuration
+import play.api.libs.json.{Json, OFormat}
+import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats
 
-@Singleton
-class AppConfig @Inject()(config: Configuration) {
+import java.time.Instant
 
-  val appName: String = config.get[String]("appName")
+final case class ObjectSummary(
+  location: String,
+  contentLength: Long,
+  contentMd5: String,
+  lastModified: Instant
+)
+
+object ObjectSummary extends MongoJavatimeFormats.Implicits {
+  implicit lazy val format: OFormat[ObjectSummary] = Json.format
 }

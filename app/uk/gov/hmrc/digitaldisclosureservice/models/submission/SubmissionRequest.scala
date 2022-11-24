@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-package config
+package models.submission
 
-import javax.inject.{Inject, Singleton}
-import play.api.Configuration
+import play.api.libs.json.{Format, Json}
 
-@Singleton
-class AppConfig @Inject()(config: Configuration) {
+final case class SubmissionRequest(
+  id: Option[String],
+  metadata: SubmissionMetadata
+) 
 
-  val appName: String = config.get[String]("appName")
+object SubmissionRequest {
+  implicit lazy val formats: Format[SubmissionRequest] = Json.format
 }

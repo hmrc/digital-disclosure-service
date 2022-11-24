@@ -25,10 +25,12 @@ import org.apache.pdfbox.text.PDFTextStripper
 import models.notification._
 import models.address._
 import models.address.Address.AddressOps
+import org.scalatest.concurrent.ScalaFutures
 
 trait NotificationPdfServiceHelper extends AnyWordSpecLike
   with Matchers
-  with OptionValues {
+  with OptionValues
+  with ScalaFutures {
   
   def testPdfService: NotificationPdfService
 
@@ -146,11 +148,12 @@ trait NotificationPdfServiceHelper extends AnyWordSpecLike
 
   def stripPDFToString(notification: Notification): String = {
     val pdfStripper = new PDFTextStripper()
-    val doc = PDDocument.load(testPdfService.createPdf(notification).toByteArray)
+    val response = testPdfService.createPdf(notification)
+    val doc = PDDocument.load(response.byteArray)
     val pdfString = pdfStripper.getText(doc)
     doc.close()
 
-    pdfString
+    pdfString.filter(_ >= ' ')
   }
 
 }

@@ -14,13 +14,24 @@
  * limitations under the License.
  */
 
-package config
+package controllers
 
+import play.api.mvc.{Action, ControllerComponents}
 import javax.inject.{Inject, Singleton}
-import play.api.Configuration
+import scala.concurrent.Future
+import play.api.libs.json.JsValue
+import play.api.i18n.I18nSupport
+import models.callback.CallbackRequest
 
-@Singleton
-class AppConfig @Inject()(config: Configuration) {
+@Singleton()
+class SubmissionCallbackController @Inject()(
+    cc: ControllerComponents
+  ) extends BaseController(cc) with I18nSupport {
 
-  val appName: String = config.get[String]("appName")
+  def callback: Action[JsValue] = Action.async(parse.json) { implicit request =>
+    withValidJson[CallbackRequest]{ _ =>
+      Future.successful(Ok(""))
+    }
+  }
+
 }

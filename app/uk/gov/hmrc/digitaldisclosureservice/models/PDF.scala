@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-package config
+package models
 
-import javax.inject.{Inject, Singleton}
-import play.api.Configuration
+import java.io.ByteArrayOutputStream
 
-@Singleton
-class AppConfig @Inject()(config: Configuration) {
-
-  val appName: String = config.get[String]("appName")
+final case class PDF(byteStream: ByteArrayOutputStream) {
+  def byteArray = byteStream.toByteArray
 }

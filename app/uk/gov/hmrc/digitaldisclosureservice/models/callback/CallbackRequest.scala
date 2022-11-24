@@ -14,13 +14,17 @@
  * limitations under the License.
  */
 
-package config
+package models.callback
 
-import javax.inject.{Inject, Singleton}
-import play.api.Configuration
+import play.api.libs.json.{Json, OFormat}
 
-@Singleton
-class AppConfig @Inject()(config: Configuration) {
+final case class CallbackRequest(
+  id: String,
+  status: SubmissionItemStatus,
+  objectSummary: ObjectSummary,
+  failureReason: Option[String]
+)
 
-  val appName: String = config.get[String]("appName")
+object CallbackRequest {
+  implicit lazy val format: OFormat[CallbackRequest] = Json.format
 }

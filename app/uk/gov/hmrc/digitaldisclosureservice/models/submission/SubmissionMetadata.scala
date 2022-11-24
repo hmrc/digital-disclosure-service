@@ -14,13 +14,23 @@
  * limitations under the License.
  */
 
-package config
+package models.submission
 
-import javax.inject.{Inject, Singleton}
-import play.api.Configuration
+import play.api.libs.json.{Json, OFormat}
+import java.time.LocalDateTime
 
-@Singleton
-class AppConfig @Inject()(config: Configuration) {
+final case class SubmissionMetadata(
+  timeOfReceipt: LocalDateTime,
+  customerId: String,
+  submissionMark: String
+) {
+  val store = true
+  val formId = "DO4SUB"
+  val businessArea = "EC"
+  val classificationType = "EC-CCO-Digital Disclosure Serv"
+  val casKey = ""
+}
 
-  val appName: String = config.get[String]("appName")
+object SubmissionMetadata {
+  implicit lazy val format: OFormat[SubmissionMetadata] = Json.format
 }
