@@ -153,7 +153,7 @@ trait NotificationPdfServiceHelper extends AnyWordSpecLike
     val pdfString = pdfStripper.getText(doc)
     doc.close()
 
-    pdfString
+    pdfString.filter(_ >= ' ')
   }
 
 }

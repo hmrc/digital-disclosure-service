@@ -24,46 +24,50 @@
     h1 {font-size: 36pt; letter-spacing: 0.04em;}
     h2 {font-size: 24pt;}
     h3 {font-size: 1em;}
+    div {display: block;}
     .govuk-summary-list {
         font-family: GDS Transport,arial,sans-serif;
         font-weight: 400;
         font-size: 16px;
         font-size: 1rem;
-        line-height: 1.25;
         color: #0b0c0c;
         margin: 0 0 20px;
-    }
-    .govuk-summary-list {
-        font-family: GDS Transport,arial,sans-serif;
-        font-weight: 400;
-        font-size: 16px;
-        font-size: 1rem;
-        line-height: 1.25;
-        color: #0b0c0c;
-        margin: 0 0 20px;
+        display: table;
+        table-layout: fixed;
+        border-collapse: collapse;
+        padding-bottom: 20px;
     }
     .govuk-summary-list__row {
         border-bottom: 1px solid #b1b4b6;
+        border-collapse: collapse;
+        display: table-row;
     }
     .govuk-summary-list__key {
-        margin-bottom: 5px;
+        display: table-cell;
+        border-collapse: collapse;
+        width: 300px;
         font-weight: 700;
-        word-wrap: break-word;
-    }
-    dl {
-        display: block;
-    }
-    dt {
-        display: block;
+        margin-bottom: 5px;
+        padding-top: 10px;
+        padding-right: 20px;
+        padding-bottom: 10px;
+        padding-left: 0;
+        vertical-align:middle;
+        border-bottom: 1px solid #b1b4b6;
     }
     .govuk-summary-list__value {
+        display: table-cell;
+        border-collapse: collapse;
+        width: 300px;
         margin-bottom: 15px;
-    }
-    dd {
-        display: block;
+        margin-left: 300px;
+        padding-top: 10px;
+        padding-right: 20px;
+        padding-bottom: 10px;
+        padding-left: 20px;
+        vertical-align:middle;
+        float: inline-start; 
+        border-bottom: 1px solid #b1b4b6;
     }
 
-    div {
-        display: block;
-    }
 </style>

@@ -41,7 +41,7 @@ trait PdfGenerationService {
       .toStream(os)
       .buildPdfRenderer()
     renderer.createPDF()
-
+    renderer.close()
     PDF(os)
     
   }

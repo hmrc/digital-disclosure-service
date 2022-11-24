@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-// package connectors
+package connectors
 
-// import org.scalatest.concurrent.ScalaFutures
-// import org.scalatest.freespec.AnyFreeSpec
-// import org.scalatest.matchers.must.Matchers
-// import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-// import models.notification._
-// import models._
-// import models.address._
-// import java.time.{LocalDate, LocalDateTime, Instant}
-// import services.DMSSubmissionService
-// import play.api.test.{FakeRequest, Injecting}
-// import play.api.i18n.{Messages, MessagesApi}
-// import scala.concurrent.ExecutionContext.Implicits.global
-// import models.submission.SubmissionResponse
+import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.must.Matchers
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import models.notification._
+import models._
+import models.address._
+import java.time.{LocalDate, Instant}
+import services.DMSSubmissionService
+import play.api.test.{FakeRequest, Injecting}
+import play.api.i18n.{Messages, MessagesApi}
+import scala.concurrent.ExecutionContext.Implicits.global
+import models.submission.SubmissionResponse
 
-// class TestSpec extends AnyFreeSpec with Matchers with ScalaFutures with GuiceOneAppPerSuite with Injecting {
+class TestSpec extends AnyFreeSpec with Matchers with ScalaFutures with GuiceOneAppPerSuite with Injecting {
 
   // "submit" - {
 
@@ -55,7 +55,7 @@
   //       val aboutTheIndividual = AboutTheIndividual(  
   //         fullName = Some("Some individual's name"),
   //         dateOfBirth = Some(LocalDate.now()),
-  //         mainOccupation = Some("Some individual's occupation"),
+  //         mainOccupation = Some("Some individual's occupation xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx "),
   //         doTheyHaveANino = Some(YesNoOrUnsure.No),
   //         registeredForVAT = Some(YesNoOrUnsure.Yes),
   //         vatRegNumber = Some("Some individual's VAT number"),
@@ -70,4 +70,4 @@
     
   // }
 
-// }
+}
