@@ -37,7 +37,7 @@ class DMSSubmissionServiceImpl @Inject()(dmsConnector: DMSSubmissionConnector, p
 
     val submissionMetadata = SubmissionMetadata(
       timeOfReceipt = notification.metadata.submissionTime.getOrElse(LocalDateTime.now()),
-      customerId = notification.customerId,
+      customerId = notification.customerId.map(_.id).getOrElse(""),
       submissionMark = submissionMark
     )
     val submissionRequest = SubmissionRequest(

@@ -30,6 +30,7 @@ final case class NotificationViewModel(
   aboutTheCompanyList: Option[SummaryList],
   aboutTheTrustList: Option[SummaryList],
   aboutTheLLPList: Option[SummaryList],
+  aboutTheEstateList: Option[SummaryList],
   aboutYouList: SummaryList
 )
 
@@ -38,6 +39,7 @@ object NotificationViewModel extends SummaryListFluency {
   val backgroundKey = "notification.background"
   val individualKey = "notification.aboutTheIndividual"
   val aboutYouKey = "notification.aboutYou"
+  val estateKey = "notification.aboutTheEstate"
 
   def apply(notification: Notification)(implicit messages: Messages): NotificationViewModel = {
 
@@ -48,6 +50,7 @@ object NotificationViewModel extends SummaryListFluency {
       notification.aboutTheCompany.map(aboutTheCompanyList),
       notification.aboutTheTrust.map(aboutTheTrustList),
       notification.aboutTheLLP.map(aboutTheLLPList),
+      notification.aboutTheEstate.map(aboutTheEstateList),
       aboutYouList(notification.aboutYou, notification.disclosingAboutThemselves)
     )
 
@@ -108,6 +111,21 @@ object NotificationViewModel extends SummaryListFluency {
       SummaryListRowViewModel("notification.aboutTheLLP.name", ValueViewModel(aboutTheLLP.name)),
       SummaryListRowViewModel("notification.aboutTheLLP.address", ValueViewModel(Text(aboutTheLLP.address.map(_.toSeparatedString).getOrElse("-"))))
     )
+  )
+
+  def aboutTheEstateList(aboutTheEstate: AboutTheEstate)(implicit messages: Messages): SummaryList = SummaryListViewModel(
+    rows = Seq(
+      Some(SummaryListRowViewModel(s"$estateKey.fullName", ValueViewModel(aboutTheEstate.fullName))),
+      Some(SummaryListRowViewModel(s"$estateKey.dateOfBirth", ValueViewModel(aboutTheEstate.dateOfBirth.map(_.toString)))),
+      Some(SummaryListRowViewModel(s"$estateKey.mainOccupation", ValueViewModel(aboutTheEstate.mainOccupation))),
+      Some(SummaryListRowViewModel(s"$estateKey.doTheyHaveANino", ValueViewModel(aboutTheEstate.doTheyHaveANino))),
+      aboutTheEstate.nino.map(_ => SummaryListRowViewModel(s"$estateKey.nino", ValueViewModel(aboutTheEstate.nino))),
+      Some(SummaryListRowViewModel(s"$estateKey.registeredForVAT", ValueViewModel(aboutTheEstate.registeredForVAT))),
+      aboutTheEstate.vatRegNumber.map(_ => SummaryListRowViewModel(s"$estateKey.vatRegNumber", ValueViewModel(aboutTheEstate.vatRegNumber))),
+      Some(SummaryListRowViewModel(s"$estateKey.registeredForSA", ValueViewModel(aboutTheEstate.registeredForSA))),
+      aboutTheEstate.sautr.map(_ => SummaryListRowViewModel(s"$estateKey.sautr", ValueViewModel(aboutTheEstate.sautr))),
+      Some(SummaryListRowViewModel(s"$estateKey.address", ValueViewModel(Text(aboutTheEstate.address.map(_.toSeparatedString).getOrElse("-")))))
+    ).flatten
   )
 
   def aboutYouList(aboutYou: AboutYou, disclosingAboutThemselves: Boolean)(implicit messages: Messages): SummaryList = {

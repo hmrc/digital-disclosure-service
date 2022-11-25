@@ -32,7 +32,8 @@ final case class Notification (
   aboutTheCompany: Option[AboutTheCompany] = None,
   aboutTheTrust: Option[AboutTheTrust] = None,
   aboutTheLLP: Option[AboutTheLLP] = None,
-  customerId: String = ""
+  aboutTheEstate: Option[AboutTheEstate] = None,
+  customerId: Option[CustomerId] = None
 ) {
   def disclosingAboutThemselves: Boolean = background.disclosureEntity match {
     case Some(DisclosureEntity(Individual, Some(true))) => true

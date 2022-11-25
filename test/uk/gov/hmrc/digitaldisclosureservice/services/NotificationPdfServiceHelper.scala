@@ -146,6 +146,30 @@ trait NotificationPdfServiceHelper extends AnyWordSpecLike
     parsedText should not include(messages("notification.aboutTheLLP.address"))
   }
 
+  def testEstateQuestions(parsedText: String) = {
+    parsedText should include(messages("notification.heading.aboutTheEstate"))
+
+    parsedText should include(messages("notification.aboutTheEstate.fullName"))
+    parsedText should include(messages("notification.aboutTheEstate.dateOfBirth"))
+    parsedText should include(messages("notification.aboutTheEstate.mainOccupation"))
+    parsedText should include(messages("notification.aboutTheEstate.doTheyHaveANino"))
+    parsedText should include(messages("notification.aboutTheEstate.registeredForVAT"))
+    parsedText should include(messages("notification.aboutTheEstate.registeredForSA"))
+    parsedText should include(messages("notification.aboutTheEstate.address"))
+  }
+
+  def testNotEstateQuestions(parsedText: String) = {
+    parsedText should not include(messages("notification.heading.aboutTheEstate"))
+
+    parsedText should not include(messages("notification.aboutTheEstate.fullName"))
+    parsedText should not include(messages("notification.aboutTheEstate.dateOfBirth"))
+    parsedText should not include(messages("notification.aboutTheEstate.mainOccupation"))
+    parsedText should not include(messages("notification.aboutTheEstate.doTheyHaveANino"))
+    parsedText should not include(messages("notification.aboutTheEstate.registeredForVAT"))
+    parsedText should not include(messages("notification.aboutTheEstate.registeredForSA"))
+    parsedText should not include(messages("notification.aboutTheEstate.address"))
+  }
+
   def stripPDFToString(notification: Notification): String = {
     val pdfStripper = new PDFTextStripper()
     val response = testPdfService.createPdf(notification)

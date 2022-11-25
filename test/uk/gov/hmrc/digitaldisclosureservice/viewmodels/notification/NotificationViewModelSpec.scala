@@ -183,6 +183,51 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
     }
   }
 
+  "aboutTheEstateList" should {
+    "return populated values as rows" in {
+      val date = LocalDate.now()
+      val aboutTheEstate = AboutTheEstate(
+        fullName = Some("Some full name"),
+        dateOfBirth = Some(date),
+        mainOccupation = Some("Some occupation"),
+        doTheyHaveANino = Some(YesNoOrUnsure.Yes),
+        nino = Some("Some nino"),
+        registeredForVAT = Some(YesNoOrUnsure.No),
+        vatRegNumber = Some("Some reg number"),
+        registeredForSA = Some(YesNoOrUnsure.Unsure),
+        sautr = Some("Some SAUTR"),
+        address = Some(address)
+      )
+      val expected = SummaryListViewModel(Seq(
+        SummaryListRowViewModel("notification.aboutTheEstate.fullName", ValueViewModel("Some full name")),
+        SummaryListRowViewModel("notification.aboutTheEstate.dateOfBirth", ValueViewModel(date.toString)),
+        SummaryListRowViewModel("notification.aboutTheEstate.mainOccupation", ValueViewModel("Some occupation")),
+        SummaryListRowViewModel("notification.aboutTheEstate.doTheyHaveANino", ValueViewModel(messages("service.yes"))),
+        SummaryListRowViewModel("notification.aboutTheEstate.nino", ValueViewModel("Some nino")),
+        SummaryListRowViewModel("notification.aboutTheEstate.registeredForVAT", ValueViewModel(messages("service.no"))),
+        SummaryListRowViewModel("notification.aboutTheEstate.vatRegNumber", ValueViewModel("Some reg number")),
+        SummaryListRowViewModel("notification.aboutTheEstate.registeredForSA", ValueViewModel(messages("service.unsure"))),
+        SummaryListRowViewModel("notification.aboutTheEstate.sautr", ValueViewModel("Some SAUTR")),
+        SummaryListRowViewModel("notification.aboutTheEstate.address", ValueViewModel(addressString))
+      ))
+      NotificationViewModel.aboutTheEstateList(aboutTheEstate) shouldEqual expected
+    }
+
+    "return unpopulated values as rows with value dash" in {
+      val aboutTheEstate = AboutTheEstate()
+      val expected = SummaryListViewModel(Seq(
+        SummaryListRowViewModel("notification.aboutTheEstate.fullName", ValueViewModel("-")),
+        SummaryListRowViewModel("notification.aboutTheEstate.dateOfBirth", ValueViewModel("-")),
+        SummaryListRowViewModel("notification.aboutTheEstate.mainOccupation", ValueViewModel("-")),
+        SummaryListRowViewModel("notification.aboutTheEstate.doTheyHaveANino", ValueViewModel("-")),
+        SummaryListRowViewModel("notification.aboutTheEstate.registeredForVAT", ValueViewModel("-")),
+        SummaryListRowViewModel("notification.aboutTheEstate.registeredForSA", ValueViewModel("-")),
+        SummaryListRowViewModel("notification.aboutTheEstate.address", ValueViewModel("-"))
+      ))
+      NotificationViewModel.aboutTheEstateList(aboutTheEstate) shouldEqual expected
+    }
+  }
+
   "aboutYouList" should {
     "return populated values as rows when disclosing as the individual" in {
       val date = LocalDate.now()
