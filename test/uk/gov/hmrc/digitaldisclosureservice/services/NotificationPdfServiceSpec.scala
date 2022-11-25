@@ -680,5 +680,180 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
       }
 
     }
+
+    "generate the pdf with about the estate info" when {
+
+      "the user has entered the full background and about you sections and started about the estate" in {
+        val background = Background (
+          haveYouReceivedALetter = Some(false),
+          letterReferenceNumber = None,
+          disclosureEntity = Some(DisclosureEntity(Estate, Some(false))),
+          offshoreLiabilities = Some(false),
+          onshoreLiabilities = Some(true)
+        )
+        val aboutYou = AboutYou(
+          fullName = Some("Some name"),
+          telephoneNumber = Some("+44 012345678"),
+          doYouHaveAEmailAddress = Some(false),
+          address = Some(address("you"))
+        )
+        val aboutTheEstate = AboutTheEstate()
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, aboutTheEstate = Some(aboutTheEstate))
+        val parsedText = stripPDFToString(notification)
+
+        baseNotificationTests(parsedText)
+        testNotFullAboutYouQuestions(parsedText)
+        testEstateQuestions(parsedText)
+        testNotCompanyQuestions(parsedText)
+        testNotTrustQuestions(parsedText)
+        testNotLLPQuestions(parsedText)
+
+        parsedText should not include(messages("notification.aboutTheEstate.nino"))
+        parsedText should not include(messages("notification.aboutTheEstate.vatRegNumber"))
+        parsedText should not include(messages("notification.aboutTheEstate.sautr"))
+      }
+
+      "the user has entered the full about the estate section" in {
+        val background = Background (
+          haveYouReceivedALetter = Some(false),
+          letterReferenceNumber = None,
+          disclosureEntity = Some(DisclosureEntity(Estate, Some(false))),
+          offshoreLiabilities = Some(false),
+          onshoreLiabilities = Some(true)
+        )
+        val aboutYou = AboutYou(
+          fullName = Some("Some name"),
+          telephoneNumber = Some("+44 012345678"),
+          doYouHaveAEmailAddress = Some(false),
+          address = Some(address("you"))
+        )
+        val aboutTheEstate = AboutTheEstate(  
+          fullName = Some("Some estate's name"),
+          dateOfBirth = Some(LocalDate.now()),
+          mainOccupation = Some("Some estate's occupation"),
+          doTheyHaveANino = Some(YesNoOrUnsure.No),
+          registeredForVAT = Some(YesNoOrUnsure.No),
+          registeredForSA = Some(YesNoOrUnsure.No),
+          address = Some(address("estate"))
+        )
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, aboutTheEstate = Some(aboutTheEstate))
+        val parsedText = stripPDFToString(notification)
+
+        baseNotificationTests(parsedText)
+        testNotFullAboutYouQuestions(parsedText)
+        testEstateQuestions(parsedText)
+
+        parsedText should include(messages("Some estate's name"))
+        parsedText should include(messages("Some estate's occupation"))
+        parsedText should include(addressString(address("estate")))
+
+      }
+
+      "the user has entered the full about the estate section with a NINO" in {
+        val background = Background (
+          haveYouReceivedALetter = Some(false),
+          letterReferenceNumber = None,
+          disclosureEntity = Some(DisclosureEntity(Estate, Some(false))),
+          offshoreLiabilities = Some(false),
+          onshoreLiabilities = Some(true)
+        )
+        val aboutYou = AboutYou(
+          fullName = Some("Some name"),
+          telephoneNumber = Some("+44 012345678"),
+          doYouHaveAEmailAddress = Some(false),
+          address = Some(address("you"))
+        )
+        val aboutTheEstate = AboutTheEstate(  
+          fullName = Some("Some estate's name"),
+          dateOfBirth = Some(LocalDate.now()),
+          mainOccupation = Some("Some estate's occupation"),
+          doTheyHaveANino = Some(YesNoOrUnsure.Yes),
+          nino = Some("Some estate's nino"),
+          registeredForVAT = Some(YesNoOrUnsure.No),
+          registeredForSA = Some(YesNoOrUnsure.No),
+          address = Some(address("estate"))
+        )
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, aboutTheEstate = Some(aboutTheEstate))
+        val parsedText = stripPDFToString(notification)
+
+        baseNotificationTests(parsedText)
+        testNotFullAboutYouQuestions(parsedText)
+        testEstateQuestions(parsedText)
+
+        parsedText should include(messages("notification.aboutTheEstate.nino"))
+        parsedText should include(messages("Some estate's nino"))
+      }
+
+      "the user has entered the full about the estate section with a VAT Reg Number" in {
+        val background = Background (
+          haveYouReceivedALetter = Some(false),
+          letterReferenceNumber = None,
+          disclosureEntity = Some(DisclosureEntity(Estate, Some(false))),
+          offshoreLiabilities = Some(false),
+          onshoreLiabilities = Some(true)
+        )
+        val aboutYou = AboutYou(
+          fullName = Some("Some name"),
+          telephoneNumber = Some("+44 012345678"),
+          doYouHaveAEmailAddress = Some(false),
+          address = Some(address("you"))
+        )
+        val aboutTheEstate = AboutTheEstate(  
+          fullName = Some("Some estate's name"),
+          dateOfBirth = Some(LocalDate.now()),
+          mainOccupation = Some("Some estate's occupation"),
+          doTheyHaveANino = Some(YesNoOrUnsure.No),
+          registeredForVAT = Some(YesNoOrUnsure.Yes),
+          vatRegNumber = Some("Some estate's VAT number"),
+          registeredForSA = Some(YesNoOrUnsure.No),
+          address = Some(address("estate"))
+        )
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, aboutTheEstate = Some(aboutTheEstate))
+        val parsedText = stripPDFToString(notification)
+
+        baseNotificationTests(parsedText)
+        testNotFullAboutYouQuestions(parsedText)
+        testEstateQuestions(parsedText)
+
+        parsedText should include(messages("notification.aboutTheEstate.vatRegNumber"))
+        parsedText should include(messages("Some estate's VAT number"))
+      }
+
+      "the user has entered the full about the estate section with an SAUTR" in {
+        val background = Background (
+          haveYouReceivedALetter = Some(false),
+          letterReferenceNumber = None,
+          disclosureEntity = Some(DisclosureEntity(Estate, Some(false))),
+          offshoreLiabilities = Some(false),
+          onshoreLiabilities = Some(true)
+        )
+        val aboutYou = AboutYou(
+          fullName = Some("Some name"),
+          telephoneNumber = Some("+44 012345678"),
+          doYouHaveAEmailAddress = Some(false),
+          address = Some(address("you"))
+        )
+        val aboutTheEstate = AboutTheEstate(  
+          fullName = Some("Some estate's name"),
+          dateOfBirth = Some(LocalDate.now()),
+          mainOccupation = Some("Some estate's occupation"),
+          doTheyHaveANino = Some(YesNoOrUnsure.No),
+          registeredForVAT = Some(YesNoOrUnsure.No),
+          registeredForSA = Some(YesNoOrUnsure.Yes),
+          sautr = Some("Some estate's SAUTR"),
+          address = Some(address("estate"))
+        )
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, aboutTheEstate = Some(aboutTheEstate))
+        val parsedText = stripPDFToString(notification)
+
+        baseNotificationTests(parsedText)
+        testNotFullAboutYouQuestions(parsedText)
+        testEstateQuestions(parsedText)
+
+        parsedText should include(messages("notification.aboutTheEstate.sautr"))
+        parsedText should include(messages("Some estate's SAUTR"))
+      }
+
+    }
   }
 }

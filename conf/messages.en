@@ -96,3 +96,18 @@ notification.aboutTheTrust.address = Trust’s address
 
 notification.aboutTheLLP.name = Limited Liability Partnership’s name
 notification.aboutTheLLP.address = Limited Liability Partnership’s address
+
+#===================================================
+#  About the estate
+#===================================================
+
+notification.aboutTheEstate.fullName = Person’s full name
+notification.aboutTheEstate.dateOfBirth = Person’s date of birth
+notification.aboutTheEstate.mainOccupation = Person’s main occupation
+notification.aboutTheEstate.doTheyHaveANino = Did the person have a National Insurance number, as far as you’re aware?
+notification.aboutTheEstate.nino = Person’s National Insurance number
+notification.aboutTheEstate.registeredForVAT = Was the person registered for VAT, as far you’re aware?
+notification.aboutTheEstate.vatRegNumber = Person’s VAT registration number
+notification.aboutTheEstate.registeredForSA = Was the person registered for Self Assessment, as far as you’re aware?
+notification.aboutTheEstate.sautr = Person’s Unique Taxpayer Reference
+notification.aboutTheEstate.address = Person’s address

@@ -94,7 +94,7 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
         metadata = Metadata(submissionTime = Some(submissionTime)),
         background = Background(),
         aboutYou = AboutYou(),
-        customerId = "customerId123")
+        customerId = Some(NINO("customerId123")))
       val submissionMark = "mark"
 
       val submissionMetadata = SubmissionMetadata(
@@ -124,7 +124,7 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
         metadata = Metadata(submissionTime = None),
         background = Background(),
         aboutYou = AboutYou(),
-        customerId = "customerId123")
+        customerId = None)
       val submissionMark = "mark"
 
       mockCreatePdf(notification)(PDF(stream))
