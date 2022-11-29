@@ -16,6 +16,7 @@
 
 package connectors
 
+import akka.actor.ActorSystem
 import config.Service
 import play.api.Configuration
 import play.api.http.Status._
@@ -31,12 +32,15 @@ import java.time.format.DateTimeFormatter
 import akka.util.ByteString
 import play.mvc.Http.HeaderNames.{USER_AGENT, AUTHORIZATION}
 import controllers.routes
+import config.AppConfig
+import utils.Retries
 
 @Singleton
 class DMSSubmissionConnectorImpl @Inject() (
+  val actorSystem: ActorSystem,
   val wsClient: WSClient,
   configuration: Configuration
-)(implicit ec: ExecutionContext) extends DMSSubmissionConnector {
+)(implicit val ec: ExecutionContext, appConfig: AppConfig) extends DMSSubmissionConnector with Retries {
 
   private val service: Service = configuration.get[Service]("microservice.services.dms-submission")
   private val clientAuthToken = configuration.get[String]("internal-auth.token")
@@ -50,17 +54,19 @@ class DMSSubmissionConnectorImpl @Inject() (
 
     val multipartFormData = constructMultipartFormData(submissionRequest, pdf)
 
-    wsClient.url(s"${service.baseUrl}/dms-submission/submit")
-      .withHttpHeaders(AUTHORIZATION -> clientAuthToken, USER_AGENT -> appName)
-      .post(multipartFormData)
-      .flatMap { response =>
-        response.status match {
-          case ACCEPTED => handleResponse[SubmissionResponse.Success](response)
-          case BAD_REQUEST => handleResponse[SubmissionResponse.Failure](response)
-          case _ => Future.failed(NotificationStoreConnector.UnexpectedResponseException(response.status, response.body))
+    retry {
+      wsClient.url(s"${service.baseUrl}/dms-submission/submit")
+        .withHttpHeaders(AUTHORIZATION -> clientAuthToken, USER_AGENT -> appName)
+        .post(multipartFormData)
+        .flatMap { response =>
+          response.status match {
+            case ACCEPTED => handleResponse[SubmissionResponse.Success](response)
+            case BAD_REQUEST => handleResponse[SubmissionResponse.Failure](response)
+            case _ => Future.failed(NotificationStoreConnector.UnexpectedResponseException(response.status, response.body))
+          }
         }
-      }
     }
+  }
   
   def handleResponse[A](response: WSResponse)(implicit reads: Reads[A]): Future[A] = {
     response.json.validate[A] match {
