@@ -22,6 +22,7 @@ import viewmodels.implicits._
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist._
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+import models.YesNoOrUnsure
 
 final case class NotificationViewModel(
   metadataList: SummaryList,
@@ -65,27 +66,36 @@ object NotificationViewModel extends SummaryListFluency {
 
   def backgroundList(background: Background)(implicit messages: Messages): SummaryList = SummaryListViewModel(
     rows = Seq(
-      Some(SummaryListRowViewModel(s"$backgroundKey.haveYouReceivedALetter", ValueViewModel(background.haveYouReceivedALetter))),
-      background.letterReferenceNumber.map(_ => SummaryListRowViewModel(s"$backgroundKey.letterReferenceNumber", ValueViewModel(background.letterReferenceNumber))),
+      displayWhenNo(s"$backgroundKey.haveYouReceivedALetter", background.haveYouReceivedALetter),
       Some(SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(background.disclosureEntity.map(de => messages(s"notification.background.${de.entity.toString}"))))),
       background.disclosureEntity.map(de => SummaryListRowViewModel(s"notification.background.areYouThe${de.entity.toString}", ValueViewModel(de.areYouTheEntity))),
-      background.areYouRepresetingAnOrganisation.map(_ => SummaryListRowViewModel(s"$backgroundKey.areYouRepresetingAnOrganisation", ValueViewModel(background.areYouRepresetingAnOrganisation))),
+      background.areYouRepresetingAnOrganisation.flatMap(areYou => displayWhenNo(s"$backgroundKey.areYouRepresetingAnOrganisation", areYou)),
       background.organisationName.map(_ => SummaryListRowViewModel(s"$backgroundKey.organisationName", ValueViewModel(background.organisationName))),
-      Some(SummaryListRowViewModel(s"$backgroundKey.offshoreLiabilities", ValueViewModel(background.offshoreLiabilities))),
-      Some(SummaryListRowViewModel(s"$backgroundKey.onshoreLiabilities", ValueViewModel(background.onshoreLiabilities)))
+      Some(liabilitiesRow(background))
     ).flatten
   )
+
+  def liabilitiesRow(background: Background)(implicit messages: Messages): SummaryListRow = {
+    val rowValue = (background.offshoreLiabilities, background.onshoreLiabilities) match{
+      case (Some(true), Some(true)) => messages("notification.background.both")
+      case (Some(true), _)          => messages("notification.background.offshore")
+      case (_,         Some(true))  => messages("notification.background.onshore")
+      case (_,         _)           => "-"
+    }
+    SummaryListRowViewModel(s"$backgroundKey.liabilities", ValueViewModel(rowValue))
+  }
+
 
   def aboutTheIndividualList(aboutTheIndividual: AboutTheIndividual)(implicit messages: Messages): SummaryList = SummaryListViewModel(
     rows = Seq(
       Some(SummaryListRowViewModel(s"$individualKey.fullName", ValueViewModel(aboutTheIndividual.fullName))),
       Some(SummaryListRowViewModel(s"$individualKey.dateOfBirth", ValueViewModel(aboutTheIndividual.dateOfBirth.map(_.toString)))),
       Some(SummaryListRowViewModel(s"$individualKey.mainOccupation", ValueViewModel(aboutTheIndividual.mainOccupation))),
-      Some(SummaryListRowViewModel(s"$individualKey.doTheyHaveANino", ValueViewModel(aboutTheIndividual.doTheyHaveANino))),
+      displayWhenNotYes(s"$individualKey.doTheyHaveANino", aboutTheIndividual.doTheyHaveANino),
       aboutTheIndividual.nino.map(_ => SummaryListRowViewModel(s"$individualKey.nino", ValueViewModel(aboutTheIndividual.nino))),
-      Some(SummaryListRowViewModel(s"$individualKey.registeredForVAT", ValueViewModel(aboutTheIndividual.registeredForVAT))),
+      displayWhenNotYes(s"$individualKey.registeredForVAT", aboutTheIndividual.registeredForVAT),
       aboutTheIndividual.vatRegNumber.map(_ => SummaryListRowViewModel(s"$individualKey.vatRegNumber", ValueViewModel(aboutTheIndividual.vatRegNumber))),
-      Some(SummaryListRowViewModel(s"$individualKey.registeredForSA", ValueViewModel(aboutTheIndividual.registeredForSA))),
+      displayWhenNotYes(s"$individualKey.registeredForSA", aboutTheIndividual.registeredForSA),
       aboutTheIndividual.sautr.map(_ => SummaryListRowViewModel(s"$individualKey.sautr", ValueViewModel(aboutTheIndividual.sautr))),
       Some(SummaryListRowViewModel(s"$individualKey.address", ValueViewModel(Text(aboutTheIndividual.address.map(_.toSeparatedString).getOrElse("-")))))
     ).flatten
@@ -118,11 +128,11 @@ object NotificationViewModel extends SummaryListFluency {
       Some(SummaryListRowViewModel(s"$estateKey.fullName", ValueViewModel(aboutTheEstate.fullName))),
       Some(SummaryListRowViewModel(s"$estateKey.dateOfBirth", ValueViewModel(aboutTheEstate.dateOfBirth.map(_.toString)))),
       Some(SummaryListRowViewModel(s"$estateKey.mainOccupation", ValueViewModel(aboutTheEstate.mainOccupation))),
-      Some(SummaryListRowViewModel(s"$estateKey.doTheyHaveANino", ValueViewModel(aboutTheEstate.doTheyHaveANino))),
+      displayWhenNotYes(s"$estateKey.doTheyHaveANino", aboutTheEstate.doTheyHaveANino),
       aboutTheEstate.nino.map(_ => SummaryListRowViewModel(s"$estateKey.nino", ValueViewModel(aboutTheEstate.nino))),
-      Some(SummaryListRowViewModel(s"$estateKey.registeredForVAT", ValueViewModel(aboutTheEstate.registeredForVAT))),
+      displayWhenNotYes(s"$estateKey.registeredForVAT", aboutTheEstate.registeredForVAT),
       aboutTheEstate.vatRegNumber.map(_ => SummaryListRowViewModel(s"$estateKey.vatRegNumber", ValueViewModel(aboutTheEstate.vatRegNumber))),
-      Some(SummaryListRowViewModel(s"$estateKey.registeredForSA", ValueViewModel(aboutTheEstate.registeredForSA))),
+      displayWhenNotYes(s"$estateKey.registeredForSA", aboutTheEstate.registeredForSA),
       aboutTheEstate.sautr.map(_ => SummaryListRowViewModel(s"$estateKey.sautr", ValueViewModel(aboutTheEstate.sautr))),
       Some(SummaryListRowViewModel(s"$estateKey.address", ValueViewModel(Text(aboutTheEstate.address.map(_.toSeparatedString).getOrElse("-")))))
     ).flatten
@@ -133,7 +143,7 @@ object NotificationViewModel extends SummaryListFluency {
     val commonRows = Seq(
       Some(SummaryListRowViewModel(s"$aboutYouKey.fullName", ValueViewModel(aboutYou.fullName))),
       Some(SummaryListRowViewModel(s"$aboutYouKey.telephoneNumber", ValueViewModel(aboutYou.telephoneNumber))),
-      Some(SummaryListRowViewModel(s"$aboutYouKey.doYouHaveAEmailAddress", ValueViewModel(aboutYou.doYouHaveAEmailAddress))),
+      displayWhenNo(s"$aboutYouKey.doYouHaveAEmailAddress", aboutYou.doYouHaveAEmailAddress),
       aboutYou.emailAddress.map(_ => SummaryListRowViewModel(s"$aboutYouKey.emailAddress", ValueViewModel(aboutYou.emailAddress))),
       Some(SummaryListRowViewModel(s"$aboutYouKey.address", ValueViewModel(Text(aboutYou.address.map(_.toSeparatedString).getOrElse("-")))))
     ).flatten
@@ -141,11 +151,11 @@ object NotificationViewModel extends SummaryListFluency {
     lazy val youAreTheIndiviudalRows = Seq(
       Some(SummaryListRowViewModel(s"$aboutYouKey.dateOfBirth", ValueViewModel(aboutYou.dateOfBirth.map(_.toString)))),
       Some(SummaryListRowViewModel(s"$aboutYouKey.mainOccupation", ValueViewModel(aboutYou.mainOccupation))),
-      Some(SummaryListRowViewModel(s"$aboutYouKey.doYouHaveANino", ValueViewModel(aboutYou.doYouHaveANino))),
+      displayWhenNotYes(s"$aboutYouKey.doYouHaveANino", aboutYou.doYouHaveANino),
       aboutYou.nino.map(_ => SummaryListRowViewModel(s"$aboutYouKey.nino", ValueViewModel(aboutYou.nino))),
-      Some(SummaryListRowViewModel(s"$aboutYouKey.registeredForVAT", ValueViewModel(aboutYou.registeredForVAT))),
+      displayWhenNotYes(s"$aboutYouKey.registeredForVAT", aboutYou.registeredForVAT),
       aboutYou.vatRegNumber.map(_ => SummaryListRowViewModel(s"$aboutYouKey.vatRegNumber", ValueViewModel(aboutYou.vatRegNumber))),
-      Some(SummaryListRowViewModel(s"$aboutYouKey.registeredForSA", ValueViewModel(aboutYou.registeredForSA))),
+      displayWhenNotYes(s"$aboutYouKey.registeredForSA", aboutYou.registeredForSA),
       aboutYou.sautr.map(_ => SummaryListRowViewModel(s"$aboutYouKey.sautr", ValueViewModel(aboutYou.sautr)))
     ).flatten
 
@@ -153,5 +163,20 @@ object NotificationViewModel extends SummaryListFluency {
     else SummaryListViewModel(rows = commonRows)
 
   }
+
+  def displayWhenNo(key: String, boolean: Option[Boolean])(implicit messages: Messages): Option[SummaryListRow] = 
+    boolean match {
+      case Some(true) => None
+      case _ => Some(SummaryListRowViewModel(key, ValueViewModel(boolean)))
+    }
+
+  def displayWhenNo(key: String, boolean: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
+    if (boolean) None else Some(SummaryListRowViewModel(key, ValueViewModel(boolean)))
+
+  def displayWhenNotYes(key: String, yesNoOrUnsure: Option[YesNoOrUnsure])(implicit messages: Messages): Option[SummaryListRow] = 
+    yesNoOrUnsure match {
+      case Some(YesNoOrUnsure.Yes) => None
+      case _ => Some(SummaryListRowViewModel(key, ValueViewModel(yesNoOrUnsure)))
+    }
 
 }

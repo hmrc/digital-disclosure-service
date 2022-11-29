@@ -18,9 +18,16 @@ package config
 
 import javax.inject.{Inject, Singleton}
 import play.api.Configuration
+import scala.concurrent.duration._
 
 @Singleton
 class AppConfig @Inject()(config: Configuration) {
 
   val appName: String = config.get[String]("appName")
+
+  val retryIntervals: Seq[FiniteDuration] = config
+    .get[Seq[Int]]("retry-intervals")
+    .map(_.milliseconds)
+    .toList
+
 }

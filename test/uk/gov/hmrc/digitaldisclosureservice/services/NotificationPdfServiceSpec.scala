@@ -52,30 +52,9 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         testNotLLPQuestions(parsedText)
       }
 
-      "the user has entered the full background section with no letter" in {
+      "the user has entered the full background section" in {
         val background = Background (
           haveYouReceivedALetter = Some(false),
-          letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Individual, Some(false))),
-          offshoreLiabilities = Some(false),
-          onshoreLiabilities = Some(false)
-        )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, AboutYou())
-        val parsedText = stripPDFToString(notification)
-
-        baseNotificationTests(parsedText)
-        testNotFullAboutYouQuestions(parsedText)
-        testNotIndividualQuestions(parsedText)
-        testNotCompanyQuestions(parsedText)
-        testNotTrustQuestions(parsedText)
-        testNotLLPQuestions(parsedText)
-
-        parsedText should not include(messages("notification.background.letterReferenceNumber"))
-      }
-
-      "the user has entered the full background section with a letter" in {
-        val background = Background (
-          haveYouReceivedALetter = Some(true),
           letterReferenceNumber = Some("1234567890"),
           disclosureEntity = Some(DisclosureEntity(Individual, Some(false))),
           offshoreLiabilities = Some(false),
@@ -86,8 +65,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
 
         baseNotificationTests(parsedText)
         testNotFullAboutYouQuestions(parsedText)
-        parsedText should include(messages("notification.background.letterReferenceNumber"))
-        parsedText should include(messages("1234567890"))
         parsedText should include(messages("An individual"))
       }
 
@@ -173,7 +150,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(true),
+          doYouHaveAEmailAddress = Some(false),
           emailAddress = Some("some.email@address.com"),
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some occupation"),
@@ -209,11 +186,11 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(true),
+          doYouHaveAEmailAddress = Some(false),
           emailAddress = Some("some.email@address.com"),
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some occupation"),
-          doYouHaveANino = Some(YesNoOrUnsure.Yes),
+          doYouHaveANino = Some(YesNoOrUnsure.No),
           nino = Some("Some nino"),
           registeredForVAT = Some(YesNoOrUnsure.No),
           registeredForSA = Some(YesNoOrUnsure.No),
@@ -240,12 +217,12 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(true),
+          doYouHaveAEmailAddress = Some(false),
           emailAddress = Some("some.email@address.com"),
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some occupation"),
           doYouHaveANino = Some(YesNoOrUnsure.No),
-          registeredForVAT = Some(YesNoOrUnsure.Yes),
+          registeredForVAT = Some(YesNoOrUnsure.No),
           vatRegNumber = Some("Some VAT reg number"),
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("you"))
@@ -271,13 +248,13 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(true),
+          doYouHaveAEmailAddress = Some(false),
           emailAddress = Some("some.email@address.com"),
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some occupation"),
           doYouHaveANino = Some(YesNoOrUnsure.No),
           registeredForVAT = Some(YesNoOrUnsure.No),
-          registeredForSA = Some(YesNoOrUnsure.Yes),
+          registeredForSA = Some(YesNoOrUnsure.No),
           sautr = Some("Some SAUTR"),
           address = Some(address("you"))
         )
@@ -302,7 +279,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(true),
+          doYouHaveAEmailAddress = Some(false),
           emailAddress = Some("some.email@address.com"),
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some occupation"),
@@ -321,7 +298,37 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         parsedText should not include(messages("notification.aboutYou.vatRegNumber"))
         parsedText should not include(messages("notification.aboutYou.sautr"))
 
-        parsedText should include("I am not sure")
+        parsedText should include("Yes, but I do not know it")
+      }
+
+      "the user has entered yes to questions" in {
+        val background = Background (
+          haveYouReceivedALetter = Some(false),
+          letterReferenceNumber = None,
+          disclosureEntity = Some(DisclosureEntity(Individual, Some(true))),
+          offshoreLiabilities = Some(false),
+          onshoreLiabilities = Some(true)
+        )
+        val aboutYou = AboutYou(
+          fullName = Some("Some name"),
+          telephoneNumber = Some("+44 012345678"),
+          doYouHaveAEmailAddress = Some(true),
+          emailAddress = Some("some.email@address.com"),
+          dateOfBirth = Some(LocalDate.now()),
+          mainOccupation = Some("Some occupation"),
+          doYouHaveANino = Some(YesNoOrUnsure.Yes),
+          registeredForVAT = Some(YesNoOrUnsure.Yes),
+          registeredForSA = Some(YesNoOrUnsure.Yes),
+          address = Some(address("you"))
+        )
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou)
+        val parsedText = stripPDFToString(notification)
+
+        parsedText should not include(messages("notification.aboutYou.doYouHaveANino"))
+        parsedText should not include(messages("notification.aboutYou.registeredForVAT"))
+        parsedText should not include(messages("notification.aboutYou.registeredForSA"))
+        parsedText should not include(messages("notification.aboutYou.doYouHaveAEmailAddress"))
+
       }
       
     }  
@@ -412,7 +419,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           fullName = Some("Some individual's name"),
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some individual's occupation"),
-          doTheyHaveANino = Some(YesNoOrUnsure.Yes),
+          doTheyHaveANino = Some(YesNoOrUnsure.No),
           nino = Some("Some individual's nino"),
           registeredForVAT = Some(YesNoOrUnsure.No),
           registeredForSA = Some(YesNoOrUnsure.No),
@@ -448,7 +455,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some individual's occupation"),
           doTheyHaveANino = Some(YesNoOrUnsure.No),
-          registeredForVAT = Some(YesNoOrUnsure.Yes),
+          registeredForVAT = Some(YesNoOrUnsure.No),
           vatRegNumber = Some("Some individual's VAT number"),
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("individual"))
@@ -484,7 +491,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           mainOccupation = Some("Some individual's occupation"),
           doTheyHaveANino = Some(YesNoOrUnsure.No),
           registeredForVAT = Some(YesNoOrUnsure.No),
-          registeredForSA = Some(YesNoOrUnsure.Yes),
+          registeredForSA = Some(YesNoOrUnsure.No),
           sautr = Some("Some individual's SAUTR"),
           address = Some(address("individual"))
         )
@@ -767,7 +774,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           fullName = Some("Some estate's name"),
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some estate's occupation"),
-          doTheyHaveANino = Some(YesNoOrUnsure.Yes),
+          doTheyHaveANino = Some(YesNoOrUnsure.No),
           nino = Some("Some estate's nino"),
           registeredForVAT = Some(YesNoOrUnsure.No),
           registeredForSA = Some(YesNoOrUnsure.No),
@@ -803,7 +810,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some estate's occupation"),
           doTheyHaveANino = Some(YesNoOrUnsure.No),
-          registeredForVAT = Some(YesNoOrUnsure.Yes),
+          registeredForVAT = Some(YesNoOrUnsure.No),
           vatRegNumber = Some("Some estate's VAT number"),
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("estate"))
@@ -839,7 +846,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           mainOccupation = Some("Some estate's occupation"),
           doTheyHaveANino = Some(YesNoOrUnsure.No),
           registeredForVAT = Some(YesNoOrUnsure.No),
-          registeredForSA = Some(YesNoOrUnsure.Yes),
+          registeredForSA = Some(YesNoOrUnsure.No),
           sautr = Some("Some estate's SAUTR"),
           address = Some(address("estate"))
         )

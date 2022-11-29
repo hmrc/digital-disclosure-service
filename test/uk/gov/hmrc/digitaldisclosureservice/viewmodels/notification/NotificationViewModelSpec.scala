@@ -18,6 +18,7 @@ package viewmodels
 
 import org.scalatest.matchers.should.Matchers
 import viewmodels.govuk.SummaryListFluency
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import org.scalatest.wordspec.AnyWordSpec
 import java.time.{LocalDate, LocalDateTime}
 import viewmodels.implicits._
@@ -57,7 +58,7 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
   }
 
   "backgroundList" should {
-    "return populated values as rows" in {
+    "return populated values as rows where have you received is yes" in {
       val background = Background (
         haveYouReceivedALetter = Some(true),
         letterReferenceNumber= Some("Some letter reference"),
@@ -66,12 +67,41 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
         onshoreLiabilities = Some (true)
       )
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel(messages("service.yes"))),
-        SummaryListRowViewModel("notification.background.letterReferenceNumber", ValueViewModel("Some letter reference")),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
         SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.yes"))),
-        SummaryListRowViewModel("notification.background.offshoreLiabilities", ValueViewModel(messages("service.no"))),
-        SummaryListRowViewModel("notification.background.onshoreLiabilities", ValueViewModel(messages("service.yes")))
+        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel(messages("notification.background.onshore")))
+      ))
+      NotificationViewModel.backgroundList(background) shouldEqual expected
+    }
+
+    "return populated values as rows where have you received is no" in {
+      val background = Background (
+        haveYouReceivedALetter = Some(false),
+        disclosureEntity = Some(DisclosureEntity(Individual, Some(true))),
+        offshoreLiabilities = Some(true),
+        onshoreLiabilities = Some (false)
+      )
+      val expected = SummaryListViewModel(Seq(
+        SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel(messages("service.no"))),
+        SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
+        SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.yes"))),
+        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel(messages("notification.background.offshore")))
+      ))
+      NotificationViewModel.backgroundList(background) shouldEqual expected
+    }
+
+    "return populated values as rows where both onshore and offshore" in {
+      val background = Background (
+        haveYouReceivedALetter = Some(false),
+        disclosureEntity = Some(DisclosureEntity(Individual, Some(true))),
+        offshoreLiabilities = Some(true),
+        onshoreLiabilities = Some (true)
+      )
+      val expected = SummaryListViewModel(Seq(
+        SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel(messages("service.no"))),
+        SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
+        SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.yes"))),
+        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel(messages("notification.background.both")))
       ))
       NotificationViewModel.backgroundList(background) shouldEqual expected
     }
@@ -81,8 +111,7 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.background.offshoreLiabilities", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.background.onshoreLiabilities", ValueViewModel("-"))
+        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
       ))
       NotificationViewModel.backgroundList(background) shouldEqual expected
     }
@@ -93,8 +122,7 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
         SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Company"))),
         SummaryListRowViewModel("notification.background.areYouTheCompany", ValueViewModel(messages("service.yes"))),
-        SummaryListRowViewModel("notification.background.offshoreLiabilities", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.background.onshoreLiabilities", ValueViewModel("-"))
+        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
       ))
       NotificationViewModel.backgroundList(background) shouldEqual expected
     }
@@ -105,8 +133,7 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
         SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.LLP"))),
         SummaryListRowViewModel("notification.background.areYouTheLLP", ValueViewModel(messages("service.yes"))),
-        SummaryListRowViewModel("notification.background.offshoreLiabilities", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.background.onshoreLiabilities", ValueViewModel("-"))
+        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
       ))
       NotificationViewModel.backgroundList(background) shouldEqual expected
     }
@@ -117,8 +144,7 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
         SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Trust"))),
         SummaryListRowViewModel("notification.background.areYouTheTrust", ValueViewModel(messages("service.yes"))),
-        SummaryListRowViewModel("notification.background.offshoreLiabilities", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.background.onshoreLiabilities", ValueViewModel("-"))
+        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
       ))
       NotificationViewModel.backgroundList(background) shouldEqual expected
     }
@@ -129,23 +155,59 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
         SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
         SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.no"))),
-        SummaryListRowViewModel("notification.background.areYouRepresetingAnOrganisation", ValueViewModel(messages("service.yes"))),
         SummaryListRowViewModel("notification.background.organisationName", ValueViewModel("Some organisation")),
-        SummaryListRowViewModel("notification.background.offshoreLiabilities", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.background.onshoreLiabilities", ValueViewModel("-"))
+        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
+      ))
+      NotificationViewModel.backgroundList(background) shouldEqual expected
+    }
+
+    "return organisation information where it's populated but set to false" in {
+      val background = Background (None, None, Some(DisclosureEntity(Individual, Some(false))), Some(false), None)
+      val expected = SummaryListViewModel(Seq(
+        SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
+        SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
+        SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.no"))),
+        SummaryListRowViewModel("notification.background.areYouRepresetingAnOrganisation", ValueViewModel(messages("service.no"))),
+        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
       ))
       NotificationViewModel.backgroundList(background) shouldEqual expected
     }
   }
 
   "aboutTheIndividualList" should {
-    "return populated values as rows" in {
+    "return populated values as rows, hiding Yes rows" in {
       val date = LocalDate.now()
       val aboutTheIndividual = AboutTheIndividual(
         fullName = Some("Some full name"),
         dateOfBirth = Some(date),
         mainOccupation = Some("Some occupation"),
         doTheyHaveANino = Some(YesNoOrUnsure.Yes),
+        nino = Some("Some nino"),
+        registeredForVAT = Some(YesNoOrUnsure.Yes),
+        vatRegNumber = Some("Some reg number"),
+        registeredForSA = Some(YesNoOrUnsure.Yes),
+        sautr = Some("Some SAUTR"),
+        address = Some(address)
+      )
+      val expected = SummaryListViewModel(Seq(
+        SummaryListRowViewModel("notification.aboutTheIndividual.fullName", ValueViewModel("Some full name")),
+        SummaryListRowViewModel("notification.aboutTheIndividual.dateOfBirth", ValueViewModel(date.toString)),
+        SummaryListRowViewModel("notification.aboutTheIndividual.mainOccupation", ValueViewModel("Some occupation")),
+        SummaryListRowViewModel("notification.aboutTheIndividual.nino", ValueViewModel("Some nino")),
+        SummaryListRowViewModel("notification.aboutTheIndividual.vatRegNumber", ValueViewModel("Some reg number")),
+        SummaryListRowViewModel("notification.aboutTheIndividual.sautr", ValueViewModel("Some SAUTR")),
+        SummaryListRowViewModel("notification.aboutTheIndividual.address", ValueViewModel(addressString))
+      ))
+      NotificationViewModel.aboutTheIndividualList(aboutTheIndividual) shouldEqual expected
+    }
+
+    "return populated values as rows, showing No rows" in {
+      val date = LocalDate.now()
+      val aboutTheIndividual = AboutTheIndividual(
+        fullName = Some("Some full name"),
+        dateOfBirth = Some(date),
+        mainOccupation = Some("Some occupation"),
+        doTheyHaveANino = Some(YesNoOrUnsure.No),
         nino = Some("Some nino"),
         registeredForVAT = Some(YesNoOrUnsure.No),
         vatRegNumber = Some("Some reg number"),
@@ -157,7 +219,7 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
         SummaryListRowViewModel("notification.aboutTheIndividual.fullName", ValueViewModel("Some full name")),
         SummaryListRowViewModel("notification.aboutTheIndividual.dateOfBirth", ValueViewModel(date.toString)),
         SummaryListRowViewModel("notification.aboutTheIndividual.mainOccupation", ValueViewModel("Some occupation")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.doTheyHaveANino", ValueViewModel(messages("service.yes"))),
+        SummaryListRowViewModel("notification.aboutTheIndividual.doTheyHaveANino", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.aboutTheIndividual.nino", ValueViewModel("Some nino")),
         SummaryListRowViewModel("notification.aboutTheIndividual.registeredForVAT", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.aboutTheIndividual.vatRegNumber", ValueViewModel("Some reg number")),
@@ -184,13 +246,39 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
   }
 
   "aboutTheEstateList" should {
-    "return populated values as rows" in {
+    "return populated values as rows hiding yes rows" in {
       val date = LocalDate.now()
       val aboutTheEstate = AboutTheEstate(
         fullName = Some("Some full name"),
         dateOfBirth = Some(date),
         mainOccupation = Some("Some occupation"),
         doTheyHaveANino = Some(YesNoOrUnsure.Yes),
+        nino = Some("Some nino"),
+        registeredForVAT = Some(YesNoOrUnsure.Yes),
+        vatRegNumber = Some("Some reg number"),
+        registeredForSA = Some(YesNoOrUnsure.Yes),
+        sautr = Some("Some SAUTR"),
+        address = Some(address)
+      )
+      val expected = SummaryListViewModel(Seq(
+        SummaryListRowViewModel("notification.aboutTheEstate.fullName", ValueViewModel("Some full name")),
+        SummaryListRowViewModel("notification.aboutTheEstate.dateOfBirth", ValueViewModel(date.toString)),
+        SummaryListRowViewModel("notification.aboutTheEstate.mainOccupation", ValueViewModel("Some occupation")),
+        SummaryListRowViewModel("notification.aboutTheEstate.nino", ValueViewModel("Some nino")),
+        SummaryListRowViewModel("notification.aboutTheEstate.vatRegNumber", ValueViewModel("Some reg number")),
+        SummaryListRowViewModel("notification.aboutTheEstate.sautr", ValueViewModel("Some SAUTR")),
+        SummaryListRowViewModel("notification.aboutTheEstate.address", ValueViewModel(addressString))
+      ))
+      NotificationViewModel.aboutTheEstateList(aboutTheEstate) shouldEqual expected
+    }
+
+    "return populated values as rows showing no rows" in {
+      val date = LocalDate.now()
+      val aboutTheEstate = AboutTheEstate(
+        fullName = Some("Some full name"),
+        dateOfBirth = Some(date),
+        mainOccupation = Some("Some occupation"),
+        doTheyHaveANino = Some(YesNoOrUnsure.No),
         nino = Some("Some nino"),
         registeredForVAT = Some(YesNoOrUnsure.No),
         vatRegNumber = Some("Some reg number"),
@@ -202,7 +290,7 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
         SummaryListRowViewModel("notification.aboutTheEstate.fullName", ValueViewModel("Some full name")),
         SummaryListRowViewModel("notification.aboutTheEstate.dateOfBirth", ValueViewModel(date.toString)),
         SummaryListRowViewModel("notification.aboutTheEstate.mainOccupation", ValueViewModel("Some occupation")),
-        SummaryListRowViewModel("notification.aboutTheEstate.doTheyHaveANino", ValueViewModel(messages("service.yes"))),
+        SummaryListRowViewModel("notification.aboutTheEstate.doTheyHaveANino", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.aboutTheEstate.nino", ValueViewModel("Some nino")),
         SummaryListRowViewModel("notification.aboutTheEstate.registeredForVAT", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.aboutTheEstate.vatRegNumber", ValueViewModel("Some reg number")),
@@ -229,7 +317,7 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
   }
 
   "aboutYouList" should {
-    "return populated values as rows when disclosing as the individual" in {
+    "return populated values as rows when disclosing as the individual hiding Yes rows" in {
       val date = LocalDate.now()
       val aboutYou = AboutYou(
         fullName = Some("Some full name"),
@@ -240,6 +328,37 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
         mainOccupation = Some("Some occupation"),
         doYouHaveANino = Some(YesNoOrUnsure.Yes),
         nino = Some("Some nino"),
+        registeredForVAT = Some(YesNoOrUnsure.Yes),
+        vatRegNumber = Some("Some reg number"),
+        registeredForSA = Some(YesNoOrUnsure.Yes),
+        sautr = Some("Some SAUTR"),
+        address = Some(address)
+      )
+      val expected = SummaryListViewModel(Seq(
+        SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("Some full name")),
+        SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
+        SummaryListRowViewModel("notification.aboutYou.emailAddress", ValueViewModel("Some email address")),
+        SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel(addressString)),
+        SummaryListRowViewModel("notification.aboutYou.dateOfBirth", ValueViewModel(date.toString)),
+        SummaryListRowViewModel("notification.aboutYou.mainOccupation", ValueViewModel("Some occupation")),
+        SummaryListRowViewModel("notification.aboutYou.nino", ValueViewModel("Some nino")),
+        SummaryListRowViewModel("notification.aboutYou.vatRegNumber", ValueViewModel("Some reg number")),
+        SummaryListRowViewModel("notification.aboutYou.sautr", ValueViewModel("Some SAUTR"))
+      ))
+      NotificationViewModel.aboutYouList(aboutYou, true) shouldEqual expected
+    }
+
+    "return populated values as rows when disclosing as the individual, showing No rows" in {
+      val date = LocalDate.now()
+      val aboutYou = AboutYou(
+        fullName = Some("Some full name"),
+        telephoneNumber = Some("Some phone number"),
+        doYouHaveAEmailAddress = Some(false),
+        emailAddress = Some("Some email address"),
+        dateOfBirth = Some(date),
+        mainOccupation = Some("Some occupation"),
+        doYouHaveANino = Some(YesNoOrUnsure.No),
+        nino = Some("Some nino"),
         registeredForVAT = Some(YesNoOrUnsure.No),
         vatRegNumber = Some("Some reg number"),
         registeredForSA = Some(YesNoOrUnsure.Unsure),
@@ -249,12 +368,12 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("Some full name")),
         SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
-        SummaryListRowViewModel("notification.aboutYou.doYouHaveAEmailAddress", ValueViewModel(messages("service.yes"))),
+        SummaryListRowViewModel("notification.aboutYou.doYouHaveAEmailAddress", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.aboutYou.emailAddress", ValueViewModel("Some email address")),
         SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel(addressString)),
         SummaryListRowViewModel("notification.aboutYou.dateOfBirth", ValueViewModel(date.toString)),
         SummaryListRowViewModel("notification.aboutYou.mainOccupation", ValueViewModel("Some occupation")),
-        SummaryListRowViewModel("notification.aboutYou.doYouHaveANino", ValueViewModel(messages("service.yes"))),
+        SummaryListRowViewModel("notification.aboutYou.doYouHaveANino", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.aboutYou.nino", ValueViewModel("Some nino")),
         SummaryListRowViewModel("notification.aboutYou.registeredForVAT", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.aboutYou.vatRegNumber", ValueViewModel("Some reg number")),
@@ -284,7 +403,6 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("Some full name")),
         SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
-        SummaryListRowViewModel("notification.aboutYou.doYouHaveAEmailAddress", ValueViewModel(messages("service.yes"))),
         SummaryListRowViewModel("notification.aboutYou.emailAddress", ValueViewModel("Some email address")),
         SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel(addressString))
       ))
@@ -378,6 +496,23 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
         SummaryListRowViewModel("notification.aboutTheLLP.address", ValueViewModel("-"))
       ))
       NotificationViewModel.aboutTheLLPList(aboutTheLLP) shouldEqual expected
+    }
+  }
+
+  "YesNoOrUnsureToText" should {
+    "convert Yes implicitly" in {
+      val text: Text = YesNoOrUnsure.Yes
+      text shouldEqual Text(messages("service.yes"))
+    }
+
+    "convert No implicitly" in {
+      val text: Text = YesNoOrUnsure.No
+      text shouldEqual Text(messages("service.no"))
+    }
+
+    "convert Unsure implicitly" in {
+      val text: Text = YesNoOrUnsure.Unsure
+      text shouldEqual Text(messages("service.unsure"))
     }
   }
 

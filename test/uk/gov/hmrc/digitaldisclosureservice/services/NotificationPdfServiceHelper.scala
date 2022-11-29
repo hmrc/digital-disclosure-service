@@ -49,8 +49,7 @@ trait NotificationPdfServiceHelper extends AnyWordSpecLike
 
     parsedText should include(messages("notification.heading.background"))
     parsedText should include(messages("notification.background.haveYouReceivedALetter"))
-    parsedText should include(messages("notification.background.offshoreLiabilities"))
-    parsedText should include(messages("notification.background.onshoreLiabilities"))
+    parsedText should include(messages("notification.background.liabilities"))
     parsedText should include(messages("notification.background.disclosureEntity"))
 
     parsedText should include(messages("notification.heading.aboutYou"))
