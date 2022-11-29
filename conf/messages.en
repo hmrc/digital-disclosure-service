@@ -2,7 +2,7 @@ service.name = Digital Disclosure Service
 
 service.yes = Yes
 service.no = No
-service.unsure = I am not sure
+service.unsure = Yes, but I do not know it
 
 #===================================================
 #  Notification headings
@@ -10,11 +10,12 @@ service.unsure = I am not sure
 notification.h1 = Notification of intent
 notification.heading.metadata = Your submission details
 notification.heading.background = Background
-notification.heading.aboutYou = About You
-notification.heading.aboutTheIndividual = About the individual
-notification.heading.aboutTheCompany = About the company
-notification.heading.aboutTheTrust = About the trust
-notification.heading.aboutTheLLP = About the limited liability partnership
+notification.heading.aboutYou = The person completing the disclosure
+notification.heading.aboutTheIndividual = The individual the disclosure is about
+notification.heading.aboutTheCompany = The company the disclosure is about
+notification.heading.aboutTheTrust = The trust the disclosure is about
+notification.heading.aboutTheLLP = The limited liability partnership the disclosure is about
+notification.heading.aboutTheEstate = The person the disclosure is about
 
 #===================================================
 #  Metadata
@@ -26,19 +27,22 @@ notification.metadata.submissionTime = Your submission was sent on
 #  Background
 #===================================================
 
-notification.background.haveYouReceivedALetter = Will you be making a disclosure because you received a letter from HMRC?
-notification.background.letterReferenceNumber = Letter reference number
-notification.background.offshoreLiabilities = Do you want to disclose offshore liabilities?
-notification.background.onshoreLiabilities = Do you want to disclose onshore liabilities?
-notification.background.disclosureEntity = Who this disclosure is for?
+notification.background.haveYouReceivedALetter = Are you making a disclosure because you have received a letter from HMRC?
+notification.background.offshore = Offshore liabilities
+notification.background.onshore = Onshore liabilities
+notification.background.both = Offshore and onshore liabilities
+notification.background.liabilities = The disclosure will be about
+notification.background.disclosureEntity = Who this disclosure is for
 notification.background.Individual = An individual
 notification.background.Company = A company
 notification.background.LLP = A limited liability partnership
 notification.background.Trust = A trust
+notification.background.Estate = An estate
 notification.background.areYouTheIndividual = Are you the individual this disclosure relates to?
 notification.background.areYouTheCompany = Are you an officer of the company this disclosure relates to?
 notification.background.areYouTheLLP = Are you a designated member of the limited liability partnership that the disclosure will be about?
-notification.background.areYouTheTrust = Are you the trustee of the trust this disclosure relates to?
+notification.background.areYouTheTrust = Are you trustee of the trust that the disclosure will be about?
+notification.background.areYouTheEstate = Are you the executor or administrator of the estate that the disclosure will be about?
 notification.background.areYouRepresetingAnOrganisation = Are you representing an organisation?
 notification.background.organisationName = The name of the organisation you represent
 
