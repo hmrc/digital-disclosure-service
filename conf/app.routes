@@ -11,4 +11,6 @@ DELETE      /notification/user/:userId/id/:id            controllers.Notificatio
 
 POST        /notification/submit                         controllers.NotificationSubmissionController.submit
 
+POST        /notification/pdf                            controllers.NotificationPDFController.generate
+
 POST        /dms-submission/callback                     controllers.SubmissionCallbackController.callback  
