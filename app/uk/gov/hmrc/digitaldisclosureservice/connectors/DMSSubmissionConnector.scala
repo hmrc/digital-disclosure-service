@@ -52,7 +52,7 @@ class DMSSubmissionConnectorImpl @Inject() (
   private val clientAuthToken = configuration.get[String]("internal-auth.token")
   private val appName: String = configuration.get[String]("appName")
 
-  private val selfUrl = configuration.get[String]("self.url")
+  private val selfUrl = configuration.get[Service]("microservice.services.self").baseUrl
   private val callbackControllerUrl = routes.SubmissionCallbackController.callback.url
   private val callbackUrl = s"${selfUrl}/digital-disclosure-service${callbackControllerUrl}"
 
