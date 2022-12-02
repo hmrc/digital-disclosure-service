@@ -33,7 +33,7 @@ import utils.BaseSpec
 class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with SummaryListFluency {
 
   implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
-  val address = Address("line1", None, None, "line3", "postcode", Country("GBR"))
+  val address = Address("line1", None, None, None, None, Country("GBR"))
   val addressString = AddressOps(address).getAddressLines.mkString(", ")
   
   "metadataList" should {
