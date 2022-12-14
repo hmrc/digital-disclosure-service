@@ -52,7 +52,6 @@ notification.background.organisationName = The name of the organisation you repr
 
 notification.aboutYou.fullName = Your full name
 notification.aboutYou.telephoneNumber = Your telephone number
-notification.aboutYou.doYouHaveAEmailAddress = Do you have an email address that you are happy to be contacted on by HMRC?
 notification.aboutYou.emailAddress = Your email address
 notification.aboutYou.dateOfBirth = Your date of birth
 notification.aboutYou.mainOccupation = Your main occupation

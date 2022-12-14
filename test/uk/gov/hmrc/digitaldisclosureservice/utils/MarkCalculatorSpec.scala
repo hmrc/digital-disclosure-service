@@ -50,7 +50,6 @@ class MarkCalculatorSpec extends PlaySpec with Logging {
       val aboutYou = AboutYou(
         fullName = Some("Some name"),
         telephoneNumber = Some("+44 012345678"),
-        doYouHaveAEmailAddress = Some(false),
         address = Some(address)
       )
       val aboutTheIndividual = AboutTheIndividual(  
