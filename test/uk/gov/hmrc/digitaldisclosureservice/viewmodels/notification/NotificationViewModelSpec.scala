@@ -409,7 +409,6 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       val aboutYou = AboutYou()
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutYou.dateOfBirth", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutYou.mainOccupation", ValueViewModel("-")),
@@ -424,7 +423,6 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       val aboutYou = AboutYou()
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel("-"))
       ))
       NotificationViewModel.aboutYouList(aboutYou, false) shouldEqual expected

@@ -142,12 +142,12 @@ object NotificationViewModel extends SummaryListFluency {
 
     val commonRows = Seq(
       Some(SummaryListRowViewModel(s"$aboutYouKey.fullName", ValueViewModel(aboutYou.fullName))),
-      Some(SummaryListRowViewModel(s"$aboutYouKey.telephoneNumber", ValueViewModel(aboutYou.telephoneNumber))),
+      aboutYou.telephoneNumber.map(_ => SummaryListRowViewModel(s"$aboutYouKey.telephoneNumber", ValueViewModel(aboutYou.telephoneNumber))),
       aboutYou.emailAddress.map(_ => SummaryListRowViewModel(s"$aboutYouKey.emailAddress", ValueViewModel(aboutYou.emailAddress))),
       Some(SummaryListRowViewModel(s"$aboutYouKey.address", ValueViewModel(Text(aboutYou.address.map(_.toSeparatedString).getOrElse("-")))))
     ).flatten
 
-    lazy val youAreTheIndiviudalRows = Seq(
+    lazy val youAreTheIndividualRows = Seq(
       Some(SummaryListRowViewModel(s"$aboutYouKey.dateOfBirth", ValueViewModel(aboutYou.dateOfBirth.map(_.toString)))),
       Some(SummaryListRowViewModel(s"$aboutYouKey.mainOccupation", ValueViewModel(aboutYou.mainOccupation))),
       displayWhenNotYes(s"$aboutYouKey.doYouHaveANino", aboutYou.doYouHaveANino),
@@ -158,7 +158,7 @@ object NotificationViewModel extends SummaryListFluency {
       aboutYou.sautr.map(_ => SummaryListRowViewModel(s"$aboutYouKey.sautr", ValueViewModel(aboutYou.sautr)))
     ).flatten
 
-    if (disclosingAboutThemselves) SummaryListViewModel(rows = commonRows ++ youAreTheIndiviudalRows)
+    if (disclosingAboutThemselves) SummaryListViewModel(rows = commonRows ++ youAreTheIndividualRows)
     else SummaryListViewModel(rows = commonRows)
 
   }
