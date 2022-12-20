@@ -143,7 +143,6 @@ object NotificationViewModel extends SummaryListFluency {
     val commonRows = Seq(
       Some(SummaryListRowViewModel(s"$aboutYouKey.fullName", ValueViewModel(aboutYou.fullName))),
       Some(SummaryListRowViewModel(s"$aboutYouKey.telephoneNumber", ValueViewModel(aboutYou.telephoneNumber))),
-      displayWhenNo(s"$aboutYouKey.doYouHaveAEmailAddress", aboutYou.doYouHaveAEmailAddress),
       aboutYou.emailAddress.map(_ => SummaryListRowViewModel(s"$aboutYouKey.emailAddress", ValueViewModel(aboutYou.emailAddress))),
       Some(SummaryListRowViewModel(s"$aboutYouKey.address", ValueViewModel(Text(aboutYou.address.map(_.toSeparatedString).getOrElse("-")))))
     ).flatten

@@ -150,7 +150,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(false),
           emailAddress = Some("some.email@address.com"),
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some occupation"),
@@ -186,7 +185,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(false),
           emailAddress = Some("some.email@address.com"),
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some occupation"),
@@ -217,7 +215,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(false),
           emailAddress = Some("some.email@address.com"),
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some occupation"),
@@ -248,7 +245,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(false),
           emailAddress = Some("some.email@address.com"),
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some occupation"),
@@ -279,7 +275,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(false),
           emailAddress = Some("some.email@address.com"),
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some occupation"),
@@ -312,7 +307,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(true),
           emailAddress = Some("some.email@address.com"),
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some occupation"),
@@ -327,8 +321,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         parsedText should not include(messages("notification.aboutYou.doYouHaveANino"))
         parsedText should not include(messages("notification.aboutYou.registeredForVAT"))
         parsedText should not include(messages("notification.aboutYou.registeredForSA"))
-        parsedText should not include(messages("notification.aboutYou.doYouHaveAEmailAddress"))
-
       }
       
     }  
@@ -346,7 +338,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(false),
           address = Some(address("you"))
         )
         val aboutTheIndividual = AboutTheIndividual()
@@ -376,7 +367,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(false),
           address = Some(address("you"))
         )
         val aboutTheIndividual = AboutTheIndividual(  
@@ -412,7 +402,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(false),
           address = Some(address("you"))
         )
         val aboutTheIndividual = AboutTheIndividual(  
@@ -447,7 +436,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(false),
           address = Some(address("you"))
         )
         val aboutTheIndividual = AboutTheIndividual(  
@@ -482,7 +470,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(false),
           address = Some(address("you"))
         )
         val aboutTheIndividual = AboutTheIndividual(  
@@ -521,7 +508,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(false),
           address = Some(address("you"))
         )
         val aboutTheCompany = AboutTheCompany()
@@ -548,7 +534,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(false),
           address = Some(address("you"))
         )
         val aboutTheCompany = AboutTheCompany(
@@ -583,7 +568,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(false),
           address = Some(address("you"))
         )
         val aboutTheTrust = AboutTheTrust()
@@ -610,7 +594,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(false),
           address = Some(address("you"))
         )
         val aboutTheTrust = AboutTheTrust(
@@ -642,7 +625,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(false),
           address = Some(address("you"))
         )
         val aboutTheLLP = AboutTheLLP()
@@ -669,7 +651,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(false),
           address = Some(address("you"))
         )
         val aboutTheLLP = AboutTheLLP(
@@ -701,7 +682,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(false),
           address = Some(address("you"))
         )
         val aboutTheEstate = AboutTheEstate()
@@ -731,7 +711,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(false),
           address = Some(address("you"))
         )
         val aboutTheEstate = AboutTheEstate(  
@@ -767,7 +746,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(false),
           address = Some(address("you"))
         )
         val aboutTheEstate = AboutTheEstate(  
@@ -802,7 +780,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(false),
           address = Some(address("you"))
         )
         val aboutTheEstate = AboutTheEstate(  
@@ -837,7 +814,6 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
         val aboutYou = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
-          doYouHaveAEmailAddress = Some(false),
           address = Some(address("you"))
         )
         val aboutTheEstate = AboutTheEstate(  

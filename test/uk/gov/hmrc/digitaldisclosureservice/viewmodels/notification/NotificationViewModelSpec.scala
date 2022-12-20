@@ -33,7 +33,7 @@ import utils.BaseSpec
 class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with SummaryListFluency {
 
   implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
-  val address = Address("line1", None, None, "line3", "postcode", Country("GBR"))
+  val address = Address("line1", None, None, None, None, Country("GBR"))
   val addressString = AddressOps(address).getAddressLines.mkString(", ")
   
   "metadataList" should {
@@ -322,7 +322,6 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       val aboutYou = AboutYou(
         fullName = Some("Some full name"),
         telephoneNumber = Some("Some phone number"),
-        doYouHaveAEmailAddress = Some(true),
         emailAddress = Some("Some email address"),
         dateOfBirth = Some(date),
         mainOccupation = Some("Some occupation"),
@@ -353,7 +352,6 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       val aboutYou = AboutYou(
         fullName = Some("Some full name"),
         telephoneNumber = Some("Some phone number"),
-        doYouHaveAEmailAddress = Some(false),
         emailAddress = Some("Some email address"),
         dateOfBirth = Some(date),
         mainOccupation = Some("Some occupation"),
@@ -368,7 +366,6 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("Some full name")),
         SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
-        SummaryListRowViewModel("notification.aboutYou.doYouHaveAEmailAddress", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.aboutYou.emailAddress", ValueViewModel("Some email address")),
         SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel(addressString)),
         SummaryListRowViewModel("notification.aboutYou.dateOfBirth", ValueViewModel(date.toString)),
@@ -388,7 +385,6 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       val aboutYou = AboutYou(
         fullName = Some("Some full name"),
         telephoneNumber = Some("Some phone number"),
-        doYouHaveAEmailAddress = Some(true),
         emailAddress = Some("Some email address"),
         dateOfBirth = Some(date),
         mainOccupation = Some("Some occupation"),
@@ -414,7 +410,6 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutYou.doYouHaveAEmailAddress", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutYou.dateOfBirth", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutYou.mainOccupation", ValueViewModel("-")),
@@ -430,7 +425,6 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutYou.doYouHaveAEmailAddress", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel("-"))
       ))
       NotificationViewModel.aboutYouList(aboutYou, false) shouldEqual expected

@@ -36,7 +36,7 @@ trait NotificationPdfServiceHelper extends AnyWordSpecLike
 
   implicit val messages: Messages 
 
-  def address(line1: String) = Address(line1, None, None, "line3", "postcode", Country("GBR"))
+  def address(line1: String) = Address(line1, None, None, None, None, Country("GBR"))
   def addressString(address: Address) = AddressOps(address).getAddressLines.mkString(", ")
 
   def baseNotificationTests(parsedText: String) = {
@@ -56,7 +56,6 @@ trait NotificationPdfServiceHelper extends AnyWordSpecLike
 
     parsedText should include(messages("notification.aboutYou.fullName"))
     parsedText should include(messages("notification.aboutYou.telephoneNumber"))
-    parsedText should include(messages("notification.aboutYou.doYouHaveAEmailAddress"))
     parsedText should include(messages("notification.aboutYou.address"))
 
   }

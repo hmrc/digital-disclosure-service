@@ -20,19 +20,22 @@ import akka.actor.ActorSystem
 import config.Service
 import play.api.Configuration
 import play.api.http.Status._
-import play.api.libs.json.{JsSuccess, JsError, Reads}
+import play.api.libs.json.{JsError, JsSuccess, Reads}
 import play.api.libs.ws._
-import com.google.inject.{Inject, Singleton, ImplementedBy}
+import com.google.inject.{ImplementedBy, Inject, Singleton}
+
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NoStackTrace
 import models.submission.{SubmissionRequest, SubmissionResponse}
-import play.api.mvc.MultipartFormData.{FilePart, DataPart, Part}
+import play.api.mvc.MultipartFormData.{DataPart, FilePart, Part}
 import akka.stream.scaladsl.Source
+
 import java.time.format.DateTimeFormatter
 import akka.util.ByteString
-import play.mvc.Http.HeaderNames.{USER_AGENT, AUTHORIZATION}
+import play.mvc.Http.HeaderNames.{AUTHORIZATION, USER_AGENT}
 import controllers.routes
 import config.AppConfig
+import uk.gov.hmrc.digitaldisclosureservice.connectors.ConnectorErrorHandler
 import utils.Retries
 
 @Singleton
@@ -40,7 +43,10 @@ class DMSSubmissionConnectorImpl @Inject() (
   val actorSystem: ActorSystem,
   val wsClient: WSClient,
   configuration: Configuration
-)(implicit val ec: ExecutionContext, appConfig: AppConfig) extends DMSSubmissionConnector with Retries {
+)(implicit val ec: ExecutionContext, appConfig: AppConfig)
+  extends DMSSubmissionConnector
+    with Retries
+    with ConnectorErrorHandler {
 
   private val service: Service = configuration.get[Service]("microservice.services.dms-submission")
   private val clientAuthToken = configuration.get[String]("internal-auth.token")

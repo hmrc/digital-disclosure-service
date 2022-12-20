@@ -39,7 +39,7 @@ class MarkCalculatorSpec extends PlaySpec with Logging {
       val date = LocalDate.of(2005,11,12)
       val instant = date.atStartOfDay().toInstant(ZoneOffset.UTC)
 
-      val address = Address("line1", None, None, "line3", "postcode", Country("GBR"))
+      val address = Address("line1", None, None, None, None, Country("GBR"))
       val background = Background (
         haveYouReceivedALetter = Some(false),
         letterReferenceNumber = None,
@@ -50,7 +50,6 @@ class MarkCalculatorSpec extends PlaySpec with Logging {
       val aboutYou = AboutYou(
         fullName = Some("Some name"),
         telephoneNumber = Some("+44 012345678"),
-        doYouHaveAEmailAddress = Some(false),
         address = Some(address)
       )
       val aboutTheIndividual = AboutTheIndividual(  
@@ -65,7 +64,7 @@ class MarkCalculatorSpec extends PlaySpec with Logging {
       )
       val notification = Notification("userId", "id", instant, Metadata(), background, aboutYou, Some(aboutTheIndividual))
       val submissionMark = sut.getSfMark(notification.toXml)
-      submissionMark mustBe "uVq4OMtMzR0zIFau9Co751b7Kng="
+      submissionMark mustBe "ub+hDxWlSMo5Vo7PRbyh1r8nhDs="
     }
   }
 }
