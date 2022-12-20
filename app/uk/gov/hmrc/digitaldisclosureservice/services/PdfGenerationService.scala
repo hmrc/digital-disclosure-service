@@ -17,10 +17,8 @@
 package services
 
 import java.io.{ByteArrayOutputStream, File}
-
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder
 import com.openhtmltopdf.svgsupport.BatikSVGDrawer
-
 import org.apache.commons.io.IOUtils
 import models.PDF
 
@@ -42,6 +40,7 @@ trait PdfGenerationService {
       .buildPdfRenderer()
     renderer.createPDF()
     renderer.close()
+
     PDF(os)
     
   }

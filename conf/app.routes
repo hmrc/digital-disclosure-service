@@ -4,11 +4,6 @@
 
 GET         /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
 
-GET         /notification/user/:userId/id/:id            controllers.NotificationStoreController.get(userId, id)
-GET         /notification/user/:userId                   controllers.NotificationStoreController.getAll(userId)
-PUT         /notification                                controllers.NotificationStoreController.set
-DELETE      /notification/user/:userId/id/:id            controllers.NotificationStoreController.delete(userId, id)
-
 POST        /notification/submit                         controllers.NotificationSubmissionController.submit
 
 POST        /notification/pdf                            controllers.NotificationPDFController.generate

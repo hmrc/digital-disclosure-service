@@ -27,22 +27,33 @@ import play.api.http.HttpEntity
 import akka.stream.scaladsl.Source
 import akka.util.ByteString
 import scala.concurrent.Future
+import play.api.Logging
+import uk.gov.hmrc.internalauth.client._
+import controllers.Permissions.internalAuthPermission
+
+import java.nio.file.Files
+import java.io.File
 
 @Singleton()
 class NotificationPDFController @Inject()(
     override val messagesApi: MessagesApi,
     service: NotificationPdfService,
+    val auth: BackendAuthComponents,
     cc: ControllerComponents
-  ) extends BaseController(cc) with I18nSupport {
+  ) extends BaseController(cc) with I18nSupport with Logging {
 
-  def generate: Action[JsValue] = Action.async(parse.json) { implicit request =>
+  def generate: Action[JsValue] = auth.authorizedAction(internalAuthPermission).async(parse.json) { implicit request =>
     withValidJson[Notification]{ notification =>
       val pdf = service.createPdf(notification).byteArray
       val contentLength = Some(pdf.length.toLong)
       
+      val tempFile: File = new File("test.pdf")
+      Files.write(tempFile.toPath, pdf)
+
+      logger.info(s"contentLength = $contentLength")
       Future.successful(Result(
         header = ResponseHeader(200, Map.empty),
-        body = HttpEntity.Streamed(Source(Seq(ByteString(pdf))), contentLength, Some("application/pdf"))
+        body = HttpEntity.Streamed(Source(Seq(ByteString(pdf))), contentLength, Some("application/octet-stream"))
       ))
     }
   }

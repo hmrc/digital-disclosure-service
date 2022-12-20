@@ -33,8 +33,7 @@ import play.api.libs.json.Json
 import models.notification._
 import services.DMSSubmissionService
 import models.submission.SubmissionResponse
-import 
-play.api.i18n.DefaultMessagesApi
+import play.api.i18n.DefaultMessagesApi
 
 class NotificationSubmissionControllerSpec extends AnyWordSpec with Matchers with MockitoSugar with BeforeAndAfterEach with MaterializerSpec {
 

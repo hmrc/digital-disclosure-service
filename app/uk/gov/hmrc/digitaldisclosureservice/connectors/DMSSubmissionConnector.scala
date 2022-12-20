@@ -62,7 +62,7 @@ class DMSSubmissionConnectorImpl @Inject() (
           response.status match {
             case ACCEPTED => handleResponse[SubmissionResponse.Success](response)
             case BAD_REQUEST => handleResponse[SubmissionResponse.Failure](response)
-            case _ => Future.failed(NotificationStoreConnector.UnexpectedResponseException(response.status, response.body))
+            case _ => Future.failed(DMSSubmissionConnector.UnexpectedResponseException(response.status, response.body))
           }
         }
     }
@@ -71,7 +71,7 @@ class DMSSubmissionConnectorImpl @Inject() (
   def handleResponse[A](response: WSResponse)(implicit reads: Reads[A]): Future[A] = {
     response.json.validate[A] match {
       case JsSuccess(a, _) => Future.successful(a)
-      case JsError(_) => Future.failed(NotificationStoreConnector.UnexpectedResponseException(response.status, response.body))
+      case JsError(_) => Future.failed(DMSSubmissionConnector.UnexpectedResponseException(response.status, response.body))
     }
   }
 
