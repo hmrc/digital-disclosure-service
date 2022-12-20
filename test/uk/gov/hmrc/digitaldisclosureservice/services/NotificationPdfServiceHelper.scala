@@ -56,7 +56,6 @@ trait NotificationPdfServiceHelper extends AnyWordSpecLike
 
     parsedText should include(messages("notification.aboutYou.fullName"))
     parsedText should include(messages("notification.aboutYou.telephoneNumber"))
-    parsedText should include(messages("notification.aboutYou.doYouHaveAEmailAddress"))
     parsedText should include(messages("notification.aboutYou.address"))
 
   }

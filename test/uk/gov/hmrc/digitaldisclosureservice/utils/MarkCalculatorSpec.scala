@@ -50,7 +50,6 @@ class MarkCalculatorSpec extends PlaySpec with Logging {
       val aboutYou = AboutYou(
         fullName = Some("Some name"),
         telephoneNumber = Some("+44 012345678"),
-        doYouHaveAEmailAddress = Some(false),
         address = Some(address)
       )
       val aboutTheIndividual = AboutTheIndividual(  
@@ -65,7 +64,7 @@ class MarkCalculatorSpec extends PlaySpec with Logging {
       )
       val notification = Notification("userId", "id", instant, Metadata(), background, aboutYou, Some(aboutTheIndividual))
       val submissionMark = sut.getSfMark(notification.toXml)
-      submissionMark mustBe "uFtlUQpQ1sPUn+AheVqTMQEaQcU="
+      submissionMark mustBe "ub+hDxWlSMo5Vo7PRbyh1r8nhDs="
     }
   }
 }
