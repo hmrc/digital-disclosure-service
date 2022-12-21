@@ -35,7 +35,7 @@ class NotificationSubmissionController @Inject()(
     cc: ControllerComponents
   )(implicit ec: ExecutionContext) extends BaseController(cc) with I18nSupport {
 
-  def submit: Action[JsValue] = auth.authorizedAction(internalAuthPermission).async(parse.json) { implicit request =>
+  def submit: Action[JsValue] = auth.authorizedAction(internalAuthPermission("submit")).async(parse.json) { implicit request =>
     withValidJson[Notification]{ notification =>
       submissionService.submitNotification(notification).map(_ match {
         case SubmissionResponse.Success(id) => Accepted(Json.toJson(SubmissionResponse.Success(id)))

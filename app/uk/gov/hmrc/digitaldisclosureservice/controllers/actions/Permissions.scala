@@ -20,10 +20,10 @@ import uk.gov.hmrc.internalauth.client._
 
 object Permissions {
 
-  val internalAuthPermission = Predicate.Permission(
+  def internalAuthPermission(location: String) = Predicate.Permission(
     resource = Resource(
       resourceType = ResourceType("digital-disclosure-service"),
-      resourceLocation = ResourceLocation("submit")
+      resourceLocation = ResourceLocation(location)
     ),
     action = IAAction("WRITE")
   )

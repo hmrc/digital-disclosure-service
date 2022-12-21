@@ -42,7 +42,7 @@ class NotificationPDFController @Inject()(
     cc: ControllerComponents
   ) extends BaseController(cc) with I18nSupport with Logging {
 
-  def generate: Action[JsValue] = auth.authorizedAction(internalAuthPermission).async(parse.json) { implicit request =>
+  def generate: Action[JsValue] = auth.authorizedAction(internalAuthPermission("pdf")).async(parse.json) { implicit request =>
     withValidJson[Notification]{ notification =>
       val pdf = service.createPdf(notification).byteArray
       val contentLength = Some(pdf.length.toLong)

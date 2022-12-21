@@ -112,7 +112,7 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
       )
 
       val exception = connector.submit(submissionRequest, pdf).failed.futureValue
-      exception mustEqual NotificationStoreConnector.UnexpectedResponseException(202, """{"name": "SomeId"}""")
+      exception mustEqual DMSSubmissionConnector.UnexpectedResponseException(202, """{"name": "SomeId"}""")
     }
 
     "must return a successful future when the store responds with BAD_REQUEST and a successful SubmissionResponse.Failure" in {
@@ -163,7 +163,7 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
       )
 
       val exception = connector.submit(submissionRequest, pdf).failed.futureValue
-      exception mustEqual NotificationStoreConnector.UnexpectedResponseException(400, """{"name": "SomeId"}""")
+      exception mustEqual DMSSubmissionConnector.UnexpectedResponseException(400, """{"name": "SomeId"}""")
     }
 
     "must return a failed future when a different response is returned" in {
@@ -187,7 +187,7 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
       )
 
       val exception = connector.submit(submissionRequest, pdf).failed.futureValue
-      exception mustEqual NotificationStoreConnector.UnexpectedResponseException(404, """{"name": "SomeId"}""")
+      exception mustEqual DMSSubmissionConnector.UnexpectedResponseException(404, """{"name": "SomeId"}""")
     }
     
   }
