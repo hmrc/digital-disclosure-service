@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.digitaldisclosureservice.connectors
+package controllers
 
-import play.api.Logging
+import uk.gov.hmrc.internalauth.client._
 
-import scala.concurrent.Future
+object Permissions {
 
-trait ConnectorErrorHandler extends Logging {
-
-  def handleError[T](e: Exception): Future[T] = {
-    logger.error(e.getMessage)
-    Future.failed(e)
-  }
+  def internalAuthPermission(location: String) = Predicate.Permission(
+    resource = Resource(
+      resourceType = ResourceType("digital-disclosure-service"),
+      resourceLocation = ResourceLocation(location)
+    ),
+    action = IAAction("WRITE")
+  )
 
 }

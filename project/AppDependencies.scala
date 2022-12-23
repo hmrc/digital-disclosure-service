@@ -24,7 +24,8 @@ object AppDependencies {
     "com.github.pathikrit"     %%  "better-files"                  % "3.9.1",
     "commons-codec"            %   "commons-codec"                 % "1.14",
     "com.thoughtworks.xstream" %   "xstream"                       % "1.4.11.1",
-    "uk.gov.hmrc.mongo"        %% "hmrc-mongo-play-28"             % "0.73.0"
+    "uk.gov.hmrc.mongo"        %% "hmrc-mongo-play-28"             % "0.73.0",
+    "uk.gov.hmrc"              %% "internal-auth-client-play-28"   % "1.2.0"
   )
 
   val test = Seq(

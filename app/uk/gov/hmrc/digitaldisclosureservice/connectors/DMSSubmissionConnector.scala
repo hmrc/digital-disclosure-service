@@ -35,7 +35,6 @@ import akka.util.ByteString
 import play.mvc.Http.HeaderNames.{AUTHORIZATION, USER_AGENT}
 import controllers.routes
 import config.AppConfig
-import uk.gov.hmrc.digitaldisclosureservice.connectors.ConnectorErrorHandler
 import utils.Retries
 
 @Singleton
@@ -45,8 +44,7 @@ class DMSSubmissionConnectorImpl @Inject() (
   configuration: Configuration
 )(implicit val ec: ExecutionContext, appConfig: AppConfig)
   extends DMSSubmissionConnector
-    with Retries
-    with ConnectorErrorHandler {
+    with Retries {
 
   private val service: Service = configuration.get[Service]("microservice.services.dms-submission")
   private val clientAuthToken = configuration.get[String]("internal-auth.token")
@@ -68,7 +66,7 @@ class DMSSubmissionConnectorImpl @Inject() (
           response.status match {
             case ACCEPTED => handleResponse[SubmissionResponse.Success](response)
             case BAD_REQUEST => handleResponse[SubmissionResponse.Failure](response)
-            case _ => handleError(NotificationStoreConnector.UnexpectedResponseException(response.status, response.body))
+            case _ => Future.failed(DMSSubmissionConnector.UnexpectedResponseException(response.status, response.body))
           }
         }
     }
@@ -77,7 +75,7 @@ class DMSSubmissionConnectorImpl @Inject() (
   def handleResponse[A](response: WSResponse)(implicit reads: Reads[A]): Future[A] = {
     response.json.validate[A] match {
       case JsSuccess(a, _) => Future.successful(a)
-      case JsError(_) => handleError(NotificationStoreConnector.UnexpectedResponseException(response.status, response.body))
+      case JsError(e) => Future.failed(DMSSubmissionConnector.UnexpectedResponseException(response.status, response.body))
     }
   }
 
