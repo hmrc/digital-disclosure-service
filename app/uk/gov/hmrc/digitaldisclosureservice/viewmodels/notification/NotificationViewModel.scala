@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,8 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist._
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import models.YesNoOrUnsure
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 final case class NotificationViewModel(
   metadataList: SummaryList,
@@ -60,9 +62,14 @@ object NotificationViewModel extends SummaryListFluency {
   def metadataList(metadata: Metadata)(implicit messages: Messages): SummaryList = SummaryListViewModel(
     rows = Seq(
       SummaryListRowViewModel("notification.metadata.reference", ValueViewModel(metadata.reference)),
-      SummaryListRowViewModel("notification.metadata.submissionTime", ValueViewModel(metadata.submissionTime.map(_.toString)))
+      SummaryListRowViewModel("notification.metadata.submissionTime", ValueViewModel(metadata.submissionTime.map(toPrettyDate)))
     )
   )
+
+  def toPrettyDate(date: LocalDateTime): String = {
+    val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy HH:MM:SS")
+    date.format(dateFormatter)
+  }
 
   def backgroundList(background: Background)(implicit messages: Messages): SummaryList = SummaryListViewModel(
     rows = Seq(

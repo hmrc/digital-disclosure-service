@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import org.scalatest.matchers.should.Matchers
 import viewmodels.govuk.SummaryListFluency
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import org.scalatest.wordspec.AnyWordSpec
-import java.time.{LocalDate, LocalDateTime}
+import java.time.{LocalDate}
 import viewmodels.implicits._
 import play.api.i18n.{MessagesApi, Messages}
 import play.api.test.FakeRequest
@@ -29,6 +29,8 @@ import models.address._
 import models.address.Address._
 import models.notification._
 import utils.BaseSpec
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with SummaryListFluency {
 
@@ -42,7 +44,7 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       val metadata = Metadata(Some("Some reference"), Some(date))
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.metadata.reference", ValueViewModel("Some reference")),
-        SummaryListRowViewModel("notification.metadata.submissionTime", ValueViewModel(date.toString))
+        SummaryListRowViewModel("notification.metadata.submissionTime", ValueViewModel(toPrettyDate(date)))
       ))
       NotificationViewModel.metadataList(metadata) shouldEqual expected
     }
@@ -506,6 +508,11 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       val text: Text = YesNoOrUnsure.Unsure
       text shouldEqual Text(messages("service.unsure"))
     }
+  }
+
+  def toPrettyDate(date: LocalDateTime): String = {
+    val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy HH:MM:SS")
+    date.format(dateFormatter)
   }
 
 }
