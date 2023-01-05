@@ -508,10 +508,4 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       text shouldEqual Text(messages("service.unsure"))
     }
   }
-
-  def toPrettyDate(date: LocalDateTime): String = {
-    val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy HH:MM:SS")
-    date.format(dateFormatter)
-  }
-
 }
