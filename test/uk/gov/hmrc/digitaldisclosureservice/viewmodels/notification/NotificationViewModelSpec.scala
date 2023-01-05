@@ -31,6 +31,7 @@ import models.notification._
 import utils.BaseSpec
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.time.Month
 
 class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with SummaryListFluency {
 
@@ -40,11 +41,11 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
   
   "metadataList" should {
     "return populated values as rows" in {
-      val date = LocalDateTime.now()
+      val date = LocalDateTime.of(2023, Month.MARCH, 4, 11, 03, 00)
       val metadata = Metadata(Some("Some reference"), Some(date))
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.metadata.reference", ValueViewModel("Some reference")),
-        SummaryListRowViewModel("notification.metadata.submissionTime", ValueViewModel(toPrettyDate(date)))
+        SummaryListRowViewModel("notification.metadata.submissionTime", ValueViewModel("4 March 2023 11:03:00"))
       ))
       NotificationViewModel.metadataList(metadata) shouldEqual expected
     }
