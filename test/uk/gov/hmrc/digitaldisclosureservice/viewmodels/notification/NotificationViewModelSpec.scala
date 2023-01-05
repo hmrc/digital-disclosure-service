@@ -20,7 +20,7 @@ import org.scalatest.matchers.should.Matchers
 import viewmodels.govuk.SummaryListFluency
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import org.scalatest.wordspec.AnyWordSpec
-import java.time.{LocalDate}
+import java.time.{LocalDate, LocalDateTime, Month}
 import viewmodels.implicits._
 import play.api.i18n.{MessagesApi, Messages}
 import play.api.test.FakeRequest
@@ -29,9 +29,7 @@ import models.address._
 import models.address.Address._
 import models.notification._
 import utils.BaseSpec
-import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.time.Month
 
 class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with SummaryListFluency {
 
