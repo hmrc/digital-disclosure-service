@@ -43,7 +43,7 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       val metadata = Metadata(Some("Some reference"), Some(date))
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.metadata.reference", ValueViewModel("Some reference")),
-        SummaryListRowViewModel("notification.metadata.submissionTime", ValueViewModel("4 March 2023 11:03:00"))
+        SummaryListRowViewModel("notification.metadata.submissionTime", ValueViewModel("4 March 2023 11:03am"))
       ))
       NotificationViewModel.metadataList(metadata) shouldEqual expected
     }
