@@ -67,8 +67,9 @@ object NotificationViewModel extends SummaryListFluency {
   )
 
   def toPrettyDate(date: LocalDateTime): String = {
-    val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm:ss")
-    date.format(dateFormatter)
+    val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy HH:mma")
+    val formattedDate = date.format(dateFormatter)
+    formattedDate.replace("AM", "am").replace("PM","pm")
   }
 
   def backgroundList(background: Background)(implicit messages: Messages): SummaryList = SummaryListViewModel(
