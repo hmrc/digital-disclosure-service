@@ -27,14 +27,15 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 final case class NotificationViewModel(
-  metadataList: SummaryList,
+  metadataList: Option[SummaryList],
   backgroundList: SummaryList,
   aboutTheIndividualList: Option[SummaryList],
   aboutTheCompanyList: Option[SummaryList],
   aboutTheTrustList: Option[SummaryList],
   aboutTheLLPList: Option[SummaryList],
   aboutTheEstateList: Option[SummaryList],
-  aboutYouList: SummaryList
+  aboutYouList: SummaryList,
+  aboutYouHeading: String = "notification.heading.completing"
 )
 
 object NotificationViewModel extends SummaryListFluency {
@@ -47,24 +48,33 @@ object NotificationViewModel extends SummaryListFluency {
   def apply(notification: Notification)(implicit messages: Messages): NotificationViewModel = {
 
     NotificationViewModel(
-      metadataList(notification.metadata),
+      metadataList(notification.background, notification.metadata),
       backgroundList(notification.background),
       notification.aboutTheIndividual.map(aboutTheIndividualList),
       notification.aboutTheCompany.map(aboutTheCompanyList),
       notification.aboutTheTrust.map(aboutTheTrustList),
       notification.aboutTheLLP.map(aboutTheLLPList),
       notification.aboutTheEstate.map(aboutTheEstateList),
-      aboutYouList(notification.aboutYou, notification.disclosingAboutThemselves)
+      aboutYouList(notification.aboutYou, notification.disclosingAboutThemselves),
+      aboutYouHeading(notification)
     )
 
   }
 
-  def metadataList(metadata: Metadata)(implicit messages: Messages): SummaryList = SummaryListViewModel(
-    rows = Seq(
-      SummaryListRowViewModel("notification.metadata.reference", ValueViewModel(metadata.reference)),
-      SummaryListRowViewModel("notification.metadata.submissionTime", ValueViewModel(metadata.submissionTime.map(toPrettyDate)))
-    )
-  )
+  def aboutYouHeading(notification: Notification): String =
+    notification.background.disclosureEntity match {
+      case Some(DisclosureEntity(Individual, Some(true))) => "notification.heading.aboutYou"
+      case _ => "notification.heading.completing"
+    }
+
+  def metadataList(background: Background, metadata: Metadata)(implicit messages: Messages): Option[SummaryList] =
+    metadata.reference.map{ ref =>
+      val referenceKey = if (background.letterReferenceNumber.isDefined) "notification.metadata.caseRef" else "notification.metadata.reference"
+      SummaryListViewModel(rows = Seq(
+        SummaryListRowViewModel(referenceKey, ValueViewModel(ref)),
+        SummaryListRowViewModel("notification.metadata.submissionTime", ValueViewModel(metadata.submissionTime.map(toPrettyDate)))
+      ))
+    }
 
   def toPrettyDate(date: LocalDateTime): String = {
     val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy HH:mma")

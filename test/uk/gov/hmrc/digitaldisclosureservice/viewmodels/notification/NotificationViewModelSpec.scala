@@ -29,7 +29,6 @@ import models.address._
 import models.address.Address._
 import models.notification._
 import utils.BaseSpec
-import java.time.format.DateTimeFormatter
 
 class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with SummaryListFluency {
 
@@ -39,23 +38,31 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
   
   "metadataList" should {
     "return populated values as rows" in {
-      val date = LocalDateTime.of(2023, Month.MARCH, 4, 11, 03, 00)
+      val date = LocalDateTime.of(2023, Month.MARCH, 4, 11, 3, 0)
       val metadata = Metadata(Some("Some reference"), Some(date))
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.metadata.reference", ValueViewModel("Some reference")),
         SummaryListRowViewModel("notification.metadata.submissionTime", ValueViewModel("4 March 2023 11:03am"))
       ))
-      NotificationViewModel.metadataList(metadata) shouldEqual expected
+      NotificationViewModel.metadataList(Background(), metadata) shouldEqual Some(expected)
     }
 
-    "return unpopulated values as rows with value dash" in {
-      val metadata = Metadata()
+    "return populated values with case ref text when you are the individual as rows" in {
+      val date = LocalDateTime.of(2023, Month.MARCH, 4, 11, 3, 0)
+      val background = Background(letterReferenceNumber = Some("case ref"))
+      val metadata = Metadata(Some("Some reference"), Some(date))
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.metadata.reference", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.metadata.submissionTime", ValueViewModel("-"))
+        SummaryListRowViewModel("notification.metadata.caseRef", ValueViewModel("Some reference")),
+        SummaryListRowViewModel("notification.metadata.submissionTime", ValueViewModel("4 March 2023 11:03am"))
       ))
-      NotificationViewModel.metadataList(metadata) shouldEqual expected
+      NotificationViewModel.metadataList(background, metadata) shouldEqual Some(expected)
     }
+
+    "return unpopulated values as None" in {
+      val metadata = Metadata()
+      NotificationViewModel.metadataList(Background(), metadata) shouldEqual None
+    }
+
   }
 
   "backgroundList" should {
