@@ -39,20 +39,20 @@ trait NotificationPdfServiceHelper extends AnyWordSpecLike
   def address(line1: String) = Address(line1, None, None, None, None, Country("GBR"))
   def addressString(address: Address) = AddressOps(address).getAddressLines.mkString(", ")
 
-  def baseNotificationTests(parsedText: String) = {
+  def baseNotificationTests(areYouTheIndividual: Boolean, parsedText: String) = {
     parsedText should include(messages("service.name"))
     parsedText should include(messages("notification.h1"))
-
-    parsedText should include(messages("notification.heading.metadata"))
-    parsedText should include(messages("notification.metadata.reference"))
-    parsedText should include(messages("notification.metadata.submissionTime"))
 
     parsedText should include(messages("notification.heading.background"))
     parsedText should include(messages("notification.background.haveYouReceivedALetter"))
     parsedText should include(messages("notification.background.liabilities"))
     parsedText should include(messages("notification.background.disclosureEntity"))
 
-    parsedText should include(messages("notification.heading.aboutYou"))
+    if (areYouTheIndividual) {
+      parsedText should include(messages("notification.heading.aboutYou"))
+    } else {
+      parsedText should include(messages("notification.heading.completing"))
+    }
 
     parsedText should include(messages("notification.aboutYou.fullName"))
     parsedText should include(messages("notification.aboutYou.address"))

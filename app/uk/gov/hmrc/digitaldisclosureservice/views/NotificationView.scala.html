@@ -62,7 +62,7 @@
 
         <h1 style="padding-top: 1em;">@messages("notification.h1")</h1>
 
-        @summarySection("notification.heading.metadata", notification.metadataList)
+        @notification.metadataList.map(list => summarySection("notification.heading.metadata", list))
         @summarySection("notification.heading.background", notification.backgroundList)
 
         @notification.aboutTheIndividualList.map(list => summarySection("notification.heading.aboutTheIndividual", list))
@@ -71,7 +71,7 @@
         @notification.aboutTheLLPList.map(list => summarySection("notification.heading.aboutTheLLP", list))
         @notification.aboutTheEstateList.map(list => summarySection("notification.heading.aboutTheEstate", list))
 
-        @summarySection("notification.heading.aboutYou", notification.aboutYouList)
-
+        @summarySection(notification.aboutYouHeading, notification.aboutYouList)
+        
     </body>
 </html>

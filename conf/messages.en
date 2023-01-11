@@ -10,18 +10,20 @@ service.unsure = Yes, but I do not know it
 notification.h1 = Notification of intent
 notification.heading.metadata = Your submission details
 notification.heading.background = Background
-notification.heading.aboutYou = The person completing the disclosure
-notification.heading.aboutTheIndividual = The individual the disclosure is about
-notification.heading.aboutTheCompany = The company the disclosure is about
-notification.heading.aboutTheTrust = The trust the disclosure is about
-notification.heading.aboutTheLLP = The limited liability partnership the disclosure is about
-notification.heading.aboutTheEstate = The person the disclosure is about
+notification.heading.aboutYou = About you
+notification.heading.completing = The person completing the notification
+notification.heading.aboutTheIndividual = The individual the disclosure will be about
+notification.heading.aboutTheCompany = The company the disclosure will be about
+notification.heading.aboutTheTrust = The trust the disclosure will be about
+notification.heading.aboutTheLLP = The limited liability partnership the disclosure will be about
+notification.heading.aboutTheEstate = The person the disclosure will be about
 
 #===================================================
 #  Metadata
 #===================================================
 notification.metadata.reference = Your reference number
-notification.metadata.submissionTime = Your submission was sent on
+notification.metadata.caseRef = Case reference
+notification.metadata.submissionTime = Notification sent on
 
 #===================================================
 #  Background
@@ -32,7 +34,7 @@ notification.background.offshore = Offshore liabilities
 notification.background.onshore = Onshore liabilities
 notification.background.both = Offshore and onshore liabilities
 notification.background.liabilities = The disclosure will be about
-notification.background.disclosureEntity = Who this disclosure is for
+notification.background.disclosureEntity = Who the disclosure will be about
 notification.background.Individual = An individual
 notification.background.Company = A company
 notification.background.LLP = A limited liability partnership
@@ -95,7 +97,7 @@ notification.aboutTheTrust.address = Trust’s address
 
 #===================================================
 #  About the LLP
-#===================================================
+#=================================================== 
 
 notification.aboutTheLLP.name = Limited Liability Partnership’s name
 notification.aboutTheLLP.address = Limited Liability Partnership’s address
