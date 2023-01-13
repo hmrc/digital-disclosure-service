@@ -343,8 +343,8 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       )
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("Some full name")),
-        SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
         SummaryListRowViewModel("notification.aboutYou.emailAddress", ValueViewModel("Some email address")),
+        SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
         SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel(addressString)),
         SummaryListRowViewModel("notification.aboutYou.dateOfBirth", ValueViewModel(date.toString)),
         SummaryListRowViewModel("notification.aboutYou.mainOccupation", ValueViewModel("Some occupation")),
@@ -373,8 +373,8 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       )
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("Some full name")),
-        SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
         SummaryListRowViewModel("notification.aboutYou.emailAddress", ValueViewModel("Some email address")),
+        SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
         SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel(addressString)),
         SummaryListRowViewModel("notification.aboutYou.dateOfBirth", ValueViewModel(date.toString)),
         SummaryListRowViewModel("notification.aboutYou.mainOccupation", ValueViewModel("Some occupation")),
@@ -406,8 +406,8 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       )
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("Some full name")),
-        SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
         SummaryListRowViewModel("notification.aboutYou.emailAddress", ValueViewModel("Some email address")),
+        SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
         SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel(addressString))
       ))
       NotificationViewModel.aboutYouList(aboutYou, false) shouldEqual expected
