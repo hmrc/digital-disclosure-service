@@ -107,6 +107,7 @@ object NotificationViewModel extends SummaryListFluency {
   def aboutTheIndividualList(aboutTheIndividual: AboutTheIndividual)(implicit messages: Messages): SummaryList = SummaryListViewModel(
     rows = Seq(
       Some(SummaryListRowViewModel(s"$individualKey.fullName", ValueViewModel(aboutTheIndividual.fullName))),
+      Some(SummaryListRowViewModel(s"$individualKey.address", ValueViewModel(Text(aboutTheIndividual.address.map(_.toSeparatedString).getOrElse("-"))))),
       Some(SummaryListRowViewModel(s"$individualKey.dateOfBirth", ValueViewModel(aboutTheIndividual.dateOfBirth.map(_.toString)))),
       Some(SummaryListRowViewModel(s"$individualKey.mainOccupation", ValueViewModel(aboutTheIndividual.mainOccupation))),
       displayWhenNotYes(s"$individualKey.doTheyHaveANino", aboutTheIndividual.doTheyHaveANino),
@@ -114,8 +115,7 @@ object NotificationViewModel extends SummaryListFluency {
       displayWhenNotYes(s"$individualKey.registeredForVAT", aboutTheIndividual.registeredForVAT),
       aboutTheIndividual.vatRegNumber.map(_ => SummaryListRowViewModel(s"$individualKey.vatRegNumber", ValueViewModel(aboutTheIndividual.vatRegNumber))),
       displayWhenNotYes(s"$individualKey.registeredForSA", aboutTheIndividual.registeredForSA),
-      aboutTheIndividual.sautr.map(_ => SummaryListRowViewModel(s"$individualKey.sautr", ValueViewModel(aboutTheIndividual.sautr))),
-      Some(SummaryListRowViewModel(s"$individualKey.address", ValueViewModel(Text(aboutTheIndividual.address.map(_.toSeparatedString).getOrElse("-")))))
+      aboutTheIndividual.sautr.map(_ => SummaryListRowViewModel(s"$individualKey.sautr", ValueViewModel(aboutTheIndividual.sautr)))
     ).flatten
   )
 
@@ -144,6 +144,7 @@ object NotificationViewModel extends SummaryListFluency {
   def aboutTheEstateList(aboutTheEstate: AboutTheEstate)(implicit messages: Messages): SummaryList = SummaryListViewModel(
     rows = Seq(
       Some(SummaryListRowViewModel(s"$estateKey.fullName", ValueViewModel(aboutTheEstate.fullName))),
+      Some(SummaryListRowViewModel(s"$estateKey.address", ValueViewModel(Text(aboutTheEstate.address.map(_.toSeparatedString).getOrElse("-"))))),
       Some(SummaryListRowViewModel(s"$estateKey.dateOfBirth", ValueViewModel(aboutTheEstate.dateOfBirth.map(_.toString)))),
       Some(SummaryListRowViewModel(s"$estateKey.mainOccupation", ValueViewModel(aboutTheEstate.mainOccupation))),
       displayWhenNotYes(s"$estateKey.doTheyHaveANino", aboutTheEstate.doTheyHaveANino),
@@ -151,8 +152,7 @@ object NotificationViewModel extends SummaryListFluency {
       displayWhenNotYes(s"$estateKey.registeredForVAT", aboutTheEstate.registeredForVAT),
       aboutTheEstate.vatRegNumber.map(_ => SummaryListRowViewModel(s"$estateKey.vatRegNumber", ValueViewModel(aboutTheEstate.vatRegNumber))),
       displayWhenNotYes(s"$estateKey.registeredForSA", aboutTheEstate.registeredForSA),
-      aboutTheEstate.sautr.map(_ => SummaryListRowViewModel(s"$estateKey.sautr", ValueViewModel(aboutTheEstate.sautr))),
-      Some(SummaryListRowViewModel(s"$estateKey.address", ValueViewModel(Text(aboutTheEstate.address.map(_.toSeparatedString).getOrElse("-")))))
+      aboutTheEstate.sautr.map(_ => SummaryListRowViewModel(s"$estateKey.sautr", ValueViewModel(aboutTheEstate.sautr)))
     ).flatten
   )
 

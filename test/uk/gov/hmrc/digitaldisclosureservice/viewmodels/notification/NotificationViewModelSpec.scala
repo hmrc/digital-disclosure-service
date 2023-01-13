@@ -199,12 +199,12 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       )
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.aboutTheIndividual.fullName", ValueViewModel("Some full name")),
+        SummaryListRowViewModel("notification.aboutTheIndividual.address", ValueViewModel(addressString)),
         SummaryListRowViewModel("notification.aboutTheIndividual.dateOfBirth", ValueViewModel(date.toString)),
         SummaryListRowViewModel("notification.aboutTheIndividual.mainOccupation", ValueViewModel("Some occupation")),
         SummaryListRowViewModel("notification.aboutTheIndividual.nino", ValueViewModel("Some nino")),
         SummaryListRowViewModel("notification.aboutTheIndividual.vatRegNumber", ValueViewModel("Some reg number")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.sautr", ValueViewModel("Some SAUTR")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.address", ValueViewModel(addressString))
+        SummaryListRowViewModel("notification.aboutTheIndividual.sautr", ValueViewModel("Some SAUTR"))
       ))
       NotificationViewModel.aboutTheIndividualList(aboutTheIndividual) shouldEqual expected
     }
@@ -225,6 +225,7 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       )
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.aboutTheIndividual.fullName", ValueViewModel("Some full name")),
+        SummaryListRowViewModel("notification.aboutTheIndividual.address", ValueViewModel(addressString)),
         SummaryListRowViewModel("notification.aboutTheIndividual.dateOfBirth", ValueViewModel(date.toString)),
         SummaryListRowViewModel("notification.aboutTheIndividual.mainOccupation", ValueViewModel("Some occupation")),
         SummaryListRowViewModel("notification.aboutTheIndividual.doTheyHaveANino", ValueViewModel(messages("service.no"))),
@@ -232,8 +233,7 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
         SummaryListRowViewModel("notification.aboutTheIndividual.registeredForVAT", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.aboutTheIndividual.vatRegNumber", ValueViewModel("Some reg number")),
         SummaryListRowViewModel("notification.aboutTheIndividual.registeredForSA", ValueViewModel(messages("service.unsure"))),
-        SummaryListRowViewModel("notification.aboutTheIndividual.sautr", ValueViewModel("Some SAUTR")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.address", ValueViewModel(addressString))
+        SummaryListRowViewModel("notification.aboutTheIndividual.sautr", ValueViewModel("Some SAUTR"))
       ))
       NotificationViewModel.aboutTheIndividualList(aboutTheIndividual) shouldEqual expected
     }
@@ -242,12 +242,12 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       val aboutTheIndividual = AboutTheIndividual()
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.aboutTheIndividual.fullName", ValueViewModel("-")),
+        SummaryListRowViewModel("notification.aboutTheIndividual.address", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutTheIndividual.dateOfBirth", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutTheIndividual.mainOccupation", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutTheIndividual.doTheyHaveANino", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutTheIndividual.registeredForVAT", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.registeredForSA", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.address", ValueViewModel("-"))
+        SummaryListRowViewModel("notification.aboutTheIndividual.registeredForSA", ValueViewModel("-"))
       ))
       NotificationViewModel.aboutTheIndividualList(aboutTheIndividual) shouldEqual expected
     }
@@ -270,12 +270,12 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       )
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.aboutTheEstate.fullName", ValueViewModel("Some full name")),
+        SummaryListRowViewModel("notification.aboutTheEstate.address", ValueViewModel(addressString)),
         SummaryListRowViewModel("notification.aboutTheEstate.dateOfBirth", ValueViewModel(date.toString)),
         SummaryListRowViewModel("notification.aboutTheEstate.mainOccupation", ValueViewModel("Some occupation")),
         SummaryListRowViewModel("notification.aboutTheEstate.nino", ValueViewModel("Some nino")),
         SummaryListRowViewModel("notification.aboutTheEstate.vatRegNumber", ValueViewModel("Some reg number")),
-        SummaryListRowViewModel("notification.aboutTheEstate.sautr", ValueViewModel("Some SAUTR")),
-        SummaryListRowViewModel("notification.aboutTheEstate.address", ValueViewModel(addressString))
+        SummaryListRowViewModel("notification.aboutTheEstate.sautr", ValueViewModel("Some SAUTR"))
       ))
       NotificationViewModel.aboutTheEstateList(aboutTheEstate) shouldEqual expected
     }
@@ -296,6 +296,7 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       )
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.aboutTheEstate.fullName", ValueViewModel("Some full name")),
+        SummaryListRowViewModel("notification.aboutTheEstate.address", ValueViewModel(addressString)),
         SummaryListRowViewModel("notification.aboutTheEstate.dateOfBirth", ValueViewModel(date.toString)),
         SummaryListRowViewModel("notification.aboutTheEstate.mainOccupation", ValueViewModel("Some occupation")),
         SummaryListRowViewModel("notification.aboutTheEstate.doTheyHaveANino", ValueViewModel(messages("service.no"))),
@@ -303,8 +304,7 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
         SummaryListRowViewModel("notification.aboutTheEstate.registeredForVAT", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.aboutTheEstate.vatRegNumber", ValueViewModel("Some reg number")),
         SummaryListRowViewModel("notification.aboutTheEstate.registeredForSA", ValueViewModel(messages("service.unsure"))),
-        SummaryListRowViewModel("notification.aboutTheEstate.sautr", ValueViewModel("Some SAUTR")),
-        SummaryListRowViewModel("notification.aboutTheEstate.address", ValueViewModel(addressString))
+        SummaryListRowViewModel("notification.aboutTheEstate.sautr", ValueViewModel("Some SAUTR"))
       ))
       NotificationViewModel.aboutTheEstateList(aboutTheEstate) shouldEqual expected
     }
@@ -313,12 +313,12 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       val aboutTheEstate = AboutTheEstate()
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.aboutTheEstate.fullName", ValueViewModel("-")),
+        SummaryListRowViewModel("notification.aboutTheEstate.address", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutTheEstate.dateOfBirth", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutTheEstate.mainOccupation", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutTheEstate.doTheyHaveANino", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutTheEstate.registeredForVAT", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheEstate.registeredForSA", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheEstate.address", ValueViewModel("-"))
+        SummaryListRowViewModel("notification.aboutTheEstate.registeredForSA", ValueViewModel("-"))
       ))
       NotificationViewModel.aboutTheEstateList(aboutTheEstate) shouldEqual expected
     }
