@@ -21,7 +21,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.ExecutionContext
 import play.api.libs.json.{Json, JsValue}
 import models.notification.Notification
-import services.DMSSubmissionService
+import services.{TestSubmissionService, DMSSubmissionService}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import models.submission.SubmissionResponse
 import uk.gov.hmrc.internalauth.client._
@@ -31,6 +31,7 @@ import controllers.Permissions.internalAuthPermission
 class NotificationSubmissionController @Inject()(
     override val messagesApi: MessagesApi,
     submissionService: DMSSubmissionService,
+    testService: TestSubmissionService,
     val auth: BackendAuthComponents,
     cc: ControllerComponents
   )(implicit ec: ExecutionContext) extends BaseController(cc) with I18nSupport {

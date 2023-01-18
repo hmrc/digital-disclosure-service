@@ -25,6 +25,8 @@ class AppConfig @Inject()(config: Configuration) {
 
   val appName: String = config.get[String]("appName")
 
+  val sendTestPDFOnStartup = config.get[Boolean]("send-test-on-startup")
+
   val retryIntervals: Seq[FiniteDuration] = config
     .get[Seq[Int]]("retry-intervals")
     .map(_.milliseconds)
