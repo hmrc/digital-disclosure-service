@@ -16,6 +16,7 @@
 
 package controllers
 
+import play.api.Logging
 import play.api.mvc.{Action, ControllerComponents}
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -26,11 +27,17 @@ import models.callback.CallbackRequest
 @Singleton()
 class SubmissionCallbackController @Inject()(
     cc: ControllerComponents
-  ) extends BaseController(cc) with I18nSupport {
+  ) extends BaseController(cc) with I18nSupport with Logging {
 
   def callback: Action[JsValue] = Action.async(parse.json) { implicit request =>
-    withValidJson[CallbackRequest]{ _ =>
-      Future.successful(Ok(""))
+    withValidJson[CallbackRequest]{ request =>
+
+      request.failureReason match {
+        case Some(reason) => logger.error(s"Callback for submission ${request.id} failed with status ${request.status}. Failure reason: $reason.")
+        case None => logger.info(s"Callback for submission ${request.id} with status ${request.status}.")
+      }
+
+      Future.successful(Ok("Received"))
     }
   }
 
