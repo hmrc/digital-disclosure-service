@@ -32,8 +32,8 @@ object AppDependencies {
     "com.vladsch.flexmark"    % "flexmark-all"                % "0.62.2"                    % "test, it",
     "uk.gov.hmrc"             %% "bootstrap-test-play-28"     % bootstrapVersion            % "test, it",
     "org.scalatestplus"       %% "mockito-4-6"                % "3.2.14.0"                  % "test, it",
-    "com.github.tomakehurst"  %  "wiremock-standalone"        % "2.27.2",
-    "org.scalatestplus.play"  %% "scalatestplus-play"         % "5.1.0",
-    "org.scalamock"           %% "scalamock"                  % "5.1.0"
+    "com.github.tomakehurst"  %  "wiremock-standalone"        % "2.27.2"                    % "test, it",
+    "org.scalatestplus.play"  %% "scalatestplus-play"         % "5.1.0"                     % "test, it",
+    "org.scalamock"           %% "scalamock"                  % "5.1.0"                     % "test, it"
   )
 }
