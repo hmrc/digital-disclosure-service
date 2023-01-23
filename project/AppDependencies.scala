@@ -5,7 +5,7 @@ import sbt._
 
 object AppDependencies {
 
-  private val bootstrapVersion = "7.8.0"
+  private val bootstrapVersion = "7.12.0"
   
   private val pdfboxVersion = "2.0.26"
   private val openHtmlVersion = "1.0.10"
@@ -19,13 +19,13 @@ object AppDependencies {
     "com.openhtmltopdf"        %   "openhtmltopdf-core"            % openHtmlVersion,
     "com.openhtmltopdf"        %   "openhtmltopdf-pdfbox"          % openHtmlVersion,
     "com.openhtmltopdf"        %   "openhtmltopdf-svg-support"     % openHtmlVersion,
-    "uk.gov.hmrc"              %%  "play-frontend-hmrc"            % "3.32.0-play-28",
+    "uk.gov.hmrc"              %%  "play-frontend-hmrc"            % "6.2.0-play-28",
     "org.typelevel"            %%  "cats-core"                     % "2.8.0",
     "com.github.pathikrit"     %%  "better-files"                  % "3.9.1",
     "commons-codec"            %   "commons-codec"                 % "1.14",
     "com.thoughtworks.xstream" %   "xstream"                       % "1.4.11.1",
-    "uk.gov.hmrc.mongo"        %% "hmrc-mongo-play-28"             % "0.73.0",
-    "uk.gov.hmrc"              %% "internal-auth-client-play-28"   % "1.2.0"
+    "uk.gov.hmrc.mongo"        %% "hmrc-mongo-play-28"             % "0.74.0",
+    "uk.gov.hmrc"              %% "internal-auth-client-play-28"   % "1.3.0"
   )
 
   val test = Seq(
