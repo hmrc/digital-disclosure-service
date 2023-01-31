@@ -20,7 +20,7 @@ import play.api.mvc.{Action, ControllerComponents}
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.ExecutionContext
 import play.api.libs.json.{Json, JsValue}
-import models.notification.Notification
+import models.Notification
 import services.{TestSubmissionService, DMSSubmissionService}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import models.submission.SubmissionResponse

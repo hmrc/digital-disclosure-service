@@ -14,16 +14,19 @@
  * limitations under the License.
  */
 
-package models.notification
+package models
 
-import java.time.LocalDateTime
-import play.api.libs.json.{Json, OFormat}
+sealed trait WhatEmailAddressCanWeContactYouWith
 
-final case class Metadata (
-  reference: Option[String] = None,
-  submissionTime: Option[LocalDateTime] = None
-)
+object WhatEmailAddressCanWeContactYouWith extends Enumerable.Implicits {
 
-object Metadata {
-  implicit val format: OFormat[Metadata] = Json.format[Metadata]
+  case object ExistingEmail extends WithName("existingEmail") with WhatEmailAddressCanWeContactYouWith
+  case object DifferentEmail extends WithName("differentEmail") with WhatEmailAddressCanWeContactYouWith
+
+  val values: Seq[WhatEmailAddressCanWeContactYouWith] = Seq(
+    ExistingEmail, DifferentEmail
+  )
+
+  implicit val enumerable: Enumerable[WhatEmailAddressCanWeContactYouWith] =
+    Enumerable(values.map(v => v.toString -> v): _*)
 }

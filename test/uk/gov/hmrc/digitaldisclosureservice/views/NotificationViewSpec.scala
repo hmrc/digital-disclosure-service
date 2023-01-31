@@ -19,6 +19,7 @@ package views
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import play.api.i18n.{MessagesApi, Messages}
+import models.{Notification, Metadata}
 import models.notification._
 import viewmodels._
 import play.twirl.api.Html
@@ -38,7 +39,7 @@ class NotificationViewSpec extends AnyWordSpec with Matchers with BaseSpec {
 
   private def createView(notification: NotificationViewModel): Html = sut.render(notification, messages)
   
-  val viewModel = NotificationViewModel(Notification("userId", "id", Instant.now(), Metadata(reference = Some("ref")), Background(), AboutYou()))
+  val viewModel = NotificationViewModel(Notification("userId", "id", Instant.now(), Metadata(reference = Some("ref")), PersonalDetails(Background(), AboutYou())))
   
   "NotificationView" should {
 
