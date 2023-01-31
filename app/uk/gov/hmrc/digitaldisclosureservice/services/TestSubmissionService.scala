@@ -20,6 +20,7 @@ import play.api.i18n.{Lang, LangImplicits, MessagesApi, Messages}
 import play.api.Logging
 import com.google.inject.{Inject, Singleton, ImplementedBy}
 import config.AppConfig
+import models.{Metadata, Notification}
 import models.notification._
 import models.submission.SubmissionResponse
 import java.time.{LocalDateTime, Instant}
@@ -35,11 +36,13 @@ class TestSubmissionServiceImpl @Inject()(
   def submit(implicit messages: Messages, ec: ExecutionContext): Future[SubmissionResponse] = {
     val notification = Notification(
       userId = "TEST",
-      notificationId = "TEST",
+      submissionId = "TEST",
       lastUpdated = Instant.now(),
       metadata = Metadata(Some("This is a test"), Some(LocalDateTime.now)),
-      background = Background(Some(true), Some("This is a test")),
-      aboutYou = AboutYou(),
+      personalDetails = PersonalDetails(
+        background = Background(Some(true), Some("This is a test")),
+        aboutYou = AboutYou()
+      )
     )
 
     logger.info("Sending test submission")

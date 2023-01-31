@@ -29,6 +29,7 @@ import org.scalatestplus.mockito.MockitoSugar
 import java.time.{LocalDateTime, ZoneOffset}
 import scala.concurrent.Future
 import play.api.libs.json.Json
+import models.{Metadata, Notification}
 import models.notification._
 import services.{TestSubmissionService, DMSSubmissionService}
 import models.submission.SubmissionResponse
@@ -54,7 +55,7 @@ class NotificationSubmissionControllerSpec extends AnyWordSpec with Matchers wit
   private val controller = new NotificationSubmissionController(new DefaultMessagesApi(), mockSubmissionService, mockTestService, BackendAuthComponentsStub(mockStubBehaviour), Helpers.stubControllerComponents())
 
   val instant = LocalDateTime.of(2022, 1, 1, 0, 0, 0).toInstant(ZoneOffset.UTC)
-  val testNotification = Notification("123", "123", instant, Metadata(), Background(), AboutYou())
+  val testNotification = Notification("123", "123", instant, Metadata(), PersonalDetails(Background(), AboutYou()))
   
   "POST /notification/submit" should {
     "return 202 where the service returns a Success" in {

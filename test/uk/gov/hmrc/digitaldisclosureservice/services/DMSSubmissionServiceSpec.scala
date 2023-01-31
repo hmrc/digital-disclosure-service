@@ -35,6 +35,7 @@ import utils.MarkCalculator
 import java.io.ByteArrayOutputStream
 import scala.concurrent.ExecutionContext.Implicits.global
 import models.PDF
+import models.{Metadata, Notification, NINO}
 
 class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers 
     with MockFactory with ScalaFutures {
@@ -89,11 +90,13 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
       val submissionTime = LocalDateTime.now()
       val notification = Notification(  
         userId = "userId",
-        notificationId = "notificationId",
+        submissionId = "submissionId",
         lastUpdated = Instant.now,
         metadata = Metadata(submissionTime = Some(submissionTime)),
-        background = Background(),
-        aboutYou = AboutYou(),
+        personalDetails = PersonalDetails(
+          background = Background(),
+          aboutYou = AboutYou()
+        ),
         customerId = Some(NINO("customerId123")))
       val submissionMark = "mark"
 
@@ -119,11 +122,13 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
       val stream = new ByteArrayOutputStream()
       val notification = Notification(  
         userId = "userId",
-        notificationId = "notificationId",
+        submissionId = "submissionId",
         lastUpdated = Instant.now,
         metadata = Metadata(submissionTime = None),
-        background = Background(),
-        aboutYou = AboutYou(),
+        personalDetails = PersonalDetails(
+          background = Background(),
+          aboutYou = AboutYou()
+        ),
         customerId = None)
       val submissionMark = "mark"
 

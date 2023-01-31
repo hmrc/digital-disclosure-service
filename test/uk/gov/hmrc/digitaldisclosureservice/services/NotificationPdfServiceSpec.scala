@@ -42,7 +42,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
   "PdfGenerationService" should {
     "generate the pdf with background info" when {
       "the user has entered no data" in {
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), Background(), AboutYou())
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(Background(), AboutYou()))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
@@ -60,7 +60,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(false)
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, AboutYou())
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, AboutYou()))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
@@ -76,7 +76,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(false)
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, AboutYou())
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, AboutYou()))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
@@ -92,7 +92,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(false)
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, AboutYou())
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, AboutYou()))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
@@ -108,7 +108,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, AboutYou())
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, AboutYou()))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
@@ -128,7 +128,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, AboutYou())
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, AboutYou()))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(true, parsedText)
@@ -158,7 +158,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("you"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou)
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(true, parsedText)
@@ -194,7 +194,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("you"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou)
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(true, parsedText)
@@ -224,7 +224,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("you"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou)
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(true, parsedText)
@@ -254,7 +254,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           sautr = Some("Some SAUTR"),
           address = Some(address("you"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou)
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(true, parsedText)
@@ -283,7 +283,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           registeredForSA = Some(YesNoOrUnsure.Unsure),
           address = Some(address("you"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou)
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(true, parsedText)
@@ -315,7 +315,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           registeredForSA = Some(YesNoOrUnsure.Yes),
           address = Some(address("you"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou)
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou))
         val parsedText = stripPDFToString(notification)
 
         parsedText should not include(messages("notification.aboutYou.doYouHaveANino"))
@@ -341,7 +341,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           address = Some(address("you"))
         )
         val aboutTheIndividual = AboutTheIndividual()
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, Some(aboutTheIndividual))
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, Some(aboutTheIndividual)))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
@@ -378,7 +378,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("individual"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, Some(aboutTheIndividual))
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, Some(aboutTheIndividual)))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
@@ -414,7 +414,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("individual"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, Some(aboutTheIndividual))
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, Some(aboutTheIndividual)))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
@@ -448,7 +448,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("individual"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, Some(aboutTheIndividual))
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, Some(aboutTheIndividual)))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
@@ -482,7 +482,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           sautr = Some("Some individual's SAUTR"),
           address = Some(address("individual"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, Some(aboutTheIndividual))
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, Some(aboutTheIndividual)))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
@@ -511,7 +511,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           address = Some(address("you"))
         )
         val aboutTheCompany = AboutTheCompany()
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, aboutTheCompany = Some(aboutTheCompany))
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheCompany = Some(aboutTheCompany)))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
@@ -541,7 +541,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           registrationNumber = Some("Some company registration number"),
           address = Some(address("company"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, aboutTheCompany = Some(aboutTheCompany))
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheCompany = Some(aboutTheCompany)))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
@@ -571,7 +571,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           address = Some(address("you"))
         )
         val aboutTheTrust = AboutTheTrust()
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, aboutTheTrust = Some(aboutTheTrust))
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheTrust = Some(aboutTheTrust)))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
@@ -600,7 +600,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           name = Some("Some trust name"),
           address = Some(address("trust"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, aboutTheTrust = Some(aboutTheTrust))
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheTrust = Some(aboutTheTrust)))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
@@ -628,7 +628,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           address = Some(address("you"))
         )
         val aboutTheLLP = AboutTheLLP()
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, aboutTheLLP = Some(aboutTheLLP))
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheLLP = Some(aboutTheLLP)))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
@@ -657,7 +657,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           name = Some("Some LLP name"),
           address = Some(address("LLP"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, aboutTheLLP = Some(aboutTheLLP))
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheLLP = Some(aboutTheLLP)))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
@@ -685,7 +685,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           address = Some(address("you"))
         )
         val aboutTheEstate = AboutTheEstate()
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, aboutTheEstate = Some(aboutTheEstate))
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheEstate = Some(aboutTheEstate)))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
@@ -722,7 +722,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("estate"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, aboutTheEstate = Some(aboutTheEstate))
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheEstate = Some(aboutTheEstate)))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
@@ -758,7 +758,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("estate"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, aboutTheEstate = Some(aboutTheEstate))
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheEstate = Some(aboutTheEstate)))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
@@ -792,7 +792,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("estate"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, aboutTheEstate = Some(aboutTheEstate))
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheEstate = Some(aboutTheEstate)))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
@@ -826,7 +826,7 @@ class NotificationPdfServiceSpec extends AnyWordSpecLike
           sautr = Some("Some estate's SAUTR"),
           address = Some(address("estate"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), background, aboutYou, aboutTheEstate = Some(aboutTheEstate))
+        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheEstate = Some(aboutTheEstate)))
         val parsedText = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)

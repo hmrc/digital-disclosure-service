@@ -14,25 +14,21 @@
  * limitations under the License.
  */
 
-package services
+package models
 
-import play.api.i18n.Messages
-import javax.inject.{Singleton, Inject}
+sealed trait AdviceContactPreference
 
-import models.Notification
-import uk.gov.hmrc.digitaldisclosureservice.views.html.NotificationView
-import viewmodels.govuk.SummaryListFluency
-import viewmodels.NotificationViewModel
-import models.PDF
+object AdviceContactPreference extends Enumerable.Implicits {
 
-@Singleton
-class NotificationPdfService @Inject()(view: NotificationView) extends PdfGenerationService with SummaryListFluency {
+  case object Email extends WithName("email") with AdviceContactPreference
+  case object Telephone extends WithName("telephone") with AdviceContactPreference
+  case object No extends WithName("no") with AdviceContactPreference
 
-  def createPdf(notification: Notification)(implicit messages: Messages): PDF = {
+  val values: Seq[AdviceContactPreference] = Seq(
+    Email, Telephone, No
+  )
 
-    val viewModel = NotificationViewModel(notification)
-
-    buildPdf(view(viewModel).toString)
-  }
+  implicit val enumerable: Enumerable[AdviceContactPreference] =
+    Enumerable(values.map(v => v.toString -> v): _*)
 
 }

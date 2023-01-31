@@ -62,9 +62,9 @@ class MarkCalculatorSpec extends PlaySpec with Logging {
         registeredForSA = Some(YesNoOrUnsure.No),
         address = Some(address)
       )
-      val notification = Notification("userId", "id", instant, Metadata(), background, aboutYou, Some(aboutTheIndividual))
+      val notification = Notification("userId", "id", instant, Metadata(), PersonalDetails(background, aboutYou, Some(aboutTheIndividual)))
       val submissionMark = sut.getSfMark(notification.toXml)
-      submissionMark mustBe "ub+hDxWlSMo5Vo7PRbyh1r8nhDs="
+      submissionMark mustBe "6+fMlMBTOZ2MLI8eAw0EefAH+Jw="
     }
   }
 }

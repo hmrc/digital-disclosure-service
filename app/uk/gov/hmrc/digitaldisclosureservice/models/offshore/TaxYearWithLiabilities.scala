@@ -14,25 +14,15 @@
  * limitations under the License.
  */
 
-package services
+package models
 
-import play.api.i18n.Messages
-import javax.inject.{Singleton, Inject}
+import play.api.libs.json._
 
-import models.Notification
-import uk.gov.hmrc.digitaldisclosureservice.views.html.NotificationView
-import viewmodels.govuk.SummaryListFluency
-import viewmodels.NotificationViewModel
-import models.PDF
+final case class TaxYearWithLiabilities(
+  taxYear: TaxYearStarting,
+  taxYearLiabilities: TaxYearLiabilities
+)
 
-@Singleton
-class NotificationPdfService @Inject()(view: NotificationView) extends PdfGenerationService with SummaryListFluency {
-
-  def createPdf(notification: Notification)(implicit messages: Messages): PDF = {
-
-    val viewModel = NotificationViewModel(notification)
-
-    buildPdf(view(viewModel).toString)
-  }
-
+object TaxYearWithLiabilities {
+  implicit val format = Json.format[TaxYearWithLiabilities]
 }

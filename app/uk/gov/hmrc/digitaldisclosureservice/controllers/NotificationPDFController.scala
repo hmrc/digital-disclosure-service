@@ -19,7 +19,7 @@ package controllers
 import play.api.mvc.{Action, ControllerComponents}
 import javax.inject.{Inject, Singleton}
 import play.api.libs.json.{JsValue}
-import models.notification.Notification
+import models.Notification
 import services.NotificationPdfService
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Result, ResponseHeader}

@@ -19,7 +19,7 @@ package services
 import play.api.i18n.Messages
 import com.google.inject.{Inject, Singleton, ImplementedBy}
 
-import models.notification.Notification
+import models.Notification
 import connectors.DMSSubmissionConnector
 import services.NotificationPdfService
 import models.submission.{SubmissionMetadata, SubmissionRequest, SubmissionResponse}

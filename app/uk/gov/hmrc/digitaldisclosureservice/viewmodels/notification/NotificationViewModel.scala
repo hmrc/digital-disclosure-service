@@ -22,7 +22,7 @@ import viewmodels.implicits._
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist._
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-import models.YesNoOrUnsure
+import models.{Metadata, YesNoOrUnsure, Notification}
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -48,21 +48,21 @@ object NotificationViewModel extends SummaryListFluency {
   def apply(notification: Notification)(implicit messages: Messages): NotificationViewModel = {
 
     NotificationViewModel(
-      metadataList(notification.background, notification.metadata),
-      backgroundList(notification.background),
-      notification.aboutTheIndividual.map(aboutTheIndividualList),
-      notification.aboutTheCompany.map(aboutTheCompanyList),
-      notification.aboutTheTrust.map(aboutTheTrustList),
-      notification.aboutTheLLP.map(aboutTheLLPList),
-      notification.aboutTheEstate.map(aboutTheEstateList),
-      aboutYouList(notification.aboutYou, notification.disclosingAboutThemselves),
+      metadataList(notification.personalDetails.background, notification.metadata),
+      backgroundList(notification.personalDetails.background),
+      notification.personalDetails.aboutTheIndividual.map(aboutTheIndividualList),
+      notification.personalDetails.aboutTheCompany.map(aboutTheCompanyList),
+      notification.personalDetails.aboutTheTrust.map(aboutTheTrustList),
+      notification.personalDetails.aboutTheLLP.map(aboutTheLLPList),
+      notification.personalDetails.aboutTheEstate.map(aboutTheEstateList),
+      aboutYouList(notification.personalDetails.aboutYou, notification.disclosingAboutThemselves),
       aboutYouHeading(notification)
     )
 
   }
 
   def aboutYouHeading(notification: Notification): String =
-    notification.background.disclosureEntity match {
+    notification.personalDetails.background.disclosureEntity match {
       case Some(DisclosureEntity(Individual, Some(true))) => "notification.heading.aboutYou"
       case _ => "notification.heading.completing"
     }

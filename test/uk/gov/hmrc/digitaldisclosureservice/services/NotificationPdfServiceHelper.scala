@@ -22,7 +22,7 @@ import org.scalatest.OptionValues
 import play.api.i18n.Messages
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.text.PDFTextStripper
-import models.notification._
+import models.Notification
 import models.address._
 import models.address.Address.AddressOps
 import org.scalatest.concurrent.ScalaFutures

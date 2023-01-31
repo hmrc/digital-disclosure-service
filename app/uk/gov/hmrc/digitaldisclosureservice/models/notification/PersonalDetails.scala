@@ -17,35 +17,23 @@
 package models.notification
 
 import play.api.libs.json.{Json, OFormat}
-import java.time.Instant
-import com.thoughtworks.xstream._
-import com.thoughtworks.xstream.io.xml.DomDriver
 
-final case class Notification (
-  userId: String,
-  notificationId: String,
-  lastUpdated: Instant,
-  metadata: Metadata,
+final case class PersonalDetails(
   background: Background,
   aboutYou: AboutYou,
   aboutTheIndividual: Option[AboutTheIndividual] = None,
   aboutTheCompany: Option[AboutTheCompany] = None,
   aboutTheTrust: Option[AboutTheTrust] = None,
   aboutTheLLP: Option[AboutTheLLP] = None,
-  aboutTheEstate: Option[AboutTheEstate] = None,
-  customerId: Option[CustomerId] = None
+  aboutTheEstate: Option[AboutTheEstate] = None
 ) {
-  def disclosingAboutThemselves: Boolean = background.disclosureEntity match {
+  lazy val disclosingAboutThemselves: Boolean = background.disclosureEntity match {
     case Some(DisclosureEntity(Individual, Some(true))) => true
     case _ => false
   }
 
-  def toXml: String = {
-    val xstream = new XStream(new DomDriver)
-    xstream.toXML(this)
-  }
 }
 
-object Notification {
-  implicit val format: OFormat[Notification] = Json.format[Notification]
+object PersonalDetails {
+  implicit val format: OFormat[PersonalDetails] = Json.format[PersonalDetails]
 }

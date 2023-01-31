@@ -22,6 +22,7 @@ import play.api.http.Status
 import play.api.test.{FakeRequest, Helpers, FakeHeaders, DefaultAwaitTimeout}
 import java.time.{LocalDateTime, ZoneOffset}
 import play.api.libs.json.Json
+import models.{Metadata, Notification}
 import models.notification._
 import services.NotificationPdfService
 import utils.BaseSpec
@@ -53,7 +54,7 @@ class NotificationPDFControllerSpec extends AnyWordSpec with Matchers with BaseS
   private val controller = new NotificationPDFController(new DefaultMessagesApi(), mockPdfService, BackendAuthComponentsStub(mockStubBehaviour), Helpers.stubControllerComponents())
 
   val instant = LocalDateTime.of(2022, 1, 1, 0, 0, 0).toInstant(ZoneOffset.UTC)
-  val testNotification = Notification("123", "123", instant, Metadata(), Background(), AboutYou())
+  val testNotification = Notification("123", "123", instant, Metadata(), PersonalDetails(Background(), AboutYou()))
   
   "POST /notification/submit" should {
     "return 200 where the service returns a Success" in {
