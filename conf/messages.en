@@ -8,6 +8,15 @@ service.unsure = Yes, but I do not know it
 #  Notification headings
 #===================================================
 notification.h1 = Notification of intent
+
+#===================================================
+#  Disclosure headings
+#===================================================
+disclosure.h1 = Notification of intent
+
+#===================================================
+#  Section headings
+#===================================================
 notification.heading.metadata = Your submission details
 notification.heading.background = Background
 notification.heading.aboutYou = About you

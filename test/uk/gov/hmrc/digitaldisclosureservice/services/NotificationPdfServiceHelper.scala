@@ -27,12 +27,12 @@ import models.address._
 import models.address.Address.AddressOps
 import org.scalatest.concurrent.ScalaFutures
 
-trait NotificationPdfServiceHelper extends AnyWordSpecLike
+trait SubmissionPdfServiceHelper extends AnyWordSpecLike
   with Matchers
   with OptionValues
   with ScalaFutures {
   
-  def testPdfService: NotificationPdfService
+  def testPdfService: SubmissionPdfService
 
   implicit val messages: Messages 
 

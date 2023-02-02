@@ -46,7 +46,7 @@ class TestSubmissionServiceImpl @Inject()(
     )
 
     logger.info("Sending test submission")
-    submissionService.submitNotification(notification)
+    submissionService.submit(notification)
   }
 
   if (appConfig.sendTestPDFOnStartup) {
