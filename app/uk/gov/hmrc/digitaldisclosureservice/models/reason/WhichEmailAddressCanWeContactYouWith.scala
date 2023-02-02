@@ -16,17 +16,17 @@
 
 package models
 
-sealed trait WhatEmailAddressCanWeContactYouWith
+sealed trait WhichEmailAddressCanWeContactYouWith
 
-object WhatEmailAddressCanWeContactYouWith extends Enumerable.Implicits {
+object WhichEmailAddressCanWeContactYouWith extends Enumerable.Implicits {
 
-  case object ExistingEmail extends WithName("existingEmail") with WhatEmailAddressCanWeContactYouWith
-  case object DifferentEmail extends WithName("differentEmail") with WhatEmailAddressCanWeContactYouWith
+  case object ExistingEmail extends WithName("existingEmail") with WhichEmailAddressCanWeContactYouWith
+  case object DifferentEmail extends WithName("differentEmail") with WhichEmailAddressCanWeContactYouWith
 
-  val values: Seq[WhatEmailAddressCanWeContactYouWith] = Seq(
+  val values: Seq[WhichEmailAddressCanWeContactYouWith] = Seq(
     ExistingEmail, DifferentEmail
   )
 
-  implicit val enumerable: Enumerable[WhatEmailAddressCanWeContactYouWith] =
+  implicit val enumerable: Enumerable[WhichEmailAddressCanWeContactYouWith] =
     Enumerable(values.map(v => v.toString -> v): _*)
 }
