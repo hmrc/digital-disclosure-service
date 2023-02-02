@@ -22,7 +22,8 @@ import play.api.http.Status
 import play.api.test.{FakeRequest, Helpers, FakeHeaders, DefaultAwaitTimeout}
 import java.time.{LocalDateTime, ZoneOffset}
 import play.api.libs.json.Json
-import models.{Metadata, Notification}
+import models.{Metadata, FullDisclosure}
+import models.disclosure._
 import models.notification._
 import services.SubmissionPdfService
 import utils.BaseSpec
@@ -39,7 +40,7 @@ import uk.gov.hmrc.internalauth.client._
 import uk.gov.hmrc.internalauth.client.test.{BackendAuthComponentsStub, StubBehaviour}
 import scala.concurrent.Future
 
-class NotificationPDFControllerSpec extends AnyWordSpec with Matchers with BaseSpec with DefaultAwaitTimeout with MockitoSugar {
+class DisclosurePDFControllerSpec extends AnyWordSpec with Matchers with BaseSpec with DefaultAwaitTimeout with MockitoSugar {
 
   implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
   implicit val actorSystem = ActorSystem()
@@ -51,17 +52,17 @@ class NotificationPDFControllerSpec extends AnyWordSpec with Matchers with BaseS
   val expectedPredicate = Predicate.Permission(Resource(ResourceType("digital-disclosure-service"), ResourceLocation("pdf")), IAAction("WRITE"))
   when(mockStubBehaviour.stubAuth(Some(expectedPredicate), Retrieval.EmptyRetrieval)).thenReturn(Future.unit)
 
-  private val controller = new NotificationPDFController(new DefaultMessagesApi(), mockPdfService, BackendAuthComponentsStub(mockStubBehaviour), Helpers.stubControllerComponents())
+  private val controller = new DisclosurePDFController(new DefaultMessagesApi(), mockPdfService, BackendAuthComponentsStub(mockStubBehaviour), Helpers.stubControllerComponents())
 
   val instant = LocalDateTime.of(2022, 1, 1, 0, 0, 0).toInstant(ZoneOffset.UTC)
-  val testNotification = Notification("123", "123", instant, Metadata(), PersonalDetails(Background(), AboutYou()))
+  val testDisclosure = FullDisclosure("123", "123", instant, Metadata(), CaseReference(), PersonalDetails(Background(), AboutYou()), OffshoreLiabilities(), OtherLiabilities(), ReasonForDisclosingNow())
   
-  "POST /notification/submit" should {
+  "POST /disclosure/submit" should {
     "return 200 where the service returns a Success" in {
-      val pdf = pdfService.createPdf(testNotification)
-      when(mockPdfService.createPdf(refEq(testNotification))(any())) thenReturn pdf
+      val pdf = pdfService.createPdf(testDisclosure)
+      when(mockPdfService.createPdf(refEq(testDisclosure))(any())) thenReturn pdf
 
-      val fakeRequest = FakeRequest(method = "GET", uri = "/notification", headers = FakeHeaders(Seq("Authorization" -> "Token some-token")), body = Json.toJson(testNotification))
+      val fakeRequest = FakeRequest(method = "GET", uri = "/disclosure", headers = FakeHeaders(Seq("Authorization" -> "Token some-token")), body = Json.toJson(testDisclosure))
       val result = controller.generate()(fakeRequest)
       status(result) shouldBe Status.OK
       contentAsBytes(result) shouldEqual ByteString(pdf.byteArray)

@@ -20,7 +20,7 @@ import play.api.mvc.{Action, ControllerComponents}
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.ExecutionContext
 import play.api.libs.json.{Json, JsValue}
-import models.Notification
+import models.FullDisclosure
 import services.{TestSubmissionService, DMSSubmissionService}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import models.submission.SubmissionResponse
@@ -28,7 +28,7 @@ import uk.gov.hmrc.internalauth.client._
 import controllers.Permissions.internalAuthPermission
 
 @Singleton()
-class NotificationSubmissionController @Inject()(
+class DisclosureSubmissionController @Inject()(
     override val messagesApi: MessagesApi,
     submissionService: DMSSubmissionService,
     testService: TestSubmissionService,
@@ -37,8 +37,8 @@ class NotificationSubmissionController @Inject()(
   )(implicit ec: ExecutionContext) extends BaseController(cc) with I18nSupport {
 
   def submit: Action[JsValue] = auth.authorizedAction(internalAuthPermission("submit")).async(parse.json) { implicit request =>
-    withValidJson[Notification]{ notification =>
-      submissionService.submit(notification).map(_ match {
+    withValidJson[FullDisclosure]{ disclosure =>
+      submissionService.submit(disclosure).map(_ match {
         case SubmissionResponse.Success(id) => Accepted(Json.toJson(SubmissionResponse.Success(id)))
         case SubmissionResponse.Failure(errors) => InternalServerError(Json.toJson(SubmissionResponse.Failure(errors)))
       })

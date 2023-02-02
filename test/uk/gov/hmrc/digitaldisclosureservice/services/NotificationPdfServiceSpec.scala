@@ -23,21 +23,22 @@ import play.api.i18n.{Messages, MessagesApi}
 import play.api.test.FakeRequest
 import models._
 import models.notification._
-import uk.gov.hmrc.digitaldisclosureservice.views.html.NotificationView
+import uk.gov.hmrc.digitaldisclosureservice.views.html.{DisclosureView, NotificationView}
 import java.time.Instant
 import utils.BaseSpec
 
 import java.time.LocalDate
 
-class NotificationPdfServiceSpec extends AnyWordSpecLike
+class SubmissionPdfServiceSpec extends AnyWordSpecLike
   with Matchers
   with OptionValues
   with BaseSpec
-  with NotificationPdfServiceHelper {
+  with SubmissionPdfServiceHelper {
 
   implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
-  val view = app.injector.instanceOf[NotificationView]
-  val testPdfService = new NotificationPdfService(view)
+  val notificationView = app.injector.instanceOf[NotificationView]
+  val disclosureView = app.injector.instanceOf[DisclosureView]
+  val testPdfService = new SubmissionPdfService(notificationView, disclosureView)
 
   "PdfGenerationService" should {
     "generate the pdf with background info" when {

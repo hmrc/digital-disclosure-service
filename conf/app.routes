@@ -9,3 +9,7 @@ POST        /notification/submit                         controllers.Notificatio
 POST        /notification/pdf                            controllers.NotificationPDFController.generate
 
 POST        /dms-submission/callback                     controllers.SubmissionCallbackController.callback  
+
+POST        /disclosure/submit                           controllers.DisclosureSubmissionController.submit
+
+POST        /disclosure/pdf                              controllers.DisclosurePDFController.generate
