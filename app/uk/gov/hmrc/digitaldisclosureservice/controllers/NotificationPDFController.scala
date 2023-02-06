@@ -46,11 +46,7 @@ class NotificationPDFController @Inject()(
     withValidJson[Notification]{ notification =>
       val pdf = service.createPdf(notification).byteArray
       val contentLength = Some(pdf.length.toLong)
-      
-      val tempFile: File = new File("test.pdf")
-      Files.write(tempFile.toPath, pdf)
 
-      logger.info(s"contentLength = $contentLength")
       Future.successful(Result(
         header = ResponseHeader(200, Map.empty),
         body = HttpEntity.Streamed(Source(Seq(ByteString(pdf))), contentLength, Some("application/octet-stream"))
