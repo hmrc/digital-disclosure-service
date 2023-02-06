@@ -19,9 +19,9 @@ package viewmodels
 import viewmodels.govuk.SummaryListFluency
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist._
 import play.api.i18n.Messages
-import models.Notification
+import models.FullDisclosure
 
-final case class NotificationViewModel(
+final case class DisclosureViewModel(
   metadataList: Option[SummaryList],
   backgroundList: SummaryList,
   aboutTheIndividualList: Option[SummaryList],
@@ -33,20 +33,20 @@ final case class NotificationViewModel(
   aboutYouHeading: String = "notification.heading.completing"
 )
 
-object NotificationViewModel extends SummaryListFluency with SubmissionViewModel {
+object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
 
-  def apply(notification: Notification)(implicit messages: Messages): NotificationViewModel = {
+  def apply(fullDisclosure: FullDisclosure)(implicit messages: Messages): DisclosureViewModel = {
 
-    NotificationViewModel(
-      metadataList(notification.personalDetails.background, notification.metadata),
-      backgroundList(notification.personalDetails.background),
-      notification.personalDetails.aboutTheIndividual.map(aboutTheIndividualList),
-      notification.personalDetails.aboutTheCompany.map(aboutTheCompanyList),
-      notification.personalDetails.aboutTheTrust.map(aboutTheTrustList),
-      notification.personalDetails.aboutTheLLP.map(aboutTheLLPList),
-      notification.personalDetails.aboutTheEstate.map(aboutTheEstateList),
-      aboutYouList(notification.personalDetails.aboutYou, notification.disclosingAboutThemselves),
-      aboutYouHeading(notification.personalDetails)
+    DisclosureViewModel(
+      metadataList(fullDisclosure.personalDetails.background, fullDisclosure.metadata),
+      backgroundList(fullDisclosure.personalDetails.background),
+      fullDisclosure.personalDetails.aboutTheIndividual.map(aboutTheIndividualList),
+      fullDisclosure.personalDetails.aboutTheCompany.map(aboutTheCompanyList),
+      fullDisclosure.personalDetails.aboutTheTrust.map(aboutTheTrustList),
+      fullDisclosure.personalDetails.aboutTheLLP.map(aboutTheLLPList),
+      fullDisclosure.personalDetails.aboutTheEstate.map(aboutTheEstateList),
+      aboutYouList(fullDisclosure.personalDetails.aboutYou, fullDisclosure.disclosingAboutThemselves),
+      aboutYouHeading(fullDisclosure.personalDetails)
     )
 
   }

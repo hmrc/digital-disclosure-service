@@ -18,26 +18,25 @@ package services
 
 import play.api.i18n.Messages
 import com.google.inject.{Inject, Singleton, ImplementedBy}
-
-import models.Notification
+import models.Submission
 import connectors.DMSSubmissionConnector
-import services.NotificationPdfService
+import services.SubmissionPdfService
 import models.submission.{SubmissionMetadata, SubmissionRequest, SubmissionResponse}
 import java.time.LocalDateTime
 import utils.MarkCalculator
 import scala.concurrent.{Future, ExecutionContext}
 
 @Singleton
-class DMSSubmissionServiceImpl @Inject()(dmsConnector: DMSSubmissionConnector, pdfService: NotificationPdfService, markCalculator: MarkCalculator) extends DMSSubmissionService {
+class DMSSubmissionServiceImpl @Inject()(dmsConnector: DMSSubmissionConnector, pdfService: SubmissionPdfService, markCalculator: MarkCalculator) extends DMSSubmissionService {
 
-  def submitNotification(notification: Notification)(implicit messages: Messages, ec: ExecutionContext): Future[SubmissionResponse] = {
+  def submit(submission: Submission)(implicit messages: Messages, ec: ExecutionContext): Future[SubmissionResponse] = {
 
-    val generatedPdf = pdfService.createPdf(notification: Notification)
-    val submissionMark = markCalculator.getSfMark(notification.toXml)
+    val generatedPdf = pdfService.createPdf(submission)
+    val submissionMark = markCalculator.getSfMark(submission.toXml)
 
     val submissionMetadata = SubmissionMetadata(
-      timeOfReceipt = notification.metadata.submissionTime.getOrElse(LocalDateTime.now()),
-      customerId = notification.customerId.map(_.id).getOrElse(""),
+      timeOfReceipt = submission.metadata.submissionTime.getOrElse(LocalDateTime.now()),
+      customerId = submission.customerId.map(_.id).getOrElse(""),
       submissionMark = submissionMark
     )
     val submissionRequest = SubmissionRequest(
@@ -53,5 +52,5 @@ class DMSSubmissionServiceImpl @Inject()(dmsConnector: DMSSubmissionConnector, p
 
 @ImplementedBy(classOf[DMSSubmissionServiceImpl])
 trait DMSSubmissionService {
-  def submitNotification(notification: Notification)(implicit messages: Messages, ec: ExecutionContext): Future[SubmissionResponse]
+  def submit(submission: Submission)(implicit messages: Messages, ec: ExecutionContext): Future[SubmissionResponse]
 }

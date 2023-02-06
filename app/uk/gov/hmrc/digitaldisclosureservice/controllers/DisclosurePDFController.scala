@@ -19,7 +19,7 @@ package controllers
 import play.api.mvc.{Action, ControllerComponents}
 import javax.inject.{Inject, Singleton}
 import play.api.libs.json.{JsValue}
-import models.Notification
+import models.FullDisclosure
 import services.SubmissionPdfService
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Result, ResponseHeader}
@@ -35,7 +35,7 @@ import java.nio.file.Files
 import java.io.File
 
 @Singleton()
-class NotificationPDFController @Inject()(
+class DisclosurePDFController @Inject()(
     override val messagesApi: MessagesApi,
     service: SubmissionPdfService,
     val auth: BackendAuthComponents,
@@ -43,8 +43,8 @@ class NotificationPDFController @Inject()(
   ) extends BaseController(cc) with I18nSupport with Logging {
 
   def generate: Action[JsValue] = auth.authorizedAction(internalAuthPermission("pdf")).async(parse.json) { implicit request =>
-    withValidJson[Notification]{ notification =>
-      val pdf = service.createPdf(notification).byteArray
+    withValidJson[FullDisclosure]{ disclosure =>
+      val pdf = service.createPdf(disclosure).byteArray
       val contentLength = Some(pdf.length.toLong)
 
       Future.successful(Result(

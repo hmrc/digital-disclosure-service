@@ -18,39 +18,30 @@ package controllers
 
 import play.api.mvc.{Action, ControllerComponents}
 import javax.inject.{Inject, Singleton}
-import play.api.libs.json.{JsValue}
-import models.Notification
-import services.SubmissionPdfService
+import scala.concurrent.ExecutionContext
+import play.api.libs.json.{Json, JsValue}
+import models.FullDisclosure
+import services.{TestSubmissionService, DMSSubmissionService}
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Result, ResponseHeader}
-import play.api.http.HttpEntity
-import akka.stream.scaladsl.Source
-import akka.util.ByteString
-import scala.concurrent.Future
-import play.api.Logging
+import models.submission.SubmissionResponse
 import uk.gov.hmrc.internalauth.client._
 import controllers.Permissions.internalAuthPermission
 
-import java.nio.file.Files
-import java.io.File
-
 @Singleton()
-class NotificationPDFController @Inject()(
+class DisclosureSubmissionController @Inject()(
     override val messagesApi: MessagesApi,
-    service: SubmissionPdfService,
+    submissionService: DMSSubmissionService,
+    testService: TestSubmissionService,
     val auth: BackendAuthComponents,
     cc: ControllerComponents
-  ) extends BaseController(cc) with I18nSupport with Logging {
+  )(implicit ec: ExecutionContext) extends BaseController(cc) with I18nSupport {
 
-  def generate: Action[JsValue] = auth.authorizedAction(internalAuthPermission("pdf")).async(parse.json) { implicit request =>
-    withValidJson[Notification]{ notification =>
-      val pdf = service.createPdf(notification).byteArray
-      val contentLength = Some(pdf.length.toLong)
-
-      Future.successful(Result(
-        header = ResponseHeader(200, Map.empty),
-        body = HttpEntity.Streamed(Source(Seq(ByteString(pdf))), contentLength, Some("application/octet-stream"))
-      ))
+  def submit: Action[JsValue] = auth.authorizedAction(internalAuthPermission("submit")).async(parse.json) { implicit request =>
+    withValidJson[FullDisclosure]{ disclosure =>
+      submissionService.submit(disclosure).map(_ match {
+        case SubmissionResponse.Success(id) => Accepted(Json.toJson(SubmissionResponse.Success(id)))
+        case SubmissionResponse.Failure(errors) => InternalServerError(Json.toJson(SubmissionResponse.Failure(errors)))
+      })
     }
   }
 

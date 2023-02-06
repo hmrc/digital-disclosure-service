@@ -30,7 +30,7 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import models.submission._
 import models.notification._
 import connectors.DMSSubmissionConnector
-import services.NotificationPdfService
+import services.SubmissionPdfService
 import utils.MarkCalculator
 import java.io.ByteArrayOutputStream
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -41,12 +41,12 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
     with MockFactory with ScalaFutures {
 
   val mockDmsConnector = mock[DMSSubmissionConnector]
-  val mockPdfService = mock[NotificationPdfService]
+  val mockPdfService = mock[SubmissionPdfService]
   val mockMarkCalculator = mock[MarkCalculator]
 
   val app = new GuiceApplicationBuilder().overrides(
     bind[DMSSubmissionConnector].toInstance(mockDmsConnector),
-    bind[NotificationPdfService].toInstance(mockPdfService),
+    bind[SubmissionPdfService].toInstance(mockPdfService),
     bind[MarkCalculator].toInstance(mockMarkCalculator)
   ).configure("create-internal-auth-token-on-start" -> false).build()
 
@@ -84,7 +84,7 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
       .returning(response)
 
 
-  "submitNotification" should {
+  "submit" should {
     "create the pdf, generate a Mark, populate a request and send it to the connector" in {
       val stream = new ByteArrayOutputStream()
       val submissionTime = LocalDateTime.now()
@@ -114,7 +114,7 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
       mockGetSfMark(notification.toXml)(submissionMark)
       mockSubmit(submissionRequest)(Future.successful(SubmissionResponse.Success("123")))
 
-      val result = sut.submitNotification(notification).futureValue
+      val result = sut.submit(notification).futureValue
       result shouldEqual SubmissionResponse.Success("123")
     }
 
@@ -136,7 +136,7 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
       mockGetSfMark(notification.toXml)(submissionMark)
       mockSubmitAny(Future.successful(SubmissionResponse.Success("123")))
 
-      val result = sut.submitNotification(notification).futureValue
+      val result = sut.submit(notification).futureValue
       result shouldEqual SubmissionResponse.Success("123")
     }
 

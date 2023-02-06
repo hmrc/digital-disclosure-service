@@ -27,6 +27,13 @@ sealed trait Submission {
   def userId: String
   def submissionId: String
   def lastUpdated: Instant
+  def metadata: Metadata
+  def customerId: Option[CustomerId]
+
+  def toXml: String = {
+    val xstream = new XStream(new DomDriver)
+    xstream.toXML(this)
+  }
 }
 
 object Submission {
@@ -44,7 +51,9 @@ final case class FullDisclosure (
   otherLiabilities: OtherLiabilities,
   reasonForDisclosingNow: ReasonForDisclosingNow,
   customerId: Option[CustomerId] = None
-) extends Submission
+) extends Submission {
+  def disclosingAboutThemselves = personalDetails.disclosingAboutThemselves
+}
 
 
 object FullDisclosure {
@@ -59,14 +68,7 @@ final case class Notification (
   personalDetails: PersonalDetails,
   customerId: Option[CustomerId] = None
 ) extends Submission {
-
-  def toXml: String = {
-    val xstream = new XStream(new DomDriver)
-    xstream.toXML(this)
-  }
-
   def disclosingAboutThemselves = personalDetails.disclosingAboutThemselves
-
 } 
 
 object Notification {

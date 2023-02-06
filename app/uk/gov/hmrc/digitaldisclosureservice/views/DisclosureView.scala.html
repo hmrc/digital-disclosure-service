@@ -1,0 +1,77 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import uk.gov.hmrc.hmrcfrontend.config.AssetsConfig
+@import viewmodels.DisclosureViewModel
+
+@this(
+    govukSummaryList: GovukSummaryList,
+    summarySection: summarySection,
+    styles: styles,
+    assetsConfig: AssetsConfig
+)
+
+@(viewModel: DisclosureViewModel)(implicit messages: Messages)
+
+<!DOCTYPE html>
+<html lang="${messages.lang.code}">
+
+    <head>
+        <title>@messages("service.name")</title>
+        <meta name="Lang" content="${messages.lang.code}"/>
+        <meta name="subject" content="DDS Notification"/>
+        <meta name="about" content="HMRC PDFA Document"/>
+
+        <!-- <link href="@uk.gov.hmrc.hmrcfrontend.controllers.routes.Assets.at("hmrc-frontend-5.11.1.min.css")" media="all" rel="stylesheet" type="text/css"/> -->
+
+        @styles()
+
+    </head>
+
+    <body>
+   
+        <header role="banner">
+            <div class="govuk-width-container">
+
+                <div class="govuk-phase-banner">
+                <p class="govuk-phase-banner__content">
+                    <strong class="govuk-tag govuk-phase-banner__content__tag">
+                        beta
+                    </strong>
+                </p>
+                <div style="padding-bottom: 0.3em; margin-top: -1em;">
+                    <p style="padding-left: 0.5em; display: inline-block; font-size: 16pt; vertical-align: middle;">@messages("service.name")</p>
+                </div>
+                </div>
+            </div>
+        </header>
+        <hr/>
+
+        <h1 style="padding-top: 1em;">@messages("disclosure.h1")</h1>
+
+        @viewModel.metadataList.map(list => summarySection("notification.heading.metadata", list))
+        @summarySection("notification.heading.background", viewModel.backgroundList)
+
+        @viewModel.aboutTheIndividualList.map(list => summarySection("notification.heading.aboutTheIndividual", list))
+        @viewModel.aboutTheCompanyList.map(list => summarySection("notification.heading.aboutTheCompany", list))
+        @viewModel.aboutTheTrustList.map(list => summarySection("notification.heading.aboutTheTrust", list))
+        @viewModel.aboutTheLLPList.map(list => summarySection("notification.heading.aboutTheLLP", list))
+        @viewModel.aboutTheEstateList.map(list => summarySection("notification.heading.aboutTheEstate", list))
+
+        @summarySection(viewModel.aboutYouHeading, viewModel.aboutYouList)
+        
+    </body>
+</html>
