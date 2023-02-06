@@ -31,9 +31,6 @@ import play.api.Logging
 import uk.gov.hmrc.internalauth.client._
 import controllers.Permissions.internalAuthPermission
 
-import java.nio.file.Files
-import java.io.File
-
 @Singleton()
 class NotificationPDFController @Inject()(
     override val messagesApi: MessagesApi,
