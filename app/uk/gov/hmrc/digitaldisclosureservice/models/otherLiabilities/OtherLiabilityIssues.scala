@@ -28,6 +28,7 @@ object OtherLiabilityIssues extends Enumerable.Implicits {
   case object NoExclusion extends WithName("noExclusion") with OtherLiabilityIssues
 
   val values: Seq[OtherLiabilityIssues] = Seq(
+    EmployerLiabilities,
     VatIssues,
     InheritanceTaxIssues,
     Class2National,
