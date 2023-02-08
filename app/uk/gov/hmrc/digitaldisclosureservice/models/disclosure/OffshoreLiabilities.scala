@@ -25,6 +25,8 @@ final case class OffshoreLiabilities(
   reasonableCare: Option[WhatReasonableCareDidYouTake] = None,
   excuseForNotFiling: Option[WhatIsYourReasonableExcuseForNotFilingReturn] = None,
   whichYears: Option[Set[OffshoreYears]] = None,
+  youHaveNotIncludedTheTaxYear: Option[String] = None,
+  youHaveNotSelectedCertainTaxYears: Option[String] = None,
   taxBeforeFiveYears: Option[String] = None,
   taxBeforeSevenYears: Option[String] = None,
   taxYearLiabilities: Option[Map[String, TaxYearWithLiabilities]] = None,
