@@ -12,7 +12,7 @@ notification.h1 = Notification of intent
 #===================================================
 #  Disclosure headings
 #===================================================
-disclosure.h1 = Notification of intent
+disclosure.h1 = Disclosure
 
 #===================================================
 #  Section headings
@@ -21,6 +21,7 @@ notification.heading.metadata = Your submission details
 notification.heading.background = Background
 notification.heading.aboutYou = About you
 notification.heading.completing = The person completing the notification
+disclosure.heading.completing = The person completing the disclosure
 notification.heading.aboutTheIndividual = The individual the disclosure will be about
 notification.heading.aboutTheCompany = The company the disclosure will be about
 notification.heading.aboutTheTrust = The trust the disclosure will be about
