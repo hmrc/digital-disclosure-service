@@ -46,7 +46,7 @@ object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
       fullDisclosure.personalDetails.aboutTheLLP.map(aboutTheLLPList),
       fullDisclosure.personalDetails.aboutTheEstate.map(aboutTheEstateList),
       aboutYouList(fullDisclosure.personalDetails.aboutYou, fullDisclosure.disclosingAboutThemselves),
-      aboutYouHeading(fullDisclosure.personalDetails)
+      aboutYouHeading(fullDisclosure.personalDetails, true)
     )
 
   }

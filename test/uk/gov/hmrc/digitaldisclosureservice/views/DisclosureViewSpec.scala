@@ -42,7 +42,7 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
   
   val viewModel = DisclosureViewModel(FullDisclosure("userId", "id", Instant.now(), Metadata(reference = Some("ref")), CaseReference(), PersonalDetails(Background(), AboutYou()), OffshoreLiabilities(), OtherLiabilities(), ReasonForDisclosingNow()))
   
-  "NotificationView" should {
+  "DisclosureView" should {
 
     val view = createView(viewModel)
 
@@ -61,7 +61,7 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
     "display the section headings" in {
       view.select("h2").text() should include(messages("notification.heading.metadata"))
       view.select("h2").text() should include(messages("notification.heading.background"))
-      view.select("h2").text() should include(messages("notification.heading.completing"))
+      view.select("h2").text() should include(messages("disclosure.heading.completing"))
     }
 
   }

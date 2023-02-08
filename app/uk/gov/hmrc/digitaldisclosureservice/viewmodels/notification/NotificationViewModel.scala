@@ -46,7 +46,7 @@ object NotificationViewModel extends SummaryListFluency with SubmissionViewModel
       notification.personalDetails.aboutTheLLP.map(aboutTheLLPList),
       notification.personalDetails.aboutTheEstate.map(aboutTheEstateList),
       aboutYouList(notification.personalDetails.aboutYou, notification.disclosingAboutThemselves),
-      aboutYouHeading(notification.personalDetails)
+      aboutYouHeading(notification.personalDetails, false)
     )
 
   }

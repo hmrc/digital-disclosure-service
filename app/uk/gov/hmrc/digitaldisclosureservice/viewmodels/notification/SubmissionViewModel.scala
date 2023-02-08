@@ -22,7 +22,7 @@ import viewmodels.implicits._
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist._
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-import models.{Metadata, YesNoOrUnsure, FullDisclosure}
+import models.{Metadata, YesNoOrUnsure}
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -33,11 +33,13 @@ trait SubmissionViewModel extends SummaryListFluency {
   val aboutYouKey = "notification.aboutYou"
   val estateKey = "notification.aboutTheEstate"
 
-  def aboutYouHeading(personalDetails: PersonalDetails): String =
+  def aboutYouHeading(personalDetails: PersonalDetails, isDisclosure: Boolean): String = {
+    val prefix = if (isDisclosure) "disclosure" else "notification"
     personalDetails.background.disclosureEntity match {
       case Some(DisclosureEntity(Individual, Some(true))) => "notification.heading.aboutYou"
-      case _ => "notification.heading.completing"
+      case _ => s"$prefix.heading.completing"
     }
+  }
 
   def metadataList(background: Background, metadata: Metadata)(implicit messages: Messages): Option[SummaryList] =
     metadata.reference.map{ ref =>
