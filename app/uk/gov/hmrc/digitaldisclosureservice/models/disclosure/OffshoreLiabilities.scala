@@ -29,6 +29,7 @@ final case class OffshoreLiabilities(
   youHaveNotSelectedCertainTaxYears: Option[String] = None,
   taxBeforeFiveYears: Option[String] = None,
   taxBeforeSevenYears: Option[String] = None,
+  taxBeforeNineteenYears: Option[String] = None,
   taxYearLiabilities: Option[Map[String, TaxYearWithLiabilities]] = None,
   legalInterpretation: Option[Set[YourLegalInterpretation]] = None,
   otherInterpretation: Option[String] = None,
