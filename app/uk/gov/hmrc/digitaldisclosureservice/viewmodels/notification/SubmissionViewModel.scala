@@ -43,9 +43,8 @@ trait SubmissionViewModel extends SummaryListFluency {
 
   def metadataList(background: Background, metadata: Metadata)(implicit messages: Messages): Option[SummaryList] =
     metadata.reference.map{ ref =>
-      val referenceKey = if (background.letterReferenceNumber.isDefined) "notification.metadata.caseRef" else "notification.metadata.reference"
       SummaryListViewModel(rows = Seq(
-        SummaryListRowViewModel(referenceKey, ValueViewModel(ref)),
+        SummaryListRowViewModel("notification.metadata.reference", ValueViewModel(ref)),
         SummaryListRowViewModel("notification.metadata.submissionTime", ValueViewModel(metadata.submissionTime.map(toPrettyDate)))
       ))
     }
@@ -59,6 +58,7 @@ trait SubmissionViewModel extends SummaryListFluency {
   def backgroundList(background: Background)(implicit messages: Messages): SummaryList = SummaryListViewModel(
     rows = Seq(
       displayWhenNo(s"$backgroundKey.haveYouReceivedALetter", background.haveYouReceivedALetter),
+      background.letterReferenceNumber.map(_ => SummaryListRowViewModel("notification.metadata.caseRef", ValueViewModel(background.letterReferenceNumber))),
       Some(SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(background.disclosureEntity.map(de => messages(s"notification.background.${de.entity.toString}"))))),
       background.disclosureEntity.map(de => SummaryListRowViewModel(s"notification.background.areYouThe${de.entity.toString}", ValueViewModel(de.areYouTheEntity))),
       background.areYouRepresetingAnOrganisation.flatMap(areYou => displayWhenNo(s"$backgroundKey.areYouRepresetingAnOrganisation", areYou)),

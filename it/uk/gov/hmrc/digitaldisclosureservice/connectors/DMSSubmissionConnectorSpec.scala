@@ -91,6 +91,43 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
       connector.submit(submissionRequest, pdf).futureValue mustEqual SubmissionResponse.Success("id")
     }
 
+    "must return a successful future when the store responds with ACCEPTED and a SubmissionResponse.Success with the id we passed in" in {
+
+      val submissionRequestWithID = SubmissionRequest(
+        id = Some("our-id-here"),
+        SubmissionMetadata(
+          timeOfReceipt = localDate,
+          customerId = "customer Id",
+          submissionMark = "mark",
+        )
+      )
+
+      server.stubFor(
+        post(urlMatching(url))
+          .withMultipartRequestBody(aMultipart().withName("id").withBody(containing("our-id-here")))
+          .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing(expectedCallbackUrl)))
+          .withMultipartRequestBody(aMultipart().withName("metadata.store").withBody(containing("true")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.source").withBody(containing("DO4SUB")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.timeOfReceipt").withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate))))
+          .withMultipartRequestBody(aMultipart().withName("metadata.formId").withBody(containing("DO4SUB")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.customerId").withBody(containing("customer Id")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.submissionMark").withBody(containing("mark")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.casKey").withBody(containing("")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.classificationType").withBody(containing("EC-CCO-Digital Disclosure Serv")))
+          .withMultipartRequestBody(aMultipart().withName("metadata.businessArea").withBody(containing("EC")))
+          .withMultipartRequestBody(aMultipart().withName("form").withBody(binaryEqualTo(pdf)))
+          .withHeader(AUTHORIZATION, containing("authToken"))
+          .withHeader(USER_AGENT, containing("digital-disclosure-service"))
+          .willReturn(
+            aResponse()
+              .withStatus(ACCEPTED)
+              .withBody(Json.toJson(SubmissionResponse.Success("our-id-here")).toString)
+          )
+      )
+
+      connector.submit(submissionRequestWithID, pdf).futureValue mustEqual SubmissionResponse.Success("our-id-here")
+    }
+
     "must return a failed future when the store responds with ACCEPTED and anything else" in {
 
       server.stubFor(
