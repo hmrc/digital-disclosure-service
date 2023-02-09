@@ -29,6 +29,15 @@ final case class OffshoreLiabilities(
   youHaveNotSelectedCertainTaxYears: Option[String] = None,
   taxBeforeFiveYears: Option[String] = None,
   taxBeforeSevenYears: Option[String] = None,
+  taxBeforeFiveYears: Option[String] = None,
+  taxBeforeNineteenYears: Option[String] = None,
+  taxYearLiabilities: Option[Map[String, TaxYearWithLiabilities]] = None,
+  legalInterpretation: Option[Set[YourLegalInterpretation]] = None,
+  otherInterpretation: Option[String] = None,
+  notIncludedDueToInterpretation: Option[HowMuchTaxHasNotBeenIncluded] = None,
+  maximumValueOfAssets: Option[TheMaximumValueOfAllAssets] = None
+) {
+  def isComplete = this match {
   taxYearLiabilities: Option[Map[String, TaxYearWithLiabilities]] = None,
   legalInterpretation: Option[Set[YourLegalInterpretation]] = None,
   otherInterpretation: Option[String] = None,
