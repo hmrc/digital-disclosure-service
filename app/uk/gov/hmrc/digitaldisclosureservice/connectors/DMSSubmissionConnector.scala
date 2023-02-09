@@ -79,8 +79,8 @@ class DMSSubmissionConnectorImpl @Inject() (
     }
   }
 
-  private def constructMultipartFormData(submissionRequest: SubmissionRequest, pdf: Array[Byte]): Source[Part[Source[ByteString, Any]], Any] =
-    Source(Seq(
+  private def constructMultipartFormData(submissionRequest: SubmissionRequest, pdf: Array[Byte]): Source[Part[Source[ByteString, Any]], Any] = {
+    val dataParts = Seq(
       DataPart("callbackUrl", callbackUrl),
       DataPart("metadata.store", submissionRequest.metadata.store.toString),
       DataPart("metadata.source", submissionRequest.metadata.formId),
@@ -98,8 +98,12 @@ class DMSSubmissionConnectorImpl @Inject() (
         ref = Source.single(ByteString(pdf)),
         fileSize = pdf.size
       )
-    ))
-
+    )
+    submissionRequest.id match {
+      case Some(id) => Source(DataPart("id", id) +: dataParts)
+      case None => Source(dataParts)
+    }
+  }
 }
 
 object DMSSubmissionConnector {
