@@ -106,7 +106,7 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
         submissionMark = submissionMark
       )
       val submissionRequest = SubmissionRequest(
-        id = None,
+        submissionReference = None,
         metadata = submissionMetadata
       )
 

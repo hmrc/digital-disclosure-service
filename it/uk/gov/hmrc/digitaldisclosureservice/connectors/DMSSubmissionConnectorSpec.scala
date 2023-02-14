@@ -54,7 +54,7 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
 
     val localDate = LocalDateTime.now() 
     val submissionRequest = SubmissionRequest(
-      id = None,
+      submissionReference = None,
       SubmissionMetadata(
         timeOfReceipt = localDate,
         customerId = "customer Id",
@@ -94,7 +94,7 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
     "must return a successful future when the store responds with ACCEPTED and a SubmissionResponse.Success with the id we passed in" in {
 
       val submissionRequestWithID = SubmissionRequest(
-        id = Some("our-id-here"),
+        submissionReference = Some("our-id-here"),
         SubmissionMetadata(
           timeOfReceipt = localDate,
           customerId = "customer Id",
@@ -104,7 +104,7 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
 
       server.stubFor(
         post(urlMatching(url))
-          .withMultipartRequestBody(aMultipart().withName("id").withBody(containing("our-id-here")))
+          .withMultipartRequestBody(aMultipart().withName("submissionReference").withBody(containing("our-id-here")))
           .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing(expectedCallbackUrl)))
           .withMultipartRequestBody(aMultipart().withName("metadata.store").withBody(containing("true")))
           .withMultipartRequestBody(aMultipart().withName("metadata.source").withBody(containing("DO4SUB")))
