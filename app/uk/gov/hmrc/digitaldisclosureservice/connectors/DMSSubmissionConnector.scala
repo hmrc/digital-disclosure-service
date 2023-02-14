@@ -99,8 +99,8 @@ class DMSSubmissionConnectorImpl @Inject() (
         fileSize = pdf.size
       )
     )
-    submissionRequest.id match {
-      case Some(id) => Source(DataPart("id", id) +: dataParts)
+    submissionRequest.submissionReference match {
+      case Some(submissionReference) => Source(DataPart("submissionReference", submissionReference) +: dataParts)
       case None => Source(dataParts)
     }
   }
