@@ -30,13 +30,19 @@ final case class OffshoreLiabilities(
   taxBeforeFiveYears: Option[String] = None,
   taxBeforeSevenYears: Option[String] = None,
   taxBeforeNineteenYears: Option[String] = None,
+  missingYear: Option[String] = None,
+  missingYears: Option[String] = None,
+  disregardedCDF: Option[Boolean] = None,
   taxYearLiabilities: Option[Map[String, TaxYearWithLiabilities]] = None,
-  countryOfYourOffshoreLiability: Option[Map[String,CountryOfYourOffshoreLiability]] = None,
+  taxYearForeignTaxDeductions: Option[Map[String, BigInt]] = None,
+  countryOfYourOffshoreLiability: Option[Map[String, CountryOfYourOffshoreLiability]] = None,
+  incomeSource: Option[Set[WhereDidTheUndeclaredIncomeOrGainIncluded]] = None,
+  otherIncomeSource: Option[String] = None,
   legalInterpretation: Option[Set[YourLegalInterpretation]] = None,
   otherInterpretation: Option[String] = None,
   notIncludedDueToInterpretation: Option[HowMuchTaxHasNotBeenIncluded] = None,
   maximumValueOfAssets: Option[TheMaximumValueOfAllAssets] = None
-) 
+)
 
 object OffshoreLiabilities {
   implicit val format: OFormat[OffshoreLiabilities] = Json.format[OffshoreLiabilities]
