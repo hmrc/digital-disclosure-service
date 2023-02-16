@@ -18,7 +18,6 @@ package models.disclosure
 
 import play.api.libs.json.{Json, OFormat}
 import models._
-import uk.gov.hmrc.digitaldisclosureservice.models.offshore.CountryOfYourOffshoreLiability
 
 final case class OffshoreLiabilities(
   behaviour: Option[Set[WhyAreYouMakingThisDisclosure]] = None,

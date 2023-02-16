@@ -19,7 +19,9 @@ package viewmodels
 import viewmodels.govuk.SummaryListFluency
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist._
 import play.api.i18n.Messages
-import models.Notification
+import models._
+import models.notification._
+import viewmodels.implicits._
 
 final case class NotificationViewModel(
   metadataList: Option[SummaryList],
@@ -37,8 +39,10 @@ object NotificationViewModel extends SummaryListFluency with SubmissionViewModel
 
   def apply(notification: Notification)(implicit messages: Messages): NotificationViewModel = {
 
+    val isADisclosure = false
+
     NotificationViewModel(
-      metadataList(notification.personalDetails.background, notification.metadata),
+      metadataList(notification.metadata),
       backgroundList(notification.personalDetails.background),
       notification.personalDetails.aboutTheIndividual.map(aboutTheIndividualList),
       notification.personalDetails.aboutTheCompany.map(aboutTheCompanyList),
@@ -46,9 +50,30 @@ object NotificationViewModel extends SummaryListFluency with SubmissionViewModel
       notification.personalDetails.aboutTheLLP.map(aboutTheLLPList),
       notification.personalDetails.aboutTheEstate.map(aboutTheEstateList),
       aboutYouList(notification.personalDetails.aboutYou, notification.disclosingAboutThemselves),
-      aboutYouHeading(notification.personalDetails, false)
+      aboutYouHeading(notification.personalDetails, isADisclosure)
     )
 
   }
+
+  def metadataList(metadata: Metadata)(implicit messages: Messages): Option[SummaryList] = {
+    metadata.reference.map{ ref =>
+      SummaryListViewModel(rows = Seq(
+        SummaryListRowViewModel(s"notification.metadata.reference", ValueViewModel(ref)),
+        SummaryListRowViewModel(s"notification.metadata.submissionTime", ValueViewModel(metadata.submissionTime.map(toPrettyDate)))
+      ))
+    }
+  }
+
+  def backgroundList(background: Background)(implicit messages: Messages): SummaryList = SummaryListViewModel(
+    rows = Seq(
+      displayWhenNo(s"$backgroundKey.haveYouReceivedALetter", background.haveYouReceivedALetter),
+      background.letterReferenceNumber.map(_ => SummaryListRowViewModel("notification.metadata.caseRef", ValueViewModel(background.letterReferenceNumber))),
+      Some(SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(background.disclosureEntity.map(de => messages(s"notification.background.${de.entity.toString}"))))),
+      background.disclosureEntity.map(de => SummaryListRowViewModel(s"notification.background.areYouThe${de.entity.toString}", ValueViewModel(de.areYouTheEntity))),
+      background.areYouRepresetingAnOrganisation.flatMap(areYou => displayWhenNo(s"$backgroundKey.areYouRepresetingAnOrganisation", areYou)),
+      background.organisationName.map(_ => SummaryListRowViewModel(s"$backgroundKey.organisationName", ValueViewModel(background.organisationName))),
+      Some(liabilitiesRow(background))
+    ).flatten
+  )
 
 }

@@ -25,7 +25,8 @@ object AppDependencies {
     "commons-codec"            %   "commons-codec"                 % "1.14",
     "com.thoughtworks.xstream" %   "xstream"                       % "1.4.11.1",
     "uk.gov.hmrc.mongo"        %% "hmrc-mongo-play-28"             % "0.74.0",
-    "uk.gov.hmrc"              %% "internal-auth-client-play-28"   % "1.3.0"
+    "uk.gov.hmrc"              %% "internal-auth-client-play-28"   % "1.3.0",
+    "uk.gov.hmrc"              %% "tax-year"                       % "3.0.0"
   )
 
   val test = Seq(
@@ -34,6 +35,8 @@ object AppDependencies {
     "org.scalatestplus"       %% "mockito-4-6"                % "3.2.14.0"                  % "test, it",
     "com.github.tomakehurst"  %  "wiremock-standalone"        % "2.27.2"                    % "test, it",
     "org.scalatestplus.play"  %% "scalatestplus-play"         % "5.1.0"                     % "test, it",
-    "org.scalamock"           %% "scalamock"                  % "5.1.0"                     % "test, it"
+    "org.scalamock"           %% "scalamock"                  % "5.1.0"                     % "test, it",
+    "org.scalatestplus"       %% "scalacheck-1-15"            % "3.2.10.0"                  % "test, it",
+    "org.scalacheck"          %% "scalacheck"                 % "1.15.4"                    % "test, it"
   )
 }
