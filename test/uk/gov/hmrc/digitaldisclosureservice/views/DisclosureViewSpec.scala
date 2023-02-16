@@ -85,7 +85,6 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
         aboutYouHeading = "disclosure.heading.completing",
         offshoreLiabilities = Some(OffshoreLiabilitiesViewModel(
           summaryList = SummaryList(rows=Nil),
-          legalInterpretationlist = SummaryList(rows=Nil),
           taxYearLists = Seq((2012, SummaryList(rows=Nil))),
           totalAmountsList = SummaryList(rows=Nil),
           liabilitiesTotal = 0

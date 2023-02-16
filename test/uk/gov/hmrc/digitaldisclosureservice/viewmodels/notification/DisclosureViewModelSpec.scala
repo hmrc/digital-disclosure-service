@@ -139,25 +139,6 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
       DisclosureViewModel.backgroundList(background) shouldEqual expected
     }
 
-    "return organisation information where it's populated" in {
-      val background = Background (None, None, Some(DisclosureEntity(Individual, Some(false))), Some(true), Some("Some organisation"))
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
-        SummaryListRowViewModel("notification.background.organisationName", ValueViewModel("Some organisation")),
-        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
-      ))
-      DisclosureViewModel.backgroundList(background) shouldEqual expected
-    }
-
-    "return organisation information where it's populated but set to false" in {
-      val background = Background (None, None, Some(DisclosureEntity(Individual, Some(false))), Some(false), None)
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
-        SummaryListRowViewModel("notification.background.areYouRepresetingAnOrganisation", ValueViewModel(messages("service.no"))),
-        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
-      ))
-      DisclosureViewModel.backgroundList(background) shouldEqual expected
-    }
   }
 
   "otherLiabilitiesList" should {

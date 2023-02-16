@@ -76,10 +76,9 @@
         @viewModel.offshoreLiabilities.map{ lists => 
             @summarySection("disclosure.offshore.heading", lists.summaryList)
             @lists.taxYearLists.map { case (year, list) =>
-                <h2 class="govuk-heading-l">@messages("disclosure.offshore.year", s"${year+1}")</h2>
+                <h2 class="govuk-heading-m">@messages("disclosure.offshore.year", s"${year+1}")</h2>
                 @govukSummaryList(list)
             }
-            @summarySection("disclosure.offshore.heading", lists.legalInterpretationlist)
             @summarySection("disclosure.totals.heading", lists.totalAmountsList)
         }
 

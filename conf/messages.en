@@ -73,6 +73,9 @@ notification.background.areYouTheEstate = Are you the executor or administrator 
 notification.background.areYouRepresetingAnOrganisation = Are you representing an organisation?
 notification.background.organisationName = The name of the organisation you represent
 
+disclosure.background.liabilities = The disclosure is for
+disclosure.background.disclosureEntity = Who the disclosure will be about
+
 #===================================================
 #  About you
 #===================================================
@@ -161,7 +164,7 @@ disclosure.offshore.reasonableCare.years = Tax years the reasonable care applies
 disclosure.offshore.notfileExcuse = Reasonable excuse for not filing a return
 disclosure.offshore.notfileExcuse.years = Tax years this reasonable excuse applies to
 disclosure.offshore.cdf = CDF considered?
-disclosure.offshore.notIncluding = Reason for not including {0}
+disclosure.offshore.notIncluding = Reason for not including tax years ending {0}
 disclosure.offshore.before = Tax owed before 6 April {0}
 disclosure.offshore.noLiabilities = No offshore liabilities to disclose
 
@@ -343,3 +346,15 @@ otherLiabilityIssues.inheritanceTaxIssues = Inheritance Tax issues
 otherLiabilityIssues.class2National = Class 2 National Insurance contributions issues
 otherLiabilityIssues.other = Other
 otherLiabilityIssues.noExclusion = No, I do not have any other liability issues
+
+#===================================================
+#  Income or gain otherIncomeSource
+#===================================================
+
+whereDidTheUndeclaredIncomeOrGainIncluded.dividends = Dividends
+whereDidTheUndeclaredIncomeOrGainIncluded.interest = Interest
+whereDidTheUndeclaredIncomeOrGainIncluded.propertyIncome = Property income
+whereDidTheUndeclaredIncomeOrGainIncluded.residentialPropertyGain = Residential property gain
+whereDidTheUndeclaredIncomeOrGainIncluded.selfEmploymentIncome = Self-employment income
+whereDidTheUndeclaredIncomeOrGainIncluded.otherGains = Other gains
+whereDidTheUndeclaredIncomeOrGainIncluded.somewhereElse = Somewhere else
