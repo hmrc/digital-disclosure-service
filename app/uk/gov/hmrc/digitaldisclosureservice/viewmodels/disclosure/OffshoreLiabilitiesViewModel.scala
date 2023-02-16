@@ -24,7 +24,6 @@ import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 import play.api.i18n.Messages
 import uk.gov.hmrc.time.{CurrentTaxYear, TaxYear}
-import uk.gov.hmrc.govukfrontend.views.viewmodels.content._
 import play.twirl.api.HtmlFormat
 
 case class OffshoreLiabilitiesViewModel(

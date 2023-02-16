@@ -25,7 +25,6 @@ import models.disclosure._
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content._
 import viewmodels.implicits._
 import play.twirl.api.HtmlFormat
-import scala.language.implicitConversions
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
