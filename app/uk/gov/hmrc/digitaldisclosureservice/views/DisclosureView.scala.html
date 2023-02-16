@@ -62,7 +62,7 @@
 
         <h1 style="padding-top: 1em;">@messages("disclosure.h1")</h1>
 
-        @viewModel.metadataList.map(list => summarySection("notification.heading.metadata", list))
+        @summarySection("disclosure.heading.metadata", viewModel.metadataList)
         @summarySection("notification.heading.background", viewModel.backgroundList)
 
         @viewModel.aboutTheIndividualList.map(list => summarySection("notification.heading.aboutTheIndividual", list))
@@ -72,6 +72,19 @@
         @viewModel.aboutTheEstateList.map(list => summarySection("notification.heading.aboutTheEstate", list))
 
         @summarySection(viewModel.aboutYouHeading, viewModel.aboutYouList)
+
+        @viewModel.offshoreLiabilities.map{ lists => 
+            @summarySection("disclosure.offshore.heading", lists.summaryList)
+            @lists.taxYearLists.map { case (year, list) =>
+                <h2 class="govuk-heading-l">@messages("disclosure.offshore.year", s"${year+1}")</h2>
+                @govukSummaryList(list)
+            }
+            @summarySection("disclosure.offshore.heading", lists.legalInterpretationlist)
+            @summarySection("disclosure.totals.heading", lists.totalAmountsList)
+        }
+
+        @summarySection("disclosure.otherLiabilities.heading", viewModel.otherLiabilitiesList)
+        @summarySection("disclosure.additional.heading", viewModel.additionalList)
         
     </body>
 </html>

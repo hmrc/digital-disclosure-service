@@ -25,10 +25,12 @@ import viewmodels.implicits._
 import play.api.i18n.{MessagesApi, Messages}
 import play.api.test.FakeRequest
 import models._
+import models.disclosure._
 import models.address._
 import models.address.Address._
 import models.notification._
 import utils.BaseSpec
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 
 class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with SummaryListFluency {
 
@@ -40,16 +42,28 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
     "return populated values as rows" in {
       val date = LocalDateTime.of(2023, Month.MARCH, 4, 11, 3, 0)
       val metadata = Metadata(Some("Some reference"), Some(date))
+
+      val disclosureEntity = DisclosureEntity(Individual, Some(true))
+      val background = Background(disclosureEntity = Some(disclosureEntity))
+
+      val caseReference = CaseReference(Some(true), Some("Case ref"))
+
+      val countryOfYourOffshoreLiability = Map("GBR" -> CountryOfYourOffshoreLiability("GBR", "United Kingdom"), "FRA" -> CountryOfYourOffshoreLiability("FRA", "France"))
+      val offshoreLiabilities = OffshoreLiabilities(countryOfYourOffshoreLiability = Some(countryOfYourOffshoreLiability))
+
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.metadata.reference", ValueViewModel("Some reference")),
-        SummaryListRowViewModel("notification.metadata.submissionTime", ValueViewModel("4 March 2023 11:03am"))
+        SummaryListRowViewModel("disclosure.metadata.reference", ValueViewModel("Some reference")),
+        SummaryListRowViewModel("disclosure.metadata.submissionTime", ValueViewModel("4 March 2023 11:03am")),
+        SummaryListRowViewModel("notification.metadata.caseRef", ValueViewModel("Case ref")),
+        SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.yes"))),
+        SummaryListRowViewModel("disclosure.offshore.country", ValueViewModel("United Kingdom, France"))
       ))
-      DisclosureViewModel.metadataList(Background(), metadata) shouldEqual Some(expected)
+      DisclosureViewModel.metadataList(background, metadata, caseReference, offshoreLiabilities) shouldEqual expected
     }
 
-    "return unpopulated values as None" in {
+    "return unpopulated values as empty" in {
       val metadata = Metadata()
-      DisclosureViewModel.metadataList(Background(), metadata) shouldEqual None
+      DisclosureViewModel.metadataList(Background(), metadata, CaseReference(), OffshoreLiabilities()) shouldEqual SummaryListViewModel(rows = Nil)
     }
 
   }
@@ -64,9 +78,7 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         onshoreLiabilities = Some (true)
       )
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.metadata.caseRef", ValueViewModel(messages("Some letter reference"))),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
-        SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.yes"))),
         SummaryListRowViewModel("notification.background.liabilities", ValueViewModel(messages("notification.background.onshore")))
       ))
       DisclosureViewModel.backgroundList(background) shouldEqual expected
@@ -80,9 +92,7 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         onshoreLiabilities = Some (false)
       )
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
-        SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.yes"))),
         SummaryListRowViewModel("notification.background.liabilities", ValueViewModel(messages("notification.background.offshore")))
       ))
       DisclosureViewModel.backgroundList(background) shouldEqual expected
@@ -96,20 +106,8 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         onshoreLiabilities = Some (true)
       )
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
-        SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.yes"))),
         SummaryListRowViewModel("notification.background.liabilities", ValueViewModel(messages("notification.background.both")))
-      ))
-      DisclosureViewModel.backgroundList(background) shouldEqual expected
-    }
-
-    "return unpopulated values as rows with value dash" in {
-      val background = Background()
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
       ))
       DisclosureViewModel.backgroundList(background) shouldEqual expected
     }
@@ -117,9 +115,7 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
     "return disclosure Entity row with information for a Company " in {
       val background = Background (None, None, Some(DisclosureEntity(Company, Some(true))), None, None)
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Company"))),
-        SummaryListRowViewModel("notification.background.areYouTheCompany", ValueViewModel(messages("service.yes"))),
         SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
       ))
       DisclosureViewModel.backgroundList(background) shouldEqual expected
@@ -128,9 +124,7 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
     "return disclosure Entity row with information for a LLP " in {
       val background = Background (None, None, Some(DisclosureEntity(LLP, Some(true))), None, None)
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.LLP"))),
-        SummaryListRowViewModel("notification.background.areYouTheLLP", ValueViewModel(messages("service.yes"))),
         SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
       ))
       DisclosureViewModel.backgroundList(background) shouldEqual expected
@@ -139,9 +133,7 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
     "return disclosure Entity row with information for a Trust " in {
       val background = Background (None, None, Some(DisclosureEntity(Trust, Some(true))), None, None)
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Trust"))),
-        SummaryListRowViewModel("notification.background.areYouTheTrust", ValueViewModel(messages("service.yes"))),
         SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
       ))
       DisclosureViewModel.backgroundList(background) shouldEqual expected
@@ -150,9 +142,7 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
     "return organisation information where it's populated" in {
       val background = Background (None, None, Some(DisclosureEntity(Individual, Some(false))), Some(true), Some("Some organisation"))
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
-        SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.background.organisationName", ValueViewModel("Some organisation")),
         SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
       ))
@@ -162,9 +152,7 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
     "return organisation information where it's populated but set to false" in {
       val background = Background (None, None, Some(DisclosureEntity(Individual, Some(false))), Some(false), None)
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
-        SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.background.areYouRepresetingAnOrganisation", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
       ))
@@ -172,337 +160,145 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
     }
   }
 
-  "aboutTheIndividualList" should {
-    "return populated values as rows, hiding Yes rows" in {
-      val date = LocalDate.now()
-      val aboutTheIndividual = AboutTheIndividual(
-        fullName = Some("Some full name"),
-        dateOfBirth = Some(date),
-        mainOccupation = Some("Some occupation"),
-        doTheyHaveANino = Some(YesNoOrUnsure.Yes),
-        nino = Some("Some nino"),
-        registeredForVAT = Some(YesNoOrUnsure.Yes),
-        vatRegNumber = Some("Some reg number"),
-        registeredForSA = Some(YesNoOrUnsure.Yes),
-        sautr = Some("Some SAUTR"),
-        address = Some(address)
-      )
+  "otherLiabilitiesList" should {
+
+    "display populated rows where you're the individual" in {
+      val otherLiabilities = OtherLiabilities(
+        issues = Some(Set(OtherLiabilityIssues.EmployerLiabilities, OtherLiabilityIssues.VatIssues)),
+        inheritanceGift = Some("Some gift"),
+        other = Some("Some other liability"),
+        taxCreditsReceived = Some(true)
+      ) 
+      val expectedIssues = messages(s"otherLiabilityIssues.employerLiabilities") + ",<br/><br/>" + messages(s"otherLiabilityIssues.vatIssues")
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheIndividual.fullName", ValueViewModel("Some full name")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.address", ValueViewModel(addressString)),
-        SummaryListRowViewModel("notification.aboutTheIndividual.dateOfBirth", ValueViewModel(date.toString)),
-        SummaryListRowViewModel("notification.aboutTheIndividual.mainOccupation", ValueViewModel("Some occupation")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.nino", ValueViewModel("Some nino")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.vatRegNumber", ValueViewModel("Some reg number")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.sautr", ValueViewModel("Some SAUTR"))
+        SummaryListRowViewModel("disclosure.otherLiabilities.issues", ValueViewModel(HtmlContent(expectedIssues))),
+        SummaryListRowViewModel("disclosure.otherLiabilities.description", ValueViewModel("Some other liability")),
+        SummaryListRowViewModel("disclosure.otherLiabilities.transfer", ValueViewModel("Some gift")),
+        SummaryListRowViewModel("disclosure.otherLiabilities.taxCredits.you", ValueViewModel(messages("service.yes")))
       ))
-      DisclosureViewModel.aboutTheIndividualList(aboutTheIndividual) shouldEqual expected
+      DisclosureViewModel.otherLiabilitiesList(otherLiabilities, true, "individual") shouldEqual expected
     }
 
-    "return populated values as rows, showing No rows" in {
-      val date = LocalDate.now()
-      val aboutTheIndividual = AboutTheIndividual(
-        fullName = Some("Some full name"),
-        dateOfBirth = Some(date),
-        mainOccupation = Some("Some occupation"),
-        doTheyHaveANino = Some(YesNoOrUnsure.No),
-        nino = Some("Some nino"),
-        registeredForVAT = Some(YesNoOrUnsure.No),
-        vatRegNumber = Some("Some reg number"),
-        registeredForSA = Some(YesNoOrUnsure.Unsure),
-        sautr = Some("Some SAUTR"),
-        address = Some(address)
-      )
+    "display populated rows where you're not the individual" in {
+      val otherLiabilities = OtherLiabilities(
+        issues = Some(Set(OtherLiabilityIssues.EmployerLiabilities, OtherLiabilityIssues.VatIssues)),
+        inheritanceGift = Some("Some gift"),
+        other = Some("Some other liability"),
+        taxCreditsReceived = Some(false)
+      ) 
+      val expectedIssues = messages(s"otherLiabilityIssues.employerLiabilities") + ",<br/><br/>" + messages(s"otherLiabilityIssues.vatIssues")
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheIndividual.fullName", ValueViewModel("Some full name")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.address", ValueViewModel(addressString)),
-        SummaryListRowViewModel("notification.aboutTheIndividual.dateOfBirth", ValueViewModel(date.toString)),
-        SummaryListRowViewModel("notification.aboutTheIndividual.mainOccupation", ValueViewModel("Some occupation")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.doTheyHaveANino", ValueViewModel(messages("service.no"))),
-        SummaryListRowViewModel("notification.aboutTheIndividual.nino", ValueViewModel("Some nino")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.registeredForVAT", ValueViewModel(messages("service.no"))),
-        SummaryListRowViewModel("notification.aboutTheIndividual.vatRegNumber", ValueViewModel("Some reg number")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.registeredForSA", ValueViewModel(messages("service.unsure"))),
-        SummaryListRowViewModel("notification.aboutTheIndividual.sautr", ValueViewModel("Some SAUTR"))
+        SummaryListRowViewModel("disclosure.otherLiabilities.issues", ValueViewModel(HtmlContent(expectedIssues))),
+        SummaryListRowViewModel("disclosure.otherLiabilities.description", ValueViewModel("Some other liability")),
+        SummaryListRowViewModel("disclosure.otherLiabilities.transfer", ValueViewModel("Some gift")),
+        SummaryListRowViewModel("disclosure.otherLiabilities.taxCredits.individual", ValueViewModel(messages("service.no")))
       ))
-      DisclosureViewModel.aboutTheIndividualList(aboutTheIndividual) shouldEqual expected
+      DisclosureViewModel.otherLiabilitiesList(otherLiabilities, false, "Individual") shouldEqual expected
     }
 
-    "return unpopulated values as rows with value dash" in {
-      val aboutTheIndividual = AboutTheIndividual()
+    "display populated rows where it's an estate" in {
+      val otherLiabilities = OtherLiabilities(
+        issues = Some(Set(OtherLiabilityIssues.EmployerLiabilities, OtherLiabilityIssues.VatIssues)),
+        inheritanceGift = Some("Some gift"),
+        other = Some("Some other liability"),
+        taxCreditsReceived = Some(false)
+      ) 
+      val expectedIssues = messages(s"otherLiabilityIssues.employerLiabilities") + ",<br/><br/>" + messages(s"otherLiabilityIssues.vatIssues")
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheIndividual.fullName", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.address", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.dateOfBirth", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.mainOccupation", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.doTheyHaveANino", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.registeredForVAT", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.registeredForSA", ValueViewModel("-"))
+        SummaryListRowViewModel("disclosure.otherLiabilities.issues", ValueViewModel(HtmlContent(expectedIssues))),
+        SummaryListRowViewModel("disclosure.otherLiabilities.description", ValueViewModel("Some other liability")),
+        SummaryListRowViewModel("disclosure.otherLiabilities.transfer", ValueViewModel("Some gift")),
+        SummaryListRowViewModel("disclosure.otherLiabilities.taxCredits.person", ValueViewModel(messages("service.no")))
       ))
-      DisclosureViewModel.aboutTheIndividualList(aboutTheIndividual) shouldEqual expected
+      DisclosureViewModel.otherLiabilitiesList(otherLiabilities, false, "Estate") shouldEqual expected
     }
+
+    "display an empty list where nothing is populated" in {
+      val otherLiabilities = OtherLiabilities() 
+      val expected = SummaryListViewModel(Seq())
+      DisclosureViewModel.otherLiabilitiesList(otherLiabilities, true, "Individual") shouldEqual expected
+    }
+
   }
 
-  "aboutTheEstateList" should {
-    "return populated values as rows hiding yes rows" in {
-      val date = LocalDate.now()
-      val aboutTheEstate = AboutTheEstate(
-        fullName = Some("Some full name"),
-        dateOfBirth = Some(date),
-        mainOccupation = Some("Some occupation"),
-        doTheyHaveANino = Some(YesNoOrUnsure.Yes),
-        nino = Some("Some nino"),
-        registeredForVAT = Some(YesNoOrUnsure.Yes),
-        vatRegNumber = Some("Some reg number"),
-        registeredForSA = Some(YesNoOrUnsure.Yes),
-        sautr = Some("Some SAUTR"),
-        address = Some(address)
+  "additionalList" should {
+
+    "display populated rows" in {
+      val reason = ReasonForDisclosingNow(
+        reason = Some(Set(WhyAreYouMakingADisclosure.GovUkGuidance, WhyAreYouMakingADisclosure.LetterFromHMRC)),
+        otherReason = Some("Some other reason"),
+        whyNotBeforeNow = Some("Reason why not before now"),
+        receivedAdvice = Some(true),
+        personWhoGaveAdvice = Some("Some advice giver"),
+        adviceOnBehalfOfBusiness = Some(false),
+        adviceBusinessName = Some("Some org"),
+        personProfession = Some("Some profession"),
+        adviceGiven= Some(AdviceGiven("Some advice", MonthYear(12, 2012), AdviceContactPreference.Email)),
+        whichEmail = None,
+        whichPhone = None,
+        email = Some("Some email"),
+        telephone = Some("Phone number")
       )
+      val expectedReason = messages(s"whyAreYouMakingADisclosure.govUkGuidance") + ",<br/><br/>" + messages(s"whyAreYouMakingADisclosure.letterFromHMRC")
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheEstate.fullName", ValueViewModel("Some full name")),
-        SummaryListRowViewModel("notification.aboutTheEstate.address", ValueViewModel(addressString)),
-        SummaryListRowViewModel("notification.aboutTheEstate.dateOfBirth", ValueViewModel(date.toString)),
-        SummaryListRowViewModel("notification.aboutTheEstate.mainOccupation", ValueViewModel("Some occupation")),
-        SummaryListRowViewModel("notification.aboutTheEstate.nino", ValueViewModel("Some nino")),
-        SummaryListRowViewModel("notification.aboutTheEstate.vatRegNumber", ValueViewModel("Some reg number")),
-        SummaryListRowViewModel("notification.aboutTheEstate.sautr", ValueViewModel("Some SAUTR"))
+        SummaryListRowViewModel("disclosure.additional.reason", ValueViewModel(HtmlContent(expectedReason))),
+        SummaryListRowViewModel("disclosure.additional.otherReason", ValueViewModel("Some other reason")),
+        SummaryListRowViewModel("disclosure.additional.beforeNow", ValueViewModel("Reason why not before now")),
+        SummaryListRowViewModel("disclosure.additional.adviceGiven.you", ValueViewModel(messages("service.yes"))),
+        SummaryListRowViewModel("disclosure.additional.advice.name", ValueViewModel("Some advice giver")),
+        SummaryListRowViewModel("disclosure.additional.advice.behalfOf", ValueViewModel(messages("service.no"))),
+        SummaryListRowViewModel("disclosure.additional.advice.business", ValueViewModel("Some org")),
+        SummaryListRowViewModel("disclosure.additional.advice.profession", ValueViewModel("Some profession")),
+        SummaryListRowViewModel("disclosure.additional.advice.given", ValueViewModel("Some advice")),
+        SummaryListRowViewModel("disclosure.additional.advice.date", ValueViewModel("December 2012")),
+        SummaryListRowViewModel("disclosure.additional.advice.discuss", ValueViewModel(messages("service.yes"))),
+        SummaryListRowViewModel("disclosure.additional.advice.email", ValueViewModel("Some email")),
+        SummaryListRowViewModel("disclosure.additional.advice.telephone", ValueViewModel("Phone number"))
       ))
-      DisclosureViewModel.aboutTheEstateList(aboutTheEstate) shouldEqual expected
+      DisclosureViewModel.additionalInformationList(reason, true, "individual") shouldEqual expected
     }
 
-    "return populated values as rows showing no rows" in {
-      val date = LocalDate.now()
-      val aboutTheEstate = AboutTheEstate(
-        fullName = Some("Some full name"),
-        dateOfBirth = Some(date),
-        mainOccupation = Some("Some occupation"),
-        doTheyHaveANino = Some(YesNoOrUnsure.No),
-        nino = Some("Some nino"),
-        registeredForVAT = Some(YesNoOrUnsure.No),
-        vatRegNumber = Some("Some reg number"),
-        registeredForSA = Some(YesNoOrUnsure.Unsure),
-        sautr = Some("Some SAUTR"),
-        address = Some(address)
+    "display populated rows when not the individual" in {
+      val reason = ReasonForDisclosingNow(
+        reason = Some(Set(WhyAreYouMakingADisclosure.GovUkGuidance, WhyAreYouMakingADisclosure.LetterFromHMRC)),
+        otherReason = Some("Some other reason"),
+        whyNotBeforeNow = Some("Reason why not before now"),
+        receivedAdvice = Some(true),
+        personWhoGaveAdvice = Some("Some advice giver"),
+        adviceOnBehalfOfBusiness = Some(false),
+        adviceBusinessName = Some("Some org"),
+        personProfession = Some("Some profession"),
+        adviceGiven= Some(AdviceGiven("Some advice", MonthYear(12, 2012), AdviceContactPreference.No)),
+        whichEmail = None,
+        whichPhone = None,
+        email = Some("Some email"),
+        telephone = Some("Phone number")
       )
+      val expectedReason = messages(s"whyAreYouMakingADisclosure.govUkGuidance") + ",<br/><br/>" + messages(s"whyAreYouMakingADisclosure.letterFromHMRC")
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheEstate.fullName", ValueViewModel("Some full name")),
-        SummaryListRowViewModel("notification.aboutTheEstate.address", ValueViewModel(addressString)),
-        SummaryListRowViewModel("notification.aboutTheEstate.dateOfBirth", ValueViewModel(date.toString)),
-        SummaryListRowViewModel("notification.aboutTheEstate.mainOccupation", ValueViewModel("Some occupation")),
-        SummaryListRowViewModel("notification.aboutTheEstate.doTheyHaveANino", ValueViewModel(messages("service.no"))),
-        SummaryListRowViewModel("notification.aboutTheEstate.nino", ValueViewModel("Some nino")),
-        SummaryListRowViewModel("notification.aboutTheEstate.registeredForVAT", ValueViewModel(messages("service.no"))),
-        SummaryListRowViewModel("notification.aboutTheEstate.vatRegNumber", ValueViewModel("Some reg number")),
-        SummaryListRowViewModel("notification.aboutTheEstate.registeredForSA", ValueViewModel(messages("service.unsure"))),
-        SummaryListRowViewModel("notification.aboutTheEstate.sautr", ValueViewModel("Some SAUTR"))
+        SummaryListRowViewModel("disclosure.additional.reason", ValueViewModel(HtmlContent(expectedReason))),
+        SummaryListRowViewModel("disclosure.additional.otherReason", ValueViewModel("Some other reason")),
+        SummaryListRowViewModel("disclosure.additional.beforeNow", ValueViewModel("Reason why not before now")),
+        SummaryListRowViewModel("disclosure.additional.adviceGiven.Individual", ValueViewModel(messages("service.yes"))),
+        SummaryListRowViewModel("disclosure.additional.advice.name", ValueViewModel("Some advice giver")),
+        SummaryListRowViewModel("disclosure.additional.advice.behalfOf", ValueViewModel(messages("service.no"))),
+        SummaryListRowViewModel("disclosure.additional.advice.business", ValueViewModel("Some org")),
+        SummaryListRowViewModel("disclosure.additional.advice.profession", ValueViewModel("Some profession")),
+        SummaryListRowViewModel("disclosure.additional.advice.given", ValueViewModel("Some advice")),
+        SummaryListRowViewModel("disclosure.additional.advice.date", ValueViewModel("December 2012")),
+        SummaryListRowViewModel("disclosure.additional.advice.discuss", ValueViewModel(messages("service.no"))),
+        SummaryListRowViewModel("disclosure.additional.advice.email", ValueViewModel("Some email")),
+        SummaryListRowViewModel("disclosure.additional.advice.telephone", ValueViewModel("Phone number"))
       ))
-      DisclosureViewModel.aboutTheEstateList(aboutTheEstate) shouldEqual expected
+      DisclosureViewModel.additionalInformationList(reason, false, Individual.toString) shouldEqual expected
     }
 
-    "return unpopulated values as rows with value dash" in {
-      val aboutTheEstate = AboutTheEstate()
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheEstate.fullName", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheEstate.address", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheEstate.dateOfBirth", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheEstate.mainOccupation", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheEstate.doTheyHaveANino", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheEstate.registeredForVAT", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheEstate.registeredForSA", ValueViewModel("-"))
-      ))
-      DisclosureViewModel.aboutTheEstateList(aboutTheEstate) shouldEqual expected
+    "display an empty list when nothing is populated" in {
+      val reason = ReasonForDisclosingNow()
+      val expected = SummaryListViewModel(Seq())
+      DisclosureViewModel.additionalInformationList(reason, false, Individual.toString) shouldEqual expected
     }
+
   }
 
-  "aboutYouList" should {
-    "return populated values as rows when disclosing as the individual hiding Yes rows" in {
-      val date = LocalDate.now()
-      val aboutYou = AboutYou(
-        fullName = Some("Some full name"),
-        telephoneNumber = Some("Some phone number"),
-        emailAddress = Some("Some email address"),
-        dateOfBirth = Some(date),
-        mainOccupation = Some("Some occupation"),
-        doYouHaveANino = Some(YesNoOrUnsure.Yes),
-        nino = Some("Some nino"),
-        registeredForVAT = Some(YesNoOrUnsure.Yes),
-        vatRegNumber = Some("Some reg number"),
-        registeredForSA = Some(YesNoOrUnsure.Yes),
-        sautr = Some("Some SAUTR"),
-        address = Some(address)
-      )
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("Some full name")),
-        SummaryListRowViewModel("notification.aboutYou.emailAddress", ValueViewModel("Some email address")),
-        SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
-        SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel(addressString)),
-        SummaryListRowViewModel("notification.aboutYou.dateOfBirth", ValueViewModel(date.toString)),
-        SummaryListRowViewModel("notification.aboutYou.mainOccupation", ValueViewModel("Some occupation")),
-        SummaryListRowViewModel("notification.aboutYou.nino", ValueViewModel("Some nino")),
-        SummaryListRowViewModel("notification.aboutYou.vatRegNumber", ValueViewModel("Some reg number")),
-        SummaryListRowViewModel("notification.aboutYou.sautr", ValueViewModel("Some SAUTR"))
-      ))
-      DisclosureViewModel.aboutYouList(aboutYou, true) shouldEqual expected
-    }
-
-    "return populated values as rows when disclosing as the individual, showing No rows" in {
-      val date = LocalDate.now()
-      val aboutYou = AboutYou(
-        fullName = Some("Some full name"),
-        telephoneNumber = Some("Some phone number"),
-        emailAddress = Some("Some email address"),
-        dateOfBirth = Some(date),
-        mainOccupation = Some("Some occupation"),
-        doYouHaveANino = Some(YesNoOrUnsure.No),
-        nino = Some("Some nino"),
-        registeredForVAT = Some(YesNoOrUnsure.No),
-        vatRegNumber = Some("Some reg number"),
-        registeredForSA = Some(YesNoOrUnsure.Unsure),
-        sautr = Some("Some SAUTR"),
-        address = Some(address)
-      )
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("Some full name")),
-        SummaryListRowViewModel("notification.aboutYou.emailAddress", ValueViewModel("Some email address")),
-        SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
-        SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel(addressString)),
-        SummaryListRowViewModel("notification.aboutYou.dateOfBirth", ValueViewModel(date.toString)),
-        SummaryListRowViewModel("notification.aboutYou.mainOccupation", ValueViewModel("Some occupation")),
-        SummaryListRowViewModel("notification.aboutYou.doYouHaveANino", ValueViewModel(messages("service.no"))),
-        SummaryListRowViewModel("notification.aboutYou.nino", ValueViewModel("Some nino")),
-        SummaryListRowViewModel("notification.aboutYou.registeredForVAT", ValueViewModel(messages("service.no"))),
-        SummaryListRowViewModel("notification.aboutYou.vatRegNumber", ValueViewModel("Some reg number")),
-        SummaryListRowViewModel("notification.aboutYou.registeredForSA", ValueViewModel(messages("service.unsure"))),
-        SummaryListRowViewModel("notification.aboutYou.sautr", ValueViewModel("Some SAUTR"))
-      ))
-      DisclosureViewModel.aboutYouList(aboutYou, true) shouldEqual expected
-    }
-
-    "return populated values as rows when disclosing on behalf of the individual" in {
-      val date = LocalDate.now()
-      val aboutYou = AboutYou(
-        fullName = Some("Some full name"),
-        telephoneNumber = Some("Some phone number"),
-        emailAddress = Some("Some email address"),
-        dateOfBirth = Some(date),
-        mainOccupation = Some("Some occupation"),
-        doYouHaveANino = Some(YesNoOrUnsure.Yes),
-        nino = Some("Some nino"),
-        registeredForVAT = Some(YesNoOrUnsure.No),
-        vatRegNumber = Some("Some reg number"),
-        registeredForSA = Some(YesNoOrUnsure.Unsure),
-        sautr = Some("Some SAUTR"),
-        address = Some(address)
-      )
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("Some full name")),
-        SummaryListRowViewModel("notification.aboutYou.emailAddress", ValueViewModel("Some email address")),
-        SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
-        SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel(addressString))
-      ))
-      DisclosureViewModel.aboutYouList(aboutYou, false) shouldEqual expected
-    }
-
-    "return unpopulated values as rows with value dash when disclosing as the individual" in {
-      val aboutYou = AboutYou()
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutYou.dateOfBirth", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutYou.mainOccupation", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutYou.doYouHaveANino", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutYou.registeredForVAT", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutYou.registeredForSA", ValueViewModel("-"))
-      ))
-      DisclosureViewModel.aboutYouList(aboutYou, true) shouldEqual expected
-    }
-
-    "return unpopulated values as rows with value dash when disclosing on behalf of the individual" in {
-      val aboutYou = AboutYou()
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel("-"))
-      ))
-      DisclosureViewModel.aboutYouList(aboutYou, false) shouldEqual expected
-    }
-  }
-
-  "companyList" should {
-    "return populated values as rows" in {
-      val aboutTheCompany = AboutTheCompany(Some("Some company name"), Some("Some reg number"), Some(address))
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheCompany.name", ValueViewModel("Some company name")),
-        SummaryListRowViewModel("notification.aboutTheCompany.registrationNumber", ValueViewModel("Some reg number")),
-        SummaryListRowViewModel("notification.aboutTheCompany.address", ValueViewModel(addressString))
-      ))
-      DisclosureViewModel.aboutTheCompanyList(aboutTheCompany) shouldEqual expected
-    }
-
-    "return unpopulated values as rows with value dash" in {
-      val aboutTheCompany = AboutTheCompany()
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheCompany.name", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheCompany.registrationNumber", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheCompany.address", ValueViewModel("-"))
-      ))
-      DisclosureViewModel.aboutTheCompanyList(aboutTheCompany) shouldEqual expected
-    }
-  }
-
-  "aboutTheTrustList" should {
-    "return populated values as rows" in {
-      val aboutTheTrust = AboutTheTrust(Some("Some trust name"), Some(address))
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheTrust.name", ValueViewModel("Some trust name")),
-        SummaryListRowViewModel("notification.aboutTheTrust.address", ValueViewModel(addressString))
-      ))
-      DisclosureViewModel.aboutTheTrustList(aboutTheTrust) shouldEqual expected
-    }
-
-    "return unpopulated values as rows with value dash" in {
-      val aboutTheTrust = AboutTheTrust()
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheTrust.name", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheTrust.address", ValueViewModel("-"))
-      ))
-      DisclosureViewModel.aboutTheTrustList(aboutTheTrust) shouldEqual expected
-    }
-  }
-
-  "aboutTheLLPList" should {
-    "return populated values as rows" in {
-      val aboutTheLLP = AboutTheLLP(Some("Some LLP name"), Some(address))
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheLLP.name", ValueViewModel("Some LLP name")),
-        SummaryListRowViewModel("notification.aboutTheLLP.address", ValueViewModel(addressString))
-      ))
-      DisclosureViewModel.aboutTheLLPList(aboutTheLLP) shouldEqual expected
-    }
-
-    "return unpopulated values as rows with value dash" in {
-      val aboutTheLLP = AboutTheLLP()
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheLLP.name", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheLLP.address", ValueViewModel("-"))
-      ))
-      DisclosureViewModel.aboutTheLLPList(aboutTheLLP) shouldEqual expected
-    }
-  }
-
-  "YesNoOrUnsureToText" should {
-    "convert Yes implicitly" in {
-      val text: Text = YesNoOrUnsure.Yes
-      text shouldEqual Text(messages("service.yes"))
-    }
-
-    "convert No implicitly" in {
-      val text: Text = YesNoOrUnsure.No
-      text shouldEqual Text(messages("service.no"))
-    }
-
-    "convert Unsure implicitly" in {
-      val text: Text = YesNoOrUnsure.Unsure
-      text shouldEqual Text(messages("service.unsure"))
-    }
-  }
 }

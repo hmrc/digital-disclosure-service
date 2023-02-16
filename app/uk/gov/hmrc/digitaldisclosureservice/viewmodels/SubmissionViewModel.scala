@@ -22,7 +22,7 @@ import viewmodels.implicits._
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist._
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-import models.{Metadata, YesNoOrUnsure}
+import models.YesNoOrUnsure
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -41,31 +41,11 @@ trait SubmissionViewModel extends SummaryListFluency {
     }
   }
 
-  def metadataList(background: Background, metadata: Metadata)(implicit messages: Messages): Option[SummaryList] =
-    metadata.reference.map{ ref =>
-      SummaryListViewModel(rows = Seq(
-        SummaryListRowViewModel("notification.metadata.reference", ValueViewModel(ref)),
-        SummaryListRowViewModel("notification.metadata.submissionTime", ValueViewModel(metadata.submissionTime.map(toPrettyDate)))
-      ))
-    }
-
   def toPrettyDate(date: LocalDateTime): String = {
     val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy HH:mma")
     val formattedDate = date.format(dateFormatter)
     formattedDate.replace("AM", "am").replace("PM","pm")
   }
-
-  def backgroundList(background: Background)(implicit messages: Messages): SummaryList = SummaryListViewModel(
-    rows = Seq(
-      displayWhenNo(s"$backgroundKey.haveYouReceivedALetter", background.haveYouReceivedALetter),
-      background.letterReferenceNumber.map(_ => SummaryListRowViewModel("notification.metadata.caseRef", ValueViewModel(background.letterReferenceNumber))),
-      Some(SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(background.disclosureEntity.map(de => messages(s"notification.background.${de.entity.toString}"))))),
-      background.disclosureEntity.map(de => SummaryListRowViewModel(s"notification.background.areYouThe${de.entity.toString}", ValueViewModel(de.areYouTheEntity))),
-      background.areYouRepresetingAnOrganisation.flatMap(areYou => displayWhenNo(s"$backgroundKey.areYouRepresetingAnOrganisation", areYou)),
-      background.organisationName.map(_ => SummaryListRowViewModel(s"$backgroundKey.organisationName", ValueViewModel(background.organisationName))),
-      Some(liabilitiesRow(background))
-    ).flatten
-  )
 
   def liabilitiesRow(background: Background)(implicit messages: Messages): SummaryListRow = {
     val rowValue = (background.offshoreLiabilities, background.onshoreLiabilities) match{

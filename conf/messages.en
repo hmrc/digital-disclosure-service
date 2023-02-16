@@ -13,15 +13,23 @@ notification.h1 = Notification of intent
 #  Disclosure headings
 #===================================================
 disclosure.h1 = Disclosure
+disclosure.heading.metadata = Disclosure details
+disclosure.heading.background = Background
+disclosure.heading.aboutYou = About you
+disclosure.heading.completing = The person completing the disclosure
+disclosure.heading.aboutTheIndividual = The individual the disclosure will be about
+disclosure.heading.aboutTheCompany = The company the disclosure will be about
+disclosure.heading.aboutTheTrust = The trust the disclosure will be about
+disclosure.heading.aboutTheLLP = The limited liability partnership the disclosure will be about
+disclosure.heading.aboutTheEstate = The person the disclosure will be about
 
 #===================================================
 #  Section headings
 #===================================================
-notification.heading.metadata = Your submission details
+notification.heading.metadata = Notification details
 notification.heading.background = Background
 notification.heading.aboutYou = About you
 notification.heading.completing = The person completing the notification
-disclosure.heading.completing = The person completing the disclosure
 notification.heading.aboutTheIndividual = The individual the disclosure will be about
 notification.heading.aboutTheCompany = The company the disclosure will be about
 notification.heading.aboutTheTrust = The trust the disclosure will be about
@@ -29,11 +37,18 @@ notification.heading.aboutTheLLP = The limited liability partnership the disclos
 notification.heading.aboutTheEstate = The person the disclosure will be about
 
 #===================================================
-#  Metadata
+#  Notification Metadata
 #===================================================
-notification.metadata.reference = Your reference number
+notification.metadata.reference = Notification reference number
 notification.metadata.caseRef = Case reference
 notification.metadata.submissionTime = Notification sent on
+
+#===================================================
+#  Disclosure Metadata
+#===================================================
+disclosure.metadata.reference = Disclosure reference number
+disclosure.metadata.caseRef = Case reference
+disclosure.metadata.submissionTime = Disclosure submitted on
 
 #===================================================
 #  Background
@@ -50,7 +65,7 @@ notification.background.Company = A company
 notification.background.LLP = A limited liability partnership
 notification.background.Trust = A trust
 notification.background.Estate = An estate
-notification.background.areYouTheIndividual = Are you the individual this disclosure relates to?
+notification.background.areYouTheIndividual = Are you the individual that the disclosure will be about?
 notification.background.areYouTheCompany = Are you an officer of the company this disclosure relates to?
 notification.background.areYouTheLLP = Are you a designated member of the limited liability partnership that the disclosure will be about?
 notification.background.areYouTheTrust = Are you trustee of the trust that the disclosure will be about?
@@ -126,3 +141,205 @@ notification.aboutTheEstate.vatRegNumber = Person’s VAT registration number
 notification.aboutTheEstate.registeredForSA = Was the person registered for Self Assessment, as far as you’re aware?
 notification.aboutTheEstate.sautr = Person’s Unique Taxpayer Reference
 notification.aboutTheEstate.address = Person’s address
+
+#===================================================
+#  Countries
+#===================================================
+
+disclosure.offshore.country = Country or territory of the offshore liability
+
+#===================================================
+#  Offshore liabilities
+#===================================================
+
+disclosure.offshore.heading = Offshore liabilities
+disclosure.offshore.reason = Reason for disclosure
+disclosure.offshore.reasonableExcuse = Reasonable excuse for not notifying HMRC about a tax liability
+disclosure.offshore.reasonableExcuse.years = Tax years this reasonable excuse applies to
+disclosure.offshore.reasonableCare = Reasonable care taken when submitting an inaccurate return
+disclosure.offshore.reasonableCare.years = Tax years the reasonable care applies to
+disclosure.offshore.notfileExcuse = Reasonable excuse for not filing a return
+disclosure.offshore.notfileExcuse.years = Tax years this reasonable excuse applies to
+disclosure.offshore.cdf = CDF considered?
+disclosure.offshore.notIncluding = Reason for not including {0}
+disclosure.offshore.before = Tax owed before 6 April {0}
+disclosure.offshore.noLiabilities = No offshore liabilities to disclose
+
+#===================================================
+#  Offshore liabilities - per year
+#===================================================
+disclosure.offshore.year = Tax year ending {0}
+disclosure.offshore.income = Offshore income
+disclosure.offshore.gains = Offshore gains
+disclosure.offshore.transfers = Chargeable transfers
+disclosure.offshore.tax = Tax due
+disclosure.offshore.ni = National Insurance contributions due
+disclosure.offshore.interest = Interest due
+disclosure.offshore.penaltyRate = Penalty
+disclosure.offshore.penalty = Penalty amount
+disclosure.offshore.penaltyReason = Reason for penalty rate
+disclosure.offshore.deductions = Deductions
+disclosure.offshore.total = Amount due
+
+#===================================================
+#  Offshore liabilities
+#===================================================
+
+disclosure.offshore.incomeFrom = Where the income or gain came from
+disclosure.offshore.legal = Legal considerations for not including any amount of tax
+disclosure.offshore.legal.other = The other issue that they considered when not including any amount of tax
+disclosure.offshore.notInc = Amount of tax not included
+disclosure.offshore.maxValue = Maximum value of all assets held outside the UK at any point over the last 5 years
+
+#===================================================
+#  Totals
+#===================================================
+
+disclosure.totals.heading = What is owed in total
+disclosure.totals.tax = Total tax due
+disclosure.totals.interest = Total interest due
+disclosure.totals.penalty = Total penalties due
+disclosure.totals.amount = Total amount due
+disclosure.totals.offer = Offer amount
+
+#===================================================
+#  Other liabilities
+#===================================================
+
+disclosure.otherLiabilities.heading = Other liabilities
+disclosure.otherLiabilities.issues = Other liability issues
+disclosure.otherLiabilities.description = Other liability issue description
+disclosure.otherLiabilities.transfer = Chargeable transfer 
+disclosure.otherLiabilities.taxCredits.you = Did you receive tax credits for any of the years covered by your disclosure?
+disclosure.otherLiabilities.taxCredits.individual = Did the individual receive tax credits for any of the years covered by this disclosure?
+disclosure.otherLiabilities.taxCredits.person = Did the person receive tax credits for any of the years covered by this disclosure?
+
+#===================================================
+#  Additional information
+#===================================================
+
+disclosure.additional.heading = Additional information
+disclosure.additional.reason = Reason for making a disclosure now
+disclosure.additional.otherReason = Other reason for making a disclosure now
+disclosure.additional.beforeNow = Why the disclosure not made before now
+disclosure.additional.adviceGiven.you = Did someone give you advice that led you to not declare these tax issues previously?
+disclosure.additional.adviceGiven.Individual = Did someone give the individual advice that led them to not declare these tax issues previously?
+disclosure.additional.adviceGiven.Company = Did someone give the company advice that led them to not declare these tax issues previously?
+disclosure.additional.adviceGiven.Trust = Did someone give the trust advice that led them to not declare these tax issues previously?
+disclosure.additional.adviceGiven.LLP = Did someone give the limited liability partnership advice that led them to not declare these tax issues previously?
+disclosure.additional.adviceGiven.Estate = Did someone give the person advice that led them to not declare these tax issues previously?
+disclosure.additional.advice.name = Name of the person who gave the advice
+disclosure.additional.advice.behalfOf = Did the person who gave advice work on behalf of a business or organisation?
+disclosure.additional.advice.business = Name of the business or organisation the person who gave the advice was working on behalf of
+disclosure.additional.advice.profession = Profession of the person who gave this advice
+disclosure.additional.advice.given = Advice given
+disclosure.additional.advice.date = When this advice was first given
+disclosure.additional.advice.discuss = Can HMRC contact you to discuss the advice?
+disclosure.additional.advice.email = Your email address
+disclosure.additional.advice.telephone = Your telephone number
+
+#===================================================
+#  Why are you making this disclosure
+#===================================================
+
+whyAreYouMakingThisDisclosure.you.didNotNotifyHasExcuse = I did not notify HMRC about a tax liability but this was not deliberate and I have a reasonable excuse.
+whyAreYouMakingThisDisclosure.you.inaccurateReturnWithCare = I have submitted an inaccurate return despite taking reasonable care.
+whyAreYouMakingThisDisclosure.you.notFileHasExcuse = I have not filed a return but have a reasonable excuse.
+whyAreYouMakingThisDisclosure.you.inaccurateReturnNoCare = I have submitted an inaccurate return because I did not take reasonable care.
+whyAreYouMakingThisDisclosure.you.didNotNotifyNoExcuse = I did not notify HMRC of a tax liability but this was not deliberate and I do not have a reasonable excuse.
+whyAreYouMakingThisDisclosure.you.deliberatelyDidNotNotify = I have deliberately failed to notify HMRC of a tax liability.
+whyAreYouMakingThisDisclosure.you.deliberateInaccurateReturn = I have deliberately submitted an inaccurate tax return.
+whyAreYouMakingThisDisclosure.you.deliberatelyDidNotFile = I have deliberately withheld information by failing to submit a return.
+whyAreYouMakingThisDisclosure.individual.didNotNotifyHasExcuse = The individual did not notify HMRC about a tax liability but this was not deliberate and they have a reasonable excuse.
+whyAreYouMakingThisDisclosure.individual.inaccurateReturnWithCare = The individual submitted an inaccurate return despite taking reasonable care.
+whyAreYouMakingThisDisclosure.individual.notFileHasExcuse = The individual did not file a return but has a reasonable excuse.
+whyAreYouMakingThisDisclosure.individual.inaccurateReturnNoCare = The individual submitted an inaccurate return because they did not take reasonable care.
+whyAreYouMakingThisDisclosure.individual.didNotNotifyNoExcuse = The individual did not notify HMRC of a tax liability but this was not deliberate and they do not have a reasonable excuse.
+whyAreYouMakingThisDisclosure.individual.deliberatelyDidNotNotify = The individual deliberately failed to notify HMRC of a tax liability.
+whyAreYouMakingThisDisclosure.individual.deliberateInaccurateReturn = The individual deliberately submitted an inaccurate tax return.
+whyAreYouMakingThisDisclosure.individual.deliberatelyDidNotFile = The individual deliberately withheld information by failing to submit a return.
+whyAreYouMakingThisDisclosure.company.didNotNotifyHasExcuse = The company did not notify HMRC about a tax liability but this was not deliberate and it has a reasonable excuse.
+whyAreYouMakingThisDisclosure.company.inaccurateReturnWithCare = The company submitted an inaccurate return despite taking reasonable care.
+whyAreYouMakingThisDisclosure.company.notFileHasExcuse = The company did not file a return but has a reasonable excuse.
+whyAreYouMakingThisDisclosure.company.inaccurateReturnNoCare = The company submitted an inaccurate return because it did not take reasonable care.
+whyAreYouMakingThisDisclosure.company.didNotNotifyNoExcuse = The company did not notify HMRC of a tax liability but this was not deliberate and it does not have a reasonable excuse.
+whyAreYouMakingThisDisclosure.company.deliberatelyDidNotNotify = The company deliberately failed to notify HMRC of a tax liability.
+whyAreYouMakingThisDisclosure.company.deliberateInaccurateReturn = The company deliberately submitted an inaccurate tax return.
+whyAreYouMakingThisDisclosure.company.deliberatelyDidNotFile = The company deliberately withheld information by failing to submit a return.
+whyAreYouMakingThisDisclosure.llp.didNotNotifyHasExcuse = The limited liability partnership did not notify HMRC about a tax liability but this was not deliberate and it has a reasonable excuse.
+whyAreYouMakingThisDisclosure.llp.inaccurateReturnWithCare = The limited liability partnership submitted an inaccurate return despite taking reasonable care.
+whyAreYouMakingThisDisclosure.llp.notFileHasExcuse = The limited liability partnership did not file a return but has a reasonable excuse.
+whyAreYouMakingThisDisclosure.llp.inaccurateReturnNoCare = The limited liability partnership submitted an inaccurate return because it did not take reasonable care.
+whyAreYouMakingThisDisclosure.llp.didNotNotifyNoExcuse = The limited liability partnership did not notify HMRC of a tax liability but this was not deliberate and it does not have a reasonable excuse.
+whyAreYouMakingThisDisclosure.llp.deliberatelyDidNotNotify = The limited liability partnership deliberately failed to notify HMRC of a tax liability.
+whyAreYouMakingThisDisclosure.llp.deliberateInaccurateReturn = The limited liability partnership deliberately submitted an inaccurate tax return.
+whyAreYouMakingThisDisclosure.llp.deliberatelyDidNotFile = The limited liability partnership deliberately withheld information by failing to submit a return.
+whyAreYouMakingThisDisclosure.trust.didNotNotifyHasExcuse = The trust did not notify HMRC about a tax liability but this was not deliberate and it has a reasonable excuse.
+whyAreYouMakingThisDisclosure.trust.inaccurateReturnWithCare = The trust submitted an inaccurate return despite taking reasonable care.
+whyAreYouMakingThisDisclosure.trust.notFileHasExcuse = The trust did not file a return but has a reasonable excuse.
+whyAreYouMakingThisDisclosure.trust.inaccurateReturnNoCare = The trust submitted an inaccurate return because it did not take reasonable care.
+whyAreYouMakingThisDisclosure.trust.didNotNotifyNoExcuse = The trust did not notify HMRC of a tax liability but this was not deliberate and it does not have a reasonable excuse.
+whyAreYouMakingThisDisclosure.trust.deliberatelyDidNotNotify = The trust deliberately failed to notify HMRC of a tax liability.
+whyAreYouMakingThisDisclosure.trust.deliberateInaccurateReturn = The trust deliberately submitted an inaccurate tax return.
+whyAreYouMakingThisDisclosure.trust.deliberatelyDidNotFile = The trust deliberately withheld information by failing to submit a return.
+whyAreYouMakingThisDisclosure.estate.didNotNotifyHasExcuse = The person who died did not notify HMRC about a tax liability but this was not deliberate and they had a reasonable excuse.
+whyAreYouMakingThisDisclosure.estate.inaccurateReturnWithCare = The person who died submitted an inaccurate return despite taking reasonable care.
+whyAreYouMakingThisDisclosure.estate.notFileHasExcuse = The person who died did not file a return but they had a reasonable excuse.
+whyAreYouMakingThisDisclosure.estate.inaccurateReturnNoCare = The person who died submitted an inaccurate return because they did not take reasonable care.
+whyAreYouMakingThisDisclosure.estate.didNotNotifyNoExcuse = The person who died did not notify HMRC of a tax liability but this was not deliberate and they did not have a reasonable excuse.
+whyAreYouMakingThisDisclosure.estate.deliberatelyDidNotNotify = The person who died deliberately failed to notify HMRC of a tax liability.
+whyAreYouMakingThisDisclosure.estate.deliberateInaccurateReturn = The person who died deliberately submitted an inaccurate tax return.
+whyAreYouMakingThisDisclosure.estate.deliberatelyDidNotFile = The person who died deliberately withheld information by failing to submit a return.
+
+#===================================================
+#  Legal interpretation
+#===================================================
+
+yourLegalInterpretation.yourResidenceStatus = Your residence status for tax purposes in the UK
+yourLegalInterpretation.yourDomicileStatus = Your domicile status for UK tax purposes
+yourLegalInterpretation.theRemittanceBasis = The remittance basis for taxing income for people not domiciled in the UK
+yourLegalInterpretation.howIncomeArisingInATrust = How income arising in a trust should be taxed
+yourLegalInterpretation.theTransferOfAssets = The Transfer of Assets legislation at sections 714 – 751 ITA 2007. This legislation counteracts avoidance by individuals who use overseas arrangements, companies, trusts or other entities to reduce UK tax liability
+yourLegalInterpretation.howIncomeArisingInAnOffshore = How income arising in an offshore corporate structure should be taxed
+yourLegalInterpretation.inheritanceTaxIssues = Inheritance Tax issues
+yourLegalInterpretation.whetherIncomeShouldBeTaxed = Whether income should be taxed under the settlements legislation at section 624 onwards of the Income Tax (Trading and Other Income) Act 2005. This legislation applies where an individual gains a tax advantage by making arrangements to divert their income to another person who is liable at a lower rate of tax or is not liable to income tax.
+yourLegalInterpretation.anotherIssue = Another issue
+yourLegalInterpretation.noExclusion = Amounts have not been excluded from this disclosure
+
+#===================================================
+#  Values
+#===================================================
+
+howMuchTaxHasNotBeenIncluded.tenThousandOrLess = £10,000 or less
+howMuchTaxHasNotBeenIncluded.moreThanTenThousandLessThanOneLakh = More than £10,000 but less than £100,000
+howMuchTaxHasNotBeenIncluded.oneLakhAndMore = £100,000 or more
+theMaximumValueOfAllAssets.below500k = Below £500,000
+theMaximumValueOfAllAssets.between500kAnd1M = Between £500,000 and £1 million
+theMaximumValueOfAllAssets.between1MAnd100M = Between £1 million and £100 million
+theMaximumValueOfAllAssets.between100MAnd500M = Between £100 million and £500 million
+theMaximumValueOfAllAssets.between500MAnd1B = Between £500 million and £1 billion
+theMaximumValueOfAllAssets.over1B = Over £1 billion
+
+#===================================================
+#  Why are you making a disclosure
+#===================================================
+
+whyAreYouMakingADisclosure.govUkGuidance = Advised by guidance on the GOV.UK website
+whyAreYouMakingADisclosure.letterFromHMRC = Prompted by a letter from HMRC advising to make a disclosure
+whyAreYouMakingADisclosure.employer = Advised by employer
+whyAreYouMakingADisclosure.news = After reading an online or newspaper article
+whyAreYouMakingADisclosure.publication = After reading an article from a professional association website or publication
+whyAreYouMakingADisclosure.accountant = Advised by an accountant, or other type of third party agent
+whyAreYouMakingADisclosure.roe = After reading about the Register of Overseas Entities
+whyAreYouMakingADisclosure.other = Other
+
+#===================================================
+#  Other liability issues
+#===================================================
+
+otherLiabilityIssues.vatIssues = VAT issues
+otherLiabilityIssues.employerLiabilities = Employer liability issues
+otherLiabilityIssues.inheritanceTaxIssues = Inheritance Tax issues
+otherLiabilityIssues.class2National = Class 2 National Insurance contributions issues
+otherLiabilityIssues.other = Other
+otherLiabilityIssues.noExclusion = No, I do not have any other liability issues

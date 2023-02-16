@@ -30,6 +30,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.time.Instant
 import utils.BaseSpec
+import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist._
 
 class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
 
@@ -40,37 +41,92 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
 
   private def createView(disclosure: DisclosureViewModel): Html = sut.render(disclosure, messages)
   
-  val viewModel = DisclosureViewModel(FullDisclosure("userId", "id", Instant.now(), Metadata(reference = Some("ref")), CaseReference(), PersonalDetails(Background(), AboutYou()), OffshoreLiabilities(), OtherLiabilities(), ReasonForDisclosingNow()))
+  "DisclosureView" when {
+
+    "neither onshore or offshore are populated" should {
+
+      val viewModel = DisclosureViewModel(FullDisclosure("userId", "id", Instant.now(), Metadata(reference = Some("ref")), CaseReference(), PersonalDetails(Background(), AboutYou()), OffshoreLiabilities(), OtherLiabilities(), ReasonForDisclosingNow()))
   
-  "DisclosureView" should {
+      val view = createView(viewModel)
 
-    val view = createView(viewModel)
+      "display the service name" in {
+        view.select("title").text() should include(messages("service.name"))
+      }
 
-    "display the service name" in {
-      view.select("title").text() should include(messages("service.name"))
+      "display the heading" in {
+        view.select("h1").text() should include(messages("disclosure.h1"))
+      }
+
+      "display the beta banner" in {
+        view.select("strong").text() should include("beta")
+      }
+
+      "display the section headings" in {
+        view.select("h2").text() should include(messages("disclosure.heading.metadata"))
+        view.select("h2").text() should include(messages("notification.heading.background"))
+        view.select("h2").text() should include(messages("disclosure.heading.completing"))
+        view.select("h2").text() should include(messages("disclosure.otherLiabilities.heading"))
+        view.select("h2").text() should include(messages("disclosure.additional.heading"))
+      }
+
     }
 
-    "display the heading" in {
-      view.select("h1").text() should include(messages("disclosure.h1"))
-    }
+    "offshore is populated" should {
+    
+      val viewModel = DisclosureViewModel(
+        metadataList = SummaryList(rows=Nil),
+        backgroundList = SummaryList(rows=Nil),
+        aboutTheIndividualList = Some(SummaryList(rows=Nil)),
+        aboutTheCompanyList = None,
+        aboutTheTrustList = None,
+        aboutTheLLPList = None,
+        aboutTheEstateList = None,
+        aboutYouList = SummaryList(rows=Nil),
+        aboutYouHeading = "disclosure.heading.completing",
+        offshoreLiabilities = Some(OffshoreLiabilitiesViewModel(
+          summaryList = SummaryList(rows=Nil),
+          legalInterpretationlist = SummaryList(rows=Nil),
+          taxYearLists = Seq((2012, SummaryList(rows=Nil))),
+          totalAmountsList = SummaryList(rows=Nil),
+          liabilitiesTotal = 0
+        )),
+        otherLiabilitiesList = SummaryList(rows=Nil),
+        additionalList = SummaryList(rows=Nil)
+      )
+      val view = createView(viewModel)
 
-    "display the beta banner" in {
-      view.select("strong").text() should include("beta")
-    }
+      "display the service name" in {
+        view.select("title").text() should include(messages("service.name"))
+      }
 
-    "display the section headings" in {
-      view.select("h2").text() should include(messages("notification.heading.metadata"))
-      view.select("h2").text() should include(messages("notification.heading.background"))
-      view.select("h2").text() should include(messages("disclosure.heading.completing"))
-    }
+      "display the heading" in {
+        view.select("h1").text() should include(messages("disclosure.h1"))
+      }
 
+      "display the beta banner" in {
+        view.select("strong").text() should include("beta")
+      }
+
+      "display the section headings" in {
+        view.select("h2").text() should include(messages("disclosure.heading.metadata"))
+        view.select("h2").text() should include(messages("notification.heading.background"))
+        view.select("h2").text() should include(messages("disclosure.heading.aboutTheIndividual"))
+        view.select("h2").text() should include(messages("disclosure.heading.completing"))
+        view.select("h2").text() should include(messages("disclosure.offshore.heading"))
+        view.select("h2").text() should include(messages("disclosure.offshore.year", "2013"))
+        view.select("h2").text() should include(messages("disclosure.otherLiabilities.heading"))
+        view.select("h2").text() should include(messages("disclosure.additional.heading"))
+      }
+
+    }
+    
   }
 
   "f" should {
-    "render the page" in {
+    "render the page" in {      
+      val viewModel = DisclosureViewModel(FullDisclosure("userId", "id", Instant.now(), Metadata(reference = Some("ref")), CaseReference(), PersonalDetails(Background(), AboutYou()), OffshoreLiabilities(), OtherLiabilities(), ReasonForDisclosingNow()))
       sut.f(viewModel)(messages) shouldEqual createView(viewModel)
     }
   }
-
 
 }

@@ -16,11 +16,12 @@
 
 package models
 
-import play.api.libs.json.Json
+sealed trait Behaviour
 
-final case class CountryOfYourOffshoreLiability(alpha3:String, name:String)
+object Behaviour {
 
-object CountryOfYourOffshoreLiability {
-  implicit val format = Json.format[CountryOfYourOffshoreLiability]
+  case object ReasonableExcuse extends Behaviour
+  case object Careless extends Behaviour
+  case object Deliberate extends Behaviour
+
 }
-
