@@ -58,14 +58,14 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
     current.startYear - earliestDate
   }
 
-  def apply(offshoreLiabilities: OffshoreLiabilities, disclosingAboutThemselves: Boolean, entity: String)(implicit messages: Messages): OffshoreLiabilitiesViewModel = {
+  def apply(offshoreLiabilities: OffshoreLiabilities, disclosingAboutThemselves: Boolean, entity: String, offerAmount: Option[BigInt])(implicit messages: Messages): OffshoreLiabilitiesViewModel = {
 
     val taxYears: Seq[TaxYearWithLiabilities] = offshoreLiabilities.taxYearLiabilities.getOrElse(Map()).values.toSeq
   
     val foreignTaxCredits = offshoreLiabilities.taxYearForeignTaxDeductions.getOrElse(Map())
     val taxYearLists: Seq[(Int, SummaryList)] = taxYears.map(year => (year.taxYear.startYear, taxYearWithLiabilitiesToSummaryList(year, foreignTaxCredits.get(year.taxYear.startYear.toString))))
 
-    val totalAmountsList = totalAmountsSummaryList(taxYears)
+    val totalAmountsList = totalAmountsSummaryList(taxYears, offerAmount)
     val liabilitiesTotal: BigDecimal = taxYears.map(yearWithLiabilities => yearTotal(yearWithLiabilities.taxYearLiabilities)).sum
 
     OffshoreLiabilitiesViewModel(
@@ -175,7 +175,7 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
     SummaryListViewModel(rows)
   }
 
-  def totalAmountsSummaryList(taxYears: Seq[TaxYearWithLiabilities])(implicit messages: Messages): SummaryList = {
+  def totalAmountsSummaryList(taxYears: Seq[TaxYearWithLiabilities], offerAmount: Option[BigInt])(implicit messages: Messages): SummaryList = {
     val taxYearLiabilities = taxYears.map(_.taxYearLiabilities)
     val unpaidTaxTotal = taxYearLiabilities.map(_.unpaidTax).sum
     val interestTotal = taxYearLiabilities.map(_.interest).sum
@@ -184,11 +184,12 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
 
     SummaryListViewModel(
       rows = Seq(
-        poundRow("disclosure.totals.tax", s"$unpaidTaxTotal"),
-        poundRow("disclosure.totals.interest", s"$interestTotal"),
-        poundRow("disclosure.totals.penalty", s"$penaltyAmountTotal"),
-        poundRow("disclosure.totals.amount", s"$amountDueTotal")
-      )
+        Some(poundRow("disclosure.totals.tax", s"$unpaidTaxTotal")),
+        Some(poundRow("disclosure.totals.interest", s"$interestTotal")),
+        Some(poundRow("disclosure.totals.penalty", s"$penaltyAmountTotal")),
+        Some(poundRow("disclosure.totals.amount", s"$amountDueTotal")),
+        offerAmount.map(amount => poundRow("disclosure.totals.offer", s"$amount"))
+      ).flatten
     )
   }
 

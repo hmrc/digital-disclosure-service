@@ -250,9 +250,10 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
         SummaryListRowViewModel("disclosure.totals.tax", ValueViewModel(HtmlContent("£6"))),
         SummaryListRowViewModel("disclosure.totals.interest", ValueViewModel(HtmlContent("£6"))),
         SummaryListRowViewModel("disclosure.totals.penalty", ValueViewModel(HtmlContent("£0.14"))),
-        SummaryListRowViewModel("disclosure.totals.amount", ValueViewModel(HtmlContent("£12.14")))
+        SummaryListRowViewModel("disclosure.totals.amount", ValueViewModel(HtmlContent("£12.14"))),
+        SummaryListRowViewModel("disclosure.totals.offer", ValueViewModel(HtmlContent("£12")))
       ))
-      OffshoreLiabilitiesViewModel.totalAmountsSummaryList(taxYears) shouldEqual expected
+      OffshoreLiabilitiesViewModel.totalAmountsSummaryList(taxYears, Some(BigInt(12))) shouldEqual expected
     }
   }
 
