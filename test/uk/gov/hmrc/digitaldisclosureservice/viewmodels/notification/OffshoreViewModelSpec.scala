@@ -50,28 +50,26 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
   )
 
   val completeOffshoreLiabilities = OffshoreLiabilities(
-    Some(Set(WhyAreYouMakingThisDisclosure.DidNotNotifyHasExcuse, WhyAreYouMakingThisDisclosure.InaccurateReturnWithCare)), 
-    Some(WhatIsYourReasonableExcuse("Some excuse", "Some years")), 
-    Some(WhatReasonableCareDidYouTake("Some excuse", "Some years")), 
-    Some(WhatIsYourReasonableExcuseForNotFilingReturn("Some excuse", "Some years")), 
-    Some(Set(TaxYearStarting(2012))), 
-    Some("You have not included the tax year"),
-    Some("You have not selected certain tax years"),
-    Some("Some liabilities - reasonable"),
-    Some("Some liabilities - careless"),
-    Some("Some liabilities - deliberate"),
-    Some("Missing year details"),
-    Some("Missing years details"),
-    Some(true),
-    Some(Map("2012" -> TaxYearWithLiabilities(TaxYearStarting(2012), liabilities))),
-    Some(Map("2012" -> 123)),
-    Some(Map()),
-    Some(Set(WhereDidTheUndeclaredIncomeOrGainIncluded.Dividends, WhereDidTheUndeclaredIncomeOrGainIncluded.Interest)),
-    Some("Other income source"),
-    Some(Set(YourLegalInterpretation.AnotherIssue, YourLegalInterpretation.YourDomicileStatus)),
-    Some("Some interpretation"),
-    Some(HowMuchTaxHasNotBeenIncluded.TenThousandOrLess),
-    Some(TheMaximumValueOfAllAssets.Below500k)
+    behaviour = Some(Set(WhyAreYouMakingThisDisclosure.DidNotNotifyHasExcuse, WhyAreYouMakingThisDisclosure.InaccurateReturnWithCare)),
+    excuseForNotNotifying = Some(WhatIsYourReasonableExcuse("Some excuse", "Some years")), 
+    reasonableCare = Some(WhatReasonableCareDidYouTake("Some excuse", "Some years")), 
+    excuseForNotFiling = Some(WhatIsYourReasonableExcuseForNotFilingReturn("Some excuse", "Some years")), 
+    whichYears = Some(Set(TaxYearStarting(2012), TaxYearStarting(2014))),  
+    youHaveNotIncludedTheTaxYear = Some("You have not included the tax year"),
+    youHaveNotSelectedCertainTaxYears = Some("You have not selected certain tax years"),
+    taxBeforeFiveYears = Some("Some liabilities - reasonable"),
+    taxBeforeSevenYears = Some("Some liabilities - careless"),
+    taxBeforeNineteenYears = Some("Some liabilities - deliberate"),
+    disregardedCDF = Some(true),
+    taxYearLiabilities = Some(Map("2012" -> TaxYearWithLiabilities(TaxYearStarting(2012), liabilities))),
+    taxYearForeignTaxDeductions = Some(Map("2012" -> BigInt(123))),
+    countryOfYourOffshoreLiability = Some(Map("GBR" -> CountryOfYourOffshoreLiability("GBR", "United Kingdom"))),
+    incomeSource = Some(Set(WhereDidTheUndeclaredIncomeOrGainIncluded.Dividends, WhereDidTheUndeclaredIncomeOrGainIncluded.Interest)),
+    otherIncomeSource = Some("Other income source"),
+    legalInterpretation = Some(Set(YourLegalInterpretation.AnotherIssue, YourLegalInterpretation.YourDomicileStatus)),
+    otherInterpretation = Some("Some interpretation"),
+    notIncludedDueToInterpretation = Some(HowMuchTaxHasNotBeenIncluded.TenThousandOrLess),
+    maximumValueOfAssets = Some(TheMaximumValueOfAllAssets.Below500k)
   )
 
   "penaltyAmount" should {
@@ -109,6 +107,8 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
     "display populated rows when they are the individual" in {
 
       val expectedBehaviour = messages(s"whyAreYouMakingThisDisclosure.you.didNotNotifyHasExcuse") + "<br/><br/>" + messages(s"whyAreYouMakingThisDisclosure.you.inaccurateReturnWithCare")
+      val expectedSource = messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.dividends") + "<br/><br/>" + messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.interest") + "<br/><br/>" + "Other income source"
+      val expectedLegal = messages(s"yourLegalInterpretation.anotherIssue") + ",<br/><br/>" + messages(s"yourLegalInterpretation.yourDomicileStatus")
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.offshore.reason", ValueViewModel(HtmlContent(expectedBehaviour))),
         SummaryListRowViewModel("disclosure.offshore.reasonableExcuse", ValueViewModel(HtmlContent("Some excuse"))),
@@ -117,15 +117,25 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
         SummaryListRowViewModel("disclosure.offshore.reasonableCare.years", ValueViewModel(HtmlContent("Some years"))),
         SummaryListRowViewModel("disclosure.offshore.notfileExcuse", ValueViewModel(HtmlContent("Some excuse"))),
         SummaryListRowViewModel("disclosure.offshore.notfileExcuse.years", ValueViewModel(HtmlContent("Some years"))),
+        SummaryListRowViewModel("disclosure.offshore.cdf", ValueViewModel(HtmlContent(messages("service.yes")))),
+        SummaryListRowViewModel(messages("disclosure.offshore.notIncluding", "2014"), ValueViewModel(HtmlContent("You have not included the tax year"))),
+        SummaryListRowViewModel(messages("disclosure.offshore.notIncluding", "2014"), ValueViewModel(HtmlContent("You have not selected certain tax years"))),
         SummaryListRowViewModel(getYearKey(Behaviour.ReasonableExcuse), ValueViewModel(HtmlContent("Some liabilities - reasonable"))),
         SummaryListRowViewModel(getYearKey(Behaviour.Careless), ValueViewModel(HtmlContent("Some liabilities - careless"))),
-        SummaryListRowViewModel(getYearKey(Behaviour.Deliberate), ValueViewModel(HtmlContent("Some liabilities - deliberate")))
+        SummaryListRowViewModel(getYearKey(Behaviour.Deliberate), ValueViewModel(HtmlContent("Some liabilities - deliberate"))),
+        SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent(expectedSource))),
+        SummaryListRowViewModel("disclosure.offshore.legal", ValueViewModel(HtmlContent(expectedLegal))),
+        SummaryListRowViewModel("disclosure.offshore.legal.other", ValueViewModel(HtmlContent("Some interpretation"))),
+        SummaryListRowViewModel("disclosure.offshore.notInc", ValueViewModel(HtmlContent(messages(s"howMuchTaxHasNotBeenIncluded.tenThousandOrLess")))),
+        SummaryListRowViewModel("disclosure.offshore.maxValue", ValueViewModel(HtmlContent(messages(s"theMaximumValueOfAllAssets.below500k"))))
       ))
       OffshoreLiabilitiesViewModel.primarySummaryList(completeOffshoreLiabilities, true, Individual.toString) shouldEqual expected
     }
 
     "display populated rows when they are not the individual" in {
       val expectedBehaviour = messages(s"whyAreYouMakingThisDisclosure.individual.didNotNotifyHasExcuse") + "<br/><br/>" + messages(s"whyAreYouMakingThisDisclosure.individual.inaccurateReturnWithCare")
+      val expectedSource = messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.dividends") + "<br/><br/>" + messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.interest") + "<br/><br/>" + "Other income source"
+      val expectedLegal = messages(s"yourLegalInterpretation.anotherIssue") + ",<br/><br/>" + messages(s"yourLegalInterpretation.yourDomicileStatus")
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.offshore.reason", ValueViewModel(HtmlContent(expectedBehaviour))),
         SummaryListRowViewModel("disclosure.offshore.reasonableExcuse", ValueViewModel(HtmlContent("Some excuse"))),
@@ -134,39 +144,27 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
         SummaryListRowViewModel("disclosure.offshore.reasonableCare.years", ValueViewModel(HtmlContent("Some years"))),
         SummaryListRowViewModel("disclosure.offshore.notfileExcuse", ValueViewModel(HtmlContent("Some excuse"))),
         SummaryListRowViewModel("disclosure.offshore.notfileExcuse.years", ValueViewModel(HtmlContent("Some years"))),
+        SummaryListRowViewModel("disclosure.offshore.cdf", ValueViewModel(HtmlContent(messages("service.yes")))),
+        SummaryListRowViewModel(messages("disclosure.offshore.notIncluding", "2014"), ValueViewModel(HtmlContent("You have not included the tax year"))),
+        SummaryListRowViewModel(messages("disclosure.offshore.notIncluding", "2014"), ValueViewModel(HtmlContent("You have not selected certain tax years"))),
         SummaryListRowViewModel(getYearKey(Behaviour.ReasonableExcuse), ValueViewModel(HtmlContent("Some liabilities - reasonable"))),
         SummaryListRowViewModel(getYearKey(Behaviour.Careless), ValueViewModel(HtmlContent("Some liabilities - careless"))),
-        SummaryListRowViewModel(getYearKey(Behaviour.Deliberate), ValueViewModel(HtmlContent("Some liabilities - deliberate")))
+        SummaryListRowViewModel(getYearKey(Behaviour.Deliberate), ValueViewModel(HtmlContent("Some liabilities - deliberate"))),
+        SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent(expectedSource))),
+        SummaryListRowViewModel("disclosure.offshore.legal", ValueViewModel(HtmlContent(expectedLegal))),
+        SummaryListRowViewModel("disclosure.offshore.legal.other", ValueViewModel(HtmlContent("Some interpretation"))),
+        SummaryListRowViewModel("disclosure.offshore.notInc", ValueViewModel(HtmlContent(messages(s"howMuchTaxHasNotBeenIncluded.tenThousandOrLess")))),
+        SummaryListRowViewModel("disclosure.offshore.maxValue", ValueViewModel(HtmlContent(messages(s"theMaximumValueOfAllAssets.below500k"))))
       ))
       OffshoreLiabilitiesViewModel.primarySummaryList(completeOffshoreLiabilities, false, Individual.toString) shouldEqual expected
     }
 
     "display an empty list when nothing is populated" in {
       val offshoreLiabilities = OffshoreLiabilities()
-      val expected = SummaryListViewModel(Seq())
+      val expected = SummaryListViewModel(Seq(SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))))
       OffshoreLiabilitiesViewModel.primarySummaryList(offshoreLiabilities, true, Individual.toString) shouldEqual expected
     }
 
-  }
-
-  "legalInterpretationlist" should {
-
-    "display populated rows" in {
-      val expectedLegal = messages(s"yourLegalInterpretation.anotherIssue") + ",<br/><br/>" + messages(s"yourLegalInterpretation.yourDomicileStatus")
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("disclosure.offshore.legal", ValueViewModel(HtmlContent(expectedLegal))),
-        SummaryListRowViewModel("disclosure.offshore.legal.other", ValueViewModel(HtmlContent("Some interpretation"))),
-        SummaryListRowViewModel("disclosure.offshore.notInc", ValueViewModel(HtmlContent(messages(s"howMuchTaxHasNotBeenIncluded.tenThousandOrLess")))),
-        SummaryListRowViewModel("disclosure.offshore.maxValue", ValueViewModel(HtmlContent(messages(s"theMaximumValueOfAllAssets.below500k"))))
-      ))
-      OffshoreLiabilitiesViewModel.legalInterpretationlist(completeOffshoreLiabilities) shouldEqual expected
-    }
-
-    "display an empty list where nothing's populated" in {
-      val offshoreLiabilities = OffshoreLiabilities()
-      val expected = SummaryListViewModel(Seq())
-      OffshoreLiabilitiesViewModel.legalInterpretationlist(offshoreLiabilities) shouldEqual expected
-    }
   }
 
   "taxYearWithLiabilitiesToSummaryList" should {
@@ -252,9 +250,10 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
         SummaryListRowViewModel("disclosure.totals.tax", ValueViewModel(HtmlContent("£6"))),
         SummaryListRowViewModel("disclosure.totals.interest", ValueViewModel(HtmlContent("£6"))),
         SummaryListRowViewModel("disclosure.totals.penalty", ValueViewModel(HtmlContent("£0.14"))),
-        SummaryListRowViewModel("disclosure.totals.amount", ValueViewModel(HtmlContent("£12.14")))
+        SummaryListRowViewModel("disclosure.totals.amount", ValueViewModel(HtmlContent("£12.14"))),
+        SummaryListRowViewModel("disclosure.totals.offer", ValueViewModel(HtmlContent("£12")))
       ))
-      OffshoreLiabilitiesViewModel.totalAmountsSummaryList(taxYears) shouldEqual expected
+      OffshoreLiabilitiesViewModel.totalAmountsSummaryList(taxYears, Some(BigInt(12))) shouldEqual expected
     }
   }
 

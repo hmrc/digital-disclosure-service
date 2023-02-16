@@ -23,7 +23,7 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist._
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import models.YesNoOrUnsure
-import java.time.LocalDateTime
+import java.time.{LocalDate, LocalDateTime}
 import java.time.format.DateTimeFormatter
 
 trait SubmissionViewModel extends SummaryListFluency {
@@ -32,6 +32,11 @@ trait SubmissionViewModel extends SummaryListFluency {
   val individualKey = "notification.aboutTheIndividual"
   val aboutYouKey = "notification.aboutYou"
   val estateKey = "notification.aboutTheEstate"
+
+  def toPrettyDateOfBirth(date: LocalDate): String = {
+    val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+    date.format(dateFormatter)
+  }
 
   def aboutYouHeading(personalDetails: PersonalDetails, isDisclosure: Boolean): String = {
     val prefix = if (isDisclosure) "disclosure" else "notification"
@@ -47,14 +52,14 @@ trait SubmissionViewModel extends SummaryListFluency {
     formattedDate.replace("AM", "am").replace("PM","pm")
   }
 
-  def liabilitiesRow(background: Background)(implicit messages: Messages): SummaryListRow = {
+  def liabilitiesRow(background: Background, key: String = "notification")(implicit messages: Messages): SummaryListRow = {
     val rowValue = (background.offshoreLiabilities, background.onshoreLiabilities) match{
-      case (Some(true), Some(true)) => messages("notification.background.both")
-      case (Some(true), _)          => messages("notification.background.offshore")
-      case (_,         Some(true))  => messages("notification.background.onshore")
+      case (Some(true), Some(true)) => messages(s"notification.background.both")
+      case (Some(true), _)          => messages(s"notification.background.offshore")
+      case (_,         Some(true))  => messages(s"notification.background.onshore")
       case (_,         _)           => "-"
     }
-    SummaryListRowViewModel(s"$backgroundKey.liabilities", ValueViewModel(rowValue))
+    SummaryListRowViewModel(s"$key.background.liabilities", ValueViewModel(rowValue))
   }
 
 
@@ -62,7 +67,7 @@ trait SubmissionViewModel extends SummaryListFluency {
     rows = Seq(
       Some(SummaryListRowViewModel(s"$individualKey.fullName", ValueViewModel(aboutTheIndividual.fullName))),
       Some(SummaryListRowViewModel(s"$individualKey.address", ValueViewModel(Text(aboutTheIndividual.address.map(_.toSeparatedString).getOrElse("-"))))),
-      Some(SummaryListRowViewModel(s"$individualKey.dateOfBirth", ValueViewModel(aboutTheIndividual.dateOfBirth.map(_.toString)))),
+      Some(SummaryListRowViewModel(s"$individualKey.dateOfBirth", ValueViewModel(aboutTheIndividual.dateOfBirth.map(toPrettyDateOfBirth)))),
       Some(SummaryListRowViewModel(s"$individualKey.mainOccupation", ValueViewModel(aboutTheIndividual.mainOccupation))),
       displayWhenNotYes(s"$individualKey.doTheyHaveANino", aboutTheIndividual.doTheyHaveANino),
       aboutTheIndividual.nino.map(_ => SummaryListRowViewModel(s"$individualKey.nino", ValueViewModel(aboutTheIndividual.nino))),
@@ -99,7 +104,7 @@ trait SubmissionViewModel extends SummaryListFluency {
     rows = Seq(
       Some(SummaryListRowViewModel(s"$estateKey.fullName", ValueViewModel(aboutTheEstate.fullName))),
       Some(SummaryListRowViewModel(s"$estateKey.address", ValueViewModel(Text(aboutTheEstate.address.map(_.toSeparatedString).getOrElse("-"))))),
-      Some(SummaryListRowViewModel(s"$estateKey.dateOfBirth", ValueViewModel(aboutTheEstate.dateOfBirth.map(_.toString)))),
+      Some(SummaryListRowViewModel(s"$estateKey.dateOfBirth", ValueViewModel(aboutTheEstate.dateOfBirth.map(toPrettyDateOfBirth)))),
       Some(SummaryListRowViewModel(s"$estateKey.mainOccupation", ValueViewModel(aboutTheEstate.mainOccupation))),
       displayWhenNotYes(s"$estateKey.doTheyHaveANino", aboutTheEstate.doTheyHaveANino),
       aboutTheEstate.nino.map(_ => SummaryListRowViewModel(s"$estateKey.nino", ValueViewModel(aboutTheEstate.nino))),
@@ -110,17 +115,19 @@ trait SubmissionViewModel extends SummaryListFluency {
     ).flatten
   )
 
-  def aboutYouList(aboutYou: AboutYou, disclosingAboutThemselves: Boolean)(implicit messages: Messages): SummaryList = {
+  def aboutYouList(aboutYou: AboutYou, background: Background, disclosingAboutThemselves: Boolean)(implicit messages: Messages): SummaryList = {
 
     val commonRows = Seq(
       Some(SummaryListRowViewModel(s"$aboutYouKey.fullName", ValueViewModel(aboutYou.fullName))),
       aboutYou.emailAddress.map(_ => SummaryListRowViewModel(s"$aboutYouKey.emailAddress", ValueViewModel(aboutYou.emailAddress))),
       aboutYou.telephoneNumber.map(_ => SummaryListRowViewModel(s"$aboutYouKey.telephoneNumber", ValueViewModel(aboutYou.telephoneNumber))),
-      Some(SummaryListRowViewModel(s"$aboutYouKey.address", ValueViewModel(Text(aboutYou.address.map(_.toSeparatedString).getOrElse("-")))))
+      Some(SummaryListRowViewModel(s"$aboutYouKey.address", ValueViewModel(Text(aboutYou.address.map(_.toSeparatedString).getOrElse("-"))))),
+      background.areYouRepresetingAnOrganisation.flatMap(areYou => displayWhenNo(s"$backgroundKey.areYouRepresetingAnOrganisation", areYou)),
+      background.organisationName.map(answer => row(s"$backgroundKey.organisationName", answer))
     ).flatten
 
     lazy val youAreTheIndividualRows = Seq(
-      Some(SummaryListRowViewModel(s"$aboutYouKey.dateOfBirth", ValueViewModel(aboutYou.dateOfBirth.map(_.toString)))),
+      Some(SummaryListRowViewModel(s"$aboutYouKey.dateOfBirth", ValueViewModel(aboutYou.dateOfBirth.map(toPrettyDateOfBirth)))),
       Some(SummaryListRowViewModel(s"$aboutYouKey.mainOccupation", ValueViewModel(aboutYou.mainOccupation))),
       displayWhenNotYes(s"$aboutYouKey.doYouHaveANino", aboutYou.doYouHaveANino),
       aboutYou.nino.map(_ => SummaryListRowViewModel(s"$aboutYouKey.nino", ValueViewModel(aboutYou.nino))),
@@ -149,5 +156,13 @@ trait SubmissionViewModel extends SummaryListFluency {
       case Some(YesNoOrUnsure.Yes) => None
       case _ => Some(SummaryListRowViewModel(key, ValueViewModel(yesNoOrUnsure)))
     }
+
+  def row(label: String, value: String)(implicit messages: Messages) = {
+    SummaryListRowViewModel(
+      key     = label,
+      value   = ValueViewModel(Text(value.toString))
+    )
+  }
+
 
 }

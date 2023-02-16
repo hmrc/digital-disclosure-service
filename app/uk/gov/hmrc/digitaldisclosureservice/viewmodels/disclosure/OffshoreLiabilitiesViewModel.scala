@@ -28,7 +28,6 @@ import play.twirl.api.HtmlFormat
 
 case class OffshoreLiabilitiesViewModel(
   summaryList: SummaryList,
-  legalInterpretationlist: SummaryList,
   taxYearLists: Seq[(Int, SummaryList)],
   totalAmountsList: SummaryList,
   liabilitiesTotal: BigDecimal
@@ -59,22 +58,22 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
     current.startYear - earliestDate
   }
 
-  def apply(offshoreLiabilities: OffshoreLiabilities, disclosingAboutThemselves: Boolean, entity: String)(implicit messages: Messages): OffshoreLiabilitiesViewModel = {
+  def apply(offshoreLiabilities: OffshoreLiabilities, disclosingAboutThemselves: Boolean, entity: String, offerAmount: Option[BigInt])(implicit messages: Messages): OffshoreLiabilitiesViewModel = {
 
     val taxYears: Seq[TaxYearWithLiabilities] = offshoreLiabilities.taxYearLiabilities.getOrElse(Map()).values.toSeq
-    
-    //Foreign tax credit needs adding
-    val taxYearLists: Seq[(Int, SummaryList)] = taxYears.map(year => (year.taxYear.startYear, taxYearWithLiabilitiesToSummaryList(year, None)))
+  
+    val foreignTaxCredits = offshoreLiabilities.taxYearForeignTaxDeductions.getOrElse(Map())
+    val taxYearLists: Seq[(Int, SummaryList)] = taxYears.map(year => (year.taxYear.startYear, taxYearWithLiabilitiesToSummaryList(year, foreignTaxCredits.get(year.taxYear.startYear.toString))))
 
-    val totalAmountsList = totalAmountsSummaryList(taxYears)
+    val totalAmountsList = totalAmountsSummaryList(taxYears, offerAmount)
     val liabilitiesTotal: BigDecimal = taxYears.map(yearWithLiabilities => yearTotal(yearWithLiabilities.taxYearLiabilities)).sum
 
     OffshoreLiabilitiesViewModel(
       primarySummaryList(offshoreLiabilities, disclosingAboutThemselves, entity), 
-      legalInterpretationlist(offshoreLiabilities), 
       taxYearLists, 
       totalAmountsList, 
-      liabilitiesTotal)
+      liabilitiesTotal
+    )
 
   }
   
@@ -88,25 +87,43 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
         offshoreLiabilities.reasonableCare.map(answer => row("disclosure.offshore.reasonableCare.years", answer.yearsThisAppliesTo)),
         offshoreLiabilities.excuseForNotFiling.map(answer => row("disclosure.offshore.notfileExcuse", answer.reasonableExcuse)),
         offshoreLiabilities.excuseForNotFiling.map(answer => row("disclosure.offshore.notfileExcuse.years", answer.yearsThisAppliesTo)),
-        // Space for CDF row
-        // Not including years row
+        offshoreLiabilities.disregardedCDF.map(answer => row("disclosure.offshore.cdf", messages("service.yes"))),
+        offshoreLiabilities.youHaveNotIncludedTheTaxYear.map(answer => row(messages("disclosure.offshore.notIncluding", getMissingYears(offshoreLiabilities)), answer)),
+        offshoreLiabilities.youHaveNotSelectedCertainTaxYears.map(answer => row(messages("disclosure.offshore.notIncluding", getMissingYears(offshoreLiabilities)), answer)),
         offshoreLiabilities.taxBeforeFiveYears.map(answer => row(messages("disclosure.offshore.before", getEarliestYearByBehaviour(Behaviour.ReasonableExcuse).toString), answer)),
         offshoreLiabilities.taxBeforeSevenYears.map(answer => row(messages("disclosure.offshore.before", getEarliestYearByBehaviour(Behaviour.Careless).toString), answer)),
-        offshoreLiabilities.taxBeforeNineteenYears.map(answer => row(messages("disclosure.offshore.before", getEarliestYearByBehaviour(Behaviour.Deliberate).toString), answer))
-      ).flatten
-    )
-  }
-
-  def legalInterpretationlist(offshoreLiabilities: OffshoreLiabilities)(implicit messages: Messages) = {
-    SummaryListViewModel(
-      rows = Seq(
-        // Where did the income/gain come from
+        offshoreLiabilities.taxBeforeNineteenYears.map(answer => row(messages("disclosure.offshore.before", getEarliestYearByBehaviour(Behaviour.Deliberate).toString), answer)),
+        Some(incomeFromRow(offshoreLiabilities)),
         offshoreLiabilities.legalInterpretation.map(legalInterpretation),
         offshoreLiabilities.otherInterpretation.map(answer => row("disclosure.offshore.legal.other", answer.toString)),
         offshoreLiabilities.notIncludedDueToInterpretation.map(answer => row("disclosure.offshore.notInc", messages(s"howMuchTaxHasNotBeenIncluded.${answer.toString}"))),
         offshoreLiabilities.maximumValueOfAssets.map(answer => row("disclosure.offshore.maxValue", messages(s"theMaximumValueOfAllAssets.${answer.toString}")))
       ).flatten
     )
+  }
+
+  def getMissingYears(offshoreLiabilities: OffshoreLiabilities): String = {
+    val yearList = offshoreLiabilities.whichYears.getOrElse(Nil).collect{case TaxYearStarting(y) => TaxYearStarting(y)}.toList
+    TaxYearStarting.findMissingYears(yearList).map(_.startYear+1).mkString(", ")
+  }
+
+  def incomeFromRow(offshoreLiabilities: OffshoreLiabilities)(implicit messages: Messages) = {
+
+    val sources = offshoreLiabilities.incomeSource.getOrElse(Nil).map(answer => messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.$answer")).toList
+    val otherSource = offshoreLiabilities.otherIncomeSource.toList
+
+    val answers = sources ::: otherSource
+
+    val value = ValueViewModel(
+      HtmlContent(
+        answers.map {
+          answer => HtmlFormat.escape(answer).toString
+        }
+        .mkString("<br/><br/>")
+      )
+    )
+
+    SummaryListRowViewModel("disclosure.offshore.incomeFrom", value)
   }
 
   def whyAreYouMakingThisDisclosure(answers: Set[WhyAreYouMakingThisDisclosure], disclosingAboutThemselves: Boolean, entity: String)(implicit messages: Messages) = {
@@ -135,7 +152,7 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
     SummaryListRowViewModel("disclosure.offshore.legal", value)
   }
 
-  def taxYearWithLiabilitiesToSummaryList(yearWithLiabilites: TaxYearWithLiabilities, foreignTaxCredit: Option[Int])(implicit messages: Messages): SummaryList = {
+  def taxYearWithLiabilitiesToSummaryList(yearWithLiabilites: TaxYearWithLiabilities, foreignTaxCredit: Option[BigInt])(implicit messages: Messages): SummaryList = {
 
     val liabilities = yearWithLiabilites.taxYearLiabilities
 
@@ -158,7 +175,7 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
     SummaryListViewModel(rows)
   }
 
-  def totalAmountsSummaryList(taxYears: Seq[TaxYearWithLiabilities])(implicit messages: Messages): SummaryList = {
+  def totalAmountsSummaryList(taxYears: Seq[TaxYearWithLiabilities], offerAmount: Option[BigInt])(implicit messages: Messages): SummaryList = {
     val taxYearLiabilities = taxYears.map(_.taxYearLiabilities)
     val unpaidTaxTotal = taxYearLiabilities.map(_.unpaidTax).sum
     val interestTotal = taxYearLiabilities.map(_.interest).sum
@@ -167,11 +184,12 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
 
     SummaryListViewModel(
       rows = Seq(
-        poundRow("disclosure.totals.tax", s"$unpaidTaxTotal"),
-        poundRow("disclosure.totals.interest", s"$interestTotal"),
-        poundRow("disclosure.totals.penalty", s"$penaltyAmountTotal"),
-        poundRow("disclosure.totals.amount", s"$amountDueTotal")
-      )
+        Some(poundRow("disclosure.totals.tax", s"$unpaidTaxTotal")),
+        Some(poundRow("disclosure.totals.interest", s"$interestTotal")),
+        Some(poundRow("disclosure.totals.penalty", s"$penaltyAmountTotal")),
+        Some(poundRow("disclosure.totals.amount", s"$amountDueTotal")),
+        offerAmount.map(amount => poundRow("disclosure.totals.offer", s"$amount"))
+      ).flatten
     )
   }
 

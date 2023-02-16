@@ -53,7 +53,7 @@ object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
 
     val offshoreLiabilities = {
       val disclosingOffshore = fullDisclosure.personalDetails.background.offshoreLiabilities.getOrElse(false)
-      if (disclosingOffshore) Some(OffshoreLiabilitiesViewModel(fullDisclosure.offshoreLiabilities, fullDisclosure.disclosingAboutThemselves, entity))
+      if (disclosingOffshore) Some(OffshoreLiabilitiesViewModel(fullDisclosure.offshoreLiabilities, fullDisclosure.disclosingAboutThemselves, entity, fullDisclosure.offerAmount))
       else None
     }
 
@@ -65,7 +65,7 @@ object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
       fullDisclosure.personalDetails.aboutTheTrust.map(aboutTheTrustList),
       fullDisclosure.personalDetails.aboutTheLLP.map(aboutTheLLPList),
       fullDisclosure.personalDetails.aboutTheEstate.map(aboutTheEstateList),
-      aboutYouList(fullDisclosure.personalDetails.aboutYou, fullDisclosure.disclosingAboutThemselves),
+      aboutYouList(fullDisclosure.personalDetails.aboutYou, fullDisclosure.personalDetails.background, fullDisclosure.disclosingAboutThemselves),
       aboutYouHeading(fullDisclosure.personalDetails, isADisclosure),
       offshoreLiabilities,
       otherLiabilitiesList(fullDisclosure.otherLiabilities, fullDisclosure.disclosingAboutThemselves, entity),
@@ -92,9 +92,7 @@ object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
 
   def backgroundList(background: Background)(implicit messages: Messages): SummaryList = SummaryListViewModel(
     rows = Seq(
-      background.disclosureEntity.map(answer => row("notification.background.disclosureEntity", messages(s"notification.background.${answer.entity.toString}"))),
-      background.areYouRepresetingAnOrganisation.flatMap(areYou => displayWhenNo(s"$backgroundKey.areYouRepresetingAnOrganisation", areYou)),
-      background.organisationName.map(answer => row(s"$backgroundKey.organisationName", answer)),
+      background.disclosureEntity.map(answer => row("disclosure.background.disclosureEntity", messages(s"notification.background.${answer.entity.toString}"))),
       Some(liabilitiesRow(background))
     ).flatten
   )
@@ -161,13 +159,6 @@ object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
     SummaryListRowViewModel(
       key     = "disclosure.additional.reason",
       value   = value
-    )
-  }
-
-  def row(label: String, value: String)(implicit messages: Messages) = {
-    SummaryListRowViewModel(
-      key     = label,
-      value   = ValueViewModel(Text(HtmlFormat.escape(value).toString))
     )
   }
 
