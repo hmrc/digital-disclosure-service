@@ -17,11 +17,11 @@ disclosure.heading.metadata = Disclosure details
 disclosure.heading.background = Background
 disclosure.heading.aboutYou = About you
 disclosure.heading.completing = The person completing the disclosure
-disclosure.heading.aboutTheIndividual = The individual the disclosure will be about
-disclosure.heading.aboutTheCompany = The company the disclosure will be about
-disclosure.heading.aboutTheTrust = The trust the disclosure will be about
-disclosure.heading.aboutTheLLP = The limited liability partnership the disclosure will be about
-disclosure.heading.aboutTheEstate = The person the disclosure will be about
+disclosure.heading.aboutTheIndividual = The individual the disclosure is about
+disclosure.heading.aboutTheCompany = The company the disclosure is about
+disclosure.heading.aboutTheTrust = The trust the disclosure is about
+disclosure.heading.aboutTheLLP = The limited liability partnership the disclosure is about
+disclosure.heading.aboutTheEstate = The person the disclosure is about
 
 #===================================================
 #  Section headings
@@ -74,7 +74,7 @@ notification.background.areYouRepresetingAnOrganisation = Are you representing a
 notification.background.organisationName = The name of the organisation you represent
 
 disclosure.background.liabilities = The disclosure is for
-disclosure.background.disclosureEntity = Who the disclosure will be about
+disclosure.background.disclosureEntity = The disclosure is about
 
 #===================================================
 #  About you
