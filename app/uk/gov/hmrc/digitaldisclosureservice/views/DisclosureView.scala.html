@@ -65,11 +65,11 @@
         @summarySection("disclosure.heading.metadata", viewModel.metadataList)
         @summarySection("notification.heading.background", viewModel.backgroundList)
 
-        @viewModel.aboutTheIndividualList.map(list => summarySection("notification.heading.aboutTheIndividual", list))
-        @viewModel.aboutTheCompanyList.map(list => summarySection("notification.heading.aboutTheCompany", list))
-        @viewModel.aboutTheTrustList.map(list => summarySection("notification.heading.aboutTheTrust", list))
-        @viewModel.aboutTheLLPList.map(list => summarySection("notification.heading.aboutTheLLP", list))
-        @viewModel.aboutTheEstateList.map(list => summarySection("notification.heading.aboutTheEstate", list))
+        @viewModel.aboutTheIndividualList.map(list => summarySection("disclosure.heading.aboutTheIndividual", list))
+        @viewModel.aboutTheCompanyList.map(list => summarySection("disclosure.heading.aboutTheCompany", list))
+        @viewModel.aboutTheTrustList.map(list => summarySection("disclosure.heading.aboutTheTrust", list))
+        @viewModel.aboutTheLLPList.map(list => summarySection("disclosure.heading.aboutTheLLP", list))
+        @viewModel.aboutTheEstateList.map(list => summarySection("disclosure.heading.aboutTheEstate", list))
 
         @summarySection(viewModel.aboutYouHeading, viewModel.aboutYouList)
 

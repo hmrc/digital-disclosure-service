@@ -18,9 +18,8 @@ package viewmodels
 
 import org.scalatest.matchers.should.Matchers
 import viewmodels.govuk.SummaryListFluency
-import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import org.scalatest.wordspec.AnyWordSpec
-import java.time.{LocalDate, LocalDateTime, Month}
+import java.time.{LocalDateTime, Month}
 import viewmodels.implicits._
 import play.api.i18n.{MessagesApi, Messages}
 import play.api.test.FakeRequest
@@ -78,8 +77,8 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         onshoreLiabilities = Some (true)
       )
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
-        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel(messages("notification.background.onshore")))
+        SummaryListRowViewModel("disclosure.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
+        SummaryListRowViewModel("disclosure.background.liabilities", ValueViewModel(messages("notification.background.onshore")))
       ))
       DisclosureViewModel.backgroundList(background) shouldEqual expected
     }
@@ -92,8 +91,8 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         onshoreLiabilities = Some (false)
       )
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
-        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel(messages("notification.background.offshore")))
+        SummaryListRowViewModel("disclosure.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
+        SummaryListRowViewModel("disclosure.background.liabilities", ValueViewModel(messages("notification.background.offshore")))
       ))
       DisclosureViewModel.backgroundList(background) shouldEqual expected
     }
@@ -106,8 +105,8 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         onshoreLiabilities = Some (true)
       )
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
-        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel(messages("notification.background.both")))
+        SummaryListRowViewModel("disclosure.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
+        SummaryListRowViewModel("disclosure.background.liabilities", ValueViewModel(messages("notification.background.both")))
       ))
       DisclosureViewModel.backgroundList(background) shouldEqual expected
     }
@@ -115,8 +114,8 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
     "return disclosure Entity row with information for a Company " in {
       val background = Background (None, None, Some(DisclosureEntity(Company, Some(true))), None, None)
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Company"))),
-        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
+        SummaryListRowViewModel("disclosure.background.disclosureEntity", ValueViewModel(messages("notification.background.Company"))),
+        SummaryListRowViewModel("disclosure.background.liabilities", ValueViewModel("-"))
       ))
       DisclosureViewModel.backgroundList(background) shouldEqual expected
     }
@@ -124,8 +123,8 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
     "return disclosure Entity row with information for a LLP " in {
       val background = Background (None, None, Some(DisclosureEntity(LLP, Some(true))), None, None)
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.LLP"))),
-        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
+        SummaryListRowViewModel("disclosure.background.disclosureEntity", ValueViewModel(messages("notification.background.LLP"))),
+        SummaryListRowViewModel("disclosure.background.liabilities", ValueViewModel("-"))
       ))
       DisclosureViewModel.backgroundList(background) shouldEqual expected
     }
@@ -133,8 +132,8 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
     "return disclosure Entity row with information for a Trust " in {
       val background = Background (None, None, Some(DisclosureEntity(Trust, Some(true))), None, None)
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Trust"))),
-        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
+        SummaryListRowViewModel("disclosure.background.disclosureEntity", ValueViewModel(messages("notification.background.Trust"))),
+        SummaryListRowViewModel("disclosure.background.liabilities", ValueViewModel("-"))
       ))
       DisclosureViewModel.backgroundList(background) shouldEqual expected
     }

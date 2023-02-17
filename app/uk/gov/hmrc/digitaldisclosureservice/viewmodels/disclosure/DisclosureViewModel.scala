@@ -93,7 +93,7 @@ object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
   def backgroundList(background: Background)(implicit messages: Messages): SummaryList = SummaryListViewModel(
     rows = Seq(
       background.disclosureEntity.map(answer => row("disclosure.background.disclosureEntity", messages(s"notification.background.${answer.entity.toString}"))),
-      Some(liabilitiesRow(background))
+      Some(liabilitiesRow(background, "disclosure"))
     ).flatten
   )
 
