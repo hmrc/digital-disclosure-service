@@ -92,7 +92,7 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
         userId = "userId",
         submissionId = "submissionId",
         lastUpdated = Instant.now,
-        metadata = Metadata(submissionTime = Some(submissionTime)),
+        metadata = Metadata(reference = Some("1234-5678-ABCD"), submissionTime = Some(submissionTime)),
         personalDetails = PersonalDetails(
           background = Background(),
           aboutYou = AboutYou()
@@ -106,7 +106,7 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
         submissionMark = submissionMark
       )
       val submissionRequest = SubmissionRequest(
-        submissionReference = None,
+        submissionReference = Some("12345678ABCD"),
         metadata = submissionMetadata
       )
 
