@@ -40,7 +40,7 @@ class DMSSubmissionServiceImpl @Inject()(dmsConnector: DMSSubmissionConnector, p
       submissionMark = submissionMark
     )
     val submissionRequest = SubmissionRequest(
-      submissionReference = submission.metadata.reference,
+      submissionReference = submission.metadata.reference.map(_.replace("-", "")),
       metadata = submissionMetadata
     )
 
