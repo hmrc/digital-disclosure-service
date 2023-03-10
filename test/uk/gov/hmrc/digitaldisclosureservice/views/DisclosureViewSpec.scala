@@ -90,9 +90,9 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
         onshoreLiabilities = Some(OnshoreLiabilitiesViewModel(
           summaryList = SummaryList(rows=Nil),
           taxYearLists = Seq((2012, SummaryList(rows=Nil))),
-          corporationTaxLists = Seq((0, SummaryList(rows=Nil))),
-          directorLoanLists = Seq((0, SummaryList(rows=Nil))),
-          lettingPropertyLists = Seq((0, SummaryList(rows=Nil)))
+          corporationTaxLists = Seq((1, SummaryList(rows=Nil))),
+          directorLoanLists = Seq((1, SummaryList(rows=Nil))),
+          lettingPropertyLists = Seq((1, SummaryList(rows=Nil)))
         )),
         otherLiabilitiesList = SummaryList(rows=Nil),
         additionalList = SummaryList(rows=Nil),
