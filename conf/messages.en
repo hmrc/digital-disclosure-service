@@ -195,15 +195,80 @@ disclosure.offshore.notInc = Amount of tax not included
 disclosure.offshore.maxValue = Maximum value of all assets held outside the UK at any point over the last 5 years
 
 #===================================================
+#  Onshore liabilities
+#===================================================
+
+disclosure.onshore.heading = Onshore liabilities
+
+#===================================================
+#  Onshore liabilities - per year
+#===================================================
+disclosure.onshore.year = Tax year ending {0}
+disclosure.onshore.businessIncome = Business income
+disclosure.onshore.gains = Capital gains
+disclosure.onshore.lettingIncome = Letting income
+disclosure.onshore.nonBusinessIncome = Non-business income
+disclosure.onshore.tax = Tax due
+disclosure.onshore.ni = National Insurance contributions due
+disclosure.onshore.interest = Interest due
+disclosure.onshore.penaltyRate = Penalty
+disclosure.onshore.penalty = Penalty amount
+disclosure.onshore.penaltyReason = Reason for penalty rate
+disclosure.onshore.deductions = Deductions
+disclosure.onshore.total = Amount due
+
+#===================================================
+#  Onshore liabilities - corporation tax
+#===================================================
+disclosure.onshore.ct.heading = Onshore Corporation Tax liability {0}
+disclosure.onshore.accountingPeriod = Accounting period end date
+disclosure.onshore.ct.income = Income
+disclosure.onshore.corporationTax = Corporation Tax due
+disclosure.onshore.ct.total = Total amount due for Corporation Tax liability
+
+#===================================================
+#  Onshore liabilities - director loan
+#===================================================
+disclosure.onshore.director.heading = Onshore director’s loan account liability {0}
+disclosure.onshore.director.name = Name of director
+disclosure.onshore.director.overdrawn = Amount overdrawn by
+disclosure.onshore.director.total = Total amount due for director loans account liability
+
+#===================================================
 #  Totals
 #===================================================
 
 disclosure.totals.heading = What is owed in total
 disclosure.totals.tax = Total tax due
+disclosure.totals.niContributions = Total National Insurance contributions due
 disclosure.totals.interest = Total interest due
 disclosure.totals.penalty = Total penalties due
 disclosure.totals.amount = Total amount due
 disclosure.totals.offer = Offer amount
+
+#===================================================
+#  Letting properties
+#===================================================
+disclosure.onshore.letting.heading = Letting property {0}
+disclosure.property.address = Property address
+disclosure.property.firstLet = When was the property first let out?
+disclosure.property.stoppedLet = Has the property stopped being let out?
+disclosure.property.stoppedLetDate = When the property was stopped being let out
+disclosure.property.happenedTo = What has happened to the property since it stopped being let out?
+disclosure.property.furnished = Was the property furnished?
+disclosure.property.fhl = Did property meet the qualifying criteria to be treated as a FHL?
+disclosure.property.joint = Was the property jointly owned by another person?
+disclosure.property.share = Percentage share received
+disclosure.property.mortgage = Was there a mortgage on the property?
+disclosure.property.mortgageType = Type of mortgage
+disclosure.property.mortgageType.capitalRepayment = Capital repayment
+disclosure.property.mortgageType.interestOnly = Interest only
+disclosure.property.lettingAgent = Was a letting agent used to let out or manage the property?
+disclosure.property.collectRent = Did the agent collect rent on your behalf?
+
+disclosure.property.landlord = Are you a member of any landlord associations?
+disclosure.property.associationMembership = Name of landlord associations you are a member of
+disclosure.property.numberOfProperties = Number of properties currently let out
 
 #===================================================
 #  Other liabilities

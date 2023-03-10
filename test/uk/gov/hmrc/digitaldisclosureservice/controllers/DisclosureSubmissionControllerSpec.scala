@@ -56,7 +56,7 @@ class DisclosureSubmissionControllerSpec extends AnyWordSpec with Matchers with 
   private val controller = new DisclosureSubmissionController(new DefaultMessagesApi(), mockSubmissionService, mockTestService, BackendAuthComponentsStub(mockStubBehaviour), Helpers.stubControllerComponents())
 
   val instant = LocalDateTime.of(2022, 1, 1, 0, 0, 0).toInstant(ZoneOffset.UTC)
-  val testDisclosure = FullDisclosure("123", "123", instant, Metadata(), CaseReference(), PersonalDetails(Background(), AboutYou()), OffshoreLiabilities(), OtherLiabilities(), ReasonForDisclosingNow())
+  val testDisclosure = FullDisclosure("123", "123", instant, Metadata(), CaseReference(), PersonalDetails(Background(), AboutYou()), None, OffshoreLiabilities(), OtherLiabilities(), ReasonForDisclosingNow())
   
   "POST /disclosure/submit" should {
     "return 202 where the service returns a Success" in {

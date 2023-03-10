@@ -39,8 +39,10 @@ final case class DisclosureViewModel(
   aboutYouList: SummaryList,
   aboutYouHeading: String = "disclosure.heading.completing",
   offshoreLiabilities: Option[OffshoreLiabilitiesViewModel],
+  onshoreLiabilities: Option[OnshoreLiabilitiesViewModel],
   otherLiabilitiesList: SummaryList,
-  additionalList: SummaryList
+  additionalList: SummaryList,
+  totalAmountsList: SummaryList
 )
 
 object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
@@ -57,6 +59,14 @@ object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
       else None
     }
 
+    val onshoreLiabilities = {
+      val disclosingOnshore = fullDisclosure.personalDetails.background.onshoreLiabilities.getOrElse(false)
+      if (disclosingOnshore) fullDisclosure.onshoreLiabilities.map(l => OnshoreLiabilitiesViewModel(l, fullDisclosure.disclosingAboutThemselves, entity, fullDisclosure.offerAmount))
+      else None
+    }
+
+    val totalAmounts = TotalAmounts(fullDisclosure)
+
     DisclosureViewModel(
       metadataList(fullDisclosure.personalDetails.background, fullDisclosure.metadata, fullDisclosure.caseReference, fullDisclosure.offshoreLiabilities),
       backgroundList(fullDisclosure.personalDetails.background),
@@ -68,8 +78,10 @@ object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
       aboutYouList(fullDisclosure.personalDetails.aboutYou, fullDisclosure.personalDetails.background, fullDisclosure.disclosingAboutThemselves),
       aboutYouHeading(fullDisclosure.personalDetails, isADisclosure),
       offshoreLiabilities,
+      onshoreLiabilities,
       otherLiabilitiesList(fullDisclosure.otherLiabilities, fullDisclosure.disclosingAboutThemselves, entity),
-      additionalInformationList(fullDisclosure.reasonForDisclosingNow, fullDisclosure.disclosingAboutThemselves, entity)
+      additionalInformationList(fullDisclosure.reasonForDisclosingNow, fullDisclosure.disclosingAboutThemselves, entity),
+      totalAmountsSummaryList(totalAmounts, fullDisclosure.offerAmount)
     )
 
   }
@@ -171,6 +183,27 @@ object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
     SummaryListRowViewModel(
       key     = "disclosure.additional.advice.date",
       value   = ValueViewModel(dateAtStartOfMonth.format(dateFormatter))
+    )
+  }
+
+  def totalAmountsSummaryList(totalAmounts: TotalAmounts, offerAmount: Option[BigInt])(implicit messages: Messages): SummaryList = {
+
+    SummaryListViewModel(
+      rows = Seq(
+        Some(poundRow("disclosure.totals.tax", s"${totalAmounts.unpaidTaxTotal}")),
+        Some(poundRow("disclosure.totals.niContributions", s"${totalAmounts.niContributionsTotal}")),
+        Some(poundRow("disclosure.totals.interest", s"${totalAmounts.interestTotal}")),
+        Some(poundRow("disclosure.totals.penalty", f"${totalAmounts.penaltyAmountTotal%1.2f}")),
+        Some(poundRow("disclosure.totals.amount", f"${totalAmounts.amountDueTotal%1.2f}")),
+        offerAmount.map(amount => poundRow("disclosure.totals.offer", s"$amount"))
+      ).flatten
+    )
+  }
+
+  def poundRow(label: String, value: String)(implicit messages: Messages) = {
+    SummaryListRowViewModel(
+      key     = label,
+      value   = ValueViewModel(HtmlContent("£" + HtmlFormat.escape(value).toString))
     )
   }
 
