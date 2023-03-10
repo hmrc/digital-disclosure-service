@@ -72,34 +72,6 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
     maximumValueOfAssets = Some(TheMaximumValueOfAllAssets.Below500k)
   )
 
-  "penaltyAmount" should {
-
-    "apply the penalty rate to the amount of unpaid tax" in {
-      forAll(arbitrary[TaxYearWithLiabilities]) { taxYearWithLiabilities =>
-        val penaltyRate = taxYearWithLiabilities.taxYearLiabilities.penaltyRate
-        val unpaidTax = taxYearWithLiabilities.taxYearLiabilities.unpaidTax
-        val expectedAmount = (BigDecimal(penaltyRate) * BigDecimal(unpaidTax)) / 100
-        OffshoreLiabilitiesViewModel.penaltyAmount(taxYearWithLiabilities.taxYearLiabilities) shouldEqual expectedAmount
-      }
-    }
-
-  }
-
-  "yearTotal" should {
-
-    "add the penalty amount to the unpaid tax and the interest" in {
-      forAll(arbitrary[TaxYearWithLiabilities]) { taxYearWithLiabilities =>
-        val penaltyRate = taxYearWithLiabilities.taxYearLiabilities.penaltyRate
-        val unpaidTax = taxYearWithLiabilities.taxYearLiabilities.unpaidTax
-        val penaltyAmount: BigDecimal = (BigDecimal(penaltyRate) / 100) * BigDecimal(unpaidTax)
-        val interest = taxYearWithLiabilities.taxYearLiabilities.interest
-        val expectedAmount: BigDecimal = penaltyAmount + BigDecimal(interest) + BigDecimal(unpaidTax)
-        OffshoreLiabilitiesViewModel.yearTotal(taxYearWithLiabilities.taxYearLiabilities) shouldEqual expectedAmount
-      }
-    }
-
-  }
-
   "primarySummaryList" should {
 
     def getYearKey(behaviour: Behaviour) = messages("disclosure.offshore.before", OffshoreLiabilitiesViewModel.getEarliestYearByBehaviour(behaviour).toString)
@@ -225,35 +197,6 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
         SummaryListRowViewModel("disclosure.offshore.total", ValueViewModel(HtmlContent("£129332.04")))
       ))
       OffshoreLiabilitiesViewModel.taxYearWithLiabilitiesToSummaryList(taxYearWithLiabilities, None) shouldEqual expected
-    }
-  }
-
-  "totalAmountsSummaryList" should {
-    "display all rows" in {
-      def taxYearWithLiabilities(int: Int) = TaxYearWithLiabilities(
-        TaxYearStarting(2012), 
-        TaxYearLiabilities(
-          income = BigInt(int),
-          chargeableTransfers = BigInt(int),
-          capitalGains = BigInt(int),
-          unpaidTax = BigInt(int),
-          interest = BigInt(int),
-          penaltyRate = int,
-          penaltyRateReason = "Some reason",
-          foreignTaxCredit = false
-        )
-      )
-
-      val taxYears = Seq(taxYearWithLiabilities(1), taxYearWithLiabilities(2), taxYearWithLiabilities(3))
-
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("disclosure.totals.tax", ValueViewModel(HtmlContent("£6"))),
-        SummaryListRowViewModel("disclosure.totals.interest", ValueViewModel(HtmlContent("£6"))),
-        SummaryListRowViewModel("disclosure.totals.penalty", ValueViewModel(HtmlContent("£0.14"))),
-        SummaryListRowViewModel("disclosure.totals.amount", ValueViewModel(HtmlContent("£12.14"))),
-        SummaryListRowViewModel("disclosure.totals.offer", ValueViewModel(HtmlContent("£12")))
-      ))
-      OffshoreLiabilitiesViewModel.totalAmountsSummaryList(taxYears, Some(BigInt(12))) shouldEqual expected
     }
   }
 

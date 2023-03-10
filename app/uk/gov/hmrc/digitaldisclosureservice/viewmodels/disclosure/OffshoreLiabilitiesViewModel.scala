@@ -28,9 +28,7 @@ import play.twirl.api.HtmlFormat
 
 case class OffshoreLiabilitiesViewModel(
   summaryList: SummaryList,
-  taxYearLists: Seq[(Int, SummaryList)],
-  totalAmountsList: SummaryList,
-  liabilitiesTotal: BigDecimal
+  taxYearLists: Seq[(Int, SummaryList)]
 )
 
 object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
@@ -65,14 +63,9 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
     val foreignTaxCredits = offshoreLiabilities.taxYearForeignTaxDeductions.getOrElse(Map())
     val taxYearLists: Seq[(Int, SummaryList)] = taxYears.map(year => (year.taxYear.startYear, taxYearWithLiabilitiesToSummaryList(year, foreignTaxCredits.get(year.taxYear.startYear.toString))))
 
-    val totalAmountsList = totalAmountsSummaryList(taxYears, offerAmount)
-    val liabilitiesTotal: BigDecimal = taxYears.map(yearWithLiabilities => yearTotal(yearWithLiabilities.taxYearLiabilities)).sum
-
     OffshoreLiabilitiesViewModel(
       primarySummaryList(offshoreLiabilities, disclosingAboutThemselves, entity), 
-      taxYearLists, 
-      totalAmountsList, 
-      liabilitiesTotal
+      taxYearLists
     )
 
   }
@@ -161,6 +154,9 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
       case _ => Nil
     }
 
+    val penaltyAmount = getPenaltyAmount(liabilities.penaltyRate, liabilities.unpaidTax)
+    val yearTotal = getPeriodTotal(liabilities.penaltyRate, liabilities.unpaidTax, liabilities.interest)
+
     val rows = Seq(
       poundRow("disclosure.offshore.income", s"${liabilities.income}"),
       poundRow("disclosure.offshore.transfers", s"${liabilities.chargeableTransfers}"),
@@ -168,37 +164,11 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
       poundRow("disclosure.offshore.tax", s"${liabilities.unpaidTax}"),
       poundRow("disclosure.offshore.interest", s"${liabilities.interest}"),
       row("disclosure.offshore.penaltyRate", s"${liabilities.penaltyRate}%"),
-      poundRow("disclosure.offshore.penalty", s"${penaltyAmount(liabilities)}"),
+      poundRow("disclosure.offshore.penalty", s"${penaltyAmount}"),
       row("disclosure.offshore.penaltyReason", liabilities.penaltyRateReason)
-    ) ++ foreignTaxCreditRow ++ Seq(poundRow("disclosure.offshore.total", s"${yearTotal(liabilities)}"))
+    ) ++ foreignTaxCreditRow ++ Seq(poundRow("disclosure.offshore.total", s"${yearTotal}"))
 
     SummaryListViewModel(rows)
-  }
-
-  def totalAmountsSummaryList(taxYears: Seq[TaxYearWithLiabilities], offerAmount: Option[BigInt])(implicit messages: Messages): SummaryList = {
-    val taxYearLiabilities = taxYears.map(_.taxYearLiabilities)
-    val unpaidTaxTotal = taxYearLiabilities.map(_.unpaidTax).sum
-    val interestTotal = taxYearLiabilities.map(_.interest).sum
-    val penaltyAmountTotal = taxYearLiabilities.map(penaltyAmount).sum
-    val amountDueTotal = taxYearLiabilities.map(yearTotal(_)).sum
-
-    SummaryListViewModel(
-      rows = Seq(
-        Some(poundRow("disclosure.totals.tax", s"$unpaidTaxTotal")),
-        Some(poundRow("disclosure.totals.interest", s"$interestTotal")),
-        Some(poundRow("disclosure.totals.penalty", s"$penaltyAmountTotal")),
-        Some(poundRow("disclosure.totals.amount", s"$amountDueTotal")),
-        offerAmount.map(amount => poundRow("disclosure.totals.offer", s"$amount"))
-      ).flatten
-    )
-  }
-
-  def penaltyAmount(taxYearLiabilities: TaxYearLiabilities): BigDecimal = {
-    (BigDecimal(taxYearLiabilities.penaltyRate) * BigDecimal(taxYearLiabilities.unpaidTax)) /100
-  }
-  
-  def yearTotal(taxYearLiabilities: TaxYearLiabilities): BigDecimal = {
-    BigDecimal(taxYearLiabilities.unpaidTax) + penaltyAmount(taxYearLiabilities) + BigDecimal(taxYearLiabilities.interest)
   }
 
   def row(label: String, value: String)(implicit messages: Messages) = {
@@ -213,6 +183,14 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
       key     = label,
       value   = ValueViewModel(HtmlContent("£" + HtmlFormat.escape(value).toString))
     )
+  }
+
+  private def getPenaltyAmount(penaltyRate: Int, unpaidAmount: BigInt): BigDecimal = {
+    BigDecimal(penaltyRate * unpaidAmount) /100
+  }
+  
+  private def getPeriodTotal(penaltyRate: Int, unpaidAmount: BigInt, interest: BigInt): BigDecimal = {
+    BigDecimal(unpaidAmount) + getPenaltyAmount(penaltyRate, unpaidAmount) + BigDecimal(interest)
   }
 
 }

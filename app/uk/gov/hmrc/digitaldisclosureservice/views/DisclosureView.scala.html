@@ -73,14 +73,40 @@
 
         @summarySection(viewModel.aboutYouHeading, viewModel.aboutYouList)
 
+        @viewModel.onshoreLiabilities.map{ lists => 
+            @summarySection("disclosure.onshore.heading", lists.summaryList)
+            @lists.taxYearLists.map { case (year, list) =>
+                <h2 class="govuk-heading-m">@messages("disclosure.onshore.year", s"${year+1}")</h2>
+                @govukSummaryList(list)
+            }
+
+            @lists.directorLoanLists.map { case (index, list) =>
+                <h2 class="govuk-heading-m">@messages("disclosure.onshore.director.heading", s"${index}")</h2>
+                @govukSummaryList(list)
+            }
+
+            @lists.corporationTaxLists.map { case (index, list) =>
+                <h2 class="govuk-heading-m">@messages("disclosure.onshore.ct.heading", s"${index}")</h2>
+                @govukSummaryList(list)
+            }
+        }
+
         @viewModel.offshoreLiabilities.map{ lists => 
             @summarySection("disclosure.offshore.heading", lists.summaryList)
             @lists.taxYearLists.map { case (year, list) =>
                 <h2 class="govuk-heading-m">@messages("disclosure.offshore.year", s"${year+1}")</h2>
                 @govukSummaryList(list)
             }
-            @summarySection("disclosure.totals.heading", lists.totalAmountsList)
         }
+
+        @viewModel.onshoreLiabilities.map{ lists => 
+            @lists.lettingPropertyLists.map { case (index, list) =>
+                <h2 class="govuk-heading-m">@messages("disclosure.onshore.letting.heading", s"${index}")</h2>
+                @govukSummaryList(list)
+            }
+        }
+
+        @summarySection("disclosure.totals.heading", viewModel.totalAmountsList)
 
         @summarySection("disclosure.otherLiabilities.heading", viewModel.otherLiabilitiesList)
         @summarySection("disclosure.additional.heading", viewModel.additionalList)

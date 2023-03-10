@@ -45,7 +45,7 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
 
     "neither onshore or offshore are populated" should {
 
-      val viewModel = DisclosureViewModel(FullDisclosure("userId", "id", Instant.now(), Metadata(reference = Some("ref")), CaseReference(), PersonalDetails(Background(), AboutYou()), OffshoreLiabilities(), OtherLiabilities(), ReasonForDisclosingNow()))
+      val viewModel = DisclosureViewModel(FullDisclosure("userId", "id", Instant.now(), Metadata(reference = Some("ref")), CaseReference(), PersonalDetails(Background(), AboutYou()), None, OffshoreLiabilities(), OtherLiabilities(), ReasonForDisclosingNow()))
   
       val view = createView(viewModel)
 
@@ -85,12 +85,18 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
         aboutYouHeading = "disclosure.heading.completing",
         offshoreLiabilities = Some(OffshoreLiabilitiesViewModel(
           summaryList = SummaryList(rows=Nil),
+          taxYearLists = Seq((2012, SummaryList(rows=Nil)))
+        )),
+        onshoreLiabilities = Some(OnshoreLiabilitiesViewModel(
+          summaryList = SummaryList(rows=Nil),
           taxYearLists = Seq((2012, SummaryList(rows=Nil))),
-          totalAmountsList = SummaryList(rows=Nil),
-          liabilitiesTotal = 0
+          corporationTaxLists = Seq((0, SummaryList(rows=Nil))),
+          directorLoanLists = Seq((0, SummaryList(rows=Nil))),
+          lettingPropertyLists = Seq((0, SummaryList(rows=Nil)))
         )),
         otherLiabilitiesList = SummaryList(rows=Nil),
-        additionalList = SummaryList(rows=Nil)
+        additionalList = SummaryList(rows=Nil),
+        totalAmountsList = SummaryList(rows=Nil)
       )
       val view = createView(viewModel)
 
@@ -111,8 +117,14 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
         view.select("h2").text() should include(messages("notification.heading.background"))
         view.select("h2").text() should include(messages("disclosure.heading.aboutTheIndividual"))
         view.select("h2").text() should include(messages("disclosure.heading.completing"))
+        view.select("h2").text() should include(messages("disclosure.onshore.heading"))
+        view.select("h2").text() should include(messages("disclosure.onshore.year", "2013"))
+        view.select("h2").text() should include(messages("disclosure.onshore.director.heading", "1"))
+        view.select("h2").text() should include(messages("disclosure.onshore.ct.heading", "1"))
         view.select("h2").text() should include(messages("disclosure.offshore.heading"))
         view.select("h2").text() should include(messages("disclosure.offshore.year", "2013"))
+        view.select("h2").text() should include(messages("disclosure.totals.heading"))
+        view.select("h2").text() should include(messages("disclosure.onshore.letting.heading", "1"))
         view.select("h2").text() should include(messages("disclosure.otherLiabilities.heading"))
         view.select("h2").text() should include(messages("disclosure.additional.heading"))
       }
@@ -123,7 +135,7 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
 
   "f" should {
     "render the page" in {      
-      val viewModel = DisclosureViewModel(FullDisclosure("userId", "id", Instant.now(), Metadata(reference = Some("ref")), CaseReference(), PersonalDetails(Background(), AboutYou()), OffshoreLiabilities(), OtherLiabilities(), ReasonForDisclosingNow()))
+      val viewModel = DisclosureViewModel(FullDisclosure("userId", "id", Instant.now(), Metadata(reference = Some("ref")), CaseReference(), PersonalDetails(Background(), AboutYou()), None, OffshoreLiabilities(), OtherLiabilities(), ReasonForDisclosingNow()))
       sut.f(viewModel)(messages) shouldEqual createView(viewModel)
     }
   }
