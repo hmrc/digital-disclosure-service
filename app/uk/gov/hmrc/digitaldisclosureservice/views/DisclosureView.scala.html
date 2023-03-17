@@ -99,14 +99,14 @@
             }
         }
 
+        @summarySection("disclosure.totals.heading", viewModel.totalAmountsList)
+
         @viewModel.onshoreLiabilities.map{ lists => 
             @lists.lettingPropertyLists.map { case (index, list) =>
                 <h2 class="govuk-heading-m">@messages("disclosure.onshore.letting.heading", s"${index}")</h2>
                 @govukSummaryList(list)
             }
         }
-
-        @summarySection("disclosure.totals.heading", viewModel.totalAmountsList)
 
         @summarySection("disclosure.otherLiabilities.heading", viewModel.otherLiabilitiesList)
         @summarySection("disclosure.additional.heading", viewModel.additionalList)

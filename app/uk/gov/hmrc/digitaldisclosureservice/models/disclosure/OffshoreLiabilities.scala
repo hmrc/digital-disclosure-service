@@ -36,8 +36,6 @@ final case class OffshoreLiabilities(
   taxYearLiabilities: Option[Map[String, TaxYearWithLiabilities]] = None,
   taxYearForeignTaxDeductions: Option[Map[String, BigInt]] = None,
   countryOfYourOffshoreLiability: Option[Map[String, CountryOfYourOffshoreLiability]] = None,
-  incomeSource: Option[Set[WhereDidTheUndeclaredIncomeOrGainIncluded]] = None,
-  otherIncomeSource: Option[String] = None,
   legalInterpretation: Option[Set[YourLegalInterpretation]] = None,
   otherInterpretation: Option[String] = None,
   notIncludedDueToInterpretation: Option[HowMuchTaxHasNotBeenIncluded] = None,

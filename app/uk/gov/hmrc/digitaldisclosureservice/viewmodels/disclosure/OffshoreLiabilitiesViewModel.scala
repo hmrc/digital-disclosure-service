@@ -86,7 +86,6 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
         offshoreLiabilities.taxBeforeFiveYears.map(answer => row(messages("disclosure.offshore.before", getEarliestYearByBehaviour(Behaviour.ReasonableExcuse).toString), answer)),
         offshoreLiabilities.taxBeforeSevenYears.map(answer => row(messages("disclosure.offshore.before", getEarliestYearByBehaviour(Behaviour.Careless).toString), answer)),
         offshoreLiabilities.taxBeforeNineteenYears.map(answer => row(messages("disclosure.offshore.before", getEarliestYearByBehaviour(Behaviour.Deliberate).toString), answer)),
-        Some(incomeFromRow(offshoreLiabilities)),
         offshoreLiabilities.legalInterpretation.map(legalInterpretation),
         offshoreLiabilities.otherInterpretation.map(answer => row("disclosure.offshore.legal.other", answer.toString)),
         offshoreLiabilities.notIncludedDueToInterpretation.map(answer => row("disclosure.offshore.notInc", messages(s"howMuchTaxHasNotBeenIncluded.${answer.toString}"))),
@@ -98,25 +97,6 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
   def getMissingYears(offshoreLiabilities: OffshoreLiabilities): String = {
     val yearList = offshoreLiabilities.whichYears.getOrElse(Nil).collect{case TaxYearStarting(y) => TaxYearStarting(y)}.toList
     TaxYearStarting.findMissingYears(yearList).map(_.startYear+1).mkString(", ")
-  }
-
-  def incomeFromRow(offshoreLiabilities: OffshoreLiabilities)(implicit messages: Messages) = {
-
-    val sources = offshoreLiabilities.incomeSource.getOrElse(Nil).map(answer => messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.$answer")).toList
-    val otherSource = offshoreLiabilities.otherIncomeSource.toList
-
-    val answers = sources ::: otherSource
-
-    val value = ValueViewModel(
-      HtmlContent(
-        answers.map {
-          answer => HtmlFormat.escape(answer).toString
-        }
-        .mkString("<br/><br/>")
-      )
-    )
-
-    SummaryListRowViewModel("disclosure.offshore.incomeFrom", value)
   }
 
   def whyAreYouMakingThisDisclosure(answers: Set[WhyAreYouMakingThisDisclosure], disclosingAboutThemselves: Boolean, entity: String)(implicit messages: Messages) = {
