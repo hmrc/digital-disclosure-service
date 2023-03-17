@@ -32,7 +32,7 @@ import play.api.libs.json.Json
 import models.{Metadata, FullDisclosure}
 import models.notification._
 import models.disclosure._
-import services.{TestSubmissionService, DMSSubmissionService}
+import services.DMSSubmissionService
 import models.submission.SubmissionResponse
 import play.api.i18n.DefaultMessagesApi
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -48,12 +48,11 @@ class DisclosureSubmissionControllerSpec extends AnyWordSpec with Matchers with 
     Mockito.reset(mockSubmissionService)
   }
 
-  val mockTestService = mock[TestSubmissionService]
   val mockSubmissionService = mock[DMSSubmissionService]
   val mockStubBehaviour = mock[StubBehaviour]
   val expectedPredicate = Predicate.Permission(Resource(ResourceType("digital-disclosure-service"), ResourceLocation("submit")), IAAction("WRITE"))
   when(mockStubBehaviour.stubAuth(Some(expectedPredicate), Retrieval.EmptyRetrieval)).thenReturn(Future.unit)
-  private val controller = new DisclosureSubmissionController(new DefaultMessagesApi(), mockSubmissionService, mockTestService, BackendAuthComponentsStub(mockStubBehaviour), Helpers.stubControllerComponents())
+  private val controller = new DisclosureSubmissionController(new DefaultMessagesApi(), mockSubmissionService, BackendAuthComponentsStub(mockStubBehaviour), Helpers.stubControllerComponents())
 
   val instant = LocalDateTime.of(2022, 1, 1, 0, 0, 0).toInstant(ZoneOffset.UTC)
   val testDisclosure = FullDisclosure("123", "123", instant, Metadata(), CaseReference(), PersonalDetails(Background(), AboutYou()), None, OffshoreLiabilities(), OtherLiabilities(), ReasonForDisclosingNow())

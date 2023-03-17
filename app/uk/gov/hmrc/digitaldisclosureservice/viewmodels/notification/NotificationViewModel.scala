@@ -22,6 +22,8 @@ import play.api.i18n.Messages
 import models._
 import models.notification._
 import viewmodels.implicits._
+import play.twirl.api.HtmlFormat
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 
 final case class NotificationViewModel(
   metadataList: Option[SummaryList],
@@ -72,8 +74,29 @@ object NotificationViewModel extends SummaryListFluency with SubmissionViewModel
       background.disclosureEntity.map(de => SummaryListRowViewModel(s"notification.background.areYouThe${de.entity.toString}", ValueViewModel(de.areYouTheEntity))),
       background.areYouRepresetingAnOrganisation.flatMap(areYou => displayWhenNo(s"$backgroundKey.areYouRepresetingAnOrganisation", areYou)),
       background.organisationName.map(_ => SummaryListRowViewModel(s"$backgroundKey.organisationName", ValueViewModel(background.organisationName))),
-      Some(liabilitiesRow(background))
+      Some(liabilitiesRow(background)),
+      Some(incomeFromRow(background)),
     ).flatten
   )
+
+  def incomeFromRow(background: Background)(implicit messages: Messages) = {
+
+    val sources = background.incomeSource.getOrElse(Nil).map(answer => messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.$answer")).toList
+    val otherSource = background.otherIncomeSource.toList
+
+    val answers = sources ::: otherSource
+
+    val value = ValueViewModel(
+      HtmlContent(
+        answers.map {
+          answer => HtmlFormat.escape(answer).toString
+        }
+        .mkString("<br/><br/>")
+      )
+    )
+
+    SummaryListRowViewModel("disclosure.offshore.incomeFrom", value)
+  }
+
 
 }

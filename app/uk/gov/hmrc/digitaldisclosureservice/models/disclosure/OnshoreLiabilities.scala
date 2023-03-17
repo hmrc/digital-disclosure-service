@@ -35,8 +35,6 @@ final case class OnshoreLiabilities(
   disregardedCDF: Option[Boolean] = None,
   taxYearLiabilities: Option[Map[String, OnshoreTaxYearWithLiabilities]] = None,
   lettingDeductions: Option[Map[String, BigInt]] = None,
-  incomeSource: Option[Set[IncomeOrGainSource]] = None,
-  otherIncomeSource: Option[String] = None,
   lettingProperties: Option[Seq[LettingProperty]] = None,
   memberOfLandlordAssociations: Option[Boolean] = None,
   landlordAssociations: Option[String] = None,

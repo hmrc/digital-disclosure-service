@@ -93,9 +93,12 @@ object OnshoreLiabilitiesViewModel extends CurrentTaxYear {
         onshoreLiabilities.taxBeforeThreeYears.map(answer => row(messages("disclosure.offshore.before", getEarliestYearByBehaviour(Behaviour.ReasonableExcuse).toString), answer)),
         onshoreLiabilities.taxBeforeFiveYears.map(answer => row(messages("disclosure.offshore.before", getEarliestYearByBehaviour(Behaviour.Careless).toString), answer)),
         onshoreLiabilities.taxBeforeNineteenYears.map(answer => row(messages("disclosure.offshore.before", getEarliestYearByBehaviour(Behaviour.Deliberate).toString), answer)),
-        Some(incomeFromRow(onshoreLiabilities))
+        onshoreLiabilities.memberOfLandlordAssociations.map(answer => row(messages("disclosure.property.landlord"), booleanText(answer))),
+        onshoreLiabilities.landlordAssociations.map(answer => row(messages("disclosure.property.associationMembership"), answer)),
+        onshoreLiabilities.howManyProperties.map(answer => row(messages("disclosure.property.numberOfProperties"), answer.toString))
       ).flatten
     )
+
   }
 
   def getMissingYears(onshoreLiabilities: OnshoreLiabilities): String = {
@@ -103,24 +106,6 @@ object OnshoreLiabilitiesViewModel extends CurrentTaxYear {
     OnshoreYearStarting.findMissingYears(yearList).map(_.startYear+1).mkString(", ")
   }
 
-  def incomeFromRow(onshoreLiabilities: OnshoreLiabilities)(implicit messages: Messages) = {
-
-    val sources = onshoreLiabilities.incomeSource.getOrElse(Nil).map(answer => messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.$answer")).toList
-    val otherSource = onshoreLiabilities.otherIncomeSource.toList
-
-    val answers = sources ::: otherSource
-
-    val value = ValueViewModel(
-      HtmlContent(
-        answers.map {
-          answer => HtmlFormat.escape(answer).toString
-        }
-        .mkString("<br/><br/>")
-      )
-    )
-
-    SummaryListRowViewModel("disclosure.offshore.incomeFrom", value)
-  }
 
   def whyAreYouMakingThisDisclosure(answers: Set[WhyAreYouMakingThisOnshoreDisclosure], disclosingAboutThemselves: Boolean, entity: String)(implicit messages: Messages) = {
     val value = ValueViewModel(
@@ -202,8 +187,8 @@ object OnshoreLiabilitiesViewModel extends CurrentTaxYear {
     val totalAmount = BigDecimal(liability.unpaidTax) + penaltyAmount + BigDecimal(liability.interest)
 
     val rows = Seq(
-      row("disclosure.onshore.accountingPeriod", liability.periodEnd.format(dateFormatter)),
       row("disclosure.onshore.director.name", s"${liability.name}"),
+      row("disclosure.onshore.accountingPeriod", liability.periodEnd.format(dateFormatter)),
       poundRow("disclosure.onshore.director.overdrawn", s"${liability.overdrawn}"),
       poundRow("disclosure.onshore.tax", s"${liability.unpaidTax}"),
       poundRow("disclosure.onshore.interest", s"${liability.interest}"),

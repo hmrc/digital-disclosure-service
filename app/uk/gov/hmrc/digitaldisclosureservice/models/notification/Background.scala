@@ -16,6 +16,7 @@
 
 package models.notification
 
+import models.IncomeOrGainSource
 import play.api.libs.json.{Json, OFormat}
 
 final case class Background (
@@ -25,7 +26,9 @@ final case class Background (
   areYouRepresetingAnOrganisation: Option[Boolean] = None,
   organisationName: Option[String] = None,
   offshoreLiabilities: Option[Boolean] = None,
-  onshoreLiabilities: Option[Boolean] = None  
+  onshoreLiabilities: Option[Boolean] = None, 
+  incomeSource: Option[Set[IncomeOrGainSource]] = None,
+  otherIncomeSource: Option[String] = None
 )
 
 object Background {

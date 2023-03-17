@@ -31,7 +31,7 @@ import scala.concurrent.Future
 import play.api.libs.json.Json
 import models.{Metadata, Notification}
 import models.notification._
-import services.{TestSubmissionService, DMSSubmissionService}
+import services.DMSSubmissionService
 import models.submission.SubmissionResponse
 import play.api.i18n.DefaultMessagesApi
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -47,12 +47,11 @@ class NotificationSubmissionControllerSpec extends AnyWordSpec with Matchers wit
     Mockito.reset(mockSubmissionService)
   }
 
-  val mockTestService = mock[TestSubmissionService]
   val mockSubmissionService = mock[DMSSubmissionService]
   val mockStubBehaviour = mock[StubBehaviour]
   val expectedPredicate = Predicate.Permission(Resource(ResourceType("digital-disclosure-service"), ResourceLocation("submit")), IAAction("WRITE"))
   when(mockStubBehaviour.stubAuth(Some(expectedPredicate), Retrieval.EmptyRetrieval)).thenReturn(Future.unit)
-  private val controller = new NotificationSubmissionController(new DefaultMessagesApi(), mockSubmissionService, mockTestService, BackendAuthComponentsStub(mockStubBehaviour), Helpers.stubControllerComponents())
+  private val controller = new NotificationSubmissionController(new DefaultMessagesApi(), mockSubmissionService, BackendAuthComponentsStub(mockStubBehaviour), Helpers.stubControllerComponents())
 
   val instant = LocalDateTime.of(2022, 1, 1, 0, 0, 0).toInstant(ZoneOffset.UTC)
   val testNotification = Notification("123", "123", instant, Metadata(), PersonalDetails(Background(), AboutYou()))

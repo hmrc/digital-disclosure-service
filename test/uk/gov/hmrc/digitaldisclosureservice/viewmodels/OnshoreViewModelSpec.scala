@@ -68,8 +68,9 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
     disregardedCDF = Some(true),
     taxYearLiabilities = Some(Map("2012" -> OnshoreTaxYearWithLiabilities(OnshoreYearStarting(2012), liabilities))),
     lettingDeductions = Some(Map("2012" -> BigInt(123))),
-    incomeSource = Some(Set(IncomeOrGainSource.Dividends, IncomeOrGainSource.Interest)),
-    otherIncomeSource = Some("Other income source")
+    memberOfLandlordAssociations = Some(true),
+    landlordAssociations = Some("Some associations"),
+    howManyProperties = Some("7")
   )
 
 
@@ -80,7 +81,6 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
     "display populated rows when they are the individual" in {
 
       val expectedBehaviour = messages(s"whyAreYouMakingThisDisclosure.you.didNotNotifyHasExcuse") + "<br/><br/>" + messages(s"whyAreYouMakingThisDisclosure.you.inaccurateReturnWithCare")
-      val expectedSource = messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.dividends") + "<br/><br/>" + messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.interest") + "<br/><br/>" + "Other income source"
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.offshore.reason", ValueViewModel(HtmlContent(expectedBehaviour))),
         SummaryListRowViewModel("disclosure.offshore.reasonableExcuse", ValueViewModel(HtmlContent("Some excuse"))),
@@ -95,14 +95,16 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
         SummaryListRowViewModel(getYearKey(Behaviour.ReasonableExcuse), ValueViewModel(HtmlContent("Some liabilities - reasonable"))),
         SummaryListRowViewModel(getYearKey(Behaviour.Careless), ValueViewModel(HtmlContent("Some liabilities - careless"))),
         SummaryListRowViewModel(getYearKey(Behaviour.Deliberate), ValueViewModel(HtmlContent("Some liabilities - deliberate"))),
-        SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent(expectedSource))),
+        SummaryListRowViewModel("disclosure.property.landlord", ValueViewModel(HtmlContent(messages("service.yes")))),
+        SummaryListRowViewModel("disclosure.property.associationMembership", ValueViewModel(HtmlContent("Some associations"))),
+        SummaryListRowViewModel("disclosure.property.numberOfProperties", ValueViewModel(HtmlContent("7")))
       ))
       OnshoreLiabilitiesViewModel.primarySummaryList(completeOnshoreLiabilities, true, Individual.toString) shouldEqual expected
     }
 
     "display populated rows when they are not the individual" in {
       val expectedBehaviour = messages(s"whyAreYouMakingThisDisclosure.individual.didNotNotifyHasExcuse") + "<br/><br/>" + messages(s"whyAreYouMakingThisDisclosure.individual.inaccurateReturnWithCare")
-      val expectedSource = messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.dividends") + "<br/><br/>" + messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.interest") + "<br/><br/>" + "Other income source"
+      
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.offshore.reason", ValueViewModel(HtmlContent(expectedBehaviour))),
         SummaryListRowViewModel("disclosure.offshore.reasonableExcuse", ValueViewModel(HtmlContent("Some excuse"))),
@@ -117,14 +119,16 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
         SummaryListRowViewModel(getYearKey(Behaviour.ReasonableExcuse), ValueViewModel(HtmlContent("Some liabilities - reasonable"))),
         SummaryListRowViewModel(getYearKey(Behaviour.Careless), ValueViewModel(HtmlContent("Some liabilities - careless"))),
         SummaryListRowViewModel(getYearKey(Behaviour.Deliberate), ValueViewModel(HtmlContent("Some liabilities - deliberate"))),
-        SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent(expectedSource))),
+        SummaryListRowViewModel("disclosure.property.landlord", ValueViewModel(HtmlContent(messages("service.yes")))),
+        SummaryListRowViewModel("disclosure.property.associationMembership", ValueViewModel(HtmlContent("Some associations"))),
+        SummaryListRowViewModel("disclosure.property.numberOfProperties", ValueViewModel(HtmlContent("7")))
       ))
       OnshoreLiabilitiesViewModel.primarySummaryList(completeOnshoreLiabilities, false, Individual.toString) shouldEqual expected
     }
 
     "display an empty list when nothing is populated" in {
       val offshoreLiabilities = OnshoreLiabilities()
-      val expected = SummaryListViewModel(Seq(SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))))
+      val expected = SummaryListViewModel(Seq())
       OnshoreLiabilitiesViewModel.primarySummaryList(offshoreLiabilities, true, Individual.toString) shouldEqual expected
     }
 
@@ -268,8 +272,8 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
       )
 
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("disclosure.onshore.accountingPeriod", ValueViewModel(HtmlContent("23 August 2022"))),
         SummaryListRowViewModel("disclosure.onshore.director.name", ValueViewModel(HtmlContent("Director name"))),
+        SummaryListRowViewModel("disclosure.onshore.accountingPeriod", ValueViewModel(HtmlContent("23 August 2022"))),
         SummaryListRowViewModel("disclosure.onshore.director.overdrawn", ValueViewModel(HtmlContent("£11111"))),
         SummaryListRowViewModel("disclosure.onshore.tax", ValueViewModel(HtmlContent("£22222"))),
         SummaryListRowViewModel("disclosure.onshore.interest", ValueViewModel(HtmlContent("£33333"))),

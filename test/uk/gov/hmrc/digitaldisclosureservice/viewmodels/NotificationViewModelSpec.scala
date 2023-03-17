@@ -29,6 +29,7 @@ import models.address._
 import models.address.Address._
 import models.notification._
 import utils.BaseSpec
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 
 class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with SummaryListFluency {
 
@@ -61,13 +62,14 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
         letterReferenceNumber= Some("Some letter reference"),
         disclosureEntity = Some(DisclosureEntity(Individual, Some(true))),
         offshoreLiabilities = Some(false),
-        onshoreLiabilities = Some (true)
+        onshoreLiabilities = Some(true)
       )
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.metadata.caseRef", ValueViewModel(messages("Some letter reference"))),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
         SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.yes"))),
-        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel(messages("notification.background.onshore")))
+        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel(messages("notification.background.onshore"))),
+        SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))
       ))
       NotificationViewModel.backgroundList(background) shouldEqual expected
     }
@@ -83,7 +85,8 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
         SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
         SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.yes"))),
-        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel(messages("notification.background.offshore")))
+        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel(messages("notification.background.offshore"))),
+        SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))
       ))
       NotificationViewModel.backgroundList(background) shouldEqual expected
     }
@@ -99,7 +102,8 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
         SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
         SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.yes"))),
-        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel(messages("notification.background.both")))
+        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel(messages("notification.background.both"))),
+        SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))
       ))
       NotificationViewModel.backgroundList(background) shouldEqual expected
     }
@@ -109,7 +113,8 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
+        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-")),
+        SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))
       ))
       NotificationViewModel.backgroundList(background) shouldEqual expected
     }
@@ -120,7 +125,8 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
         SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Company"))),
         SummaryListRowViewModel("notification.background.areYouTheCompany", ValueViewModel(messages("service.yes"))),
-        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
+        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-")),
+        SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))
       ))
       NotificationViewModel.backgroundList(background) shouldEqual expected
     }
@@ -131,7 +137,8 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
         SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.LLP"))),
         SummaryListRowViewModel("notification.background.areYouTheLLP", ValueViewModel(messages("service.yes"))),
-        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
+        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-")),
+        SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))
       ))
       NotificationViewModel.backgroundList(background) shouldEqual expected
     }
@@ -142,7 +149,8 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
         SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Trust"))),
         SummaryListRowViewModel("notification.background.areYouTheTrust", ValueViewModel(messages("service.yes"))),
-        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
+        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-")),
+        SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))
       ))
       NotificationViewModel.backgroundList(background) shouldEqual expected
     }
@@ -154,19 +162,23 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
         SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.background.organisationName", ValueViewModel("Some organisation")),
-        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
+        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-")),
+        SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))
       ))
       NotificationViewModel.backgroundList(background) shouldEqual expected
     }
 
     "return organisation information where it's populated but set to false" in {
-      val background = Background (None, None, Some(DisclosureEntity(Individual, Some(false))), Some(false), None)
+      val sourceSet: Set[IncomeOrGainSource] = Set(IncomeOrGainSource.Dividends, IncomeOrGainSource.Interest)
+      val background = Background (None, None, Some(DisclosureEntity(Individual, Some(false))), Some(false), None, None, None, Some(sourceSet), Some("Other income source"))
+      val expectedSource = messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.dividends") + "<br/><br/>" + messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.interest") + "<br/><br/>" + "Other income source"
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
         SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.background.areYouRepresetingAnOrganisation", ValueViewModel(messages("service.no"))),
-        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-"))
+        SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-")),
+        SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent(expectedSource)))
       ))
       NotificationViewModel.backgroundList(background) shouldEqual expected
     }

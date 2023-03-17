@@ -46,7 +46,7 @@ notification.metadata.submissionTime = Notification sent on
 #===================================================
 #  Disclosure Metadata
 #===================================================
-disclosure.metadata.reference = Disclosure reference number
+disclosure.metadata.reference = Disclosure submission number
 disclosure.metadata.caseRef = Case reference
 disclosure.metadata.submissionTime = Disclosure submitted on
 
@@ -253,7 +253,7 @@ disclosure.onshore.letting.heading = Letting property {0}
 disclosure.property.address = Property address
 disclosure.property.firstLet = When was the property first let out?
 disclosure.property.stoppedLet = Has the property stopped being let out?
-disclosure.property.stoppedLetDate = When the property was stopped being let out
+disclosure.property.stoppedLetDate = When the property stopped being let out
 disclosure.property.happenedTo = What has happened to the property since it stopped being let out?
 disclosure.property.furnished = Was the property furnished?
 disclosure.property.fhl = Did property meet the qualifying criteria to be treated as a FHL?

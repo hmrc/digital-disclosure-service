@@ -64,8 +64,6 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
     taxYearLiabilities = Some(Map("2012" -> TaxYearWithLiabilities(TaxYearStarting(2012), liabilities))),
     taxYearForeignTaxDeductions = Some(Map("2012" -> BigInt(123))),
     countryOfYourOffshoreLiability = Some(Map("GBR" -> CountryOfYourOffshoreLiability("GBR", "United Kingdom"))),
-    incomeSource = Some(Set(WhereDidTheUndeclaredIncomeOrGainIncluded.Dividends, WhereDidTheUndeclaredIncomeOrGainIncluded.Interest)),
-    otherIncomeSource = Some("Other income source"),
     legalInterpretation = Some(Set(YourLegalInterpretation.AnotherIssue, YourLegalInterpretation.YourDomicileStatus)),
     otherInterpretation = Some("Some interpretation"),
     notIncludedDueToInterpretation = Some(HowMuchTaxHasNotBeenIncluded.TenThousandOrLess),
@@ -79,7 +77,6 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
     "display populated rows when they are the individual" in {
 
       val expectedBehaviour = messages(s"whyAreYouMakingThisDisclosure.you.didNotNotifyHasExcuse") + "<br/><br/>" + messages(s"whyAreYouMakingThisDisclosure.you.inaccurateReturnWithCare")
-      val expectedSource = messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.dividends") + "<br/><br/>" + messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.interest") + "<br/><br/>" + "Other income source"
       val expectedLegal = messages(s"yourLegalInterpretation.anotherIssue") + ",<br/><br/>" + messages(s"yourLegalInterpretation.yourDomicileStatus")
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.offshore.reason", ValueViewModel(HtmlContent(expectedBehaviour))),
@@ -95,7 +92,6 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
         SummaryListRowViewModel(getYearKey(Behaviour.ReasonableExcuse), ValueViewModel(HtmlContent("Some liabilities - reasonable"))),
         SummaryListRowViewModel(getYearKey(Behaviour.Careless), ValueViewModel(HtmlContent("Some liabilities - careless"))),
         SummaryListRowViewModel(getYearKey(Behaviour.Deliberate), ValueViewModel(HtmlContent("Some liabilities - deliberate"))),
-        SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent(expectedSource))),
         SummaryListRowViewModel("disclosure.offshore.legal", ValueViewModel(HtmlContent(expectedLegal))),
         SummaryListRowViewModel("disclosure.offshore.legal.other", ValueViewModel(HtmlContent("Some interpretation"))),
         SummaryListRowViewModel("disclosure.offshore.notInc", ValueViewModel(HtmlContent(messages(s"howMuchTaxHasNotBeenIncluded.tenThousandOrLess")))),
@@ -106,7 +102,6 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
 
     "display populated rows when they are not the individual" in {
       val expectedBehaviour = messages(s"whyAreYouMakingThisDisclosure.individual.didNotNotifyHasExcuse") + "<br/><br/>" + messages(s"whyAreYouMakingThisDisclosure.individual.inaccurateReturnWithCare")
-      val expectedSource = messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.dividends") + "<br/><br/>" + messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.interest") + "<br/><br/>" + "Other income source"
       val expectedLegal = messages(s"yourLegalInterpretation.anotherIssue") + ",<br/><br/>" + messages(s"yourLegalInterpretation.yourDomicileStatus")
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.offshore.reason", ValueViewModel(HtmlContent(expectedBehaviour))),
@@ -122,7 +117,6 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
         SummaryListRowViewModel(getYearKey(Behaviour.ReasonableExcuse), ValueViewModel(HtmlContent("Some liabilities - reasonable"))),
         SummaryListRowViewModel(getYearKey(Behaviour.Careless), ValueViewModel(HtmlContent("Some liabilities - careless"))),
         SummaryListRowViewModel(getYearKey(Behaviour.Deliberate), ValueViewModel(HtmlContent("Some liabilities - deliberate"))),
-        SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent(expectedSource))),
         SummaryListRowViewModel("disclosure.offshore.legal", ValueViewModel(HtmlContent(expectedLegal))),
         SummaryListRowViewModel("disclosure.offshore.legal.other", ValueViewModel(HtmlContent("Some interpretation"))),
         SummaryListRowViewModel("disclosure.offshore.notInc", ValueViewModel(HtmlContent(messages(s"howMuchTaxHasNotBeenIncluded.tenThousandOrLess")))),
@@ -133,7 +127,7 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
 
     "display an empty list when nothing is populated" in {
       val offshoreLiabilities = OffshoreLiabilities()
-      val expected = SummaryListViewModel(Seq(SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))))
+      val expected = SummaryListViewModel(Seq())
       OffshoreLiabilitiesViewModel.primarySummaryList(offshoreLiabilities, true, Individual.toString) shouldEqual expected
     }
 

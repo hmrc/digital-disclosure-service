@@ -21,7 +21,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.ExecutionContext
 import play.api.libs.json.{Json, JsValue}
 import models.FullDisclosure
-import services.{TestSubmissionService, DMSSubmissionService}
+import services.DMSSubmissionService
 import play.api.i18n.{I18nSupport, MessagesApi}
 import models.submission.SubmissionResponse
 import uk.gov.hmrc.internalauth.client._
@@ -31,7 +31,6 @@ import controllers.Permissions.internalAuthPermission
 class DisclosureSubmissionController @Inject()(
     override val messagesApi: MessagesApi,
     submissionService: DMSSubmissionService,
-    testService: TestSubmissionService,
     val auth: BackendAuthComponents,
     cc: ControllerComponents
   )(implicit ec: ExecutionContext) extends BaseController(cc) with I18nSupport {
