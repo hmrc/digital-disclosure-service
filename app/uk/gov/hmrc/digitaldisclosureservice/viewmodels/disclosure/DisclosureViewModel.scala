@@ -193,8 +193,8 @@ object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
         Some(poundRow("disclosure.totals.tax", s"${totalAmounts.unpaidTaxTotal}")),
         Some(poundRow("disclosure.totals.niContributions", s"${totalAmounts.niContributionsTotal}")),
         Some(poundRow("disclosure.totals.interest", s"${totalAmounts.interestTotal}")),
-        Some(poundRow("disclosure.totals.penalty", f"${totalAmounts.penaltyAmountTotal%1.2f}")),
-        Some(poundRow("disclosure.totals.amount", f"${totalAmounts.amountDueTotal%1.2f}")),
+        Some(poundRow("disclosure.totals.penalty", f"${totalAmounts.penaltyAmountTotal}%1.2f")),
+        Some(poundRow("disclosure.totals.amount", f"${totalAmounts.amountDueTotal}%1.2f")),
         offerAmount.map(amount => poundRow("disclosure.totals.offer", s"$amount"))
       ).flatten
     )

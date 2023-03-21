@@ -144,9 +144,9 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
       poundRow("disclosure.offshore.tax", s"${liabilities.unpaidTax}"),
       poundRow("disclosure.offshore.interest", s"${liabilities.interest}"),
       row("disclosure.offshore.penaltyRate", s"${liabilities.penaltyRate}%"),
-      poundRow("disclosure.offshore.penalty", s"${penaltyAmount}"),
+      poundRow("disclosure.offshore.penalty", f"${penaltyAmount}%1.2f"),
       row("disclosure.offshore.penaltyReason", liabilities.penaltyRateReason)
-    ) ++ foreignTaxCreditRow ++ Seq(poundRow("disclosure.offshore.total", s"${yearTotal}"))
+    ) ++ foreignTaxCreditRow ++ Seq(poundRow("disclosure.offshore.total", f"${yearTotal}%1.2f"))
 
     SummaryListViewModel(rows)
   }
