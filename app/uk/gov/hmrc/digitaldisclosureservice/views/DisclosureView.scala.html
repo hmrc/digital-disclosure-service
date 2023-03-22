@@ -27,17 +27,35 @@
 @(viewModel: DisclosureViewModel)(implicit messages: Messages)
 
 <!DOCTYPE html>
-<html lang="${messages.lang.code}">
+<html lang="en">
 
     <head>
         <title>@messages("service.name")</title>
-        <meta name="Lang" content="${messages.lang.code}"/>
-        <meta name="subject" content="DDS Notification"/>
+        <meta name="Lang" content="en"/>
+        <meta name="subject" content="DDS Disclosure"/>
         <meta name="about" content="HMRC PDFA Document"/>
-
+        <meta name="author" content="HMRC"/>
+        <meta name="description" content="Disclosure of unpaid tax for previous tax years"/>
+        
         <!-- <link href="@uk.gov.hmrc.hmrcfrontend.controllers.routes.Assets.at("hmrc-frontend-5.11.1.min.css")" media="all" rel="stylesheet" type="text/css"/> -->
 
         @styles()
+
+        <bookmarks>
+            <bookmark name="@messages("disclosure.heading.metadata")" href="#metadata"/>
+            <bookmark name="@messages("disclosure.heading.background")" href="#background"/>
+            @viewModel.aboutTheIndividualList.map{_ => <bookmark name="@messages("disclosure.heading.aboutTheIndividual")" href="#aboutTheIndividual"/>}
+            @viewModel.aboutTheCompanyList.map{_ => <bookmark name="@messages("disclosure.heading.aboutTheCompany")" href="#aboutTheCompany"/>}
+            @viewModel.aboutTheTrustList.map{_ => <bookmark name="@messages("disclosure.heading.aboutTheTrust")" href="#aboutTheTrust"/>}
+            @viewModel.aboutTheLLPList.map{_ => <bookmark name="@messages("disclosure.heading.aboutTheLLP")" href="#aboutTheLLP"/>}
+            @viewModel.aboutTheEstateList.map{_ => <bookmark name="@messages("disclosure.heading.aboutTheEstate")" href="#aboutTheEstate"/>}
+            <bookmark name="@messages(viewModel.aboutYouHeading)" href="#aboutYou"/>
+            @viewModel.onshoreLiabilities.map{_ => <bookmark name="@messages("disclosure.onshore.heading")" href="#onshore"/>}
+            @viewModel.onshoreLiabilities.map{_ => <bookmark name="@messages("disclosure.offshore.heading")" href="#offshore"/>}  
+            <bookmark name="@messages("disclosure.totals.heading")" href="#totals"/>
+            <bookmark name="@messages("disclosure.otherLiabilities.heading")" href="#otherLiabilities"/>
+            <bookmark name="@messages("disclosure.additional.heading")" href="#additional"/>
+        </bookmarks>
 
     </head>
 
@@ -62,54 +80,49 @@
 
         <h1 style="padding-top: 1em;">@messages("disclosure.h1")</h1>
 
-        @summarySection("disclosure.heading.metadata", viewModel.metadataList)
-        @summarySection("notification.heading.background", viewModel.backgroundList)
+        @summarySection("disclosure.heading.metadata", viewModel.metadataList, "metadata")
+        @summarySection("notification.heading.background", viewModel.backgroundList, "background")
 
-        @viewModel.aboutTheIndividualList.map(list => summarySection("disclosure.heading.aboutTheIndividual", list))
-        @viewModel.aboutTheCompanyList.map(list => summarySection("disclosure.heading.aboutTheCompany", list))
-        @viewModel.aboutTheTrustList.map(list => summarySection("disclosure.heading.aboutTheTrust", list))
-        @viewModel.aboutTheLLPList.map(list => summarySection("disclosure.heading.aboutTheLLP", list))
-        @viewModel.aboutTheEstateList.map(list => summarySection("disclosure.heading.aboutTheEstate", list))
+        @viewModel.aboutTheIndividualList.map(list => summarySection("disclosure.heading.aboutTheIndividual", list, "aboutTheIndividual"))
+        @viewModel.aboutTheCompanyList.map(list => summarySection("disclosure.heading.aboutTheCompany", list, "aboutTheCompany"))
+        @viewModel.aboutTheTrustList.map(list => summarySection("disclosure.heading.aboutTheTrust", list, "aboutTheTrust"))
+        @viewModel.aboutTheLLPList.map(list => summarySection("disclosure.heading.aboutTheLLP", list, "aboutTheLLP"))
+        @viewModel.aboutTheEstateList.map(list => summarySection("disclosure.heading.aboutTheEstate", list, "aboutTheEstate"))
 
-        @summarySection(viewModel.aboutYouHeading, viewModel.aboutYouList)
+        @summarySection(viewModel.aboutYouHeading, viewModel.aboutYouList, "aboutYou")
 
         @viewModel.onshoreLiabilities.map{ lists => 
-            @summarySection("disclosure.onshore.heading", lists.summaryList)
+            @summarySection("disclosure.onshore.heading", lists.summaryList, "onshore")
             @lists.taxYearLists.map { case (year, list) =>
-                <h2 class="govuk-heading-m">@messages("disclosure.onshore.year", s"${year+1}")</h2>
-                @govukSummaryList(list)
+                @summarySection(messages("disclosure.onshore.year", s"${year+1}"), list, s"onshore-$year")
             }
 
             @lists.directorLoanLists.map { case (index, list) =>
-                <h2 class="govuk-heading-m">@messages("disclosure.onshore.director.heading", s"${index}")</h2>
-                @govukSummaryList(list)
+                @summarySection(messages("disclosure.onshore.director.heading", s"${index}"), list, s"dl-$index")
             }
 
             @lists.corporationTaxLists.map { case (index, list) =>
-                <h2 class="govuk-heading-m">@messages("disclosure.onshore.ct.heading", s"${index}")</h2>
-                @govukSummaryList(list)
+                @summarySection(messages("disclosure.onshore.ct.heading", s"${index}"), list, s"ct-$index")
             }
         }
 
         @viewModel.offshoreLiabilities.map{ lists => 
-            @summarySection("disclosure.offshore.heading", lists.summaryList)
+            @summarySection("disclosure.offshore.heading", lists.summaryList, "offshore")
             @lists.taxYearLists.map { case (year, list) =>
-                <h2 class="govuk-heading-m">@messages("disclosure.offshore.year", s"${year+1}")</h2>
-                @govukSummaryList(list)
+                @summarySection(messages("disclosure.offshore.year", s"${year+1}"), list, s"offshore-$year")
             }
         }
 
-        @summarySection("disclosure.totals.heading", viewModel.totalAmountsList)
+        @summarySection("disclosure.totals.heading", viewModel.totalAmountsList, "totals")
 
         @viewModel.onshoreLiabilities.map{ lists => 
             @lists.lettingPropertyLists.map { case (index, list) =>
-                <h2 class="govuk-heading-m">@messages("disclosure.onshore.letting.heading", s"${index}")</h2>
-                @govukSummaryList(list)
+                @summarySection(messages("disclosure.onshore.letting.heading", s"${index}"), list, s"property-$index")
             }
         }
 
-        @summarySection("disclosure.otherLiabilities.heading", viewModel.otherLiabilitiesList)
-        @summarySection("disclosure.additional.heading", viewModel.additionalList)
+        @summarySection("disclosure.otherLiabilities.heading", viewModel.otherLiabilitiesList, "otherLiabilities")
+        @summarySection("disclosure.additional.heading", viewModel.additionalList, "additional")
         
     </body>
 </html>

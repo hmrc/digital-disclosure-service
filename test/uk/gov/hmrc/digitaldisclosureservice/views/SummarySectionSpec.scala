@@ -35,7 +35,7 @@ class SummarySectionSpec extends AnyWordSpec with Matchers with BaseSpec with Su
   implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
   implicit val sut = app.injector.instanceOf[summarySection]
 
-  private def createView(headingKey: String, list: SummaryList): Html = sut.render(headingKey, list, messages)
+  private def createView(headingKey: String, list: SummaryList, id: String = "id"): Html = sut.render(headingKey, list, id, messages)
 
   val summaryList = SummaryListViewModel(rows = Nil)
   
@@ -51,7 +51,7 @@ class SummarySectionSpec extends AnyWordSpec with Matchers with BaseSpec with Su
 
   "f" should {
     "render the page" in {
-      sut.f("key", summaryList)(messages) shouldEqual createView("key", summaryList)
+      sut.f("key", summaryList, "id")(messages) shouldEqual createView("key", summaryList)
     }
   }
 

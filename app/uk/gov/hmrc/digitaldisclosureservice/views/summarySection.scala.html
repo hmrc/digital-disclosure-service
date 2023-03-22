@@ -18,7 +18,10 @@
     govukSummaryList: GovukSummaryList
 )
 
-@(headingKey: String, list: SummaryList)(implicit messages: Messages)
+@(headingKey: String, list: SummaryList, id: String = "")(implicit messages: Messages)
 
-<h2 class="govuk-heading-l">@messages(headingKey)</h2>
-@govukSummaryList(list)
+<h2 class="govuk-heading-l" id="@id">@messages(headingKey)</h2>
+
+<div class="govuk-summary-list">
+    @list.rows.map{row => <div class="govuk-summary-list__row"><p class="govuk-summary-list__key">@row.key.content.asHtml</p><p class="govuk-summary-list__value">@row.value.content.asHtml</p></div>}
+</div>
