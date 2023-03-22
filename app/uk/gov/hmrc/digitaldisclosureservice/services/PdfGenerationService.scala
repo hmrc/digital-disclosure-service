@@ -32,7 +32,6 @@ trait PdfGenerationService {
       .useColorProfile(IOUtils.toByteArray(getClass.getResourceAsStream("/resources/sRGB-Color-Space-Profile.icm")))
       .useFont(new File(getClass.getResource("/resources/ArialMT.ttf").toURI), "arial")
       .usePdfUaAccessbility(true)
-      .usePdfAConformance(PdfRendererBuilder.PdfAConformance.PDFA_3_U)
       .withHtmlContent(html, "/")
       .useFastMode
       .useSVGDrawer(new BatikSVGDrawer())

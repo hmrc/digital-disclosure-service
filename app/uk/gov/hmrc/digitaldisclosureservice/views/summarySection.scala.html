@@ -21,4 +21,7 @@
 @(headingKey: String, list: SummaryList, id: String = "")(implicit messages: Messages)
 
 <h2 class="govuk-heading-l" id="@id">@messages(headingKey)</h2>
-@govukSummaryList(list)
+
+<div class="govuk-summary-list">
+    @list.rows.map{row => <div class="govuk-summary-list__row"><div class="govuk-summary-list__key">@row.key.content.asHtml</div><div class="govuk-summary-list__value">@row.value.content.asHtml</div></div>}
+</div>

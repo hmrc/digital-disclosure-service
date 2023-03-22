@@ -94,26 +94,22 @@
         @viewModel.onshoreLiabilities.map{ lists => 
             @summarySection("disclosure.onshore.heading", lists.summaryList, "onshore")
             @lists.taxYearLists.map { case (year, list) =>
-                <h2 class="govuk-heading-m">@messages("disclosure.onshore.year", s"${year+1}")</h2>
-                @govukSummaryList(list)
+                @summarySection(messages("disclosure.onshore.year", s"${year+1}"), list, s"onshore-$year")
             }
 
             @lists.directorLoanLists.map { case (index, list) =>
-                <h2 class="govuk-heading-m">@messages("disclosure.onshore.director.heading", s"${index}")</h2>
-                @govukSummaryList(list)
+                @summarySection(messages("disclosure.onshore.director.heading", s"${index}"), list, s"dl-$index")
             }
 
             @lists.corporationTaxLists.map { case (index, list) =>
-                <h2 class="govuk-heading-m">@messages("disclosure.onshore.ct.heading", s"${index}")</h2>
-                @govukSummaryList(list)
+                @summarySection(messages("disclosure.onshore.ct.heading", s"${index}"), list, s"ct-$index")
             }
         }
 
         @viewModel.offshoreLiabilities.map{ lists => 
             @summarySection("disclosure.offshore.heading", lists.summaryList, "offshore")
             @lists.taxYearLists.map { case (year, list) =>
-                <h2 class="govuk-heading-m">@messages("disclosure.offshore.year", s"${year+1}")</h2>
-                @govukSummaryList(list)
+                @summarySection(messages("disclosure.offshore.year", s"${year+1}"), list, s"offshore-$year")
             }
         }
 
@@ -121,8 +117,7 @@
 
         @viewModel.onshoreLiabilities.map{ lists => 
             @lists.lettingPropertyLists.map { case (index, list) =>
-                <h2 class="govuk-heading-m">@messages("disclosure.onshore.letting.heading", s"${index}")</h2>
-                @govukSummaryList(list)
+                @summarySection(messages("disclosure.onshore.letting.heading", s"${index}"), list, s"property-$index")
             }
         }
 
