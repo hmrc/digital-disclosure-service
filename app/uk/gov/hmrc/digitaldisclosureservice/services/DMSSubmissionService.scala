@@ -20,9 +20,7 @@ import play.api.i18n.Messages
 import com.google.inject.{ImplementedBy, Inject, Singleton}
 import models.Submission
 import connectors.DMSSubmissionConnector
-import services.SubmissionPdfService
 import models.submission.{SubmissionMetadata, SubmissionRequest, SubmissionResponse}
-import play.api.Logging
 
 import java.time.LocalDateTime
 import utils.MarkCalculator
