@@ -30,7 +30,7 @@ import utils.MarkCalculator
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class DMSSubmissionServiceImpl @Inject()(dmsConnector: DMSSubmissionConnector, pdfService: SubmissionPdfService, markCalculator: MarkCalculator) extends DMSSubmissionService with Logging {
+class DMSSubmissionServiceImpl @Inject()(dmsConnector: DMSSubmissionConnector, pdfService: SubmissionPdfService, markCalculator: MarkCalculator) extends DMSSubmissionService {
 
   def submit(submission: Submission)(implicit messages: Messages, ec: ExecutionContext): Future[SubmissionResponse] = {
 
@@ -42,13 +42,10 @@ class DMSSubmissionServiceImpl @Inject()(dmsConnector: DMSSubmissionConnector, p
       customerId = submission.customerId.map(_.id).getOrElse("NO-ID-FOUND"),
       submissionMark = submissionMark
     )
-    logger.error(s"===============>> $submissionMetadata" )
     val submissionRequest = SubmissionRequest(
       submissionReference = submission.metadata.reference.map(_.replace("-", "")),
       metadata = submissionMetadata
     )
-
-    logger.error(s"===============>>> $submissionRequest" )
 
     dmsConnector.submit(submissionRequest, generatedPdf.byteArray)
   

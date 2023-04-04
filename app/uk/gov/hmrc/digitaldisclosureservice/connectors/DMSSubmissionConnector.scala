@@ -44,8 +44,7 @@ class DMSSubmissionConnectorImpl @Inject() (
   configuration: Configuration
 )(implicit val ec: ExecutionContext, appConfig: AppConfig)
   extends DMSSubmissionConnector
-    with Retries
-    with Logging {
+    with Retries {
 
   private val service: Service = configuration.get[Service]("microservice.services.dms-submission")
   private val clientAuthToken = configuration.get[String]("internal-auth.token")
@@ -58,9 +57,6 @@ class DMSSubmissionConnectorImpl @Inject() (
   def submit(submissionRequest: SubmissionRequest, pdf: Array[Byte]): Future[SubmissionResponse] = {
 
     val multipartFormData = constructMultipartFormData(submissionRequest, pdf)
-
-    logger.error(s"===============>>>>> $multipartFormData" )
-
 
     retry {
       wsClient.url(s"${service.baseUrl}/dms-submission/submit")
@@ -77,7 +73,6 @@ class DMSSubmissionConnectorImpl @Inject() (
   }
   
   def handleResponse[A](response: WSResponse)(implicit reads: Reads[A]): Future[A] = {
-    logger.error(s"===============>>>>> ${response.body}" )
     response.json.validate[A] match {
       case JsSuccess(a, _) => Future.successful(a)
       case JsError(e) => Future.failed(DMSSubmissionConnector.UnexpectedResponseException(response.status, response.body))
