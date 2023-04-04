@@ -18,7 +18,7 @@ package connectors
 
 import akka.actor.ActorSystem
 import config.Service
-import play.api.Configuration
+import play.api.{Configuration, Logging}
 import play.api.http.Status._
 import play.api.libs.json.{JsError, JsSuccess, Reads}
 import play.api.libs.ws._

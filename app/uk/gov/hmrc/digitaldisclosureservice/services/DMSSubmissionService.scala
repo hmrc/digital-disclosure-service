@@ -17,14 +17,17 @@
 package services
 
 import play.api.i18n.Messages
-import com.google.inject.{Inject, Singleton, ImplementedBy}
+import com.google.inject.{ImplementedBy, Inject, Singleton}
 import models.Submission
 import connectors.DMSSubmissionConnector
 import services.SubmissionPdfService
 import models.submission.{SubmissionMetadata, SubmissionRequest, SubmissionResponse}
+import play.api.Logging
+
 import java.time.LocalDateTime
 import utils.MarkCalculator
-import scala.concurrent.{Future, ExecutionContext}
+
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class DMSSubmissionServiceImpl @Inject()(dmsConnector: DMSSubmissionConnector, pdfService: SubmissionPdfService, markCalculator: MarkCalculator) extends DMSSubmissionService {
@@ -36,7 +39,7 @@ class DMSSubmissionServiceImpl @Inject()(dmsConnector: DMSSubmissionConnector, p
 
     val submissionMetadata = SubmissionMetadata(
       timeOfReceipt = submission.metadata.submissionTime.getOrElse(LocalDateTime.now()),
-      customerId = submission.customerId.map(_.id).getOrElse(""),
+      customerId = submission.customerId.map(_.id).getOrElse("NO-ID-FOUND"),
       submissionMark = submissionMark
     )
     val submissionRequest = SubmissionRequest(
