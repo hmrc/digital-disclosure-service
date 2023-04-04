@@ -18,7 +18,7 @@ package connectors
 
 import akka.actor.ActorSystem
 import config.Service
-import play.api.Configuration
+import play.api.{Configuration, Logging}
 import play.api.http.Status._
 import play.api.libs.json.{JsError, JsSuccess, Reads}
 import play.api.libs.ws._
@@ -44,7 +44,8 @@ class DMSSubmissionConnectorImpl @Inject() (
   configuration: Configuration
 )(implicit val ec: ExecutionContext, appConfig: AppConfig)
   extends DMSSubmissionConnector
-    with Retries {
+    with Retries
+    with Logging {
 
   private val service: Service = configuration.get[Service]("microservice.services.dms-submission")
   private val clientAuthToken = configuration.get[String]("internal-auth.token")
@@ -57,6 +58,9 @@ class DMSSubmissionConnectorImpl @Inject() (
   def submit(submissionRequest: SubmissionRequest, pdf: Array[Byte]): Future[SubmissionResponse] = {
 
     val multipartFormData = constructMultipartFormData(submissionRequest, pdf)
+
+    logger.error(s"===============>>>>> $multipartFormData" )
+
 
     retry {
       wsClient.url(s"${service.baseUrl}/dms-submission/submit")
@@ -73,6 +77,7 @@ class DMSSubmissionConnectorImpl @Inject() (
   }
   
   def handleResponse[A](response: WSResponse)(implicit reads: Reads[A]): Future[A] = {
+    logger.error(s"===============>>>>> ${response.body}" )
     response.json.validate[A] match {
       case JsSuccess(a, _) => Future.successful(a)
       case JsError(e) => Future.failed(DMSSubmissionConnector.UnexpectedResponseException(response.status, response.body))
