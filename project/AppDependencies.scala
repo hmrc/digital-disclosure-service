@@ -23,7 +23,7 @@ object AppDependencies {
     "org.typelevel"            %%  "cats-core"                     % "2.8.0",
     "com.github.pathikrit"     %%  "better-files"                  % "3.9.1",
     "commons-codec"            %   "commons-codec"                 % "1.14",
-    "com.thoughtworks.xstream" %   "xstream"                       % "1.4.11.1",
+    "com.thoughtworks.xstream" %   "xstream"                       % "1.4.16",
     "uk.gov.hmrc.mongo"        %% "hmrc-mongo-play-28"             % "0.74.0",
     "uk.gov.hmrc"              %% "internal-auth-client-play-28"   % "1.3.0",
     "uk.gov.hmrc"              %% "tax-year"                       % "3.0.0"
