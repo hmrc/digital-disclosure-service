@@ -47,7 +47,7 @@ final case class DisclosureViewModel(
 
 object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
 
-  def apply(fullDisclosure: FullDisclosure)(implicit messages: Messages): DisclosureViewModel = {
+  def apply(fullDisclosure: FullDisclosure, caseflowDateFormat: Boolean)(implicit messages: Messages): DisclosureViewModel = {
 
     val isADisclosure = true
 
@@ -68,14 +68,14 @@ object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
     val totalAmounts = TotalAmounts(fullDisclosure)
 
     DisclosureViewModel(
-      metadataList(fullDisclosure.personalDetails.background, fullDisclosure.metadata, fullDisclosure.caseReference, fullDisclosure.offshoreLiabilities),
+      metadataList(fullDisclosure.personalDetails.background, fullDisclosure.metadata, fullDisclosure.caseReference, fullDisclosure.offshoreLiabilities, caseflowDateFormat),
       backgroundList(fullDisclosure.personalDetails.background),
-      fullDisclosure.personalDetails.aboutTheIndividual.map(aboutTheIndividualList),
+      fullDisclosure.personalDetails.aboutTheIndividual.map(aboutTheIndividual => aboutTheIndividualList(aboutTheIndividual, caseflowDateFormat)),
       fullDisclosure.personalDetails.aboutTheCompany.map(aboutTheCompanyList),
       fullDisclosure.personalDetails.aboutTheTrust.map(aboutTheTrustList),
       fullDisclosure.personalDetails.aboutTheLLP.map(aboutTheLLPList),
-      fullDisclosure.personalDetails.aboutTheEstate.map(aboutTheEstateList),
-      aboutYouList(fullDisclosure.personalDetails.aboutYou, fullDisclosure.personalDetails.background, fullDisclosure.disclosingAboutThemselves),
+      fullDisclosure.personalDetails.aboutTheEstate.map(aboutTheEstate => aboutTheEstateList(aboutTheEstate, caseflowDateFormat)),
+      aboutYouList(fullDisclosure.personalDetails.aboutYou, fullDisclosure.personalDetails.background, fullDisclosure.disclosingAboutThemselves, caseflowDateFormat),
       aboutYouHeading(fullDisclosure.personalDetails, isADisclosure),
       offshoreLiabilities,
       onshoreLiabilities,
@@ -91,10 +91,10 @@ object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
     row("disclosure.offshore.country", value)
   }
 
-  def metadataList(background: Background, metadata: Metadata, caseReference: CaseReference, offshore: OffshoreLiabilities)(implicit messages: Messages): SummaryList = {
+  def metadataList(background: Background, metadata: Metadata, caseReference: CaseReference, offshore: OffshoreLiabilities, caseflowDateFormat: Boolean)(implicit messages: Messages): SummaryList = {
     val rows = Seq(
       metadata.reference.map(ref => row(s"disclosure.metadata.reference", ref)),
-      metadata.submissionTime.map(time => row(s"disclosure.metadata.submissionTime", toPrettyDate(time))),
+      metadata.submissionTime.map(time => row(s"disclosure.metadata.submissionTime", toPrettyDate(time, caseflowDateFormat))),
       caseReference.whatIsTheCaseReference.map(caseRef => row("notification.metadata.caseRef", caseRef)),
       background.disclosureEntity.map(de => SummaryListRowViewModel(s"notification.background.areYouThe${de.entity.toString}", ValueViewModel(de.areYouTheEntity))),
       offshore.countryOfYourOffshoreLiability.map(countriesRow)

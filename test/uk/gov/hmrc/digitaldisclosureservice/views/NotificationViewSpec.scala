@@ -39,7 +39,7 @@ class NotificationViewSpec extends AnyWordSpec with Matchers with BaseSpec {
 
   private def createView(notification: NotificationViewModel): Html = sut.render(notification, messages)
   
-  val viewModel = NotificationViewModel(Notification("userId", "id", Instant.now(), Metadata(reference = Some("ref")), PersonalDetails(Background(), AboutYou())))
+  val viewModel = NotificationViewModel(Notification("userId", "id", Instant.now(), Metadata(reference = Some("ref")), PersonalDetails(Background(), AboutYou())), false)
   
   "NotificationView" should {
 

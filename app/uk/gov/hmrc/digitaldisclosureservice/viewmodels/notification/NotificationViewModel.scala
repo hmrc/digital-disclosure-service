@@ -39,29 +39,29 @@ final case class NotificationViewModel(
 
 object NotificationViewModel extends SummaryListFluency with SubmissionViewModel {
 
-  def apply(notification: Notification)(implicit messages: Messages): NotificationViewModel = {
+  def apply(notification: Notification, caseflowDateFormat: Boolean)(implicit messages: Messages): NotificationViewModel = {
 
     val isADisclosure = false
 
     NotificationViewModel(
-      metadataList(notification.metadata),
+      metadataList(notification.metadata, caseflowDateFormat),
       backgroundList(notification.personalDetails.background),
-      notification.personalDetails.aboutTheIndividual.map(aboutTheIndividualList),
+      notification.personalDetails.aboutTheIndividual.map(aboutTheIndividual => aboutTheIndividualList(aboutTheIndividual, caseflowDateFormat)),
       notification.personalDetails.aboutTheCompany.map(aboutTheCompanyList),
       notification.personalDetails.aboutTheTrust.map(aboutTheTrustList),
       notification.personalDetails.aboutTheLLP.map(aboutTheLLPList),
-      notification.personalDetails.aboutTheEstate.map(aboutTheEstateList),
-      aboutYouList(notification.personalDetails.aboutYou, notification.personalDetails.background, notification.disclosingAboutThemselves),
+      notification.personalDetails.aboutTheEstate.map(aboutTheEstate => aboutTheEstateList(aboutTheEstate, caseflowDateFormat)),
+      aboutYouList(notification.personalDetails.aboutYou, notification.personalDetails.background, notification.disclosingAboutThemselves, caseflowDateFormat),
       aboutYouHeading(notification.personalDetails, isADisclosure)
     )
 
   }
 
-  def metadataList(metadata: Metadata)(implicit messages: Messages): Option[SummaryList] = {
+  def metadataList(metadata: Metadata, caseflowDateFormat: Boolean)(implicit messages: Messages): Option[SummaryList] = {
     metadata.reference.map{ ref =>
       SummaryListViewModel(rows = Seq(
         SummaryListRowViewModel(s"notification.metadata.reference", ValueViewModel(ref)),
-        SummaryListRowViewModel(s"notification.metadata.submissionTime", ValueViewModel(metadata.submissionTime.map(toPrettyDate)))
+        SummaryListRowViewModel(s"notification.metadata.submissionTime", ValueViewModel(metadata.submissionTime.map(time => toPrettyDate(time, caseflowDateFormat))))
       ))
     }
   }

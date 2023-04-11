@@ -32,7 +32,7 @@ class DMSSubmissionServiceImpl @Inject()(dmsConnector: DMSSubmissionConnector, p
 
   def submit(submission: Submission)(implicit messages: Messages, ec: ExecutionContext): Future[SubmissionResponse] = {
 
-    val generatedPdf = pdfService.createPdf(submission)
+    val generatedPdf = pdfService.createPdf(submission, true)
     val submissionMark = markCalculator.getSfMark(submission.toXml)
 
     val submissionMetadata = SubmissionMetadata(
