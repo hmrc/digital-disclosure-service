@@ -61,7 +61,7 @@ object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
 
     val onshoreLiabilities = {
       val disclosingOnshore = fullDisclosure.personalDetails.background.onshoreLiabilities.getOrElse(false)
-      if (disclosingOnshore) fullDisclosure.onshoreLiabilities.map(l => OnshoreLiabilitiesViewModel(l, fullDisclosure.disclosingAboutThemselves, entity, fullDisclosure.offerAmount))
+      if (disclosingOnshore) fullDisclosure.onshoreLiabilities.map(l => OnshoreLiabilitiesViewModel(l, fullDisclosure.disclosingAboutThemselves, entity, fullDisclosure.offerAmount, caseflowDateFormat))
       else None
     }
 

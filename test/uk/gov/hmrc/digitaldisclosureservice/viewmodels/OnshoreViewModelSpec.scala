@@ -255,7 +255,7 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
         SummaryListRowViewModel("disclosure.onshore.penaltyReason", ValueViewModel(HtmlContent("Some reason"))),
         SummaryListRowViewModel("disclosure.onshore.ct.total", ValueViewModel(HtmlContent("£65332.68")))
       ))
-      OnshoreLiabilitiesViewModel.corporationTaxSummaryList(corporationTaxLiability) shouldEqual expected
+      OnshoreLiabilitiesViewModel.corporationTaxSummaryList(corporationTaxLiability, false) shouldEqual expected
     }
   }
 
@@ -282,7 +282,7 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
         SummaryListRowViewModel("disclosure.onshore.penaltyReason", ValueViewModel(HtmlContent("Some reason"))),
         SummaryListRowViewModel("disclosure.onshore.director.total", ValueViewModel(HtmlContent("£65332.68")))
       ))
-      OnshoreLiabilitiesViewModel.directorLoanSummaryList(directorLoanAccountLiabilities) shouldEqual expected
+      OnshoreLiabilitiesViewModel.directorLoanSummaryList(directorLoanAccountLiabilities, false) shouldEqual expected
     }
   }
 
@@ -322,7 +322,7 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
         SummaryListRowViewModel("disclosure.property.collectRent", ValueViewModel(HtmlContent(messages("service.no"))))
       ))
 
-      OnshoreLiabilitiesViewModel.lettingPropertySummaryList(property) shouldEqual expected
+      OnshoreLiabilitiesViewModel.lettingPropertySummaryList(property, false) shouldEqual expected
     }
   }
 
