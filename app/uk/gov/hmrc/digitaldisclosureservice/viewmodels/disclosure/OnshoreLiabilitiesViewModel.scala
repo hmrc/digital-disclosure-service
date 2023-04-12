@@ -48,7 +48,7 @@ object OnshoreLiabilitiesViewModel extends CurrentTaxYear {
 
   def getEarliestYearByBehaviour(behaviour: Behaviour): Int = {
     val yearsToGoBack = getNumberOfYearsForBehaviour(behaviour)
-    current.back(yearsToGoBack).startYear
+    current.back(yearsToGoBack+1).startYear
   }
 
   def getNumberOfYearsForBehaviour(behaviour: Behaviour): Int = behaviour match {

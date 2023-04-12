@@ -38,11 +38,11 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
   val DELIBERATE_YEARS = 19
   val REASONABLE_EXCUSE_LEGISLATION_START = 2015
   val CARELESS_LEGISLATION_START = 2013
-  val YEARS_TO_GO_BACK = 12
+  val YEARS_TO_GO_BACK = 13
 
   def getEarliestYearByBehaviour(behaviour: Behaviour): Int = {
     val yearsToGoBack = getNumberOfYearsForBehaviour(behaviour)
-    current.back(yearsToGoBack).startYear
+    current.back(yearsToGoBack+1).startYear
   }
 
   def getNumberOfYearsForBehaviour(behaviour: Behaviour): Int = behaviour match {
@@ -53,7 +53,7 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
 
   def getNumberOfYears(legislationStartYear: TaxYear): Int = {
     val earliestDate = List(current.back(YEARS_TO_GO_BACK).startYear, legislationStartYear.startYear).max
-    current.startYear - earliestDate
+    current.startYear - earliestDate - 1
   }
 
   def apply(offshoreLiabilities: OffshoreLiabilities, disclosingAboutThemselves: Boolean, entity: String, offerAmount: Option[BigInt])(implicit messages: Messages): OffshoreLiabilitiesViewModel = {
