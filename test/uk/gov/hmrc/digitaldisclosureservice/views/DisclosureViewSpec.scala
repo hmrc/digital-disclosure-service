@@ -45,7 +45,7 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
 
     "neither onshore or offshore are populated" should {
 
-      val viewModel = DisclosureViewModel(FullDisclosure("userId", "id", Instant.now(), Metadata(reference = Some("ref")), CaseReference(), PersonalDetails(Background(), AboutYou()), None, OffshoreLiabilities(), OtherLiabilities(), ReasonForDisclosingNow()))
+      val viewModel = DisclosureViewModel(FullDisclosure("userId", "id", Instant.now(), Metadata(reference = Some("ref")), CaseReference(), PersonalDetails(Background(), AboutYou()), None, OffshoreLiabilities(), OtherLiabilities(), ReasonForDisclosingNow()), false)
   
       val view = createView(viewModel)
 
@@ -135,7 +135,7 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
 
   "f" should {
     "render the page" in {      
-      val viewModel = DisclosureViewModel(FullDisclosure("userId", "id", Instant.now(), Metadata(reference = Some("ref")), CaseReference(), PersonalDetails(Background(), AboutYou()), None, OffshoreLiabilities(), OtherLiabilities(), ReasonForDisclosingNow()))
+      val viewModel = DisclosureViewModel(FullDisclosure("userId", "id", Instant.now(), Metadata(reference = Some("ref")), CaseReference(), PersonalDetails(Background(), AboutYou()), None, OffshoreLiabilities(), OtherLiabilities(), ReasonForDisclosingNow()), false)
       sut.f(viewModel)(messages) shouldEqual createView(viewModel)
     }
   }

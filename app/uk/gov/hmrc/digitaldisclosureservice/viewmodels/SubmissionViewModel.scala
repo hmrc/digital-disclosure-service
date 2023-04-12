@@ -33,8 +33,9 @@ trait SubmissionViewModel extends SummaryListFluency {
   val aboutYouKey = "notification.aboutYou"
   val estateKey = "notification.aboutTheEstate"
 
-  def toPrettyDateOfBirth(date: LocalDate): String = {
-    val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+  def toPrettyDateOfBirth(date: LocalDate, caseflowDateFormat: Boolean): String = {
+    val format = if(caseflowDateFormat) "d/MM/YYYY" else "d MMMM yyyy"
+    val dateFormatter = DateTimeFormatter.ofPattern(format)
     date.format(dateFormatter)
   }
 
@@ -46,8 +47,9 @@ trait SubmissionViewModel extends SummaryListFluency {
     }
   }
 
-  def toPrettyDate(date: LocalDateTime): String = {
-    val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy HH:mma")
+  def toPrettyDate(date: LocalDateTime, caseflowDateFormat: Boolean): String = {
+    val format = if(caseflowDateFormat) "d/MM/YYYY" else "d MMMM yyyy HH:mma"
+    val dateFormatter = DateTimeFormatter.ofPattern(format) 
     val formattedDate = date.format(dateFormatter)
     formattedDate.replace("AM", "am").replace("PM","pm")
   }
@@ -63,11 +65,11 @@ trait SubmissionViewModel extends SummaryListFluency {
   }
 
 
-  def aboutTheIndividualList(aboutTheIndividual: AboutTheIndividual)(implicit messages: Messages): SummaryList = SummaryListViewModel(
+  def aboutTheIndividualList(aboutTheIndividual: AboutTheIndividual, caseflowDateFormat: Boolean)(implicit messages: Messages): SummaryList = SummaryListViewModel(
     rows = Seq(
       Some(SummaryListRowViewModel(s"$individualKey.fullName", ValueViewModel(aboutTheIndividual.fullName))),
       Some(SummaryListRowViewModel(s"$individualKey.address", ValueViewModel(Text(aboutTheIndividual.address.map(_.toSeparatedString).getOrElse("-"))))),
-      Some(SummaryListRowViewModel(s"$individualKey.dateOfBirth", ValueViewModel(aboutTheIndividual.dateOfBirth.map(toPrettyDateOfBirth)))),
+      Some(SummaryListRowViewModel(s"$individualKey.dateOfBirth", ValueViewModel(aboutTheIndividual.dateOfBirth.map(date => toPrettyDateOfBirth(date, caseflowDateFormat))))),
       Some(SummaryListRowViewModel(s"$individualKey.mainOccupation", ValueViewModel(aboutTheIndividual.mainOccupation))),
       displayWhenNotYes(s"$individualKey.doTheyHaveANino", aboutTheIndividual.doTheyHaveANino),
       aboutTheIndividual.nino.map(_ => SummaryListRowViewModel(s"$individualKey.nino", ValueViewModel(aboutTheIndividual.nino))),
@@ -100,11 +102,11 @@ trait SubmissionViewModel extends SummaryListFluency {
     )
   )
 
-  def aboutTheEstateList(aboutTheEstate: AboutTheEstate)(implicit messages: Messages): SummaryList = SummaryListViewModel(
+  def aboutTheEstateList(aboutTheEstate: AboutTheEstate, caseflowDateFormat: Boolean)(implicit messages: Messages): SummaryList = SummaryListViewModel(
     rows = Seq(
       Some(SummaryListRowViewModel(s"$estateKey.fullName", ValueViewModel(aboutTheEstate.fullName))),
       Some(SummaryListRowViewModel(s"$estateKey.address", ValueViewModel(Text(aboutTheEstate.address.map(_.toSeparatedString).getOrElse("-"))))),
-      Some(SummaryListRowViewModel(s"$estateKey.dateOfBirth", ValueViewModel(aboutTheEstate.dateOfBirth.map(toPrettyDateOfBirth)))),
+      Some(SummaryListRowViewModel(s"$estateKey.dateOfBirth", ValueViewModel(aboutTheEstate.dateOfBirth.map(date => toPrettyDateOfBirth(date, caseflowDateFormat))))),
       Some(SummaryListRowViewModel(s"$estateKey.mainOccupation", ValueViewModel(aboutTheEstate.mainOccupation))),
       displayWhenNotYes(s"$estateKey.doTheyHaveANino", aboutTheEstate.doTheyHaveANino),
       aboutTheEstate.nino.map(_ => SummaryListRowViewModel(s"$estateKey.nino", ValueViewModel(aboutTheEstate.nino))),
@@ -115,7 +117,7 @@ trait SubmissionViewModel extends SummaryListFluency {
     ).flatten
   )
 
-  def aboutYouList(aboutYou: AboutYou, background: Background, disclosingAboutThemselves: Boolean)(implicit messages: Messages): SummaryList = {
+  def aboutYouList(aboutYou: AboutYou, background: Background, disclosingAboutThemselves: Boolean, caseflowDateFormat: Boolean)(implicit messages: Messages): SummaryList = {
 
     val commonRows = Seq(
       Some(SummaryListRowViewModel(s"$aboutYouKey.fullName", ValueViewModel(aboutYou.fullName))),
@@ -127,7 +129,7 @@ trait SubmissionViewModel extends SummaryListFluency {
     ).flatten
 
     lazy val youAreTheIndividualRows = Seq(
-      Some(SummaryListRowViewModel(s"$aboutYouKey.dateOfBirth", ValueViewModel(aboutYou.dateOfBirth.map(toPrettyDateOfBirth)))),
+      Some(SummaryListRowViewModel(s"$aboutYouKey.dateOfBirth", ValueViewModel(aboutYou.dateOfBirth.map(date => toPrettyDateOfBirth(date, caseflowDateFormat))))),
       Some(SummaryListRowViewModel(s"$aboutYouKey.mainOccupation", ValueViewModel(aboutYou.mainOccupation))),
       displayWhenNotYes(s"$aboutYouKey.doYouHaveANino", aboutYou.doYouHaveANino),
       aboutYou.nino.map(_ => SummaryListRowViewModel(s"$aboutYouKey.nino", ValueViewModel(aboutYou.nino))),

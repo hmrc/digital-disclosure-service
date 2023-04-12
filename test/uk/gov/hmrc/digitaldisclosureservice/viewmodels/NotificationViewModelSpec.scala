@@ -18,9 +18,8 @@ package viewmodels
 
 import org.scalatest.matchers.should.Matchers
 import viewmodels.govuk.SummaryListFluency
-import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import org.scalatest.wordspec.AnyWordSpec
-import java.time.{LocalDate, LocalDateTime, Month}
+import java.time.{LocalDateTime, Month}
 import viewmodels.implicits._
 import play.api.i18n.{MessagesApi, Messages}
 import play.api.test.FakeRequest
@@ -45,12 +44,12 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
         SummaryListRowViewModel("notification.metadata.reference", ValueViewModel("Some reference")),
         SummaryListRowViewModel("notification.metadata.submissionTime", ValueViewModel("4 March 2023 11:03am"))
       ))
-      NotificationViewModel.metadataList(metadata) shouldEqual Some(expected)
+      NotificationViewModel.metadataList(metadata, false) shouldEqual Some(expected)
     }
 
     "return unpopulated values as None" in {
       val metadata = Metadata()
-      NotificationViewModel.metadataList(metadata) shouldEqual None
+      NotificationViewModel.metadataList(metadata, false) shouldEqual None
     }
 
   }

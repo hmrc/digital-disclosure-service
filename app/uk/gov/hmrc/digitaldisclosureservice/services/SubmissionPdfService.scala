@@ -28,14 +28,14 @@ import models.PDF
 @Singleton
 class SubmissionPdfService @Inject()(notificationView: NotificationView, diclosureView: DisclosureView) extends PdfGenerationService with SummaryListFluency {
 
-  def createPdf(submission: Submission)(implicit messages: Messages): PDF = {
+  def createPdf(submission: Submission, caseflowDateFormat: Boolean)(implicit messages: Messages): PDF = {
 
     val html = submission match {
       case notification: Notification => 
-        val viewModel = NotificationViewModel(notification)
+        val viewModel = NotificationViewModel(notification, caseflowDateFormat)
         notificationView(viewModel).toString
       case disclosure: FullDisclosure =>
-        val viewModel = DisclosureViewModel(disclosure)
+        val viewModel = DisclosureViewModel(disclosure, caseflowDateFormat)
         diclosureView(viewModel).toString
     }
     

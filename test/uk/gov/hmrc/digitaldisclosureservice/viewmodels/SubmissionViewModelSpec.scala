@@ -20,7 +20,7 @@ import org.scalatest.matchers.should.Matchers
 import viewmodels.govuk.SummaryListFluency
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import org.scalatest.wordspec.AnyWordSpec
-import java.time.{LocalDate, LocalDateTime, Month}
+import java.time.LocalDate
 import viewmodels.implicits._
 import play.api.i18n.{MessagesApi, Messages}
 import play.api.test.FakeRequest
@@ -65,7 +65,7 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         SummaryListRowViewModel("notification.aboutTheIndividual.vatRegNumber", ValueViewModel("Some reg number")),
         SummaryListRowViewModel("notification.aboutTheIndividual.sautr", ValueViewModel("Some SAUTR"))
       ))
-      TestSubmissionViewModel.aboutTheIndividualList(aboutTheIndividual) shouldEqual expected
+      TestSubmissionViewModel.aboutTheIndividualList(aboutTheIndividual, false) shouldEqual expected
     }
 
     "return populated values as rows, showing No rows" in {
@@ -93,7 +93,7 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         SummaryListRowViewModel("notification.aboutTheIndividual.registeredForSA", ValueViewModel(messages("service.unsure"))),
         SummaryListRowViewModel("notification.aboutTheIndividual.sautr", ValueViewModel("Some SAUTR"))
       ))
-      TestSubmissionViewModel.aboutTheIndividualList(aboutTheIndividual) shouldEqual expected
+      TestSubmissionViewModel.aboutTheIndividualList(aboutTheIndividual, false) shouldEqual expected
     }
 
     "return unpopulated values as rows with value dash" in {
@@ -107,7 +107,7 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         SummaryListRowViewModel("notification.aboutTheIndividual.registeredForVAT", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutTheIndividual.registeredForSA", ValueViewModel("-"))
       ))
-      TestSubmissionViewModel.aboutTheIndividualList(aboutTheIndividual) shouldEqual expected
+      TestSubmissionViewModel.aboutTheIndividualList(aboutTheIndividual, false) shouldEqual expected
     }
   }
 
@@ -134,7 +134,7 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         SummaryListRowViewModel("notification.aboutTheEstate.vatRegNumber", ValueViewModel("Some reg number")),
         SummaryListRowViewModel("notification.aboutTheEstate.sautr", ValueViewModel("Some SAUTR"))
       ))
-      TestSubmissionViewModel.aboutTheEstateList(aboutTheEstate) shouldEqual expected
+      TestSubmissionViewModel.aboutTheEstateList(aboutTheEstate, false) shouldEqual expected
     }
 
     "return populated values as rows showing no rows" in {
@@ -162,7 +162,7 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         SummaryListRowViewModel("notification.aboutTheEstate.registeredForSA", ValueViewModel(messages("service.unsure"))),
         SummaryListRowViewModel("notification.aboutTheEstate.sautr", ValueViewModel("Some SAUTR"))
       ))
-      TestSubmissionViewModel.aboutTheEstateList(aboutTheEstate) shouldEqual expected
+      TestSubmissionViewModel.aboutTheEstateList(aboutTheEstate, false) shouldEqual expected
     }
 
     "return unpopulated values as rows with value dash" in {
@@ -176,7 +176,7 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         SummaryListRowViewModel("notification.aboutTheEstate.registeredForVAT", ValueViewModel("-")),
         SummaryListRowViewModel("notification.aboutTheEstate.registeredForSA", ValueViewModel("-"))
       ))
-      TestSubmissionViewModel.aboutTheEstateList(aboutTheEstate) shouldEqual expected
+      TestSubmissionViewModel.aboutTheEstateList(aboutTheEstate, false) shouldEqual expected
     }
   }
 
@@ -208,7 +208,7 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         SummaryListRowViewModel("notification.aboutYou.vatRegNumber", ValueViewModel("Some reg number")),
         SummaryListRowViewModel("notification.aboutYou.sautr", ValueViewModel("Some SAUTR"))
       ))
-      TestSubmissionViewModel.aboutYouList(aboutYou, background, true) shouldEqual expected
+      TestSubmissionViewModel.aboutYouList(aboutYou, background, true, false) shouldEqual expected
     }
 
     "return populated values as rows when disclosing as the individual, showing No rows" in {
@@ -241,7 +241,7 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         SummaryListRowViewModel("notification.aboutYou.registeredForSA", ValueViewModel(messages("service.unsure"))),
         SummaryListRowViewModel("notification.aboutYou.sautr", ValueViewModel("Some SAUTR"))
       ))
-      TestSubmissionViewModel.aboutYouList(aboutYou, background, true) shouldEqual expected
+      TestSubmissionViewModel.aboutYouList(aboutYou, background, true, false) shouldEqual expected
     }
 
     "return populated values as rows when disclosing on behalf of the individual" in {
@@ -267,7 +267,7 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel(addressString)),
         SummaryListRowViewModel("notification.background.areYouRepresetingAnOrganisation", ValueViewModel(messages("service.no")))
       ))
-      TestSubmissionViewModel.aboutYouList(aboutYou, background, false) shouldEqual expected
+      TestSubmissionViewModel.aboutYouList(aboutYou, background, false, false) shouldEqual expected
     }
 
     "return populated values as rows when disclosing on behalf of the individual and representing an org" in {
@@ -293,7 +293,7 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel(addressString)),
         SummaryListRowViewModel("notification.background.organisationName", ValueViewModel("Some organisation")),
       ))
-      TestSubmissionViewModel.aboutYouList(aboutYou, background, false) shouldEqual expected
+      TestSubmissionViewModel.aboutYouList(aboutYou, background, false, false) shouldEqual expected
     }
 
     "return unpopulated values as rows with value dash when disclosing as the individual" in {
@@ -308,7 +308,7 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         SummaryListRowViewModel("notification.aboutYou.registeredForSA", ValueViewModel("-"))
       ))
       val background = Background()
-      TestSubmissionViewModel.aboutYouList(aboutYou, background, true) shouldEqual expected
+      TestSubmissionViewModel.aboutYouList(aboutYou, background, true, false) shouldEqual expected
     }
 
     "return unpopulated values as rows with value dash when disclosing on behalf of the individual" in {
@@ -318,7 +318,7 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel("-"))
       ))
       val background = Background()
-      TestSubmissionViewModel.aboutYouList(aboutYou, background, false) shouldEqual expected
+      TestSubmissionViewModel.aboutYouList(aboutYou, background, false, false) shouldEqual expected
     }
   }
 

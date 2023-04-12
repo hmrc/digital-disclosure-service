@@ -41,7 +41,7 @@ class DisclosurePDFController @Inject()(
 
   def generate: Action[JsValue] = auth.authorizedAction(internalAuthPermission("pdf")).async(parse.json) { implicit request =>
     withValidJson[FullDisclosure]{ disclosure =>
-      val pdf = service.createPdf(disclosure).byteArray
+      val pdf = service.createPdf(disclosure, false).byteArray
       val contentLength = Some(pdf.length.toLong)
 
       Future.successful(Result(
