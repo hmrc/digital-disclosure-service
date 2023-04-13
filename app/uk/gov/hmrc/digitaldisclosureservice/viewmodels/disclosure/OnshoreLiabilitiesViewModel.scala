@@ -166,7 +166,7 @@ object OnshoreLiabilitiesViewModel extends CurrentTaxYear {
 
   def corporationTaxSummaryList(liability: CorporationTaxLiability, caseflowDateFormat: Boolean)(implicit messages: Messages): SummaryList = {
 
-    val penaltyAmount = (BigDecimal(liability.penaltyRate) * BigDecimal(liability.howMuchUnpaid)) /100
+    val penaltyAmount = (liability.penaltyRate * BigDecimal(liability.howMuchUnpaid)) /100
     val totalAmount = BigDecimal(liability.howMuchUnpaid) + penaltyAmount + BigDecimal(liability.howMuchInterest)
 
     val rows = Seq(
@@ -184,7 +184,7 @@ object OnshoreLiabilitiesViewModel extends CurrentTaxYear {
   }
 
   def directorLoanSummaryList(liability: DirectorLoanAccountLiabilities, caseflowDateFormat: Boolean)(implicit messages: Messages): SummaryList = {
-    val penaltyAmount = (BigDecimal(liability.penaltyRate) * BigDecimal(liability.unpaidTax)) /100
+    val penaltyAmount = (liability.penaltyRate * BigDecimal(liability.unpaidTax)) /100
     val totalAmount = BigDecimal(liability.unpaidTax) + penaltyAmount + BigDecimal(liability.interest)
 
     val rows = Seq(
@@ -234,11 +234,11 @@ object OnshoreLiabilitiesViewModel extends CurrentTaxYear {
   def booleanText(bool: Boolean)(implicit messages: Messages): String = 
     if (bool) messages("service.yes") else messages("service.no")
 
-  private def getPenaltyAmount(penaltyRate: Int, unpaidAmount: BigInt): BigDecimal = {
-    BigDecimal(penaltyRate * unpaidAmount) /100
+  private def getPenaltyAmount(penaltyRate: BigDecimal, unpaidAmount: BigInt): BigDecimal = {
+    (penaltyRate * BigDecimal(unpaidAmount)) /100
   }
   
-  private def getPeriodTotal(penaltyRate: Int, unpaidAmount: BigInt, interest: BigInt): BigDecimal = {
+  private def getPeriodTotal(penaltyRate: BigDecimal, unpaidAmount: BigInt, interest: BigInt): BigDecimal = {
     BigDecimal(unpaidAmount) + getPenaltyAmount(penaltyRate, unpaidAmount) + BigDecimal(interest)
   }
 

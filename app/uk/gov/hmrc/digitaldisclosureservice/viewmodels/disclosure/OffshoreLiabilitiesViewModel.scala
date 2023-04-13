@@ -165,11 +165,11 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
     )
   }
 
-  private def getPenaltyAmount(penaltyRate: Int, unpaidAmount: BigInt): BigDecimal = {
-    BigDecimal(penaltyRate * unpaidAmount) /100
+  private def getPenaltyAmount(penaltyRate: BigDecimal, unpaidAmount: BigInt): BigDecimal = {
+    (penaltyRate * BigDecimal(unpaidAmount)) /100
   }
   
-  private def getPeriodTotal(penaltyRate: Int, unpaidAmount: BigInt, interest: BigInt): BigDecimal = {
+  private def getPeriodTotal(penaltyRate: BigDecimal, unpaidAmount: BigInt, interest: BigInt): BigDecimal = {
     BigDecimal(unpaidAmount) + getPenaltyAmount(penaltyRate, unpaidAmount) + BigDecimal(interest)
   }
 
