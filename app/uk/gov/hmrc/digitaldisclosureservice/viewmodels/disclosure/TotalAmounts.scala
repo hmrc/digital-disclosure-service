@@ -18,6 +18,7 @@ package models
 
 import models._
 import models.disclosure._
+import scala.math.BigDecimal.RoundingMode
 
 case class TotalAmounts(
   unpaidTaxTotal: BigInt,
@@ -69,7 +70,7 @@ object TotalAmounts {
   }
 
   def getPenaltyAmount(penaltyRate: BigDecimal, unpaidAmount: BigInt): BigDecimal = {
-    (penaltyRate * BigDecimal(unpaidAmount)) /100
+    ((penaltyRate * BigDecimal(unpaidAmount)) /100).setScale(2, RoundingMode.DOWN)
   }
   
   def getPeriodTotal(penaltyRate: BigDecimal, unpaidAmount: BigInt, interest: BigInt): BigDecimal = {
