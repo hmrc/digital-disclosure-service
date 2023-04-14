@@ -25,6 +25,7 @@ import viewmodels.implicits._
 import play.api.i18n.Messages
 import uk.gov.hmrc.time.{CurrentTaxYear, TaxYear}
 import play.twirl.api.HtmlFormat
+import scala.math.BigDecimal.RoundingMode
 
 case class OffshoreLiabilitiesViewModel(
   summaryList: SummaryList,
@@ -144,7 +145,7 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
       poundRow("disclosure.offshore.tax", s"${liabilities.unpaidTax}"),
       poundRow("disclosure.offshore.interest", s"${liabilities.interest}"),
       row("disclosure.offshore.penaltyRate", s"${liabilities.penaltyRate}%"),
-      poundRow("disclosure.offshore.penalty", f"${penaltyAmount}%1.2f"),
+      poundRow("disclosure.offshore.penalty", s"${penaltyAmount}"),
       row("disclosure.offshore.penaltyReason", liabilities.penaltyRateReason)
     ) ++ foreignTaxCreditRow ++ Seq(poundRow("disclosure.offshore.total", f"${yearTotal}%1.2f"))
 
@@ -165,11 +166,11 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
     )
   }
 
-  private def getPenaltyAmount(penaltyRate: Int, unpaidAmount: BigInt): BigDecimal = {
-    BigDecimal(penaltyRate * unpaidAmount) /100
+  private def getPenaltyAmount(penaltyRate: BigDecimal, unpaidAmount: BigInt): BigDecimal = {
+    ((penaltyRate * BigDecimal(unpaidAmount)) /100).setScale(2, RoundingMode.DOWN)
   }
   
-  private def getPeriodTotal(penaltyRate: Int, unpaidAmount: BigInt, interest: BigInt): BigDecimal = {
+  private def getPeriodTotal(penaltyRate: BigDecimal, unpaidAmount: BigInt, interest: BigInt): BigDecimal = {
     BigDecimal(unpaidAmount) + getPenaltyAmount(penaltyRate, unpaidAmount) + BigDecimal(interest)
   }
 
