@@ -24,14 +24,15 @@ import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.Gen._
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import java.time.LocalDate
+import scala.math.BigDecimal.RoundingMode
 
 class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with ScalaCheckPropertyChecks {
 
   "getPenaltyAmount" should {
 
     "determine the penalty from a rate and an unpaid amount" in {
-      forAll(chooseNum[BigInt](BigInt(0), BigInt(99999999)), arbitrary[Int]) { (amount, rate) =>
-        val expectedAmount = (BigDecimal(rate) * BigDecimal(amount)) / 100
+      forAll(chooseNum[BigInt](BigInt(0), BigInt(99999999)), chooseNum[BigDecimal](BigDecimal(0), BigDecimal(200))) { (amount, rate) =>
+        val expectedAmount = ((rate * BigDecimal(amount)) / 100).setScale(2, RoundingMode.DOWN)
         TotalAmounts.getPenaltyAmount(rate, amount) shouldEqual expectedAmount
       }
     }
@@ -41,7 +42,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
 
     "determine the penalty from a rate and an unpaid amount" in {
       forAll(chooseNum[BigInt](BigInt(0), BigInt(99999999)), arbitrary[Int], chooseNum[BigInt](BigInt(0), BigInt(99999999))) { (amount, rate, interest) =>
-        val penaltyAmount = (BigDecimal(rate) * BigDecimal(amount)) / 100
+        val penaltyAmount = ((rate * BigDecimal(amount)) / 100).setScale(2, RoundingMode.DOWN)
         val expectedAmount = penaltyAmount + BigDecimal(amount) + BigDecimal(interest)
         TotalAmounts.getPeriodTotal(rate, amount, interest) shouldEqual expectedAmount
       }
@@ -59,7 +60,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
           overdrawn = BigInt(10),
           unpaidTax = BigInt(10),
           interest = BigInt(10),
-          penaltyRate = 10,
+          penaltyRate = 10.25,
           penaltyRateReason = "Some reason"
         ),
         DirectorLoanAccountLiabilities(
@@ -68,7 +69,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
           overdrawn = BigInt(20),
           unpaidTax = BigInt(20),
           interest = BigInt(20),
-          penaltyRate = 20,
+          penaltyRate = 20.25,
           penaltyRateReason = "Some reason"
         )
       )
@@ -76,8 +77,8 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
         unpaidTaxTotal = BigInt(30),
         niContributionsTotal = BigInt(0),
         interestTotal = BigInt(30),
-        penaltyAmountTotal = BigDecimal(5),
-        amountDueTotal = BigDecimal(65)
+        penaltyAmountTotal = BigDecimal(5.07),
+        amountDueTotal = BigDecimal(65.07)
       )
       TotalAmounts.getDirectorLoanTotals(liabilities) shouldEqual expectedTotals
     }
@@ -90,7 +91,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
           overdrawn = BigInt(10),
           unpaidTax = BigInt(10),
           interest = BigInt(10),
-          penaltyRate = 10,
+          penaltyRate = 10.25,
           penaltyRateReason = "Some reason"
         )
       )
@@ -98,8 +99,8 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
         unpaidTaxTotal = BigInt(10),
         niContributionsTotal = BigInt(0),
         interestTotal = BigInt(10),
-        penaltyAmountTotal = BigDecimal(1),
-        amountDueTotal = BigDecimal(21)
+        penaltyAmountTotal = BigDecimal(1.02),
+        amountDueTotal = BigDecimal(21.02)
       )
       TotalAmounts.getDirectorLoanTotals(liabilities) shouldEqual expectedTotals
     }
@@ -126,7 +127,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
           howMuchIncome = BigInt(10),
           howMuchUnpaid = BigInt(10),
           howMuchInterest = BigInt(10),
-          penaltyRate = 10,
+          penaltyRate = 10.25,
           penaltyRateReason = "Some reason"
         ),
         CorporationTaxLiability(
@@ -134,7 +135,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
           howMuchIncome = BigInt(20),
           howMuchUnpaid = BigInt(20),
           howMuchInterest = BigInt(20),
-          penaltyRate = 20,
+          penaltyRate = 20.25,
           penaltyRateReason = "Some reason"
         )
       )
@@ -142,8 +143,8 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
         unpaidTaxTotal = BigInt(30),
         niContributionsTotal = BigInt(0),
         interestTotal = BigInt(30),
-        penaltyAmountTotal = BigDecimal(5),
-        amountDueTotal = BigDecimal(65)
+        penaltyAmountTotal = BigDecimal(5.07),
+        amountDueTotal = BigDecimal(65.07)
       )
       TotalAmounts.getCorporationTaxTotals(liabilities) shouldEqual expectedTotals
     }
@@ -155,7 +156,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
           howMuchIncome = BigInt(10),
           howMuchUnpaid = BigInt(10),
           howMuchInterest = BigInt(10),
-          penaltyRate = 10,
+          penaltyRate = 10.25,
           penaltyRateReason = "Some reason"
         )
       )
@@ -163,8 +164,8 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
         unpaidTaxTotal = BigInt(10),
         niContributionsTotal = BigInt(0),
         interestTotal = BigInt(10),
-        penaltyAmountTotal = BigDecimal(1),
-        amountDueTotal = BigDecimal(21)
+        penaltyAmountTotal = BigDecimal(1.02),
+        amountDueTotal = BigDecimal(21.02)
       )
       TotalAmounts.getCorporationTaxTotals(liabilities) shouldEqual expectedTotals
     }
@@ -193,7 +194,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
             capitalGains = BigInt(10),
             unpaidTax = BigInt(10),
             interest = BigInt(10),
-            penaltyRate = 10,
+            penaltyRate = 10.25,
             penaltyRateReason = "Some reason",
             foreignTaxCredit = false
           )
@@ -206,7 +207,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
             capitalGains = BigInt(20),
             unpaidTax = BigInt(20),
             interest = BigInt(20),
-            penaltyRate = 20,
+            penaltyRate = 20.25,
             penaltyRateReason = "Some reason",
             foreignTaxCredit = false
           )
@@ -216,8 +217,8 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
         unpaidTaxTotal = BigInt(30),
         niContributionsTotal = BigInt(0),
         interestTotal = BigInt(30),
-        penaltyAmountTotal = BigDecimal(5),
-        amountDueTotal = BigDecimal(65)
+        penaltyAmountTotal = BigDecimal(5.07),
+        amountDueTotal = BigDecimal(65.07)
       )
       TotalAmounts.getOffshoreTaxYearTotals(liabilities) shouldEqual expectedTotals
     }
@@ -232,7 +233,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
             capitalGains = BigInt(10),
             unpaidTax = BigInt(10),
             interest = BigInt(10),
-            penaltyRate = 10,
+            penaltyRate = 10.25,
             penaltyRateReason = "Some reason",
             foreignTaxCredit = false
           )
@@ -242,8 +243,8 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
         unpaidTaxTotal = BigInt(10),
         niContributionsTotal = BigInt(0),
         interestTotal = BigInt(10),
-        penaltyAmountTotal = BigDecimal(1),
-        amountDueTotal = BigDecimal(21)
+        penaltyAmountTotal = BigDecimal(1.02),
+        amountDueTotal = BigDecimal(21.02)
       )
       TotalAmounts.getOffshoreTaxYearTotals(liabilities) shouldEqual expectedTotals
     }
@@ -273,7 +274,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
             unpaidTax = BigInt(10),
             niContributions = BigInt(10),
             interest = BigInt(10),
-            penaltyRate = 10,
+            penaltyRate = 10.25,
             penaltyRateReason = "Some reason",
             residentialTaxReduction = Some(false)
           )
@@ -288,7 +289,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
             unpaidTax = BigInt(20),
             niContributions = BigInt(20),
             interest = BigInt(20),
-            penaltyRate = 20,
+            penaltyRate = 20.25,
             penaltyRateReason = "Some reason",
             residentialTaxReduction = Some(false)
           )
@@ -298,8 +299,8 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
         unpaidTaxTotal = BigInt(30),
         niContributionsTotal = BigInt(30),
         interestTotal = BigInt(30),
-        penaltyAmountTotal = BigDecimal(10),
-        amountDueTotal = BigDecimal(100)
+        penaltyAmountTotal = BigDecimal(10.15),
+        amountDueTotal = BigDecimal(100.15)
       )
       TotalAmounts.getOnshoreTaxYearTotals(liabilities) shouldEqual expectedTotals
     }
@@ -316,7 +317,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
             unpaidTax = BigInt(10),
             niContributions = BigInt(10),
             interest = BigInt(10),
-            penaltyRate = 10,
+            penaltyRate = 10.25,
             penaltyRateReason = "Some reason",
             residentialTaxReduction = Some(false)
           )
@@ -326,8 +327,8 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
         unpaidTaxTotal = BigInt(10),
         niContributionsTotal = BigInt(10),
         interestTotal = BigInt(10),
-        penaltyAmountTotal = BigDecimal(2),
-        amountDueTotal = BigDecimal(32)
+        penaltyAmountTotal = BigDecimal(2.05),
+        amountDueTotal = BigDecimal(32.05)
       )
       TotalAmounts.getOnshoreTaxYearTotals(liabilities) shouldEqual expectedTotals
     }
