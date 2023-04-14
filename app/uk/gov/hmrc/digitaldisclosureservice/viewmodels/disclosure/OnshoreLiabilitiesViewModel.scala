@@ -26,6 +26,7 @@ import play.api.i18n.Messages
 import uk.gov.hmrc.time.{CurrentTaxYear, TaxYear}
 import play.twirl.api.HtmlFormat
 import java.time.format.DateTimeFormatter
+import scala.math.BigDecimal.RoundingMode
 
 case class OnshoreLiabilitiesViewModel(
   summaryList: SummaryList,
@@ -143,7 +144,7 @@ object OnshoreLiabilitiesViewModel extends CurrentTaxYear {
       Some(poundRow("disclosure.onshore.ni", s"${liabilities.niContributions}")),
       Some(poundRow("disclosure.onshore.interest", s"${liabilities.interest}")),
       Some(row("disclosure.onshore.penaltyRate", s"${liabilities.penaltyRate}%")),
-      Some(poundRow("disclosure.onshore.penalty", f"${penaltyAmount}%1.2f")),
+      Some(poundRow("disclosure.onshore.penalty", s"${penaltyAmount}")),
       Some(row("disclosure.onshore.penaltyReason", liabilities.penaltyRateReason))
     ).flatten ++ lettingDeductionRow ++ Seq(poundRow("disclosure.onshore.total", f"${yearTotal}%1.2f"))
 
@@ -166,7 +167,7 @@ object OnshoreLiabilitiesViewModel extends CurrentTaxYear {
 
   def corporationTaxSummaryList(liability: CorporationTaxLiability, caseflowDateFormat: Boolean)(implicit messages: Messages): SummaryList = {
 
-    val penaltyAmount = (liability.penaltyRate * BigDecimal(liability.howMuchUnpaid)) /100
+    val penaltyAmount = ((liability.penaltyRate * BigDecimal(liability.howMuchUnpaid)) /100).setScale(2, RoundingMode.DOWN)
     val totalAmount = BigDecimal(liability.howMuchUnpaid) + penaltyAmount + BigDecimal(liability.howMuchInterest)
 
     val rows = Seq(
@@ -184,7 +185,7 @@ object OnshoreLiabilitiesViewModel extends CurrentTaxYear {
   }
 
   def directorLoanSummaryList(liability: DirectorLoanAccountLiabilities, caseflowDateFormat: Boolean)(implicit messages: Messages): SummaryList = {
-    val penaltyAmount = (liability.penaltyRate * BigDecimal(liability.unpaidTax)) /100
+    val penaltyAmount = ((liability.penaltyRate * BigDecimal(liability.unpaidTax)) /100).setScale(2, RoundingMode.DOWN)
     val totalAmount = BigDecimal(liability.unpaidTax) + penaltyAmount + BigDecimal(liability.interest)
 
     val rows = Seq(
@@ -235,7 +236,7 @@ object OnshoreLiabilitiesViewModel extends CurrentTaxYear {
     if (bool) messages("service.yes") else messages("service.no")
 
   private def getPenaltyAmount(penaltyRate: BigDecimal, unpaidAmount: BigInt): BigDecimal = {
-    (penaltyRate * BigDecimal(unpaidAmount)) /100
+    ((penaltyRate * BigDecimal(unpaidAmount)) /100).setScale(2, RoundingMode.DOWN)
   }
   
   private def getPeriodTotal(penaltyRate: BigDecimal, unpaidAmount: BigInt, interest: BigInt): BigDecimal = {
