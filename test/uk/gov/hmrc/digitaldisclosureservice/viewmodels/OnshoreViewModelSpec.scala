@@ -49,7 +49,7 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
     unpaidTax = BigInt(2000),
     niContributions = BigInt(2000),
     interest = BigInt(2000),
-    penaltyRate = 12,
+    penaltyRate = 12.25,
     penaltyRateReason = "Reason",
     residentialTaxReduction = Some(true)
   )
@@ -139,32 +139,32 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
       val taxYearWithLiabilities = OnshoreTaxYearWithLiabilities(
         OnshoreYearStarting(2012), 
         OnshoreTaxYearLiabilities(
-          nonBusinessIncome = Some(BigInt(11111)),
-          businessIncome = Some(BigInt(22222)),
-          lettingIncome = Some(BigInt(33333)),
-          gains = Some(BigInt(44444)),
-          unpaidTax = BigInt(55555),
-          niContributions = BigInt(66666),
-          interest = BigInt(77777),
-          penaltyRate = 88,
+          nonBusinessIncome = Some(BigInt(1)),
+          businessIncome = Some(BigInt(1)),
+          lettingIncome = Some(BigInt(1)),
+          gains = Some(BigInt(1)),
+          unpaidTax = BigInt(1),
+          niContributions = BigInt(1),
+          interest = BigInt(1),
+          penaltyRate = 2.5,
           penaltyRateReason = "Some reason",
           residentialTaxReduction = Some(true)
         )
       )
 
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("disclosure.onshore.businessIncome", ValueViewModel(HtmlContent("£22222"))),
-        SummaryListRowViewModel("disclosure.onshore.gains", ValueViewModel(HtmlContent("£44444"))),
-        SummaryListRowViewModel("disclosure.onshore.lettingIncome", ValueViewModel(HtmlContent("£33333"))),
-        SummaryListRowViewModel("disclosure.onshore.nonBusinessIncome", ValueViewModel(HtmlContent("£11111"))),
-        SummaryListRowViewModel("disclosure.onshore.tax", ValueViewModel(HtmlContent("£55555"))),
-        SummaryListRowViewModel("disclosure.onshore.ni", ValueViewModel(HtmlContent("£66666"))),
-        SummaryListRowViewModel("disclosure.onshore.interest", ValueViewModel(HtmlContent("£77777"))),
-        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("88%"))),
-        SummaryListRowViewModel("disclosure.onshore.penalty", ValueViewModel(HtmlContent("£107554.48"))),
+        SummaryListRowViewModel("disclosure.onshore.businessIncome", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.onshore.gains", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.onshore.lettingIncome", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.onshore.nonBusinessIncome", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.onshore.tax", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.onshore.ni", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.onshore.interest", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("2.5%"))),
+        SummaryListRowViewModel("disclosure.onshore.penalty", ValueViewModel(HtmlContent("£0.05"))),
         SummaryListRowViewModel("disclosure.onshore.penaltyReason", ValueViewModel(HtmlContent("Some reason"))),
         SummaryListRowViewModel("disclosure.onshore.deductions", ValueViewModel(HtmlContent("£123"))),
-        SummaryListRowViewModel("disclosure.onshore.total", ValueViewModel(HtmlContent("£307552.48")))
+        SummaryListRowViewModel("disclosure.onshore.total", ValueViewModel(HtmlContent("£3.05")))
       ))
       OnshoreLiabilitiesViewModel.taxYearWithLiabilitiesToSummaryList(taxYearWithLiabilities, Some(123)) shouldEqual expected
     }
@@ -173,31 +173,31 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
       val taxYearWithLiabilities = OnshoreTaxYearWithLiabilities(
         OnshoreYearStarting(2012), 
         OnshoreTaxYearLiabilities(
-          nonBusinessIncome = Some(BigInt(11111)),
-          businessIncome = Some(BigInt(22222)),
-          lettingIncome = Some(BigInt(33333)),
-          gains = Some(BigInt(44444)),
-          unpaidTax = BigInt(55555),
-          niContributions = BigInt(66666),
-          interest = BigInt(77777),
-          penaltyRate = 88,
+          nonBusinessIncome = Some(BigInt(1)),
+          businessIncome = Some(BigInt(1)),
+          lettingIncome = Some(BigInt(1)),
+          gains = Some(BigInt(1)),
+          unpaidTax = BigInt(1),
+          niContributions = BigInt(1),
+          interest = BigInt(1),
+          penaltyRate = 2.5,
           penaltyRateReason = "Some reason",
           residentialTaxReduction = Some(false)
         )
       )
 
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("disclosure.onshore.businessIncome", ValueViewModel(HtmlContent("£22222"))),
-        SummaryListRowViewModel("disclosure.onshore.gains", ValueViewModel(HtmlContent("£44444"))),
-        SummaryListRowViewModel("disclosure.onshore.lettingIncome", ValueViewModel(HtmlContent("£33333"))),
-        SummaryListRowViewModel("disclosure.onshore.nonBusinessIncome", ValueViewModel(HtmlContent("£11111"))),
-        SummaryListRowViewModel("disclosure.onshore.tax", ValueViewModel(HtmlContent("£55555"))),
-        SummaryListRowViewModel("disclosure.onshore.ni", ValueViewModel(HtmlContent("£66666"))),
-        SummaryListRowViewModel("disclosure.onshore.interest", ValueViewModel(HtmlContent("£77777"))),
-        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("88%"))),
-        SummaryListRowViewModel("disclosure.onshore.penalty", ValueViewModel(HtmlContent("£107554.48"))),
+        SummaryListRowViewModel("disclosure.onshore.businessIncome", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.onshore.gains", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.onshore.lettingIncome", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.onshore.nonBusinessIncome", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.onshore.tax", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.onshore.ni", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.onshore.interest", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("2.5%"))),
+        SummaryListRowViewModel("disclosure.onshore.penalty", ValueViewModel(HtmlContent("£0.05"))),
         SummaryListRowViewModel("disclosure.onshore.penaltyReason", ValueViewModel(HtmlContent("Some reason"))),
-        SummaryListRowViewModel("disclosure.onshore.total", ValueViewModel(HtmlContent("£307552.48")))
+        SummaryListRowViewModel("disclosure.onshore.total", ValueViewModel(HtmlContent("£3.05")))
       ))
       OnshoreLiabilitiesViewModel.taxYearWithLiabilitiesToSummaryList(taxYearWithLiabilities, None) shouldEqual expected
     }
@@ -214,7 +214,7 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
         unpaidTax <- Gen.choose(BigInt(1), BigInt("9999999999999999999"))
         niContributions <- Gen.choose(BigInt(1), BigInt("9999999999999999999"))
         interest <- Gen.choose(BigInt(1), BigInt("9999999999999999999"))
-        penaltyRate <- arbitrary[Int]
+        penaltyRate <- arbitrary[BigDecimal]
         penaltyRateReason <- arbitrary[String]
         residentialTaxReduction <- arbitrary[Boolean]
       } yield {
@@ -238,22 +238,22 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
     "display all rows" in {
       val corporationTaxLiability = CorporationTaxLiability(
         periodEnd = LocalDate.of(2022, 8, 23),
-        howMuchIncome = BigInt(11111),
-        howMuchUnpaid = BigInt(22222),
-        howMuchInterest = BigInt(33333),
-        penaltyRate = 44,
+        howMuchIncome = BigInt(1),
+        howMuchUnpaid = BigInt(1),
+        howMuchInterest = BigInt(1),
+        penaltyRate = 2.5,
         penaltyRateReason = "Some reason"
       )
 
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.onshore.accountingPeriod", ValueViewModel(HtmlContent("23 August 2022"))),
-        SummaryListRowViewModel("disclosure.onshore.ct.income", ValueViewModel(HtmlContent("£11111"))),
-        SummaryListRowViewModel("disclosure.onshore.corporationTax", ValueViewModel(HtmlContent("£22222"))),
-        SummaryListRowViewModel("disclosure.onshore.interest", ValueViewModel(HtmlContent("£33333"))),
-        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("44%"))),
-        SummaryListRowViewModel("disclosure.onshore.penalty", ValueViewModel(HtmlContent("£9777.68"))),
+        SummaryListRowViewModel("disclosure.onshore.ct.income", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.onshore.corporationTax", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.onshore.interest", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("2.5%"))),
+        SummaryListRowViewModel("disclosure.onshore.penalty", ValueViewModel(HtmlContent("£0.02"))),
         SummaryListRowViewModel("disclosure.onshore.penaltyReason", ValueViewModel(HtmlContent("Some reason"))),
-        SummaryListRowViewModel("disclosure.onshore.ct.total", ValueViewModel(HtmlContent("£65332.68")))
+        SummaryListRowViewModel("disclosure.onshore.ct.total", ValueViewModel(HtmlContent("£2.02")))
       ))
       OnshoreLiabilitiesViewModel.corporationTaxSummaryList(corporationTaxLiability, false) shouldEqual expected
     }
@@ -264,23 +264,23 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
       val directorLoanAccountLiabilities = DirectorLoanAccountLiabilities(
         name = "Director name",
         periodEnd = LocalDate.of(2022, 8, 23),
-        overdrawn = BigInt(11111),
-        unpaidTax = BigInt(22222),
-        interest = BigInt(33333),
-        penaltyRate = 44,
+        overdrawn = BigInt(1),
+        unpaidTax = BigInt(1),
+        interest = BigInt(1),
+        penaltyRate = 2.5,
         penaltyRateReason = "Some reason"
       )
 
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.onshore.director.name", ValueViewModel(HtmlContent("Director name"))),
         SummaryListRowViewModel("disclosure.onshore.accountingPeriod", ValueViewModel(HtmlContent("23 August 2022"))),
-        SummaryListRowViewModel("disclosure.onshore.director.overdrawn", ValueViewModel(HtmlContent("£11111"))),
-        SummaryListRowViewModel("disclosure.onshore.tax", ValueViewModel(HtmlContent("£22222"))),
-        SummaryListRowViewModel("disclosure.onshore.interest", ValueViewModel(HtmlContent("£33333"))),
-        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("44%"))),
-        SummaryListRowViewModel("disclosure.onshore.penalty", ValueViewModel(HtmlContent("£9777.68"))),
+        SummaryListRowViewModel("disclosure.onshore.director.overdrawn", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.onshore.tax", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.onshore.interest", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("2.5%"))),
+        SummaryListRowViewModel("disclosure.onshore.penalty", ValueViewModel(HtmlContent("£0.02"))),
         SummaryListRowViewModel("disclosure.onshore.penaltyReason", ValueViewModel(HtmlContent("Some reason"))),
-        SummaryListRowViewModel("disclosure.onshore.director.total", ValueViewModel(HtmlContent("£65332.68")))
+        SummaryListRowViewModel("disclosure.onshore.director.total", ValueViewModel(HtmlContent("£2.02")))
       ))
       OnshoreLiabilitiesViewModel.directorLoanSummaryList(directorLoanAccountLiabilities, false) shouldEqual expected
     }

@@ -39,12 +39,12 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
   def now = TaxYear.now
 
   val liabilities = TaxYearLiabilities(
-    income = BigInt(2000),
-    chargeableTransfers = BigInt(2000),
-    capitalGains = BigInt(2000),
-    unpaidTax = BigInt(2000),
-    interest = BigInt(2000),
-    penaltyRate = 12,
+    income = BigInt(1),
+    chargeableTransfers = BigInt(1),
+    capitalGains = BigInt(1),
+    unpaidTax = BigInt(1),
+    interest = BigInt(1),
+    penaltyRate = 2.5,
     penaltyRateReason = "Reason",
     foreignTaxCredit = false
   )
@@ -138,28 +138,28 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
       val taxYearWithLiabilities = TaxYearWithLiabilities(
         TaxYearStarting(2012), 
         TaxYearLiabilities(
-          income = BigInt(11111),
-          chargeableTransfers = BigInt(22222),
-          capitalGains = BigInt(33333),
-          unpaidTax = BigInt(44444),
-          interest = BigInt(55555),
-          penaltyRate = 66,
+          income = BigInt(1),
+          chargeableTransfers = BigInt(1),
+          capitalGains = BigInt(1),
+          unpaidTax = BigInt(1),
+          interest = BigInt(1),
+          penaltyRate = 2.5,
           penaltyRateReason = "Some reason",
           foreignTaxCredit = true
         )
       )
 
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("disclosure.offshore.income", ValueViewModel(HtmlContent("£11111"))),
-        SummaryListRowViewModel("disclosure.offshore.transfers", ValueViewModel(HtmlContent("£22222"))),
-        SummaryListRowViewModel("disclosure.offshore.gains", ValueViewModel(HtmlContent("£33333"))),
-        SummaryListRowViewModel("disclosure.offshore.tax", ValueViewModel(HtmlContent("£44444"))),
-        SummaryListRowViewModel("disclosure.offshore.interest", ValueViewModel(HtmlContent("£55555"))),
-        SummaryListRowViewModel("disclosure.offshore.penaltyRate", ValueViewModel(HtmlContent("66%"))),
-        SummaryListRowViewModel("disclosure.offshore.penalty", ValueViewModel(HtmlContent("£29333.04"))),
+        SummaryListRowViewModel("disclosure.offshore.income", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.offshore.transfers", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.offshore.gains", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.offshore.tax", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.offshore.interest", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.offshore.penaltyRate", ValueViewModel(HtmlContent("2.5%"))),
+        SummaryListRowViewModel("disclosure.offshore.penalty", ValueViewModel(HtmlContent("£0.02"))),
         SummaryListRowViewModel("disclosure.offshore.penaltyReason", ValueViewModel(HtmlContent("Some reason"))),
         SummaryListRowViewModel("disclosure.offshore.deductions", ValueViewModel(HtmlContent("£123"))),
-        SummaryListRowViewModel("disclosure.offshore.total", ValueViewModel(HtmlContent("£129332.04")))
+        SummaryListRowViewModel("disclosure.offshore.total", ValueViewModel(HtmlContent("£2.02")))
       ))
       OffshoreLiabilitiesViewModel.taxYearWithLiabilitiesToSummaryList(taxYearWithLiabilities, Some(123)) shouldEqual expected
     }
@@ -168,27 +168,27 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
       val taxYearWithLiabilities = TaxYearWithLiabilities(
         TaxYearStarting(2012), 
         TaxYearLiabilities(
-          income = BigInt(11111),
-          chargeableTransfers = BigInt(22222),
-          capitalGains = BigInt(33333),
-          unpaidTax = BigInt(44444),
-          interest = BigInt(55555),
-          penaltyRate = 66,
+          income = BigInt(1),
+          chargeableTransfers = BigInt(1),
+          capitalGains = BigInt(1),
+          unpaidTax = BigInt(1),
+          interest = BigInt(1),
+          penaltyRate = 2.5,
           penaltyRateReason = "Some reason",
           foreignTaxCredit = true
         )
       )
 
       val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("disclosure.offshore.income", ValueViewModel(HtmlContent("£11111"))),
-        SummaryListRowViewModel("disclosure.offshore.transfers", ValueViewModel(HtmlContent("£22222"))),
-        SummaryListRowViewModel("disclosure.offshore.gains", ValueViewModel(HtmlContent("£33333"))),
-        SummaryListRowViewModel("disclosure.offshore.tax", ValueViewModel(HtmlContent("£44444"))),
-        SummaryListRowViewModel("disclosure.offshore.interest", ValueViewModel(HtmlContent("£55555"))),
-        SummaryListRowViewModel("disclosure.offshore.penaltyRate", ValueViewModel(HtmlContent("66%"))),
-        SummaryListRowViewModel("disclosure.offshore.penalty", ValueViewModel(HtmlContent("£29333.04"))),
+        SummaryListRowViewModel("disclosure.offshore.income", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.offshore.transfers", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.offshore.gains", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.offshore.tax", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.offshore.interest", ValueViewModel(HtmlContent("£1"))),
+        SummaryListRowViewModel("disclosure.offshore.penaltyRate", ValueViewModel(HtmlContent("2.5%"))),
+        SummaryListRowViewModel("disclosure.offshore.penalty", ValueViewModel(HtmlContent("£0.02"))),
         SummaryListRowViewModel("disclosure.offshore.penaltyReason", ValueViewModel(HtmlContent("Some reason"))),
-        SummaryListRowViewModel("disclosure.offshore.total", ValueViewModel(HtmlContent("£129332.04")))
+        SummaryListRowViewModel("disclosure.offshore.total", ValueViewModel(HtmlContent("£2.02")))
       ))
       OffshoreLiabilitiesViewModel.taxYearWithLiabilitiesToSummaryList(taxYearWithLiabilities, None) shouldEqual expected
     }
@@ -203,7 +203,7 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
         capitalGains <- Gen.choose(BigInt(1), BigInt("9999999999999999999"))
         unpaidTax <- Gen.choose(BigInt(1), BigInt("9999999999999999999"))
         interest <- Gen.choose(BigInt(1), BigInt("9999999999999999999"))
-        penaltyRate <- arbitrary[Int]
+        penaltyRate <- arbitrary[BigDecimal]
         penaltyRateReason <- arbitrary[String]
         foreignTaxCredit <- arbitrary[Boolean]
       } yield {
