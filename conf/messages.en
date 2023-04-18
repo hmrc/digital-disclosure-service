@@ -199,6 +199,7 @@ disclosure.offshore.maxValue = Maximum value of all assets held outside the UK a
 #===================================================
 
 disclosure.onshore.heading = Onshore liabilities
+disclosure.onshore.noLiabilities = No onshore liabilities to disclose
 
 #===================================================
 #  Onshore liabilities - per year
