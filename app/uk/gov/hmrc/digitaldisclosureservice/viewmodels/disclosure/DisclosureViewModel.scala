@@ -105,7 +105,8 @@ object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
   def backgroundList(background: Background)(implicit messages: Messages): SummaryList = SummaryListViewModel(
     rows = Seq(
       background.disclosureEntity.map(answer => row("disclosure.background.disclosureEntity", messages(s"notification.background.${answer.entity.toString}"))),
-      Some(liabilitiesRow(background, "disclosure"))
+      Some(liabilitiesRow(background, "disclosure")),
+      Some(incomeFromRow(background))
     ).flatten
   )
 
@@ -205,6 +206,25 @@ object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
       key     = label,
       value   = ValueViewModel(HtmlContent("£" + HtmlFormat.escape(value).toString))
     )
+  }
+
+  def incomeFromRow(background: Background)(implicit messages: Messages) = {
+
+    val sources = background.incomeSource.getOrElse(Nil).map(answer => messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.$answer")).toList
+    val otherSource = background.otherIncomeSource.toList
+
+    val answers = sources ::: otherSource
+
+    val value = ValueViewModel(
+      HtmlContent(
+        answers.map {
+          answer => HtmlFormat.escape(answer).toString
+        }
+        .mkString("<br/><br/>")
+      )
+    )
+
+    SummaryListRowViewModel("disclosure.offshore.incomeFrom", value)
   }
 
 }

@@ -78,7 +78,8 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
       )
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
-        SummaryListRowViewModel("disclosure.background.liabilities", ValueViewModel(messages("notification.background.onshore")))
+        SummaryListRowViewModel("disclosure.background.liabilities", ValueViewModel(messages("notification.background.onshore"))),
+        SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))
       ))
       DisclosureViewModel.backgroundList(background) shouldEqual expected
     }
@@ -92,7 +93,8 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
       )
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
-        SummaryListRowViewModel("disclosure.background.liabilities", ValueViewModel(messages("notification.background.offshore")))
+        SummaryListRowViewModel("disclosure.background.liabilities", ValueViewModel(messages("notification.background.offshore"))),
+        SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))
       ))
       DisclosureViewModel.backgroundList(background) shouldEqual expected
     }
@@ -106,7 +108,8 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
       )
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
-        SummaryListRowViewModel("disclosure.background.liabilities", ValueViewModel(messages("notification.background.both")))
+        SummaryListRowViewModel("disclosure.background.liabilities", ValueViewModel(messages("notification.background.both"))),
+        SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))
       ))
       DisclosureViewModel.backgroundList(background) shouldEqual expected
     }
@@ -115,7 +118,8 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
       val background = Background (None, None, Some(DisclosureEntity(Company, Some(true))), None, None)
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.background.disclosureEntity", ValueViewModel(messages("notification.background.Company"))),
-        SummaryListRowViewModel("disclosure.background.liabilities", ValueViewModel("-"))
+        SummaryListRowViewModel("disclosure.background.liabilities", ValueViewModel("-")),
+        SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))
       ))
       DisclosureViewModel.backgroundList(background) shouldEqual expected
     }
@@ -124,16 +128,20 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
       val background = Background (None, None, Some(DisclosureEntity(LLP, Some(true))), None, None)
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.background.disclosureEntity", ValueViewModel(messages("notification.background.LLP"))),
-        SummaryListRowViewModel("disclosure.background.liabilities", ValueViewModel("-"))
+        SummaryListRowViewModel("disclosure.background.liabilities", ValueViewModel("-")),
+        SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))
       ))
       DisclosureViewModel.backgroundList(background) shouldEqual expected
     }
 
     "return disclosure Entity row with information for a Trust " in {
-      val background = Background (None, None, Some(DisclosureEntity(Trust, Some(true))), None, None)
+      val sourceSet: Set[IncomeOrGainSource] = Set(IncomeOrGainSource.Dividends, IncomeOrGainSource.Interest)
+      val background = Background (None, None, Some(DisclosureEntity(Trust, Some(true))), None, None, None, None, Some(sourceSet), Some("Other income source"))
+      val expectedSource = messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.dividends") + "<br/><br/>" + messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.interest") + "<br/><br/>" + "Other income source"
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.background.disclosureEntity", ValueViewModel(messages("notification.background.Trust"))),
-        SummaryListRowViewModel("disclosure.background.liabilities", ValueViewModel("-"))
+        SummaryListRowViewModel("disclosure.background.liabilities", ValueViewModel("-")),
+        SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent(expectedSource)))
       ))
       DisclosureViewModel.backgroundList(background) shouldEqual expected
     }
