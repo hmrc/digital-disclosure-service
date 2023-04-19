@@ -24,6 +24,7 @@ import uk.gov.hmrc.digitaldisclosureservice.views.html.{NotificationView, Disclo
 import viewmodels.govuk.SummaryListFluency
 import viewmodels.{DisclosureViewModel, NotificationViewModel}
 import models.PDF
+import play.api.mvc.RequestHeader
 
 @Singleton
 class SubmissionPdfService @Inject()(notificationView: NotificationView, diclosureView: DisclosureView) extends PdfGenerationService with SummaryListFluency {
@@ -40,6 +41,19 @@ class SubmissionPdfService @Inject()(notificationView: NotificationView, diclosu
     }
     
     buildPdf(html)
+  }
+
+  def generatePdfHtml(submission: Submission)(implicit messages: Messages): String = {
+
+    submission match {
+      case notification: Notification => 
+        val viewModel = NotificationViewModel(notification)
+        notificationView(viewModel).toString
+      case disclosure: FullDisclosure =>
+        val viewModel = DisclosureViewModel(disclosure)
+        diclosureView(viewModel).toString
+    }
+
   }
 
 }
