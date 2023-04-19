@@ -58,13 +58,13 @@ class NotificationPDFControllerSpec extends AnyWordSpec with Matchers with BaseS
   
   "POST /notification/submit" should {
     "return 200 where the service returns a Success" in {
-      val pdf = pdfService.createPdf(testNotification)
-      when(mockPdfService.createPdf(refEq(testNotification))(any())) thenReturn pdf
+      val pdf = pdfService.generatePdfHtml(testNotification, false)
+      when(mockPdfService.generatePdfHtml(refEq(testNotification), any())(any())) thenReturn pdf
 
       val fakeRequest = FakeRequest(method = "GET", uri = "/notification", headers = FakeHeaders(Seq("Authorization" -> "Token some-token")), body = Json.toJson(testNotification))
       val result = controller.generate()(fakeRequest)
       status(result) shouldBe Status.OK
-      contentAsBytes(result) shouldEqual ByteString(pdf.byteArray)
+      contentAsBytes(result) shouldEqual ByteString(pdf.getBytes)
     }
   }
 

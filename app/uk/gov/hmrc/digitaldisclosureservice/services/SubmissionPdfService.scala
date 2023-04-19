@@ -29,28 +29,28 @@ import play.api.mvc.RequestHeader
 @Singleton
 class SubmissionPdfService @Inject()(notificationView: NotificationView, diclosureView: DisclosureView) extends PdfGenerationService with SummaryListFluency {
 
-  def createPdf(submission: Submission)(implicit messages: Messages): PDF = {
+  def createPdf(submission: Submission, caseflowDateFormat: Boolean)(implicit messages: Messages): PDF = {
 
     val html = submission match {
       case notification: Notification => 
-        val viewModel = NotificationViewModel(notification)
+        val viewModel = NotificationViewModel(notification, caseflowDateFormat)
         notificationView(viewModel).toString
       case disclosure: FullDisclosure =>
-        val viewModel = DisclosureViewModel(disclosure)
+        val viewModel = DisclosureViewModel(disclosure, caseflowDateFormat)
         diclosureView(viewModel).toString
     }
     
     buildPdf(html)
   }
 
-  def generatePdfHtml(submission: Submission)(implicit messages: Messages): String = {
+  def generatePdfHtml(submission: Submission, caseflowDateFormat: Boolean)(implicit messages: Messages): String = {
 
     submission match {
       case notification: Notification => 
-        val viewModel = NotificationViewModel(notification)
+        val viewModel = NotificationViewModel(notification, caseflowDateFormat)
         notificationView(viewModel).toString
       case disclosure: FullDisclosure =>
-        val viewModel = DisclosureViewModel(disclosure)
+        val viewModel = DisclosureViewModel(disclosure, caseflowDateFormat)
         diclosureView(viewModel).toString
     }
 

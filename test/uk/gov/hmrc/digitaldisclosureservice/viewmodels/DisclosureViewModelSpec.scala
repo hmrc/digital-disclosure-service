@@ -57,12 +57,12 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.yes"))),
         SummaryListRowViewModel("disclosure.offshore.country", ValueViewModel("United Kingdom, France"))
       ))
-      DisclosureViewModel.metadataList(background, metadata, caseReference, offshoreLiabilities) shouldEqual expected
+      DisclosureViewModel.metadataList(background, metadata, caseReference, offshoreLiabilities, false) shouldEqual expected
     }
 
     "return unpopulated values as empty" in {
       val metadata = Metadata()
-      DisclosureViewModel.metadataList(Background(), metadata, CaseReference(), OffshoreLiabilities()) shouldEqual SummaryListViewModel(rows = Nil)
+      DisclosureViewModel.metadataList(Background(), metadata, CaseReference(), OffshoreLiabilities(), false) shouldEqual SummaryListViewModel(rows = Nil)
     }
 
   }
