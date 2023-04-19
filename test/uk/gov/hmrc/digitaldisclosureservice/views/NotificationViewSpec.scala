@@ -53,10 +53,6 @@ class NotificationViewSpec extends AnyWordSpec with Matchers with BaseSpec {
       view.select("h1").text() should include(messages("notification.h1"))
     }
 
-    "display the beta banner" in {
-      view.select("strong").text() should include("beta")
-    }
-
     "display the section headings" in {
       view.select("h2").text() should include(messages("notification.heading.metadata"))
       view.select("h2").text() should include(messages("notification.heading.background"))

@@ -59,13 +59,13 @@ class DisclosurePDFControllerSpec extends AnyWordSpec with Matchers with BaseSpe
   
   "POST /disclosure/submit" should {
     "return 200 where the service returns a Success" in {
-      val pdf = pdfService.createPdf(testDisclosure, false)
-      when(mockPdfService.createPdf(refEq(testDisclosure), any())(any())) thenReturn pdf
+      val pdf = pdfService.generatePdfHtml(testDisclosure, false)
+      when(mockPdfService.generatePdfHtml(refEq(testDisclosure), any())(any())) thenReturn pdf
 
       val fakeRequest = FakeRequest(method = "GET", uri = "/disclosure", headers = FakeHeaders(Seq("Authorization" -> "Token some-token")), body = Json.toJson(testDisclosure))
       val result = controller.generate()(fakeRequest)
       status(result) shouldBe Status.OK
-      contentAsBytes(result) shouldEqual ByteString(pdf.byteArray)
+      contentAsBytes(result) shouldEqual ByteString(pdf.getBytes)
     }
   }
 

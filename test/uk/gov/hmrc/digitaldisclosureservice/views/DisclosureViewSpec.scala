@@ -57,10 +57,6 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
         view.select("h1").text() should include(messages("disclosure.h1"))
       }
 
-      "display the beta banner" in {
-        view.select("strong").text() should include("beta")
-      }
-
       "display the section headings" in {
         view.select("h2").text() should include(messages("disclosure.heading.metadata"))
         view.select("h2").text() should include(messages("notification.heading.background"))
@@ -106,10 +102,6 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
 
       "display the heading" in {
         view.select("h1").text() should include(messages("disclosure.h1"))
-      }
-
-      "display the beta banner" in {
-        view.select("strong").text() should include("beta")
       }
 
       "display the section headings" in {
