@@ -52,7 +52,7 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
 
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.metadata.reference", ValueViewModel("Some reference")),
-        SummaryListRowViewModel("disclosure.metadata.submissionTime", ValueViewModel("4 March 2023 11:03am")),
+        SummaryListRowViewModel("disclosure.metadata.submissionTime", ValueViewModel("04 March 2023 11:03am")),
         SummaryListRowViewModel("notification.metadata.caseRef", ValueViewModel("Case ref")),
         SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.yes"))),
         SummaryListRowViewModel("disclosure.offshore.country", ValueViewModel("United Kingdom, France"))
