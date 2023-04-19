@@ -308,9 +308,9 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
 
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.property.address", ValueViewModel(HtmlContent(addressString))),
-        SummaryListRowViewModel("disclosure.property.firstLet", ValueViewModel(HtmlContent("1 January 2021"))),
+        SummaryListRowViewModel("disclosure.property.firstLet", ValueViewModel(HtmlContent("01 January 2021"))),
         SummaryListRowViewModel("disclosure.property.stoppedLet", ValueViewModel(HtmlContent(messages("service.yes")))),
-        SummaryListRowViewModel("disclosure.property.stoppedLetDate", ValueViewModel(HtmlContent("1 January 2022"))),
+        SummaryListRowViewModel("disclosure.property.stoppedLetDate", ValueViewModel(HtmlContent("01 January 2022"))),
         SummaryListRowViewModel("disclosure.property.happenedTo", ValueViewModel(HtmlContent("Something happened"))),
         SummaryListRowViewModel("disclosure.property.furnished", ValueViewModel(HtmlContent(messages("service.no")))),
         SummaryListRowViewModel("disclosure.property.fhl", ValueViewModel(HtmlContent(messages("service.yes")))),

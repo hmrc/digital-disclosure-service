@@ -34,7 +34,7 @@ trait SubmissionViewModel extends SummaryListFluency {
   val estateKey = "notification.aboutTheEstate"
 
   def toPrettyDateOfBirth(date: LocalDate, caseflowDateFormat: Boolean): String = {
-    val format = if(caseflowDateFormat) "d/MM/YYYY" else "d MMMM yyyy"
+    val format = if(caseflowDateFormat) "dd/MM/YYYY" else "dd MMMM yyyy"
     val dateFormatter = DateTimeFormatter.ofPattern(format)
     date.format(dateFormatter)
   }
@@ -48,7 +48,7 @@ trait SubmissionViewModel extends SummaryListFluency {
   }
 
   def toPrettyDate(date: LocalDateTime, caseflowDateFormat: Boolean): String = {
-    val format = if(caseflowDateFormat) "d/MM/YYYY" else "d MMMM yyyy HH:mma"
+    val format = if(caseflowDateFormat) "dd/MM/YYYY" else "dd MMMM yyyy HH:mma"
     val dateFormatter = DateTimeFormatter.ofPattern(format) 
     val formattedDate = date.format(dateFormatter)
     formattedDate.replace("AM", "am").replace("PM","pm")
