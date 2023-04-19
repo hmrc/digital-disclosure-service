@@ -40,8 +40,8 @@ object OnshoreLiabilitiesViewModel extends CurrentTaxYear {
 
   def now = TaxYear.now
 
-  val downloadDateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
-  val dmsDateFormatter = DateTimeFormatter.ofPattern("d/MM/YYYY")
+  val downloadDateFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
+  val dmsDateFormatter = DateTimeFormatter.ofPattern("dd/MM/YYYY")
 
   val DELIBERATE_YEARS = 19
   val REASONABLE_EXCUSE_YEARS = 3
