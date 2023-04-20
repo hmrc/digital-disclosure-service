@@ -20,8 +20,9 @@
 
 <style>
     body {margin: 0; font-family: 'arial'; font-size: 16px; max-width: max-content; margin: auto;}
-    .width-container { margin-right: auto; margin-left: auto; }
-    header {margin: 0; font-family: 'arial'; font-size: 16px;}
+    div {display: block;}
+    .width-container { margin-right: auto; margin-left: auto; width: 100%;}
+    header {margin: 0; font-family: 'arial'; font-size: 1.1875rem;}
     h1 {font-size: 36pt; letter-spacing: 0.04em;}
     h2 {font-size: 24pt;}
     h3 {font-size: 1em;}
@@ -29,14 +30,14 @@
     .govuk-summary-list {
         font-family: GDS Transport,arial,sans-serif;
         font-weight: 400;
-        font-size: 16px;
-        font-size: 1rem;
+        font-size: 1.1875rem;
         color: #0b0c0c;
         margin: 0 0 20px;
-        display: table;
+        display: block;
         table-layout: fixed;
         border-collapse: collapse;
         padding-bottom: 20px;
+        margin-bottom: 30px;
     }
     .govuk-summary-list__row {
         border-bottom: 1px solid #b1b4b6;
@@ -78,10 +79,47 @@
         text-transform: uppercase;
         font-family: GDS Transport,arial,sans-serif;
         font-weight: 700;
-        font-size: 14px;
         font-size: .875rem;
         line-height: 1;
         padding: 5px 8px 4px;
+    }
+
+    @@media (max-width: 768px) {
+        .govuk-summary-list {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .govuk-summary-list__row {
+            display: contents;
+        }
+        
+        .govuk-summary-list__key {
+            display: block;
+            border: none;
+            position: relative;
+            padding-bottom: 0;
+            margin-bottom: 5px;
+        }
+
+        .govuk-summary-list__value {
+            display: block;
+            border: none;
+            position: relative;
+            margin-left: 0;
+            padding-left: 0;
+            padding-bottom: 0;
+            margin-bottom: 5px;
+            border-bottom: 1px solid #b1b4b6;
+        }
+        
+        .govuk-summary-list__key::before .govuk-summary-list__value::before {
+            position: absolute;
+            left: 6px;
+            content: attr(data-label);
+            text-align: left;
+            font-weight: bold;
+        }
     }
 
 </style>
