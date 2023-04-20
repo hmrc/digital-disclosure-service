@@ -30,42 +30,22 @@
 <html lang="en">
 
     <head>
-        <title>@messages("service.name")</title>
+        <title>@messages("pdf.title.disclosure")</title>
         <meta name="Lang" content="en"/>
         <meta name="subject" content="DDS Disclosure"/>
         <meta name="about" content="HMRC PDFA Document"/>
         <meta name="author" content="HMRC"/>
         <meta name="description" content="Disclosure of unpaid tax for previous tax years"/>
-        
-        <!-- <link href="@uk.gov.hmrc.hmrcfrontend.controllers.routes.Assets.at("hmrc-frontend-5.11.1.min.css")" media="all" rel="stylesheet" type="text/css"/> -->
 
         @styles()
-
-        <bookmarks>
-            <bookmark name="@messages("disclosure.heading.metadata")" href="#metadata"/>
-            <bookmark name="@messages("disclosure.heading.background")" href="#background"/>
-            @viewModel.aboutTheIndividualList.map{_ => <bookmark name="@messages("disclosure.heading.aboutTheIndividual")" href="#aboutTheIndividual"/>}
-            @viewModel.aboutTheCompanyList.map{_ => <bookmark name="@messages("disclosure.heading.aboutTheCompany")" href="#aboutTheCompany"/>}
-            @viewModel.aboutTheTrustList.map{_ => <bookmark name="@messages("disclosure.heading.aboutTheTrust")" href="#aboutTheTrust"/>}
-            @viewModel.aboutTheLLPList.map{_ => <bookmark name="@messages("disclosure.heading.aboutTheLLP")" href="#aboutTheLLP"/>}
-            @viewModel.aboutTheEstateList.map{_ => <bookmark name="@messages("disclosure.heading.aboutTheEstate")" href="#aboutTheEstate"/>}
-            <bookmark name="@messages(viewModel.aboutYouHeading)" href="#aboutYou"/>
-            @viewModel.onshoreLiabilities.map{_ => <bookmark name="@messages("disclosure.onshore.heading")" href="#onshore"/>}
-            @viewModel.onshoreLiabilities.map{_ => <bookmark name="@messages("disclosure.offshore.heading")" href="#offshore"/>}  
-            <bookmark name="@messages("disclosure.totals.heading")" href="#totals"/>
-            <bookmark name="@messages("disclosure.otherLiabilities.heading")" href="#otherLiabilities"/>
-            <bookmark name="@messages("disclosure.additional.heading")" href="#additional"/>
-        </bookmarks>
 
     </head>
 
     <body><div class="width-container ">
    
         <header role="banner">
-            <div class="govuk-width-container">
-                <div style="padding-bottom: 0.3em; margin-top: -1em;">
-                    <h2 style="padding-left: 0.5em; display: inline-block; font-size: 16pt; vertical-align: middle;">@messages("service.name")</h2>
-                </div>
+            <div style="padding-bottom: 0.3em; margin-top: -1em;">
+                <h2 style="padding-left: 0.5em; display: inline-block; font-size: 16pt; vertical-align: middle;">@messages("service.name")</h2>
             </div>
         </header>
         <hr/>

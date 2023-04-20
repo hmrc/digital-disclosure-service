@@ -4,6 +4,9 @@ service.yes = Yes
 service.no = No
 service.unsure = Yes, but I do not know it
 
+pdf.title.disclosure = Disclosure - Digital Disclosure Service - GOV UK
+pdf.title.notification = Notification of intent - Digital Disclosure Service - GOV UK
+
 #===================================================
 #  Notification headings
 #===================================================
