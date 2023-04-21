@@ -43,7 +43,7 @@ class MarkCalculatorSpec extends PlaySpec with Logging {
       val background = Background (
         haveYouReceivedALetter = Some(false),
         letterReferenceNumber = None,
-        disclosureEntity = Some(DisclosureEntity(Individual, Some(false))),
+        disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
         offshoreLiabilities = Some(false),
         onshoreLiabilities = Some(true)
       )
@@ -64,7 +64,7 @@ class MarkCalculatorSpec extends PlaySpec with Logging {
       )
       val notification = Notification("userId", "id", instant, Metadata(), PersonalDetails(background, aboutYou, Some(aboutTheIndividual)))
       val submissionMark = sut.getSfMark(notification.toXml)
-      submissionMark mustBe "bwKJv43/rNRTO0UrICD+fLzhTz8="
+      submissionMark mustBe "eYc0dAMDjqFVY9Qjk27qZMa8kYw="
     }
   }
 }

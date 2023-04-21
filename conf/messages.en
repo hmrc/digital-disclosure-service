@@ -68,11 +68,6 @@ notification.background.Company = A company
 notification.background.LLP = A limited liability partnership
 notification.background.Trust = A trust
 notification.background.Estate = An estate
-notification.background.areYouTheIndividual = Are you the individual that the disclosure will be about?
-notification.background.areYouTheCompany = Are you an officer of the company this disclosure relates to?
-notification.background.areYouTheLLP = Are you a designated member of the limited liability partnership that the disclosure will be about?
-notification.background.areYouTheTrust = Are you trustee of the trust that the disclosure will be about?
-notification.background.areYouTheEstate = Are you the executor or administrator of the estate that the disclosure will be about?
 notification.background.areYouRepresetingAnOrganisation = Are you representing an organisation?
 notification.background.organisationName = The name of the organisation you represent
 
@@ -427,3 +422,42 @@ whereDidTheUndeclaredIncomeOrGainIncluded.residentialPropertyGain = Residential 
 whereDidTheUndeclaredIncomeOrGainIncluded.selfEmploymentIncome = Self-employment income
 whereDidTheUndeclaredIncomeOrGainIncluded.otherGains = Other gains
 whereDidTheUndeclaredIncomeOrGainIncluded.somewhereElse = Somewhere else
+
+#===================================================
+#  Are you the entity?
+#===================================================
+
+areYouTheEntity.Individual.heading = Are you the individual that the disclosure will be about?
+areYouTheEntity.Individual.yes = Yes, I am the individual
+areYouTheEntity.Individual.accountant = I am an accountant or tax agent
+areYouTheEntity.Individual.friend = I am their friend or relative
+areYouTheEntity.Individual.voluntaryOrganisation = I work for a voluntary organisation acting as an intermediary
+areYouTheEntity.Individual.powerOfAttorney = I have been appointed with power of attorney to act on their behalf
+
+areYouTheEntity.Estate.heading = Are you the executor or administrator of the estate that the disclosure will be about?
+areYouTheEntity.Estate.yes = Yes, I am the executor or administrator
+areYouTheEntity.Estate.accountant = I am an accountant or tax agent
+areYouTheEntity.Estate.friend = I am their friend or relative
+areYouTheEntity.Estate.voluntaryOrganisation = I work for a voluntary organisation acting as an intermediary
+areYouTheEntity.Estate.powerOfAttorney = I have been appointed with power of attorney to act on their behalf
+
+areYouTheEntity.Company.heading = Are you an officer of the company that the disclosure will be about?
+areYouTheEntity.Company.yes = Yes, I am an officer
+areYouTheEntity.Company.accountant = I am an accountant or tax agent
+areYouTheEntity.Company.friend = I am their friend or relative
+areYouTheEntity.Company.voluntaryOrganisation = I work for a voluntary organisation acting as an intermediary
+areYouTheEntity.Company.powerOfAttorney = I have been appointed with power of attorney to act on their behalf
+
+areYouTheEntity.LLP.heading = Are you a designated member of the limited liability partnership that the disclosure will be about?
+areYouTheEntity.LLP.yes = Yes, I am a designated member
+areYouTheEntity.LLP.accountant = I am an accountant or tax agent
+areYouTheEntity.LLP.friend = I am their friend or relative
+areYouTheEntity.LLP.voluntaryOrganisation = I work for a voluntary organisation acting as an intermediary
+areYouTheEntity.LLP.powerOfAttorney = I have been appointed with power of attorney to act on their behalf
+
+areYouTheEntity.Trust.heading = Are you a trustee of the trust that the disclosure will be about?
+areYouTheEntity.Trust.yes = Yes, I am a trustee
+areYouTheEntity.Trust.accountant = I am an accountant or tax agent
+areYouTheEntity.Trust.friend = I am their friend or relative
+areYouTheEntity.Trust.voluntaryOrganisation = I work for a voluntary organisation acting as an intermediary
+areYouTheEntity.Trust.powerOfAttorney = I have been appointed with power of attorney to act on their behalf

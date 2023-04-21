@@ -59,14 +59,14 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
       val background = Background (
         haveYouReceivedALetter = Some(true),
         letterReferenceNumber= Some("Some letter reference"),
-        disclosureEntity = Some(DisclosureEntity(Individual, Some(true))),
+        disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))),
         offshoreLiabilities = Some(false),
         onshoreLiabilities = Some(true)
       )
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.metadata.caseRef", ValueViewModel(messages("Some letter reference"))),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
-        SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.yes"))),
+        SummaryListRowViewModel("areYouTheEntity.Individual.heading", ValueViewModel(messages("areYouTheEntity.Individual.yes"))),
         SummaryListRowViewModel("notification.background.liabilities", ValueViewModel(messages("notification.background.onshore"))),
         SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))
       ))
@@ -76,14 +76,14 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
     "return populated values as rows where have you received is no" in {
       val background = Background (
         haveYouReceivedALetter = Some(false),
-        disclosureEntity = Some(DisclosureEntity(Individual, Some(true))),
+        disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))),
         offshoreLiabilities = Some(true),
         onshoreLiabilities = Some (false)
       )
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
-        SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.yes"))),
+        SummaryListRowViewModel("areYouTheEntity.Individual.heading", ValueViewModel(messages("areYouTheEntity.Individual.yes"))),
         SummaryListRowViewModel("notification.background.liabilities", ValueViewModel(messages("notification.background.offshore"))),
         SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))
       ))
@@ -93,14 +93,14 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
     "return populated values as rows where both onshore and offshore" in {
       val background = Background (
         haveYouReceivedALetter = Some(false),
-        disclosureEntity = Some(DisclosureEntity(Individual, Some(true))),
+        disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))),
         offshoreLiabilities = Some(true),
         onshoreLiabilities = Some (true)
       )
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
-        SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.yes"))),
+        SummaryListRowViewModel("areYouTheEntity.Individual.heading", ValueViewModel(messages("areYouTheEntity.Individual.yes"))),
         SummaryListRowViewModel("notification.background.liabilities", ValueViewModel(messages("notification.background.both"))),
         SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))
       ))
@@ -119,11 +119,11 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
     }
 
     "return disclosure Entity row with information for a Company " in {
-      val background = Background (None, None, Some(DisclosureEntity(Company, Some(true))), None, None)
+      val background = Background (None, None, Some(DisclosureEntity(Company, Some(AreYouTheEntity.YesIAm))), None, None)
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Company"))),
-        SummaryListRowViewModel("notification.background.areYouTheCompany", ValueViewModel(messages("service.yes"))),
+        SummaryListRowViewModel("areYouTheEntity.Company.heading", ValueViewModel(messages("areYouTheEntity.Company.yes"))),
         SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-")),
         SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))
       ))
@@ -131,11 +131,11 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
     }
 
     "return disclosure Entity row with information for a LLP " in {
-      val background = Background (None, None, Some(DisclosureEntity(LLP, Some(true))), None, None)
+      val background = Background (None, None, Some(DisclosureEntity(LLP, Some(AreYouTheEntity.YesIAm))), None, None)
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.LLP"))),
-        SummaryListRowViewModel("notification.background.areYouTheLLP", ValueViewModel(messages("service.yes"))),
+        SummaryListRowViewModel("areYouTheEntity.LLP.heading", ValueViewModel(messages("areYouTheEntity.LLP.yes"))),
         SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-")),
         SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))
       ))
@@ -143,11 +143,11 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
     }
 
     "return disclosure Entity row with information for a Trust " in {
-      val background = Background (None, None, Some(DisclosureEntity(Trust, Some(true))), None, None)
+      val background = Background (None, None, Some(DisclosureEntity(Trust, Some(AreYouTheEntity.YesIAm))), None, None)
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Trust"))),
-        SummaryListRowViewModel("notification.background.areYouTheTrust", ValueViewModel(messages("service.yes"))),
+        SummaryListRowViewModel("areYouTheEntity.Trust.heading", ValueViewModel(messages("areYouTheEntity.Trust.yes"))),
         SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-")),
         SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))
       ))
@@ -155,11 +155,11 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
     }
 
     "return organisation information where it's populated" in {
-      val background = Background (None, None, Some(DisclosureEntity(Individual, Some(false))), Some(true), Some("Some organisation"))
+      val background = Background (None, None, Some(DisclosureEntity(Individual, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))), Some(true), Some("Some organisation"))
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
-        SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.no"))),
+        SummaryListRowViewModel("areYouTheEntity.Individual.heading", ValueViewModel(messages("areYouTheEntity.Individual.accountant"))),
         SummaryListRowViewModel("notification.background.organisationName", ValueViewModel("Some organisation")),
         SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-")),
         SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent("")))
@@ -169,12 +169,12 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
 
     "return organisation information where it's populated but set to false" in {
       val sourceSet: Set[IncomeOrGainSource] = Set(IncomeOrGainSource.Dividends, IncomeOrGainSource.Interest)
-      val background = Background (None, None, Some(DisclosureEntity(Individual, Some(false))), Some(false), None, None, None, Some(sourceSet), Some("Other income source"))
+      val background = Background (None, None, Some(DisclosureEntity(Individual, Some(AreYouTheEntity.IAmAFriend))), Some(false), None, None, None, Some(sourceSet), Some("Other income source"))
       val expectedSource = messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.dividends") + "<br/><br/>" + messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.interest") + "<br/><br/>" + "Other income source"
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),
-        SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.no"))),
+        SummaryListRowViewModel("areYouTheEntity.Individual.heading", ValueViewModel(messages("areYouTheEntity.Individual.friend"))),
         SummaryListRowViewModel("notification.background.areYouRepresetingAnOrganisation", ValueViewModel(messages("service.no"))),
         SummaryListRowViewModel("notification.background.liabilities", ValueViewModel("-")),
         SummaryListRowViewModel("disclosure.offshore.incomeFrom", ValueViewModel(HtmlContent(expectedSource)))

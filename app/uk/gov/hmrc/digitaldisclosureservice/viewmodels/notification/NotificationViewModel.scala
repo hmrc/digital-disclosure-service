@@ -71,7 +71,7 @@ object NotificationViewModel extends SummaryListFluency with SubmissionViewModel
       displayWhenNo(s"$backgroundKey.haveYouReceivedALetter", background.haveYouReceivedALetter),
       background.letterReferenceNumber.map(_ => SummaryListRowViewModel("notification.metadata.caseRef", ValueViewModel(background.letterReferenceNumber))),
       Some(SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(background.disclosureEntity.map(de => messages(s"notification.background.${de.entity.toString}"))))),
-      background.disclosureEntity.map(de => SummaryListRowViewModel(s"notification.background.areYouThe${de.entity.toString}", ValueViewModel(de.areYouTheEntity))),
+      background.disclosureEntity.map(de => SummaryListRowViewModel(s"areYouTheEntity.${de.entity}.heading", ValueViewModel(s"areYouTheEntity.${de.entity}.${de.areYouTheEntity.getOrElse("yes")}"))),
       background.areYouRepresetingAnOrganisation.flatMap(areYou => displayWhenNo(s"$backgroundKey.areYouRepresetingAnOrganisation", areYou)),
       background.organisationName.map(_ => SummaryListRowViewModel(s"$backgroundKey.organisationName", ValueViewModel(background.organisationName))),
       Some(liabilitiesRow(background)),
