@@ -42,7 +42,7 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
       val date = LocalDateTime.of(2023, Month.MARCH, 4, 11, 3, 0)
       val metadata = Metadata(Some("Some reference"), Some(date))
 
-      val disclosureEntity = DisclosureEntity(Individual, Some(true))
+      val disclosureEntity = DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))
       val background = Background(disclosureEntity = Some(disclosureEntity))
 
       val caseReference = CaseReference(Some(true), Some("Case ref"))
@@ -54,7 +54,7 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         SummaryListRowViewModel("disclosure.metadata.reference", ValueViewModel("Some reference")),
         SummaryListRowViewModel("disclosure.metadata.submissionTime", ValueViewModel("4 March 2023 11:03am")),
         SummaryListRowViewModel("notification.metadata.caseRef", ValueViewModel("Case ref")),
-        SummaryListRowViewModel("notification.background.areYouTheIndividual", ValueViewModel(messages("service.yes"))),
+        SummaryListRowViewModel("areYouTheEntity.Individual.heading", ValueViewModel(messages("areYouTheEntity.Individual.yes"))),
         SummaryListRowViewModel("disclosure.offshore.country", ValueViewModel("United Kingdom, France"))
       ))
       DisclosureViewModel.metadataList(background, metadata, caseReference, offshoreLiabilities, false) shouldEqual expected
@@ -72,7 +72,7 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
       val background = Background (
         haveYouReceivedALetter = Some(true),
         letterReferenceNumber= Some("Some letter reference"),
-        disclosureEntity = Some(DisclosureEntity(Individual, Some(true))),
+        disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))),
         offshoreLiabilities = Some(false),
         onshoreLiabilities = Some (true)
       )
@@ -87,7 +87,7 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
     "return populated values as rows where have you received is no" in {
       val background = Background (
         haveYouReceivedALetter = Some(false),
-        disclosureEntity = Some(DisclosureEntity(Individual, Some(true))),
+        disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))),
         offshoreLiabilities = Some(true),
         onshoreLiabilities = Some (false)
       )
@@ -102,7 +102,7 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
     "return populated values as rows where both onshore and offshore" in {
       val background = Background (
         haveYouReceivedALetter = Some(false),
-        disclosureEntity = Some(DisclosureEntity(Individual, Some(true))),
+        disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))),
         offshoreLiabilities = Some(true),
         onshoreLiabilities = Some (true)
       )
@@ -115,7 +115,7 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
     }
 
     "return disclosure Entity row with information for a Company " in {
-      val background = Background (None, None, Some(DisclosureEntity(Company, Some(true))), None, None)
+      val background = Background (None, None, Some(DisclosureEntity(Company, Some(AreYouTheEntity.YesIAm))), None, None)
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.background.disclosureEntity", ValueViewModel(messages("notification.background.Company"))),
         SummaryListRowViewModel("disclosure.background.liabilities", ValueViewModel("-")),
@@ -125,7 +125,7 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
     }
 
     "return disclosure Entity row with information for a LLP " in {
-      val background = Background (None, None, Some(DisclosureEntity(LLP, Some(true))), None, None)
+      val background = Background (None, None, Some(DisclosureEntity(LLP, Some(AreYouTheEntity.YesIAm))), None, None)
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.background.disclosureEntity", ValueViewModel(messages("notification.background.LLP"))),
         SummaryListRowViewModel("disclosure.background.liabilities", ValueViewModel("-")),
@@ -136,7 +136,7 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
 
     "return disclosure Entity row with information for a Trust " in {
       val sourceSet: Set[IncomeOrGainSource] = Set(IncomeOrGainSource.Dividends, IncomeOrGainSource.Interest)
-      val background = Background (None, None, Some(DisclosureEntity(Trust, Some(true))), None, None, None, None, Some(sourceSet), Some("Other income source"))
+      val background = Background (None, None, Some(DisclosureEntity(Trust, Some(AreYouTheEntity.YesIAm))), None, None, None, None, Some(sourceSet), Some("Other income source"))
       val expectedSource = messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.dividends") + "<br/><br/>" + messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.interest") + "<br/><br/>" + "Other income source"
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.background.disclosureEntity", ValueViewModel(messages("notification.background.Trust"))),

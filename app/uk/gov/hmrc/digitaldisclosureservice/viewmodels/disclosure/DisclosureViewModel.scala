@@ -96,7 +96,7 @@ object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
       metadata.reference.map(ref => row(s"disclosure.metadata.reference", ref)),
       metadata.submissionTime.map(time => row(s"disclosure.metadata.submissionTime", toPrettyDate(time, caseflowDateFormat))),
       caseReference.whatIsTheCaseReference.map(caseRef => row("notification.metadata.caseRef", caseRef)),
-      background.disclosureEntity.map(de => SummaryListRowViewModel(s"notification.background.areYouThe${de.entity.toString}", ValueViewModel(de.areYouTheEntity))),
+      background.disclosureEntity.map(de => SummaryListRowViewModel(s"areYouTheEntity.${de.entity}.heading", ValueViewModel(s"areYouTheEntity.${de.entity}.${de.areYouTheEntity.getOrElse("yes")}"))),
       offshore.countryOfYourOffshoreLiability.map(countriesRow)
     ).flatten
     SummaryListViewModel(rows = rows)

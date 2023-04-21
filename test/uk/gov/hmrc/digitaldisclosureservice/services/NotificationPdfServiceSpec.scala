@@ -57,7 +57,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = Some("1234567890"),
-          disclosureEntity = Some(DisclosureEntity(Individual, Some(false))),
+          disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.PowerOfAttorney))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(false)
         )
@@ -73,7 +73,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Company, Some(false))),
+          disclosureEntity = Some(DisclosureEntity(Company, Some(AreYouTheEntity.VoluntaryOrganisation))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(false)
         )
@@ -89,7 +89,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Trust, Some(false))),
+          disclosureEntity = Some(DisclosureEntity(Trust, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(false)
         )
@@ -105,7 +105,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(LLP, Some(false))),
+          disclosureEntity = Some(DisclosureEntity(LLP, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -125,7 +125,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Individual, Some(true))),
+          disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -144,7 +144,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Individual, Some(true))),
+          disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -179,7 +179,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Individual, Some(true))),
+          disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -209,7 +209,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Individual, Some(true))),
+          disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -239,7 +239,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Individual, Some(true))),
+          disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -269,7 +269,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Individual, Some(true))),
+          disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -301,7 +301,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Individual, Some(true))),
+          disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -332,7 +332,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Individual, Some(false))),
+          disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -361,7 +361,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Individual, Some(false))),
+          disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -396,7 +396,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Individual, Some(false))),
+          disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -430,7 +430,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Individual, Some(false))),
+          disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -464,7 +464,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Individual, Some(false))),
+          disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -502,7 +502,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Company, Some(false))),
+          disclosureEntity = Some(DisclosureEntity(Company, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -528,7 +528,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Company, Some(false))),
+          disclosureEntity = Some(DisclosureEntity(Company, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -562,7 +562,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Company, Some(false))),
+          disclosureEntity = Some(DisclosureEntity(Company, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -588,7 +588,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Company, Some(false))),
+          disclosureEntity = Some(DisclosureEntity(Company, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -619,7 +619,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Company, Some(false))),
+          disclosureEntity = Some(DisclosureEntity(Company, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -645,7 +645,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Company, Some(false))),
+          disclosureEntity = Some(DisclosureEntity(Company, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -676,7 +676,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Estate, Some(false))),
+          disclosureEntity = Some(DisclosureEntity(Estate, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -705,7 +705,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Estate, Some(false))),
+          disclosureEntity = Some(DisclosureEntity(Estate, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -740,7 +740,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Estate, Some(false))),
+          disclosureEntity = Some(DisclosureEntity(Estate, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -774,7 +774,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Estate, Some(false))),
+          disclosureEntity = Some(DisclosureEntity(Estate, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
@@ -808,7 +808,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         val background = Background (
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
-          disclosureEntity = Some(DisclosureEntity(Estate, Some(false))),
+          disclosureEntity = Some(DisclosureEntity(Estate, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
