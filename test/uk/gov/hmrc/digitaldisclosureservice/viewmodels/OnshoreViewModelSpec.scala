@@ -160,7 +160,7 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
         SummaryListRowViewModel("disclosure.onshore.tax", ValueViewModel(HtmlContent("£1"))),
         SummaryListRowViewModel("disclosure.onshore.ni", ValueViewModel(HtmlContent("£1"))),
         SummaryListRowViewModel("disclosure.onshore.interest", ValueViewModel(HtmlContent("£1"))),
-        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("2.5%"))),
+        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("2.50%"))),
         SummaryListRowViewModel("disclosure.onshore.penalty", ValueViewModel(HtmlContent("£0.05"))),
         SummaryListRowViewModel("disclosure.onshore.penaltyReason", ValueViewModel(HtmlContent("Some reason"))),
         SummaryListRowViewModel("disclosure.onshore.deductions", ValueViewModel(HtmlContent("£123"))),
@@ -194,7 +194,7 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
         SummaryListRowViewModel("disclosure.onshore.tax", ValueViewModel(HtmlContent("£1"))),
         SummaryListRowViewModel("disclosure.onshore.ni", ValueViewModel(HtmlContent("£1"))),
         SummaryListRowViewModel("disclosure.onshore.interest", ValueViewModel(HtmlContent("£1"))),
-        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("2.5%"))),
+        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("2.50%"))),
         SummaryListRowViewModel("disclosure.onshore.penalty", ValueViewModel(HtmlContent("£0.05"))),
         SummaryListRowViewModel("disclosure.onshore.penaltyReason", ValueViewModel(HtmlContent("Some reason"))),
         SummaryListRowViewModel("disclosure.onshore.total", ValueViewModel(HtmlContent("£3.05")))
@@ -250,7 +250,7 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
         SummaryListRowViewModel("disclosure.onshore.ct.income", ValueViewModel(HtmlContent("£1"))),
         SummaryListRowViewModel("disclosure.onshore.corporationTax", ValueViewModel(HtmlContent("£1"))),
         SummaryListRowViewModel("disclosure.onshore.interest", ValueViewModel(HtmlContent("£1"))),
-        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("2.5%"))),
+        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("2.50%"))),
         SummaryListRowViewModel("disclosure.onshore.penalty", ValueViewModel(HtmlContent("£0.02"))),
         SummaryListRowViewModel("disclosure.onshore.penaltyReason", ValueViewModel(HtmlContent("Some reason"))),
         SummaryListRowViewModel("disclosure.onshore.ct.total", ValueViewModel(HtmlContent("£2.02")))
@@ -277,7 +277,7 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
         SummaryListRowViewModel("disclosure.onshore.director.overdrawn", ValueViewModel(HtmlContent("£1"))),
         SummaryListRowViewModel("disclosure.onshore.tax", ValueViewModel(HtmlContent("£1"))),
         SummaryListRowViewModel("disclosure.onshore.interest", ValueViewModel(HtmlContent("£1"))),
-        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("2.5%"))),
+        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("2.50%"))),
         SummaryListRowViewModel("disclosure.onshore.penalty", ValueViewModel(HtmlContent("£0.02"))),
         SummaryListRowViewModel("disclosure.onshore.penaltyReason", ValueViewModel(HtmlContent("Some reason"))),
         SummaryListRowViewModel("disclosure.onshore.director.total", ValueViewModel(HtmlContent("£2.02")))
