@@ -213,6 +213,7 @@ disclosure.onshore.interest = Interest due
 disclosure.onshore.penaltyRate = Penalty
 disclosure.onshore.penalty = Penalty amount
 disclosure.onshore.penaltyReason = Reason for penalty rate
+disclosure.onshore.undeclaredIncomeOrGain = Where the income or gain came from
 disclosure.onshore.deductions = Deductions
 disclosure.onshore.total = Amount due
 
