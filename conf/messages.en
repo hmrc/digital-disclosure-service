@@ -7,6 +7,8 @@ service.unsure = Yes, but I do not know it
 pdf.title.disclosure = Disclosure - Digital Disclosure Service - GOV UK
 pdf.title.notification = Notification of intent - Digital Disclosure Service - GOV UK
 
+site.2DP = {0,number,#,##0.00}
+
 #===================================================
 #  Notification headings
 #===================================================
