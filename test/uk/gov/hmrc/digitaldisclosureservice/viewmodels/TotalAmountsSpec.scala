@@ -276,7 +276,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
             interest = BigInt(10),
             penaltyRate = 10.25,
             penaltyRateReason = "Some reason",
-            undeclaredIncomeOrGain = "Some gain",
+            undeclaredIncomeOrGain = Some("Some gain"),
             residentialTaxReduction = Some(false)
           )
         ),
@@ -292,7 +292,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
             interest = BigInt(20),
             penaltyRate = 20.25,
             penaltyRateReason = "Some reason",
-            undeclaredIncomeOrGain = "Some gain",
+            undeclaredIncomeOrGain = Some("Some gain"),
             residentialTaxReduction = Some(false)
           )
         )
@@ -321,7 +321,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
             interest = BigInt(10),
             penaltyRate = 10.25,
             penaltyRateReason = "Some reason",
-            undeclaredIncomeOrGain = "Some gain",
+            undeclaredIncomeOrGain = Some("Some gain"),
             residentialTaxReduction = Some(false)
           )
         )

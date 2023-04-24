@@ -51,7 +51,7 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
     interest = BigInt(2000),
     penaltyRate = 12.25,
     penaltyRateReason = "Reason",
-    undeclaredIncomeOrGain = "Some gain",
+    undeclaredIncomeOrGain = Some("Some gain"),
     residentialTaxReduction = Some(true)
   )
 
@@ -149,7 +149,7 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
           interest = BigInt(1),
           penaltyRate = 2.5,
           penaltyRateReason = "Some reason",
-          undeclaredIncomeOrGain = "Some gain",
+          undeclaredIncomeOrGain = Some("Some gain"),
           residentialTaxReduction = Some(true)
         )
       )
@@ -185,7 +185,7 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
           interest = BigInt(1),
           penaltyRate = 2.5,
           penaltyRateReason = "Some reason",
-          undeclaredIncomeOrGain = "Some gain",
+          undeclaredIncomeOrGain = Some("Some gain"),
           residentialTaxReduction = Some(false)
         )
       )
@@ -234,7 +234,7 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
           interest,
           penaltyRate,
           penaltyRateReason,
-          undeclaredIncomeOrGain,
+          Some(undeclaredIncomeOrGain),
           Some(residentialTaxReduction)
         )
         OnshoreTaxYearWithLiabilities(OnshoreYearStarting(year), taxYearLiabilities)
