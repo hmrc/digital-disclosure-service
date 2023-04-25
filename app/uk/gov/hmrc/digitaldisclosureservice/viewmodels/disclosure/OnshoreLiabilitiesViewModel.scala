@@ -145,7 +145,8 @@ object OnshoreLiabilitiesViewModel extends CurrentTaxYear {
       Some(poundRow("disclosure.onshore.interest", s"${liabilities.interest}")),
       Some(row("disclosure.onshore.penaltyRate", messages("site.2DP", liabilities.penaltyRate)+"%")),
       Some(poundRow("disclosure.onshore.penalty", s"${penaltyAmount}")),
-      Some(row("disclosure.onshore.penaltyReason", liabilities.penaltyRateReason))
+      Some(row("disclosure.onshore.penaltyReason", liabilities.penaltyRateReason)),
+      liabilities.undeclaredIncomeOrGain.map(undeclaredIncome => row("disclosure.onshore.undeclaredIncomeOrGain", s"${undeclaredIncome}"))
     ).flatten ++ lettingDeductionRow ++ Seq(poundRow("disclosure.onshore.total", f"${yearTotal}%1.2f"))
 
     SummaryListViewModel(rows)
