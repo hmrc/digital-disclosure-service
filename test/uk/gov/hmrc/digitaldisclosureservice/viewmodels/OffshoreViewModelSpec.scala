@@ -46,6 +46,7 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
     interest = BigInt(1),
     penaltyRate = 2.5,
     penaltyRateReason = "Reason",
+    undeclaredIncomeOrGain = Some("Some gain"),
     foreignTaxCredit = false
   )
 
@@ -145,6 +146,7 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
           interest = BigInt(1),
           penaltyRate = 2.5,
           penaltyRateReason = "Some reason",
+          undeclaredIncomeOrGain = Some("Some gain"),
           foreignTaxCredit = true
         )
       )
@@ -158,6 +160,7 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
         SummaryListRowViewModel("disclosure.offshore.penaltyRate", ValueViewModel(HtmlContent("2.50%"))),
         SummaryListRowViewModel("disclosure.offshore.penalty", ValueViewModel(HtmlContent("£0.02"))),
         SummaryListRowViewModel("disclosure.offshore.penaltyReason", ValueViewModel(HtmlContent("Some reason"))),
+        SummaryListRowViewModel("disclosure.offshore.undeclaredIncomeOrGain", ValueViewModel(HtmlContent("Some gain"))),
         SummaryListRowViewModel("disclosure.offshore.deductions", ValueViewModel(HtmlContent("£123"))),
         SummaryListRowViewModel("disclosure.offshore.total", ValueViewModel(HtmlContent("£2.02")))
       ))
@@ -175,6 +178,7 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
           interest = BigInt(1),
           penaltyRate = 2.5,
           penaltyRateReason = "Some reason",
+          undeclaredIncomeOrGain = Some("Some gain"),
           foreignTaxCredit = true
         )
       )
@@ -188,13 +192,14 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
         SummaryListRowViewModel("disclosure.offshore.penaltyRate", ValueViewModel(HtmlContent("2.50%"))),
         SummaryListRowViewModel("disclosure.offshore.penalty", ValueViewModel(HtmlContent("£0.02"))),
         SummaryListRowViewModel("disclosure.offshore.penaltyReason", ValueViewModel(HtmlContent("Some reason"))),
+        SummaryListRowViewModel("disclosure.offshore.undeclaredIncomeOrGain", ValueViewModel(HtmlContent("Some gain"))),
         SummaryListRowViewModel("disclosure.offshore.total", ValueViewModel(HtmlContent("£2.02")))
       ))
       OffshoreLiabilitiesViewModel.taxYearWithLiabilitiesToSummaryList(taxYearWithLiabilities, None) shouldEqual expected
     }
   }
 
-  implicit lazy val abitraryTaxYearWithLiabilities: Arbitrary[TaxYearWithLiabilities] =
+  implicit lazy val arbitraryTaxYearWithLiabilities: Arbitrary[TaxYearWithLiabilities] =
     Arbitrary {
       for {
         year <- Gen.choose(2002, 2032)
@@ -205,6 +210,7 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
         interest <- Gen.choose(BigInt(1), BigInt("9999999999999999999"))
         penaltyRate <- arbitrary[BigDecimal]
         penaltyRateReason <- arbitrary[String]
+        undeclaredIncomeOrGain <- arbitrary[String]
         foreignTaxCredit <- arbitrary[Boolean]
       } yield {
         val taxYearLiabilities = TaxYearLiabilities(
@@ -215,6 +221,7 @@ class OffshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with
           interest,
           penaltyRate,
           penaltyRateReason,
+          Some(undeclaredIncomeOrGain),
           foreignTaxCredit
         )
         TaxYearWithLiabilities(TaxYearStarting(year), taxYearLiabilities)
