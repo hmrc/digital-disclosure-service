@@ -13,7 +13,10 @@ lazy val microservice = Project("digital-disclosure-service", file("."))
     // https://www.scala-lang.org/2021/01/12/configuring-and-suppressing-warnings.html
     // suppress warnings in generated routes files
     libraryDependencySchemes += "org.scala-lang.modules" %% "scala-xml" % VersionScheme.Always,
-    scalacOptions += "-Wconf:src=routes/.*:s",
+    scalacOptions ++= Seq(
+      "-P:silencer:lineContentFilters=^\\w",
+      "-Wconf:src=routes/.*:s"
+    ),
     ScoverageKeys.coverageExcludedFiles := "<empty>;Reverse.*;.*handlers.*;.*components.*;" +
       ".*Routes.*;.*viewmodels.govuk.*;",
     ScoverageKeys.coverageMinimumStmtTotal := 95,
