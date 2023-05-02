@@ -7,6 +7,8 @@ service.unsure = Yes, but I do not know it
 pdf.title.disclosure = Disclosure - Digital Disclosure Service - GOV UK
 pdf.title.notification = Notification of intent - Digital Disclosure Service - GOV UK
 
+site.2DP = {0,number,#,##0.00}
+
 #===================================================
 #  Notification headings
 #===================================================
@@ -179,6 +181,7 @@ disclosure.offshore.interest = Interest due
 disclosure.offshore.penaltyRate = Penalty
 disclosure.offshore.penalty = Penalty amount
 disclosure.offshore.penaltyReason = Reason for penalty rate
+disclosure.offshore.undeclaredIncomeOrGain = Where the income or gain came from
 disclosure.offshore.deductions = Deductions
 disclosure.offshore.total = Amount due
 
@@ -213,6 +216,7 @@ disclosure.onshore.interest = Interest due
 disclosure.onshore.penaltyRate = Penalty
 disclosure.onshore.penalty = Penalty amount
 disclosure.onshore.penaltyReason = Reason for penalty rate
+disclosure.onshore.undeclaredIncomeOrGain = Where the income or gain came from
 disclosure.onshore.deductions = Deductions
 disclosure.onshore.total = Amount due
 

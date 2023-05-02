@@ -130,6 +130,11 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
 
     val liabilities = yearWithLiabilites.taxYearLiabilities
 
+    val undeclaredIncome = liabilities.undeclaredIncomeOrGain match {
+      case Some(value) => Seq(row("disclosure.offshore.undeclaredIncomeOrGain", value))
+      case _ => Nil
+    }
+
     val foreignTaxCreditRow = foreignTaxCredit match {
       case Some(value) => Seq(poundRow("disclosure.offshore.deductions", s"${value}"))
       case _ => Nil
@@ -144,10 +149,10 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
       poundRow("disclosure.offshore.gains", s"${liabilities.capitalGains}"),
       poundRow("disclosure.offshore.tax", s"${liabilities.unpaidTax}"),
       poundRow("disclosure.offshore.interest", s"${liabilities.interest}"),
-      row("disclosure.offshore.penaltyRate", s"${liabilities.penaltyRate}%"),
+      row("disclosure.offshore.penaltyRate", messages("site.2DP", liabilities.penaltyRate)+"%"),
       poundRow("disclosure.offshore.penalty", s"${penaltyAmount}"),
       row("disclosure.offshore.penaltyReason", liabilities.penaltyRateReason)
-    ) ++ foreignTaxCreditRow ++ Seq(poundRow("disclosure.offshore.total", f"${yearTotal}%1.2f"))
+    ) ++ undeclaredIncome ++ foreignTaxCreditRow ++ Seq(poundRow("disclosure.offshore.total", f"${yearTotal}%1.2f"))
 
     SummaryListViewModel(rows)
   }

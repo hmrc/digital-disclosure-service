@@ -40,8 +40,8 @@ object OnshoreLiabilitiesViewModel extends CurrentTaxYear {
 
   def now = TaxYear.now
 
-  val downloadDateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
-  val dmsDateFormatter = DateTimeFormatter.ofPattern("d/MM/YYYY")
+  val downloadDateFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
+  val dmsDateFormatter = DateTimeFormatter.ofPattern("dd/MM/YYYY")
 
   val DELIBERATE_YEARS = 19
   val REASONABLE_EXCUSE_YEARS = 3
@@ -143,9 +143,10 @@ object OnshoreLiabilitiesViewModel extends CurrentTaxYear {
       Some(poundRow("disclosure.onshore.tax", s"${liabilities.unpaidTax}")),
       Some(poundRow("disclosure.onshore.ni", s"${liabilities.niContributions}")),
       Some(poundRow("disclosure.onshore.interest", s"${liabilities.interest}")),
-      Some(row("disclosure.onshore.penaltyRate", s"${liabilities.penaltyRate}%")),
+      Some(row("disclosure.onshore.penaltyRate", messages("site.2DP", liabilities.penaltyRate)+"%")),
       Some(poundRow("disclosure.onshore.penalty", s"${penaltyAmount}")),
-      Some(row("disclosure.onshore.penaltyReason", liabilities.penaltyRateReason))
+      Some(row("disclosure.onshore.penaltyReason", liabilities.penaltyRateReason)),
+      liabilities.undeclaredIncomeOrGain.map(undeclaredIncome => row("disclosure.onshore.undeclaredIncomeOrGain", s"${undeclaredIncome}"))
     ).flatten ++ lettingDeductionRow ++ Seq(poundRow("disclosure.onshore.total", f"${yearTotal}%1.2f"))
 
     SummaryListViewModel(rows)
@@ -175,7 +176,7 @@ object OnshoreLiabilitiesViewModel extends CurrentTaxYear {
       poundRow("disclosure.onshore.ct.income", s"${liability.howMuchIncome}"),
       poundRow("disclosure.onshore.corporationTax", s"${liability.howMuchUnpaid}"),
       poundRow("disclosure.onshore.interest", s"${liability.howMuchInterest}"),
-      row("disclosure.onshore.penaltyRate", s"${liability.penaltyRate}%"),
+      row("disclosure.onshore.penaltyRate", messages("site.2DP", liability.penaltyRate)+"%"),
       poundRow("disclosure.onshore.penalty", s"$penaltyAmount"),
       row("disclosure.onshore.penaltyReason", liability.penaltyRateReason),
       poundRow("disclosure.onshore.ct.total", s"$totalAmount")
@@ -194,7 +195,7 @@ object OnshoreLiabilitiesViewModel extends CurrentTaxYear {
       poundRow("disclosure.onshore.director.overdrawn", s"${liability.overdrawn}"),
       poundRow("disclosure.onshore.tax", s"${liability.unpaidTax}"),
       poundRow("disclosure.onshore.interest", s"${liability.interest}"),
-      row("disclosure.onshore.penaltyRate", s"${liability.penaltyRate}%"),
+      row("disclosure.onshore.penaltyRate", messages("site.2DP", liability.penaltyRate)+"%"),
       poundRow("disclosure.onshore.penalty", s"$penaltyAmount"),
       row("disclosure.onshore.penaltyReason", liability.penaltyRateReason),
       poundRow("disclosure.onshore.director.total", s"$totalAmount")

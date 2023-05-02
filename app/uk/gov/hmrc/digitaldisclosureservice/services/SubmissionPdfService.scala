@@ -24,7 +24,6 @@ import uk.gov.hmrc.digitaldisclosureservice.views.html.{NotificationView, Disclo
 import viewmodels.govuk.SummaryListFluency
 import viewmodels.{DisclosureViewModel, NotificationViewModel}
 import models.PDF
-import play.api.mvc.RequestHeader
 
 @Singleton
 class SubmissionPdfService @Inject()(notificationView: NotificationView, diclosureView: DisclosureView) extends PdfGenerationService with SummaryListFluency {

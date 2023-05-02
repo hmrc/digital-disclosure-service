@@ -51,6 +51,7 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
     interest = BigInt(2000),
     penaltyRate = 12.25,
     penaltyRateReason = "Reason",
+    undeclaredIncomeOrGain = Some("Some gain"),
     residentialTaxReduction = Some(true)
   )
 
@@ -148,6 +149,7 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
           interest = BigInt(1),
           penaltyRate = 2.5,
           penaltyRateReason = "Some reason",
+          undeclaredIncomeOrGain = Some("Some gain"),
           residentialTaxReduction = Some(true)
         )
       )
@@ -160,9 +162,10 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
         SummaryListRowViewModel("disclosure.onshore.tax", ValueViewModel(HtmlContent("£1"))),
         SummaryListRowViewModel("disclosure.onshore.ni", ValueViewModel(HtmlContent("£1"))),
         SummaryListRowViewModel("disclosure.onshore.interest", ValueViewModel(HtmlContent("£1"))),
-        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("2.5%"))),
+        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("2.50%"))),
         SummaryListRowViewModel("disclosure.onshore.penalty", ValueViewModel(HtmlContent("£0.05"))),
         SummaryListRowViewModel("disclosure.onshore.penaltyReason", ValueViewModel(HtmlContent("Some reason"))),
+        SummaryListRowViewModel("disclosure.onshore.undeclaredIncomeOrGain", ValueViewModel(HtmlContent("Some gain"))),
         SummaryListRowViewModel("disclosure.onshore.deductions", ValueViewModel(HtmlContent("£123"))),
         SummaryListRowViewModel("disclosure.onshore.total", ValueViewModel(HtmlContent("£3.05")))
       ))
@@ -182,6 +185,7 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
           interest = BigInt(1),
           penaltyRate = 2.5,
           penaltyRateReason = "Some reason",
+          undeclaredIncomeOrGain = Some("Some gain"),
           residentialTaxReduction = Some(false)
         )
       )
@@ -194,9 +198,10 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
         SummaryListRowViewModel("disclosure.onshore.tax", ValueViewModel(HtmlContent("£1"))),
         SummaryListRowViewModel("disclosure.onshore.ni", ValueViewModel(HtmlContent("£1"))),
         SummaryListRowViewModel("disclosure.onshore.interest", ValueViewModel(HtmlContent("£1"))),
-        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("2.5%"))),
+        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("2.50%"))),
         SummaryListRowViewModel("disclosure.onshore.penalty", ValueViewModel(HtmlContent("£0.05"))),
         SummaryListRowViewModel("disclosure.onshore.penaltyReason", ValueViewModel(HtmlContent("Some reason"))),
+        SummaryListRowViewModel("disclosure.onshore.undeclaredIncomeOrGain", ValueViewModel(HtmlContent("Some gain"))),
         SummaryListRowViewModel("disclosure.onshore.total", ValueViewModel(HtmlContent("£3.05")))
       ))
       OnshoreLiabilitiesViewModel.taxYearWithLiabilitiesToSummaryList(taxYearWithLiabilities, None) shouldEqual expected
@@ -216,6 +221,7 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
         interest <- Gen.choose(BigInt(1), BigInt("9999999999999999999"))
         penaltyRate <- arbitrary[BigDecimal]
         penaltyRateReason <- arbitrary[String]
+        undeclaredIncomeOrGain <- arbitrary[String]
         residentialTaxReduction <- arbitrary[Boolean]
       } yield {
         val taxYearLiabilities = OnshoreTaxYearLiabilities(
@@ -228,6 +234,7 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
           interest,
           penaltyRate,
           penaltyRateReason,
+          Some(undeclaredIncomeOrGain),
           Some(residentialTaxReduction)
         )
         OnshoreTaxYearWithLiabilities(OnshoreYearStarting(year), taxYearLiabilities)
@@ -250,7 +257,7 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
         SummaryListRowViewModel("disclosure.onshore.ct.income", ValueViewModel(HtmlContent("£1"))),
         SummaryListRowViewModel("disclosure.onshore.corporationTax", ValueViewModel(HtmlContent("£1"))),
         SummaryListRowViewModel("disclosure.onshore.interest", ValueViewModel(HtmlContent("£1"))),
-        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("2.5%"))),
+        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("2.50%"))),
         SummaryListRowViewModel("disclosure.onshore.penalty", ValueViewModel(HtmlContent("£0.02"))),
         SummaryListRowViewModel("disclosure.onshore.penaltyReason", ValueViewModel(HtmlContent("Some reason"))),
         SummaryListRowViewModel("disclosure.onshore.ct.total", ValueViewModel(HtmlContent("£2.02")))
@@ -277,7 +284,7 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
         SummaryListRowViewModel("disclosure.onshore.director.overdrawn", ValueViewModel(HtmlContent("£1"))),
         SummaryListRowViewModel("disclosure.onshore.tax", ValueViewModel(HtmlContent("£1"))),
         SummaryListRowViewModel("disclosure.onshore.interest", ValueViewModel(HtmlContent("£1"))),
-        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("2.5%"))),
+        SummaryListRowViewModel("disclosure.onshore.penaltyRate", ValueViewModel(HtmlContent("2.50%"))),
         SummaryListRowViewModel("disclosure.onshore.penalty", ValueViewModel(HtmlContent("£0.02"))),
         SummaryListRowViewModel("disclosure.onshore.penaltyReason", ValueViewModel(HtmlContent("Some reason"))),
         SummaryListRowViewModel("disclosure.onshore.director.total", ValueViewModel(HtmlContent("£2.02")))
@@ -308,9 +315,9 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
 
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.property.address", ValueViewModel(HtmlContent(addressString))),
-        SummaryListRowViewModel("disclosure.property.firstLet", ValueViewModel(HtmlContent("1 January 2021"))),
+        SummaryListRowViewModel("disclosure.property.firstLet", ValueViewModel(HtmlContent("01 January 2021"))),
         SummaryListRowViewModel("disclosure.property.stoppedLet", ValueViewModel(HtmlContent(messages("service.yes")))),
-        SummaryListRowViewModel("disclosure.property.stoppedLetDate", ValueViewModel(HtmlContent("1 January 2022"))),
+        SummaryListRowViewModel("disclosure.property.stoppedLetDate", ValueViewModel(HtmlContent("01 January 2022"))),
         SummaryListRowViewModel("disclosure.property.happenedTo", ValueViewModel(HtmlContent("Something happened"))),
         SummaryListRowViewModel("disclosure.property.furnished", ValueViewModel(HtmlContent(messages("service.no")))),
         SummaryListRowViewModel("disclosure.property.fhl", ValueViewModel(HtmlContent(messages("service.yes")))),

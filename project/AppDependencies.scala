@@ -9,6 +9,7 @@ object AppDependencies {
   
   private val pdfboxVersion = "2.0.26"
   private val openHtmlVersion = "1.0.10"
+  private val silencerVersion = "1.7.12"
 
   val compile = Seq(
     "uk.gov.hmrc"              %%  "bootstrap-backend-play-28"     % bootstrapVersion,
@@ -26,7 +27,9 @@ object AppDependencies {
     "com.thoughtworks.xstream" %   "xstream"                       % "1.4.16",
     "uk.gov.hmrc.mongo"        %% "hmrc-mongo-play-28"             % "0.74.0",
     "uk.gov.hmrc"              %% "internal-auth-client-play-28"   % "1.3.0",
-    "uk.gov.hmrc"              %% "tax-year"                       % "3.0.0"
+    "uk.gov.hmrc"              %% "tax-year"                       % "3.0.0",
+    compilerPlugin("com.github.ghik" % "silencer-plugin" % silencerVersion cross CrossVersion.full),
+    "com.github.ghik" % "silencer-lib" % silencerVersion % Provided cross CrossVersion.full
   )
 
   val test = Seq(
