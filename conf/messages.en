@@ -97,53 +97,53 @@ notification.aboutYou.address = Your address
 #  About the individual
 #===================================================
 
-notification.aboutTheIndividual.fullName = Individual’s full name
-notification.aboutTheIndividual.dateOfBirth = Individual’s date of birth
-notification.aboutTheIndividual.mainOccupation = Individual’s main occupation
-notification.aboutTheIndividual.doTheyHaveANino = Does the individual have a National Insurance number, as far as you’re aware?
-notification.aboutTheIndividual.nino = Individual’s National Insurance number
-notification.aboutTheIndividual.registeredForVAT = Is the individual registered for VAT, as far you’re aware?
-notification.aboutTheIndividual.vatRegNumber = Individual’s VAT registration number
-notification.aboutTheIndividual.registeredForSA = Is the individual registered for Self Assessment, as far as you’re aware?
-notification.aboutTheIndividual.sautr = Individual’s Unique Taxpayer Reference
-notification.aboutTheIndividual.address = Individual’s address
+notification.aboutTheIndividual.fullName = Individual&#39;s full name
+notification.aboutTheIndividual.dateOfBirth = Individual&#39;s date of birth
+notification.aboutTheIndividual.mainOccupation = Individual&#39;s main occupation
+notification.aboutTheIndividual.doTheyHaveANino = Does the individual have a National Insurance number, as far as you&#39;re aware?
+notification.aboutTheIndividual.nino = Individual&#39;s National Insurance number
+notification.aboutTheIndividual.registeredForVAT = Is the individual registered for VAT, as far you&#39;re aware?
+notification.aboutTheIndividual.vatRegNumber = Individual&#39;s VAT registration number
+notification.aboutTheIndividual.registeredForSA = Is the individual registered for Self Assessment, as far as you&#39;re aware?
+notification.aboutTheIndividual.sautr = Individual&#39;s Unique Taxpayer Reference
+notification.aboutTheIndividual.address = Individual&#39;s address
 
 #===================================================
 #  About the company
 #===================================================
 
-notification.aboutTheCompany.name = Company’s name
+notification.aboutTheCompany.name = Company&#39;s name
 notification.aboutTheCompany.registrationNumber =  Company registration number
-notification.aboutTheCompany.address = Company’s address
+notification.aboutTheCompany.address = Company&#39;s address
 
 #===================================================
 #  About the trust
 #===================================================
 
-notification.aboutTheTrust.name = Trust’s name
-notification.aboutTheTrust.address = Trust’s address
+notification.aboutTheTrust.name = Trust&#39;s name
+notification.aboutTheTrust.address = Trust&#39;s address
 
 #===================================================
 #  About the LLP
 #=================================================== 
 
-notification.aboutTheLLP.name = Limited Liability Partnership’s name
-notification.aboutTheLLP.address = Limited Liability Partnership’s address
+notification.aboutTheLLP.name = Limited Liability Partnership&#39;s name
+notification.aboutTheLLP.address = Limited Liability Partnership&#39;s address
 
 #===================================================
 #  About the estate
 #===================================================
 
-notification.aboutTheEstate.fullName = Person’s full name
-notification.aboutTheEstate.dateOfBirth = Person’s date of birth
-notification.aboutTheEstate.mainOccupation = Person’s main occupation
-notification.aboutTheEstate.doTheyHaveANino = Did the person have a National Insurance number, as far as you’re aware?
-notification.aboutTheEstate.nino = Person’s National Insurance number
-notification.aboutTheEstate.registeredForVAT = Was the person registered for VAT, as far you’re aware?
-notification.aboutTheEstate.vatRegNumber = Person’s VAT registration number
-notification.aboutTheEstate.registeredForSA = Was the person registered for Self Assessment, as far as you’re aware?
-notification.aboutTheEstate.sautr = Person’s Unique Taxpayer Reference
-notification.aboutTheEstate.address = Person’s address
+notification.aboutTheEstate.fullName = Person&#39;s full name
+notification.aboutTheEstate.dateOfBirth = Person&#39;s date of birth
+notification.aboutTheEstate.mainOccupation = Person&#39;s main occupation
+notification.aboutTheEstate.doTheyHaveANino = Did the person have a National Insurance number, as far as you&#39;re aware?
+notification.aboutTheEstate.nino = Person&#39;s National Insurance number
+notification.aboutTheEstate.registeredForVAT = Was the person registered for VAT, as far you&#39;re aware?
+notification.aboutTheEstate.vatRegNumber = Person&#39;s VAT registration number
+notification.aboutTheEstate.registeredForSA = Was the person registered for Self Assessment, as far as you&#39;re aware?
+notification.aboutTheEstate.sautr = Person&#39;s Unique Taxpayer Reference
+notification.aboutTheEstate.address = Person&#39;s address
 
 #===================================================
 #  Countries
@@ -232,7 +232,7 @@ disclosure.onshore.ct.total = Total amount due for Corporation Tax liability
 #===================================================
 #  Onshore liabilities - director loan
 #===================================================
-disclosure.onshore.director.heading = Onshore director’s loan account liability {0}
+disclosure.onshore.director.heading = Onshore director&#39;s loan account liability {0}
 disclosure.onshore.director.name = Name of director
 disclosure.onshore.director.overdrawn = Amount overdrawn by
 disclosure.onshore.director.total = Total amount due for director loans account liability

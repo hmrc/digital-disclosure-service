@@ -81,7 +81,7 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
 
     "display populated rows when they are the individual" in {
 
-      val expectedBehaviour = messages(s"whyAreYouMakingThisDisclosure.you.didNotNotifyHasExcuse") + "<br/><br/>" + messages(s"whyAreYouMakingThisDisclosure.you.inaccurateReturnWithCare")
+      val expectedBehaviour = messages(s"whyAreYouMakingThisDisclosure.you.didNotNotifyHasExcuse") + "<br/>" + messages(s"whyAreYouMakingThisDisclosure.you.inaccurateReturnWithCare")
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.offshore.reason", ValueViewModel(HtmlContent(expectedBehaviour))),
         SummaryListRowViewModel("disclosure.offshore.reasonableExcuse", ValueViewModel(HtmlContent("Some excuse"))),
@@ -104,7 +104,7 @@ class OnshoreViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with 
     }
 
     "display populated rows when they are not the individual" in {
-      val expectedBehaviour = messages(s"whyAreYouMakingThisDisclosure.individual.didNotNotifyHasExcuse") + "<br/><br/>" + messages(s"whyAreYouMakingThisDisclosure.individual.inaccurateReturnWithCare")
+      val expectedBehaviour = messages(s"whyAreYouMakingThisDisclosure.individual.didNotNotifyHasExcuse") + "<br/>" + messages(s"whyAreYouMakingThisDisclosure.individual.inaccurateReturnWithCare")
       
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.offshore.reason", ValueViewModel(HtmlContent(expectedBehaviour))),

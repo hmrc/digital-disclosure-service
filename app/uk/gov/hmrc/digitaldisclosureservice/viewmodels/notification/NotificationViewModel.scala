@@ -91,7 +91,7 @@ object NotificationViewModel extends SummaryListFluency with SubmissionViewModel
         answers.map {
           answer => HtmlFormat.escape(answer).toString
         }
-        .mkString("<br/><br/>")
+        .mkString("<br/>")
       )
     )
 

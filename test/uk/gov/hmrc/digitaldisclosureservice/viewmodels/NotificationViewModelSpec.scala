@@ -170,7 +170,7 @@ class NotificationViewModelSpec extends AnyWordSpec with Matchers with BaseSpec 
     "return organisation information where it's populated but set to false" in {
       val sourceSet: Set[IncomeOrGainSource] = Set(IncomeOrGainSource.Dividends, IncomeOrGainSource.Interest)
       val background = Background (None, None, Some(DisclosureEntity(Individual, Some(AreYouTheEntity.IAmAFriend))), Some(false), None, None, None, Some(sourceSet), Some("Other income source"))
-      val expectedSource = messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.dividends") + "<br/><br/>" + messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.interest") + "<br/><br/>" + "Other income source"
+      val expectedSource = messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.dividends") + "<br/>" + messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.interest") + "<br/>" + "Other income source"
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("notification.background.haveYouReceivedALetter", ValueViewModel("-")),
         SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(messages("notification.background.Individual"))),

@@ -131,7 +131,7 @@ object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
         answers.map {
           answer => HtmlFormat.escape(messages(s"otherLiabilityIssues.$answer")).toString
         }
-        .mkString(",<br/><br/>")
+        .mkString(",<br/>")
       )
     )
 
@@ -165,7 +165,7 @@ object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
         answers.map {
           answer => HtmlFormat.escape(messages(s"whyAreYouMakingADisclosure.$answer")).toString
         }
-        .mkString(",<br/><br/>")
+        .mkString(",<br/>")
       )
     )
 
@@ -220,7 +220,7 @@ object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
         answers.map {
           answer => HtmlFormat.escape(answer).toString
         }
-        .mkString("<br/><br/>")
+        .mkString("<br/>")
       )
     )
 
