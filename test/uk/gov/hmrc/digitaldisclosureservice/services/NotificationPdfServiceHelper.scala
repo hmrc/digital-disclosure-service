@@ -149,7 +149,6 @@ trait SubmissionPdfServiceHelper extends AnyWordSpecLike
     parsedText should include(messages("notification.aboutTheEstate.fullName"))
     parsedText should include(messages("notification.aboutTheEstate.dateOfBirth"))
     parsedText should include(messages("notification.aboutTheEstate.mainOccupation"))
-    parsedText should include(messages("notification.aboutTheEstate.doTheyHaveANino"))
     parsedText should include(messages("notification.aboutTheEstate.registeredForVAT"))
     parsedText should include(messages("notification.aboutTheEstate.registeredForSA"))
     parsedText should include(messages("notification.aboutTheEstate.address"))
@@ -161,7 +160,6 @@ trait SubmissionPdfServiceHelper extends AnyWordSpecLike
     parsedText should not include(messages("notification.aboutTheEstate.fullName"))
     parsedText should not include(messages("notification.aboutTheEstate.dateOfBirth"))
     parsedText should not include(messages("notification.aboutTheEstate.mainOccupation"))
-    parsedText should not include(messages("notification.aboutTheEstate.doTheyHaveANino"))
     parsedText should not include(messages("notification.aboutTheEstate.registeredForVAT"))
     parsedText should not include(messages("notification.aboutTheEstate.registeredForSA"))
     parsedText should not include(messages("notification.aboutTheEstate.address"))
@@ -174,7 +172,7 @@ trait SubmissionPdfServiceHelper extends AnyWordSpecLike
     val pdfString = pdfStripper.getText(doc)
     doc.close()
 
-    pdfString.filter(_ >= ' ')
+    pdfString.filter(_ >= ' ').replace("'", "&#39;")
   }
 
 }

@@ -371,9 +371,9 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           address = Some(address("you"))
         )
         val aboutTheIndividual = AboutTheIndividual(  
-          fullName = Some("Some individual's name"),
+          fullName = Some("Some individual&#39;s name"),
           dateOfBirth = Some(LocalDate.now()),
-          mainOccupation = Some("Some individual's occupation"),
+          mainOccupation = Some("Some individual&#39;s occupation"),
           doTheyHaveANino = Some(YesNoOrUnsure.No),
           registeredForVAT = Some(YesNoOrUnsure.No),
           registeredForSA = Some(YesNoOrUnsure.No),
@@ -386,8 +386,8 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         testNotFullAboutYouQuestions(parsedText)
         testIndividualQuestions(parsedText)
 
-        parsedText should include(messages("Some individual's name"))
-        parsedText should include(messages("Some individual's occupation"))
+        parsedText should include(messages("Some individual&#39;s name"))
+        parsedText should include(messages("Some individual&#39;s occupation"))
         parsedText should include(addressString(address("individual")))
 
       }
@@ -406,11 +406,11 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           address = Some(address("you"))
         )
         val aboutTheIndividual = AboutTheIndividual(  
-          fullName = Some("Some individual's name"),
+          fullName = Some("Some individual&#39;s name"),
           dateOfBirth = Some(LocalDate.now()),
-          mainOccupation = Some("Some individual's occupation"),
+          mainOccupation = Some("Some individual&#39;s occupation"),
           doTheyHaveANino = Some(YesNoOrUnsure.No),
-          nino = Some("Some individual's nino"),
+          nino = Some("Some individual&#39;s nino"),
           registeredForVAT = Some(YesNoOrUnsure.No),
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("individual"))
@@ -423,7 +423,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         testIndividualQuestions(parsedText)
 
         parsedText should include(messages("notification.aboutTheIndividual.nino"))
-        parsedText should include(messages("Some individual's nino"))
+        parsedText should include(messages("Some individual&#39;s nino"))
       }
 
       "the user has entered the full about the individual section with a VAT Reg Number" in {
@@ -440,12 +440,12 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           address = Some(address("you"))
         )
         val aboutTheIndividual = AboutTheIndividual(  
-          fullName = Some("Some individual's name"),
+          fullName = Some("Some individual&#39;s name"),
           dateOfBirth = Some(LocalDate.now()),
-          mainOccupation = Some("Some individual's occupation"),
+          mainOccupation = Some("Some individual&#39;s occupation"),
           doTheyHaveANino = Some(YesNoOrUnsure.No),
           registeredForVAT = Some(YesNoOrUnsure.No),
-          vatRegNumber = Some("Some individual's VAT number"),
+          vatRegNumber = Some("Some individual&#39;s VAT number"),
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("individual"))
         )
@@ -457,7 +457,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         testIndividualQuestions(parsedText)
 
         parsedText should include(messages("notification.aboutTheIndividual.vatRegNumber"))
-        parsedText should include(messages("Some individual's VAT number"))
+        parsedText should include(messages("Some individual&#39;s VAT number"))
       }
 
       "the user has entered the full about the individual section with an SAUTR" in {
@@ -474,13 +474,13 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           address = Some(address("you"))
         )
         val aboutTheIndividual = AboutTheIndividual(  
-          fullName = Some("Some individual's name"),
+          fullName = Some("Some individual&#39;s name"),
           dateOfBirth = Some(LocalDate.now()),
-          mainOccupation = Some("Some individual's occupation"),
+          mainOccupation = Some("Some individual&#39;s occupation"),
           doTheyHaveANino = Some(YesNoOrUnsure.No),
           registeredForVAT = Some(YesNoOrUnsure.No),
           registeredForSA = Some(YesNoOrUnsure.No),
-          sautr = Some("Some individual's SAUTR"),
+          sautr = Some("Some individual&#39;s SAUTR"),
           address = Some(address("individual"))
         )
         val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, Some(aboutTheIndividual)))
@@ -491,7 +491,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         testIndividualQuestions(parsedText)
 
         parsedText should include(messages("notification.aboutTheIndividual.sautr"))
-        parsedText should include(messages("Some individual's SAUTR"))
+        parsedText should include(messages("Some individual&#39;s SAUTR"))
       }
 
     }
@@ -715,9 +715,9 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           address = Some(address("you"))
         )
         val aboutTheEstate = AboutTheEstate(  
-          fullName = Some("Some estate's name"),
+          fullName = Some("Some estate&#39;s name"),
           dateOfBirth = Some(LocalDate.now()),
-          mainOccupation = Some("Some estate's occupation"),
+          mainOccupation = Some("Some estate&#39;s occupation"),
           doTheyHaveANino = Some(YesNoOrUnsure.No),
           registeredForVAT = Some(YesNoOrUnsure.No),
           registeredForSA = Some(YesNoOrUnsure.No),
@@ -730,8 +730,8 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         testNotFullAboutYouQuestions(parsedText)
         testEstateQuestions(parsedText)
 
-        parsedText should include(messages("Some estate's name"))
-        parsedText should include(messages("Some estate's occupation"))
+        parsedText should include(messages("Some estate&#39;s name"))
+        parsedText should include(messages("Some estate&#39;s occupation"))
         parsedText should include(addressString(address("estate")))
 
       }
@@ -750,11 +750,11 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           address = Some(address("you"))
         )
         val aboutTheEstate = AboutTheEstate(  
-          fullName = Some("Some estate's name"),
+          fullName = Some("Some estate&#39;s name"),
           dateOfBirth = Some(LocalDate.now()),
-          mainOccupation = Some("Some estate's occupation"),
+          mainOccupation = Some("Some estate&#39;s occupation"),
           doTheyHaveANino = Some(YesNoOrUnsure.No),
-          nino = Some("Some estate's nino"),
+          nino = Some("Some estate&#39;s nino"),
           registeredForVAT = Some(YesNoOrUnsure.No),
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("estate"))
@@ -767,7 +767,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         testEstateQuestions(parsedText)
 
         parsedText should include(messages("notification.aboutTheEstate.nino"))
-        parsedText should include(messages("Some estate's nino"))
+        parsedText should include(messages("Some estate&#39;s nino"))
       }
 
       "the user has entered the full about the estate section with a VAT Reg Number" in {
@@ -784,12 +784,12 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           address = Some(address("you"))
         )
         val aboutTheEstate = AboutTheEstate(  
-          fullName = Some("Some estate's name"),
+          fullName = Some("Some estate&#39;s name"),
           dateOfBirth = Some(LocalDate.now()),
-          mainOccupation = Some("Some estate's occupation"),
+          mainOccupation = Some("Some estate&#39;s occupation"),
           doTheyHaveANino = Some(YesNoOrUnsure.No),
           registeredForVAT = Some(YesNoOrUnsure.No),
-          vatRegNumber = Some("Some estate's VAT number"),
+          vatRegNumber = Some("Some estate&#39;s VAT number"),
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("estate"))
         )
@@ -801,7 +801,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         testEstateQuestions(parsedText)
 
         parsedText should include(messages("notification.aboutTheEstate.vatRegNumber"))
-        parsedText should include(messages("Some estate's VAT number"))
+        parsedText should include(messages("Some estate&#39;s VAT number"))
       }
 
       "the user has entered the full about the estate section with an SAUTR" in {
@@ -818,13 +818,13 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           address = Some(address("you"))
         )
         val aboutTheEstate = AboutTheEstate(  
-          fullName = Some("Some estate's name"),
+          fullName = Some("Some estate&#39;s name"),
           dateOfBirth = Some(LocalDate.now()),
-          mainOccupation = Some("Some estate's occupation"),
+          mainOccupation = Some("Some estate&#39;s occupation"),
           doTheyHaveANino = Some(YesNoOrUnsure.No),
           registeredForVAT = Some(YesNoOrUnsure.No),
           registeredForSA = Some(YesNoOrUnsure.No),
-          sautr = Some("Some estate's SAUTR"),
+          sautr = Some("Some estate&#39;s SAUTR"),
           address = Some(address("estate"))
         )
         val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheEstate = Some(aboutTheEstate)))
@@ -835,7 +835,7 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         testEstateQuestions(parsedText)
 
         parsedText should include(messages("notification.aboutTheEstate.sautr"))
-        parsedText should include(messages("Some estate's SAUTR"))
+        parsedText should include(messages("Some estate&#39;s SAUTR"))
       }
 
     }

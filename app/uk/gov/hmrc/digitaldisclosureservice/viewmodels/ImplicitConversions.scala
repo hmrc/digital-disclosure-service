@@ -20,6 +20,7 @@ import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Key
 import models._
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 
 import scala.language.implicitConversions
 
@@ -31,7 +32,7 @@ trait ImplicitConversions {
     Text(messages(string))
 
   implicit def stringToKey(string: String)(implicit messages: Messages): Key =
-    Key(content = Text(messages(string)))
+    Key(content = HtmlContent(messages(string)))
 
   implicit def stringOptionToText(stringOpt: Option[String])(implicit messages: Messages): Text =
     stringOpt.map(stringToText).getOrElse(Text("-"))

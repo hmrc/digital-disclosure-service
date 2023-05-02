@@ -106,7 +106,7 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
         answers.map {
           answer => HtmlFormat.escape(messages(if(disclosingAboutThemselves) s"whyAreYouMakingThisDisclosure.you.$answer" else s"whyAreYouMakingThisDisclosure.${entity.toLowerCase}.$answer")).toString
         }
-        .mkString("<br/><br/>")
+        .mkString("<br/>")
       )
     )
 
@@ -119,7 +119,7 @@ object OffshoreLiabilitiesViewModel extends CurrentTaxYear {
         answers.map {
           answer => HtmlFormat.escape(messages(s"yourLegalInterpretation.$answer")).toString
         }
-        .mkString(",<br/><br/>")
+        .mkString(",<br/>")
       )
     )
 

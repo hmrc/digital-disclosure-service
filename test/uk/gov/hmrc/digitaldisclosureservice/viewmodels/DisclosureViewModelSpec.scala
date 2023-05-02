@@ -137,7 +137,7 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
     "return disclosure Entity row with information for a Trust " in {
       val sourceSet: Set[IncomeOrGainSource] = Set(IncomeOrGainSource.Dividends, IncomeOrGainSource.Interest)
       val background = Background (None, None, Some(DisclosureEntity(Trust, Some(AreYouTheEntity.YesIAm))), None, None, None, None, Some(sourceSet), Some("Other income source"))
-      val expectedSource = messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.dividends") + "<br/><br/>" + messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.interest") + "<br/><br/>" + "Other income source"
+      val expectedSource = messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.dividends") + "<br/>" + messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.interest") + "<br/>" + "Other income source"
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.background.disclosureEntity", ValueViewModel(messages("notification.background.Trust"))),
         SummaryListRowViewModel("disclosure.background.liabilities", ValueViewModel("-")),
@@ -157,7 +157,7 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         other = Some("Some other liability"),
         taxCreditsReceived = Some(true)
       ) 
-      val expectedIssues = messages(s"otherLiabilityIssues.employerLiabilities") + ",<br/><br/>" + messages(s"otherLiabilityIssues.vatIssues")
+      val expectedIssues = messages(s"otherLiabilityIssues.employerLiabilities") + ",<br/>" + messages(s"otherLiabilityIssues.vatIssues")
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.otherLiabilities.issues", ValueViewModel(HtmlContent(expectedIssues))),
         SummaryListRowViewModel("disclosure.otherLiabilities.description", ValueViewModel("Some other liability")),
@@ -174,7 +174,7 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         other = Some("Some other liability"),
         taxCreditsReceived = Some(false)
       ) 
-      val expectedIssues = messages(s"otherLiabilityIssues.employerLiabilities") + ",<br/><br/>" + messages(s"otherLiabilityIssues.vatIssues")
+      val expectedIssues = messages(s"otherLiabilityIssues.employerLiabilities") + ",<br/>" + messages(s"otherLiabilityIssues.vatIssues")
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.otherLiabilities.issues", ValueViewModel(HtmlContent(expectedIssues))),
         SummaryListRowViewModel("disclosure.otherLiabilities.description", ValueViewModel("Some other liability")),
@@ -191,7 +191,7 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         other = Some("Some other liability"),
         taxCreditsReceived = Some(false)
       ) 
-      val expectedIssues = messages(s"otherLiabilityIssues.employerLiabilities") + ",<br/><br/>" + messages(s"otherLiabilityIssues.vatIssues")
+      val expectedIssues = messages(s"otherLiabilityIssues.employerLiabilities") + ",<br/>" + messages(s"otherLiabilityIssues.vatIssues")
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.otherLiabilities.issues", ValueViewModel(HtmlContent(expectedIssues))),
         SummaryListRowViewModel("disclosure.otherLiabilities.description", ValueViewModel("Some other liability")),
@@ -227,7 +227,7 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         email = Some("Some email"),
         telephone = Some("Phone number")
       )
-      val expectedReason = messages(s"whyAreYouMakingADisclosure.govUkGuidance") + ",<br/><br/>" + messages(s"whyAreYouMakingADisclosure.letterFromHMRC")
+      val expectedReason = messages(s"whyAreYouMakingADisclosure.govUkGuidance") + ",<br/>" + messages(s"whyAreYouMakingADisclosure.letterFromHMRC")
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.additional.reason", ValueViewModel(HtmlContent(expectedReason))),
         SummaryListRowViewModel("disclosure.additional.otherReason", ValueViewModel("Some other reason")),
@@ -262,7 +262,7 @@ class DisclosureViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         email = Some("Some email"),
         telephone = Some("Phone number")
       )
-      val expectedReason = messages(s"whyAreYouMakingADisclosure.govUkGuidance") + ",<br/><br/>" + messages(s"whyAreYouMakingADisclosure.letterFromHMRC")
+      val expectedReason = messages(s"whyAreYouMakingADisclosure.govUkGuidance") + ",<br/>" + messages(s"whyAreYouMakingADisclosure.letterFromHMRC")
       val expected = SummaryListViewModel(Seq(
         SummaryListRowViewModel("disclosure.additional.reason", ValueViewModel(HtmlContent(expectedReason))),
         SummaryListRowViewModel("disclosure.additional.otherReason", ValueViewModel("Some other reason")),

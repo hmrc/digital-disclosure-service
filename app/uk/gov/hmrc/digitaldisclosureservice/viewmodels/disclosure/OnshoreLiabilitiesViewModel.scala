@@ -115,7 +115,7 @@ object OnshoreLiabilitiesViewModel extends CurrentTaxYear {
         answers.map {
           answer => HtmlFormat.escape(messages(if(disclosingAboutThemselves) s"whyAreYouMakingThisDisclosure.you.$answer" else s"whyAreYouMakingThisDisclosure.${entity.toLowerCase}.$answer")).toString
         }
-        .mkString("<br/><br/>")
+        .mkString("<br/>")
       )
     )
 
