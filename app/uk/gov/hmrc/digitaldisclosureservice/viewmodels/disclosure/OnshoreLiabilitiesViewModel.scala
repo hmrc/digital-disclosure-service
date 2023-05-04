@@ -60,7 +60,7 @@ object OnshoreLiabilitiesViewModel extends CurrentTaxYear {
 
   def apply(onshoreLiabilities: OnshoreLiabilities, disclosingAboutThemselves: Boolean, entity: String, offerAmount: Option[BigInt], caseflowDateFormat: Boolean)(implicit messages: Messages): OnshoreLiabilitiesViewModel = {
 
-    val taxYears: Seq[OnshoreTaxYearWithLiabilities] = onshoreLiabilities.taxYearLiabilities.getOrElse(Map()).values.toSeq
+    val taxYears: Seq[OnshoreTaxYearWithLiabilities] = onshoreLiabilities.taxYearLiabilities.getOrElse(Map()).values.toSeq.sortBy(_.taxYear)
   
     val lettingDeduction = onshoreLiabilities.lettingDeductions.getOrElse(Map())
     val taxYearLists: Seq[(Int, SummaryList)] = taxYears.map(year => (year.taxYear.startYear, taxYearWithLiabilitiesToSummaryList(year, lettingDeduction.get(year.taxYear.startYear.toString))))
