@@ -20,5 +20,5 @@
 
 @(headingKey: String, list: SummaryList, id: String = "")(implicit messages: Messages)
 
-<h2 class="govuk-heading-l" id="@id">@messages(headingKey)</h2>
+<h2 class="govuk-heading-l" id="@id">@HtmlContent(messages(headingKey)).asHtml</h2>
 @govukSummaryList(list)

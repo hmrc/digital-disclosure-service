@@ -111,7 +111,7 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
         view.select("h2").text() should include(messages("disclosure.heading.completing"))
         view.select("h2").text() should include(messages("disclosure.onshore.heading"))
         view.select("h2").text() should include(messages("disclosure.onshore.year", "2013"))
-        view.select("h2").text() should include(messages("disclosure.onshore.director.heading", "1"))
+        view.select("h2").text() should include(messages("disclosure.onshore.director.heading", "1").replace("&#39;", "'"))
         view.select("h2").text() should include(messages("disclosure.onshore.ct.heading", "1"))
         view.select("h2").text() should include(messages("disclosure.offshore.heading"))
         view.select("h2").text() should include(messages("disclosure.offshore.year", "2013"))
