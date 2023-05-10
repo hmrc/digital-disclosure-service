@@ -182,7 +182,7 @@ disclosure.offshore.penaltyRate = Penalty
 disclosure.offshore.penalty = Penalty amount
 disclosure.offshore.penaltyReason = Reason for penalty rate
 disclosure.offshore.undeclaredIncomeOrGain = Where the income or gain came from
-disclosure.offshore.deductions = Deductions
+disclosure.offshore.deductions = Amount of foreign tax credit relief deducted
 disclosure.offshore.total = Amount due
 
 #===================================================
@@ -217,7 +217,7 @@ disclosure.onshore.penaltyRate = Penalty
 disclosure.onshore.penalty = Penalty amount
 disclosure.onshore.penaltyReason = Reason for penalty rate
 disclosure.onshore.undeclaredIncomeOrGain = Where the income or gain came from
-disclosure.onshore.deductions = Deductions
+disclosure.onshore.deductions = Amount of residential finance costs deducted
 disclosure.onshore.total = Amount due
 
 #===================================================
