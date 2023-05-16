@@ -37,7 +37,7 @@ class DisclosureSubmissionController @Inject()(
 
   def submit: Action[JsValue] = auth.authorizedAction(internalAuthPermission("submit")).async(parse.json) { implicit request =>
     withValidJson[FullDisclosure]{ disclosure =>
-      submissionService.submit(disclosure).map(_ match {
+      submissionService.submit(disclosure, getLanguage).map(_ match {
         case SubmissionResponse.Success(id) => Accepted(Json.toJson(SubmissionResponse.Success(id)))
         case SubmissionResponse.Failure(errors) => InternalServerError(Json.toJson(SubmissionResponse.Failure(errors)))
       })

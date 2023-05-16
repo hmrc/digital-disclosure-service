@@ -59,7 +59,7 @@ class DisclosureSubmissionControllerSpec extends AnyWordSpec with Matchers with 
   
   "POST /disclosure/submit" should {
     "return 202 where the service returns a Success" in {
-      when(mockSubmissionService.submit(refEq(testDisclosure))(any(), any())) thenReturn Future.successful(SubmissionResponse.Success("id"))
+      when(mockSubmissionService.submit(refEq(testDisclosure), any())(any(), any())) thenReturn Future.successful(SubmissionResponse.Success("id"))
 
       val fakeRequest = FakeRequest(method = "GET", uri = "/disclosure", headers = FakeHeaders(Seq("Authorization" -> "Token some-token")), body = Json.toJson(testDisclosure))
       val result = controller.submit()(fakeRequest)
@@ -71,7 +71,7 @@ class DisclosureSubmissionControllerSpec extends AnyWordSpec with Matchers with 
 
   "POST /disclosure/submit" should {
     "return 500 where the service returns a Failure" in {
-      when(mockSubmissionService.submit(refEq(testDisclosure))(any(), any())) thenReturn Future.successful(SubmissionResponse.Failure(Seq("error1", "error2")))
+      when(mockSubmissionService.submit(refEq(testDisclosure), any())(any(), any())) thenReturn Future.successful(SubmissionResponse.Failure(Seq("error1", "error2")))
 
       val fakeRequest = FakeRequest(method = "GET", uri = "/disclosure", headers = FakeHeaders(Seq("Authorization" -> "Token some-token")), body = Json.toJson(testDisclosure))
       val result = controller.submit()(fakeRequest)

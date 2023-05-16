@@ -16,8 +16,10 @@
 
 package controllers
 
+import play.api.i18n.Lang
+
 import scala.concurrent.Future
-import play.api.mvc.{Request, Result, ControllerComponents}
+import play.api.mvc.{ControllerComponents, Request, Result}
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import play.api.libs.json.{JsSuccess, JsValue, Reads}
 
@@ -28,5 +30,15 @@ abstract class BaseController(cc: ControllerComponents) extends BackendControlle
       case JsSuccess(value, _) => f(value)
       case _ => Future.successful(BadRequest("Invalid JSON"))
     }
+
+  def getLanguage(implicit request:Request[JsValue]): String = {
+    val acceptedLanguages: Seq[Lang] = request.acceptLanguages
+    val preferredLanguage: Option[Lang] = acceptedLanguages.headOption
+
+    preferredLanguage match {
+      case Some(lang) => lang.code
+      case None => "en"
+    }
+  }
 
 }

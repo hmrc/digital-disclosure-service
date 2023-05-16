@@ -41,7 +41,8 @@ class NotificationPDFController @Inject()(
 
   def generate: Action[JsValue] = auth.authorizedAction(internalAuthPermission("pdf")).async(parse.json) { implicit request =>
     withValidJson[Notification]{ notification =>
-      val pdf = service.generatePdfHtml(notification, false).getBytes
+
+      val pdf = service.generatePdfHtml(notification, false, getLanguage).getBytes
       val contentLength = Some(pdf.length.toLong)
 
       Future.successful(Result(

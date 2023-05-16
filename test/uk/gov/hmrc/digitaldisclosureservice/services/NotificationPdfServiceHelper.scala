@@ -167,7 +167,7 @@ trait SubmissionPdfServiceHelper extends AnyWordSpecLike
 
   def stripPDFToString(notification: Notification): String = {
     val pdfStripper = new PDFTextStripper()
-    val response = testPdfService.createPdf(notification, false)
+    val response = testPdfService.createPdf(notification, false, "en")
     val doc = PDDocument.load(response.byteArray)
     val pdfString = pdfStripper.getText(doc)
     doc.close()

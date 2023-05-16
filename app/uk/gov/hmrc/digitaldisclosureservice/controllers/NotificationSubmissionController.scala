@@ -37,7 +37,7 @@ class NotificationSubmissionController @Inject()(
 
   def submit: Action[JsValue] = auth.authorizedAction(internalAuthPermission("submit")).async(parse.json) { implicit request =>
     withValidJson[Notification]{ notification =>
-      submissionService.submit(notification).map(_ match {
+      submissionService.submit(notification, getLanguage).map(_ match {
         case SubmissionResponse.Success(id) => Accepted(Json.toJson(SubmissionResponse.Success(id)))
         case SubmissionResponse.Failure(errors) => InternalServerError(Json.toJson(SubmissionResponse.Failure(errors)))
       })

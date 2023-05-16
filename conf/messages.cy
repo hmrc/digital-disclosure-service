@@ -59,10 +59,10 @@ disclosure.metadata.submissionTime = Datgeliad wedi’i gyflwyno ar
 #  Background
 #===================================================
 
-notification.background.haveYouReceivedALetter = Are you making a disclosure because you have received a letter from HMRC?
+notification.background.haveYouReceivedALetter = A fyddwch yn gwneud datgeliad oherwydd eich bod wedi cael llythyr gan CThEF?
 notification.background.offshore = Rhwymedigaethau alltraeth
 notification.background.onshore = Rhwymedigaethau artraeth
-notification.background.both = Offshore and onshore liabilities
+notification.background.both = Rhwymedigaethau atraeth ac alltraeth
 notification.background.liabilities = Bydd y datgeliad yn ymwneud â
 notification.background.disclosureEntity = Y sawl y bydd y datgeliad yn ymwneud ag ef
 notification.background.Individual = Unigolyn
@@ -71,7 +71,7 @@ notification.background.LLP = Partneriaeth atebolrwydd cyfyngedig
 notification.background.Trust = Ymddiriedolaeth
 notification.background.Estate = Ystâd
 notification.background.areYouRepresetingAnOrganisation = A ydych yn cynrychioli sefydliad?
-notification.background.organisationName = The name of the organisation you represent
+notification.background.organisationName = Enw’r sefydliad rydych yn ei gynrychioli
 
 disclosure.background.liabilities = Mae'r datgeliad ar gyfer
 disclosure.background.disclosureEntity = Mae'r datgeliad yn ymwneud â
@@ -137,11 +137,11 @@ notification.aboutTheLLP.address = Cyfeiriad y bartneriaeth atebolrwydd cyfynged
 notification.aboutTheEstate.fullName = Enw llawn y person
 notification.aboutTheEstate.dateOfBirth = Dyddiad geni’r person
 notification.aboutTheEstate.mainOccupation = Prif swydd y person
-notification.aboutTheEstate.doTheyHaveANino = Did the person have a National Insurance number, as far as you’re aware?
+notification.aboutTheEstate.doTheyHaveANino = A oedd gan y person rif Yswiriant Gwladol, hyd eithaf eich gwybodaeth?
 notification.aboutTheEstate.nino = Rhif Yswiriant Gwladol y Person
-notification.aboutTheEstate.registeredForVAT = Was the person registered for VAT, as far you’re aware?
+notification.aboutTheEstate.registeredForVAT = A oedd y person wedi cofrestru ar gyfer TAW, hyd eithaf eich gwybodaeth?
 notification.aboutTheEstate.vatRegNumber = Rhif cofrestru TAW y person
-notification.aboutTheEstate.registeredForSA = Was the person registered for Self Assessment, as far as you’re aware?
+notification.aboutTheEstate.registeredForSA = A oedd y person wedi cofrestru ar gyfer Hunanasesiad, hyd eithaf eich gwybodaeth?
 notification.aboutTheEstate.sautr = Cyfeirnod Unigryw y Trethdalwr y person
 notification.aboutTheEstate.address = Cyfeiriad y person
 
@@ -155,7 +155,7 @@ disclosure.offshore.country = Country or territory of the offshore liability
 #  Offshore liabilities
 #===================================================
 
-disclosure.offshore.heading = Offshore liabilities
+disclosure.offshore.heading = Rhwymedigaethau alltraeth
 disclosure.offshore.reason = Rheswm dros y datgeliad
 disclosure.offshore.reasonableExcuse = Esgus rhesymol dros beidio â rhoi gwybod i CThEF am rwymedigaeth treth
 disclosure.offshore.reasonableExcuse.years = Blynyddoedd treth y mae’r esgus rhesymol hwn yn berthnasol iddynt

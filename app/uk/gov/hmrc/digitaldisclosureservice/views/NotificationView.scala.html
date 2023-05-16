@@ -24,14 +24,14 @@
     assetsConfig: AssetsConfig
 )
 
-@(notification: NotificationViewModel)(implicit messages: Messages)
+@(notification: NotificationViewModel, lang:String)(implicit messages: Messages)
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@lang">
 
     <head>
         <title>@messages("pdf.title.notification")</title>
-        <meta name="Lang" content="en"/>
+        <meta name="Lang" content="@lang"/>
         <meta name="subject" content="DDS Notification"/>
         <meta name="about" content="HMRC PDFA Document"/>
         <meta name="author" content="HMRC"/>

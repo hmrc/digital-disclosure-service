@@ -17,15 +17,17 @@
 package controllers
 
 import play.api.mvc.{Action, ControllerComponents}
+
 import javax.inject.{Inject, Singleton}
-import play.api.libs.json.{JsValue}
+import play.api.libs.json.JsValue
 import models.FullDisclosure
 import services.SubmissionPdfService
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Result, ResponseHeader}
+import play.api.i18n.{I18nSupport, Lang, Langs, MessagesApi}
+import play.api.mvc.{ResponseHeader, Result}
 import play.api.http.HttpEntity
 import akka.stream.scaladsl.Source
 import akka.util.ByteString
+
 import scala.concurrent.Future
 import play.api.Logging
 import uk.gov.hmrc.internalauth.client._
@@ -42,7 +44,7 @@ class DisclosurePDFController @Inject()(
   def generate: Action[JsValue] = auth.authorizedAction(internalAuthPermission("pdf")).async(parse.json) { implicit request =>
     withValidJson[FullDisclosure]{ disclosure =>
 
-      val pdf = service.generatePdfHtml(disclosure, false).getBytes
+      val pdf = service.generatePdfHtml(disclosure, false, getLanguage).getBytes
       val contentLength = Some(pdf.length.toLong)
 
       Future.successful(Result(

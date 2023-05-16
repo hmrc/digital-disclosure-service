@@ -59,7 +59,7 @@ disclosure.metadata.submissionTime = Disclosure submitted on
 #  Background
 #===================================================
 
-notification.background.haveYouReceivedALetter = Are you making a disclosure because you have received a letter from HMRC?
+notification.background.haveYouReceivedALetter = Will you be making a disclosure because you received a letter from HMRC?
 notification.background.offshore = Offshore liabilities
 notification.background.onshore = Onshore liabilities
 notification.background.both = Offshore and onshore liabilities
