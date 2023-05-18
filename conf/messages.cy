@@ -21,12 +21,12 @@ disclosure.h1 = Datgeliad
 disclosure.heading.metadata = Manylion y datgeliad
 disclosure.heading.background = Cefndir
 disclosure.heading.aboutYou = Amdanoch chi
-disclosure.heading.completing = Y person sy’n llenwi’r datgeliad
+disclosure.heading.completing = Y person sy&#39;n llenwi&#39;r datgeliad
 disclosure.heading.aboutTheIndividual = The individual the disclosure will be about
-disclosure.heading.aboutTheCompany = Y cwmni y mae’r datgeliad yn ymwneud ag ef
+disclosure.heading.aboutTheCompany = Y cwmni y mae&#39;r datgeliad yn ymwneud ag ef
 disclosure.heading.aboutTheTrust = Yr ymddiriedolaeth y bydd y datgeliad yn ymwneud â hi
-disclosure.heading.aboutTheLLP = Y bartneriaeth atebolrwydd cyfyngedig mae’r datgeliad yn ymwneud â hi
-disclosure.heading.aboutTheEstate = Y person y mae’r datgeliad yn ymwneud ag ef
+disclosure.heading.aboutTheLLP = Y bartneriaeth atebolrwydd cyfyngedig mae&#39;r datgeliad yn ymwneud â hi
+disclosure.heading.aboutTheEstate = Y person y mae&#39;r datgeliad yn ymwneud ag ef
 
 #===================================================
 #  Section headings
@@ -34,10 +34,10 @@ disclosure.heading.aboutTheEstate = Y person y mae’r datgeliad yn ymwneud ag e
 notification.heading.metadata = NManylion yr hysbysiad
 notification.heading.background = Cefndir
 notification.heading.aboutYou = Amdanoch chi
-notification.heading.completing = Y person sy’n llenwi’r hysbysiad
+notification.heading.completing = Y person sy&#39;n llenwi&#39;r hysbysiad
 notification.heading.aboutTheIndividual = The individual the disclosure will be about
 notification.heading.aboutTheCompany = Y cwmni y bydd y datgeliad yn ymwneud ag ef
-notification.heading.aboutTheTrust = Yr ymddiriedolaeth mae’r datgeliad yn ymwneud â hi
+notification.heading.aboutTheTrust = Yr ymddiriedolaeth mae&#39;r datgeliad yn ymwneud â hi
 notification.heading.aboutTheLLP = Y bartneriaeth atebolrwydd cyfyngedig y bydd y datgeliad yn ymwneud â hi
 notification.heading.aboutTheEstate = Y person y bydd datgeliad yn ymwneud ag ef
 
@@ -51,9 +51,9 @@ notification.metadata.submissionTime = Anfonwyd yr hysbysiad ar
 #===================================================
 #  Disclosure Metadata
 #===================================================
-disclosure.metadata.reference = Rhif cyflwyno’r datgeliad
+disclosure.metadata.reference = Rhif cyflwyno&#39;r datgeliad
 disclosure.metadata.caseRef = Cyfeirnod yr achos
-disclosure.metadata.submissionTime = Datgeliad wedi’i gyflwyno ar
+disclosure.metadata.submissionTime = Datgeliad wedi&#39;i gyflwyno ar
 
 #===================================================
 #  Background
@@ -71,10 +71,10 @@ notification.background.LLP = Partneriaeth atebolrwydd cyfyngedig
 notification.background.Trust = Ymddiriedolaeth
 notification.background.Estate = Ystâd
 notification.background.areYouRepresetingAnOrganisation = A ydych yn cynrychioli sefydliad?
-notification.background.organisationName = Enw’r sefydliad rydych yn ei gynrychioli
+notification.background.organisationName = Enw&#39;r sefydliad rydych yn ei gynrychioli
 
-disclosure.background.liabilities = Mae'r datgeliad ar gyfer
-disclosure.background.disclosureEntity = Mae'r datgeliad yn ymwneud â
+disclosure.background.liabilities = Mae&#39;r datgeliad ar gyfer
+disclosure.background.disclosureEntity = Mae&#39;r datgeliad yn ymwneud â
 
 #===================================================
 #  About you
@@ -98,13 +98,13 @@ notification.aboutYou.address = Eich cyfeiriad
 #===================================================
 
 notification.aboutTheIndividual.fullName = Enw llawn yr unigolyn
-notification.aboutTheIndividual.dateOfBirth = Dyddiad geni’r unigolyn
+notification.aboutTheIndividual.dateOfBirth = Dyddiad geni&#39;r unigolyn
 notification.aboutTheIndividual.mainOccupation = Prif swydd yr unigolyn
 notification.aboutTheIndividual.doTheyHaveANino = A oes gan yr unigolyn rif Yswiriant Gwladol, hyd eithaf eich gwybodaeth?
 notification.aboutTheIndividual.nino = Rhif Yswiriant Gwladol yr unigolyn
-notification.aboutTheIndividual.registeredForVAT = A yw’r unigolyn wedi’i gofrestru ar gyfer TAW, hyd eithaf eich gwybodaeth?
+notification.aboutTheIndividual.registeredForVAT = A yw&#39;r unigolyn wedi&#39;i gofrestru ar gyfer TAW, hyd eithaf eich gwybodaeth?
 notification.aboutTheIndividual.vatRegNumber = Rhif cofrestru TAW yr unigolyn
-notification.aboutTheIndividual.registeredForSA = A yw’r unigolyn wedi’i gofrestru ar gyfer Hunanasesiad, hyd eithaf eich gwybodaeth?
+notification.aboutTheIndividual.registeredForSA = A yw&#39;r unigolyn wedi&#39;i gofrestru ar gyfer Hunanasesiad, hyd eithaf eich gwybodaeth?
 notification.aboutTheIndividual.sautr = Cyfeirnod Unigryw y Trethdalwr yr unigolyn
 notification.aboutTheIndividual.address = Cyfeiriad yr unigolyn
 
@@ -112,22 +112,22 @@ notification.aboutTheIndividual.address = Cyfeiriad yr unigolyn
 #  About the company
 #===================================================
 
-notification.aboutTheCompany.name = Enw’r cwmni
-notification.aboutTheCompany.registrationNumber =  Rhif cofrestru’r cwmni
+notification.aboutTheCompany.name = Enw&#39;r cwmni
+notification.aboutTheCompany.registrationNumber =  Rhif cofrestru&#39;r cwmni
 notification.aboutTheCompany.address = Cyfeiriad y cwmni
 
 #===================================================
 #  About the trust
 #===================================================
 
-notification.aboutTheTrust.name = Enw’r ymddiriedolaeth
+notification.aboutTheTrust.name = Enw&#39;r ymddiriedolaeth
 notification.aboutTheTrust.address = Cyfeiriad yr ymddiriedolaeth
 
 #===================================================
 #  About the LLP
 #=================================================== 
 
-notification.aboutTheLLP.name = Enw’r bartneriaeth atebolrwydd cyfyngedig
+notification.aboutTheLLP.name = Enw&#39;r bartneriaeth atebolrwydd cyfyngedig
 notification.aboutTheLLP.address = Cyfeiriad y bartneriaeth atebolrwydd cyfyngedig
 
 #===================================================
@@ -135,7 +135,7 @@ notification.aboutTheLLP.address = Cyfeiriad y bartneriaeth atebolrwydd cyfynged
 #===================================================
 
 notification.aboutTheEstate.fullName = Enw llawn y person
-notification.aboutTheEstate.dateOfBirth = Dyddiad geni’r person
+notification.aboutTheEstate.dateOfBirth = Dyddiad geni&#39;r person
 notification.aboutTheEstate.mainOccupation = Prif swydd y person
 notification.aboutTheEstate.doTheyHaveANino = A oedd gan y person rif Yswiriant Gwladol, hyd eithaf eich gwybodaeth?
 notification.aboutTheEstate.nino = Rhif Yswiriant Gwladol y Person
@@ -158,15 +158,15 @@ disclosure.offshore.country = Country or territory of the offshore liability
 disclosure.offshore.heading = Rhwymedigaethau alltraeth
 disclosure.offshore.reason = Rheswm dros y datgeliad
 disclosure.offshore.reasonableExcuse = Esgus rhesymol dros beidio â rhoi gwybod i CThEF am rwymedigaeth treth
-disclosure.offshore.reasonableExcuse.years = Blynyddoedd treth y mae’r esgus rhesymol hwn yn berthnasol iddynt
-disclosure.offshore.reasonableCare = Gofal rhesymol wedi’i gymryd wrth gyflwyno Ffurflen Dreth wallus
-disclosure.offshore.reasonableCare.years = Blynyddoedd treth y mae’r gofal rhesymol yn berthnasol iddynt
+disclosure.offshore.reasonableExcuse.years = Blynyddoedd treth y mae&#39;r esgus rhesymol hwn yn berthnasol iddynt
+disclosure.offshore.reasonableCare = Gofal rhesymol wedi&#39;i gymryd wrth gyflwyno Ffurflen Dreth wallus
+disclosure.offshore.reasonableCare.years = Blynyddoedd treth y mae&#39;r gofal rhesymol yn berthnasol iddynt
 disclosure.offshore.notfileExcuse = Esgus rhesymol dros beidio â chyflwyno Ffurflen Dreth
-disclosure.offshore.notfileExcuse.years = Blynyddoedd treth y mae’r esgus rhesymol hwn yn berthnasol iddynt
+disclosure.offshore.notfileExcuse.years = Blynyddoedd treth y mae&#39;r esgus rhesymol hwn yn berthnasol iddynt
 disclosure.offshore.cdf = Ystyriwyd CDF?
 disclosure.offshore.notIncluding = Reason for not including tax years ending {0}
 disclosure.offshore.before = Treth a oedd yn ddyledus cyn 6 Ebrill {0}
-disclosure.offshore.noLiabilities = Dim rhwymedigaethau alltraeth i’w datgelu
+disclosure.offshore.noLiabilities = Dim rhwymedigaethau alltraeth i&#39;w datgelu
 
 #===================================================
 #  Offshore liabilities - per year
@@ -175,32 +175,32 @@ disclosure.offshore.year = Tax year ending {0}
 disclosure.offshore.income = Incwm alltraeth
 disclosure.offshore.gains = Offshore gains
 disclosure.offshore.transfers = Trosglwyddiadau trethadwy
-disclosure.offshore.tax = Treth sy’n ddyledus
-disclosure.offshore.ni = Cyfraniadau Yswiriant Gwladol sy’n ddyledus
-disclosure.offshore.interest = Llog sy’n ddyledus
+disclosure.offshore.tax = Treth sy&#39;n ddyledus
+disclosure.offshore.ni = Cyfraniadau Yswiriant Gwladol sy&#39;n ddyledus
+disclosure.offshore.interest = Llog sy&#39;n ddyledus
 disclosure.offshore.penaltyRate = Cyfradd y gosb
 disclosure.offshore.penalty = Swm y gosb
 disclosure.offshore.penaltyReason = Rheswm dros gyfradd y gosb
-disclosure.offshore.undeclaredIncomeOrGain = O ble y daeth yr incwm neu’r enillion
+disclosure.offshore.undeclaredIncomeOrGain = O ble y daeth yr incwm neu&#39;r enillion
 disclosure.offshore.deductions = Didyniadau
-disclosure.offshore.total = Swm sy’n ddyledus
+disclosure.offshore.total = Swm sy&#39;n ddyledus
 
 #===================================================
 #  Offshore liabilities
 #===================================================
 
-disclosure.offshore.incomeFrom = O ble y daeth yr incwm neu’r enillion
+disclosure.offshore.incomeFrom = O ble y daeth yr incwm neu&#39;r enillion
 disclosure.offshore.legal = Ystyriaethau cyfreithiol dros beidio â chynnwys unrhyw swm o dreth
 disclosure.offshore.legal.other = Y mater arall a ystyriwyd gennych wrth beidio â chynnwys unrhyw swm o dreth
 disclosure.offshore.notInc = Swm y dreth sydd heb ei gynnwys
-disclosure.offshore.maxValue = Uchafswm gwerth yr holl asedion a gedwir y tu allan i’r DU ar unrhyw adeg dros y 5 mlynedd diwethaf
+disclosure.offshore.maxValue = Uchafswm gwerth yr holl asedion a gedwir y tu allan i&#39;r DU ar unrhyw adeg dros y 5 mlynedd diwethaf
 
 #===================================================
 #  Onshore liabilities
 #===================================================
 
 disclosure.onshore.heading = Rhwymedigaethau artraeth
-disclosure.onshore.noLiabilities = Dim rhwymedigaethau artraeth i’w datgelu
+disclosure.onshore.noLiabilities = Dim rhwymedigaethau artraeth i&#39;w datgelu
 
 #===================================================
 #  Onshore liabilities - per year
@@ -209,16 +209,16 @@ disclosure.onshore.year = Tax year ending {0}
 disclosure.onshore.businessIncome = Incwm busnes
 disclosure.onshore.gains = Enillion cyfalaf
 disclosure.onshore.lettingIncome = Incwm o roi eiddo ar osod
-disclosure.onshore.nonBusinessIncome = Incwm nad yw’n ymwneud â busnes
-disclosure.onshore.tax = Treth sy’n ddyledus
-disclosure.onshore.ni = Cyfraniadau Yswiriant Gwladol sy’n ddyledus
-disclosure.onshore.interest = Llog sy’n ddyledus
+disclosure.onshore.nonBusinessIncome = Incwm nad yw&#39;n ymwneud â busnes
+disclosure.onshore.tax = Treth sy&#39;n ddyledus
+disclosure.onshore.ni = Cyfraniadau Yswiriant Gwladol sy&#39;n ddyledus
+disclosure.onshore.interest = Llog sy&#39;n ddyledus
 disclosure.onshore.penaltyRate = Cyfradd y gosb
 disclosure.onshore.penalty = Swm y gosb
 disclosure.onshore.penaltyReason = Rheswm dros gyfradd y gosb
-disclosure.onshore.undeclaredIncomeOrGain = O ble y daeth yr incwm neu’r enillion
+disclosure.onshore.undeclaredIncomeOrGain = O ble y daeth yr incwm neu&#39;r enillion
 disclosure.onshore.deductions = Didyniadau
-disclosure.onshore.total = Swm sy’n ddyledus
+disclosure.onshore.total = Swm sy&#39;n ddyledus
 
 #===================================================
 #  Onshore liabilities - corporation tax
@@ -226,27 +226,27 @@ disclosure.onshore.total = Swm sy’n ddyledus
 disclosure.onshore.ct.heading = Rhwymedigaeth Treth Gorfforaeth artraeth {0}
 disclosure.onshore.accountingPeriod = Dyddiad diwedd y cyfnod cyfrifyddu
 disclosure.onshore.ct.income = Incwm
-disclosure.onshore.corporationTax = Treth Gorfforaeth sy’n ddyledus
-disclosure.onshore.ct.total = Y cyfanswm sy’n ddyledus ar gyfer rhwymedigaeth Treth Gorfforaeth
+disclosure.onshore.corporationTax = Treth Gorfforaeth sy&#39;n ddyledus
+disclosure.onshore.ct.total = Y cyfanswm sy&#39;n ddyledus ar gyfer rhwymedigaeth Treth Gorfforaeth
 
 #===================================================
 #  Onshore liabilities - director loan
 #===================================================
 disclosure.onshore.director.heading = Rhwymedigaeth cyfrif benthyg y cyfarwyddwr artraeth {0}
-disclosure.onshore.director.name = Enw’r cyfarwyddwr
+disclosure.onshore.director.name = Enw&#39;r cyfarwyddwr
 disclosure.onshore.director.overdrawn = Y swm a gafodd ei or-dynnu
-disclosure.onshore.director.total = Y cyfanswm sy’n ddyledus ar gyfer rhwymedigaeth cyfrif benthyg y cyfarwyddwr
+disclosure.onshore.director.total = Y cyfanswm sy&#39;n ddyledus ar gyfer rhwymedigaeth cyfrif benthyg y cyfarwyddwr
 
 #===================================================
 #  Totals
 #===================================================
 
-disclosure.totals.heading = Y cyfanswm sy’n ddyledus
-disclosure.totals.tax = Cyfanswm y dreth sy’n ddyledus
-disclosure.totals.niContributions = Cyfanswm y cyfraniadau Yswiriant Gwladol sy’n ddyledus
-disclosure.totals.interest = Cyfanswm y llog sy’n ddyledus
-disclosure.totals.penalty = Cyfanswm y cosbau sy’n ddyledus
-disclosure.totals.amount = Y cyfanswm sy’n ddyledus
+disclosure.totals.heading = Y cyfanswm sy&#39;n ddyledus
+disclosure.totals.tax = Cyfanswm y dreth sy&#39;n ddyledus
+disclosure.totals.niContributions = Cyfanswm y cyfraniadau Yswiriant Gwladol sy&#39;n ddyledus
+disclosure.totals.interest = Cyfanswm y llog sy&#39;n ddyledus
+disclosure.totals.penalty = Cyfanswm y cosbau sy&#39;n ddyledus
+disclosure.totals.amount = Y cyfanswm sy&#39;n ddyledus
 disclosure.totals.offer = Swm y cynnig
 
 #===================================================
@@ -255,22 +255,22 @@ disclosure.totals.offer = Swm y cynnig
 disclosure.onshore.letting.heading = Eiddo gosod {0}
 disclosure.property.address = Cyfeiriad yr eiddo
 disclosure.property.firstLet = Pryd y cafodd yr eiddo ei roi ar osod am y tro cyntaf?
-disclosure.property.stoppedLet = A ydy'r eiddo wedi stopio cael ei roi ar osod?
+disclosure.property.stoppedLet = A ydy&#39;r eiddo wedi stopio cael ei roi ar osod?
 disclosure.property.stoppedLetDate = Pryd y daeth gosod yr eiddo i ben
-disclosure.property.happenedTo = Beth sydd wedi digwydd i’r eiddo ers iddo beidio â bod ar osod?
-disclosure.property.furnished = A oedd yr eiddo wedi’i ddodrefnu?
-disclosure.property.fhl = A oedd yr eiddo’n bodloni’r meini prawf cymhwysol i gael ei drin fel FHL?
-disclosure.property.joint = A oedd yr eiddo wedi’i berchen ar y cyd â pherson arall?
+disclosure.property.happenedTo = Beth sydd wedi digwydd i&#39;r eiddo ers iddo beidio â bod ar osod?
+disclosure.property.furnished = A oedd yr eiddo wedi&#39;i ddodrefnu?
+disclosure.property.fhl = A oedd yr eiddo&#39;n bodloni&#39;r meini prawf cymhwysol i gael ei drin fel FHL?
+disclosure.property.joint = A oedd yr eiddo wedi&#39;i berchen ar y cyd â pherson arall?
 disclosure.property.share = Cyfran ganrannol a gafwyd
 disclosure.property.mortgage = A oedd morgais ar yr eiddo?
 disclosure.property.mortgageType = Math o forgais
-disclosure.property.mortgageType.capitalRepayment = Ad-dalu’r cyfalaf
+disclosure.property.mortgageType.capitalRepayment = Ad-dalu&#39;r cyfalaf
 disclosure.property.mortgageType.interestOnly = Llog yn unig
-disclosure.property.lettingAgent = A oedd asiant gosod eiddo wedi’i ddefnyddio i roi’r eiddo ar osod neu reoli'r eiddo?
+disclosure.property.lettingAgent = A oedd asiant gosod eiddo wedi&#39;i ddefnyddio i roi&#39;r eiddo ar osod neu reoli&#39;r eiddo?
 disclosure.property.collectRent = A wnaeth yr asiant gasglu rhent ar eich rhan?
 
 disclosure.property.landlord = A ydych yn aelod o unrhyw gymdeithasau landlordiaid?
-disclosure.property.associationMembership = Enw’r cymdeithasau landlordiaid rydych yn aelod ohonynt
+disclosure.property.associationMembership = Enw&#39;r cymdeithasau landlordiaid rydych yn aelod ohonynt
 disclosure.property.numberOfProperties = Nifer o eiddo sydd ar osod ar hyn o bryd
 
 #===================================================
@@ -279,11 +279,11 @@ disclosure.property.numberOfProperties = Nifer o eiddo sydd ar osod ar hyn o bry
 
 disclosure.otherLiabilities.heading = Rhwymedigaethau eraill
 disclosure.otherLiabilities.issues = Materion rhwymedigaethau eraill
-disclosure.otherLiabilities.description = Disgrifiad o’r materion rhwymedigaeth eraill
+disclosure.otherLiabilities.description = Disgrifiad o&#39;r materion rhwymedigaeth eraill
 disclosure.otherLiabilities.transfer = Trosglwyddiad trethadwy
-disclosure.otherLiabilities.taxCredits.you = A gawsoch gredydau treth ar gyfer unrhyw un o’r blynyddoedd a gwmpesir gan eich datgeliad?
-disclosure.otherLiabilities.taxCredits.individual = A gafodd yr unigolyn gredydau treth ar gyfer unrhyw rai o’r blynyddoedd a gwmpesir gan y datgeliad hwn?
-disclosure.otherLiabilities.taxCredits.person = A gafodd y person gredydau treth ar gyfer unrhyw rai o’r blynyddoedd a gwmpesir gan y datgeliad hwn?
+disclosure.otherLiabilities.taxCredits.you = A gawsoch gredydau treth ar gyfer unrhyw un o&#39;r blynyddoedd a gwmpesir gan eich datgeliad?
+disclosure.otherLiabilities.taxCredits.individual = A gafodd yr unigolyn gredydau treth ar gyfer unrhyw rai o&#39;r blynyddoedd a gwmpesir gan y datgeliad hwn?
+disclosure.otherLiabilities.taxCredits.person = A gafodd y person gredydau treth ar gyfer unrhyw rai o&#39;r blynyddoedd a gwmpesir gan y datgeliad hwn?
 
 #===================================================
 #  Additional information
@@ -294,14 +294,14 @@ disclosure.additional.reason = Rheswm dros wneud datgeliad nawr
 disclosure.additional.otherReason = Rheswm arall dros wneud datgeliad nawr
 disclosure.additional.beforeNow = Pam na wnaethpwyd y datgeliad cyn hyn
 disclosure.additional.adviceGiven.you = A roddodd rhywun gyngor i chi a wnaeth beri i chi beidio â datgan y materion treth hyn yn flaenorol?
-disclosure.additional.adviceGiven.Individual = A roddodd rhywun gyngor i’r unigolyn a wnaeth beri iddynt beidio â datgan y materion treth hyn yn flaenorol?
-disclosure.additional.adviceGiven.Company = A roddodd rhywun gyngor i’r cwmni a wnaeth beri iddynt beidio â datgan y materion treth hyn yn flaenorol?
-disclosure.additional.adviceGiven.Trust = A roddodd rhywun gyngor i’r ymddiriedolaeth a wnaeth beri iddynt beidio â datgan y materion treth hyn yn flaenorol?
-disclosure.additional.adviceGiven.LLP = A roddodd rhywun gyngor i’r bartneriaeth atebolrwydd cyfyngedig a wnaeth beri iddynt beidio â datgan y materion treth hyn yn flaenorol?
-disclosure.additional.adviceGiven.Estate = A roddodd rhywun gyngor i’r person a wnaeth beri iddynt beidio â datgan y materion treth hyn yn flaenorol?
-disclosure.additional.advice.name = Enw’r person a roddodd y cyngor
+disclosure.additional.adviceGiven.Individual = A roddodd rhywun gyngor i&#39;r unigolyn a wnaeth beri iddynt beidio â datgan y materion treth hyn yn flaenorol?
+disclosure.additional.adviceGiven.Company = A roddodd rhywun gyngor i&#39;r cwmni a wnaeth beri iddynt beidio â datgan y materion treth hyn yn flaenorol?
+disclosure.additional.adviceGiven.Trust = A roddodd rhywun gyngor i&#39;r ymddiriedolaeth a wnaeth beri iddynt beidio â datgan y materion treth hyn yn flaenorol?
+disclosure.additional.adviceGiven.LLP = A roddodd rhywun gyngor i&#39;r bartneriaeth atebolrwydd cyfyngedig a wnaeth beri iddynt beidio â datgan y materion treth hyn yn flaenorol?
+disclosure.additional.adviceGiven.Estate = A roddodd rhywun gyngor i&#39;r person a wnaeth beri iddynt beidio â datgan y materion treth hyn yn flaenorol?
+disclosure.additional.advice.name = Enw&#39;r person a roddodd y cyngor
 disclosure.additional.advice.behalfOf = A oedd y person a roddodd y cyngor yn gweithio ar ran busnes neu sefydliad?
-disclosure.additional.advice.business = Enw’r busnes neu’r sefydliad yr oedd y person a roddodd y cyngor yn gweithio ar ei ran
+disclosure.additional.advice.business = Enw&#39;r busnes neu&#39;r sefydliad yr oedd y person a roddodd y cyngor yn gweithio ar ei ran
 disclosure.additional.advice.profession = Proffesiwn y person a roddodd y cyngor hwn
 disclosure.additional.advice.given = Y cyngor a roddwyd
 disclosure.additional.advice.date = Pryd rhoddwyd y cyngor hwn
@@ -318,47 +318,47 @@ whyAreYouMakingThisDisclosure.you.inaccurateReturnWithCare = Rwyf wedi cyflwyno 
 whyAreYouMakingThisDisclosure.you.notFileHasExcuse = Nid wyf wedi cyflwyno Ffurflen Dreth, ond mae gen i esgus rhesymol.
 whyAreYouMakingThisDisclosure.you.inaccurateReturnNoCare = Rwyf wedi cyflwyno Ffurflen Dreth wallus oherwydd ni chymerais ofal rhesymol.
 whyAreYouMakingThisDisclosure.you.didNotNotifyNoExcuse = Ni roddais wybod i CThEF am rwymedigaeth treth, ond nid oedd hyn yn fwriadol ac nid oes gennyf esgus rhesymol.
-whyAreYouMakingThisDisclosure.you.deliberatelyDidNotNotify = Rwyf wedi methu’n fwriadol â rhoi gwybod i CThEF am rwymedigaeth treth.
+whyAreYouMakingThisDisclosure.you.deliberatelyDidNotNotify = Rwyf wedi methu&#39;n fwriadol â rhoi gwybod i CThEF am rwymedigaeth treth.
 whyAreYouMakingThisDisclosure.you.deliberateInaccurateReturn = Rwyf wedi cyflwyno Ffurflen Dreth wallus yn fwriadol.
 whyAreYouMakingThisDisclosure.you.deliberatelyDidNotFile = Rwyf wedi dal gwybodaeth yn ôl yn fwriadol drwy beidio â chyflwyno Ffurflen Dreth.
 whyAreYouMakingThisDisclosure.individual.didNotNotifyHasExcuse = Ni wnaeth yr unigolyn roi gwybod i CThEF am rwymedigaeth treth, ond nid oedd hyn yn fwriadol ac mae esgus rhesymol ganddo.
-whyAreYouMakingThisDisclosure.individual.inaccurateReturnWithCare = Mae’r unigolyn wedi cyflwyno Ffurflen Dreth wallus er gwaethaf cymryd gofal rhesymol.
+whyAreYouMakingThisDisclosure.individual.inaccurateReturnWithCare = Mae&#39;r unigolyn wedi cyflwyno Ffurflen Dreth wallus er gwaethaf cymryd gofal rhesymol.
 whyAreYouMakingThisDisclosure.individual.notFileHasExcuse = Ni wnaeth yr unigolyn gyflwyno Ffurflen Dreth, ond mae ganddo esgus rhesymol.
 whyAreYouMakingThisDisclosure.individual.inaccurateReturnNoCare = Gwnaeth yr unigolyn gyflwyno Ffurflen Dreth wallus oherwydd ni wnaeth gymryd digon o ofal.
 whyAreYouMakingThisDisclosure.individual.didNotNotifyNoExcuse = Ni wnaeth yr unigolyn roi gwybod i CThEF am rwymedigaeth treth, ond nid oedd hyn yn fwriadol ac nid oes ganddo esgus rhesymol.
-whyAreYouMakingThisDisclosure.individual.deliberatelyDidNotNotify = Mae’r unigolyn wedi methu’n fwriadol â rhoi gwybod i CThEF am rwymedigaeth treth.
-whyAreYouMakingThisDisclosure.individual.deliberateInaccurateReturn = Mae’r unigolyn wedi cyflwyno Ffurflen Dreth wallus yn fwriadol.
-whyAreYouMakingThisDisclosure.individual.deliberatelyDidNotFile = Mae’r unigolyn wedi dal gwybodaeth yn ôl yn fwriadol drwy fethu â chyflwyno Ffurflen Dreth.
+whyAreYouMakingThisDisclosure.individual.deliberatelyDidNotNotify = Mae&#39;r unigolyn wedi methu&#39;n fwriadol â rhoi gwybod i CThEF am rwymedigaeth treth.
+whyAreYouMakingThisDisclosure.individual.deliberateInaccurateReturn = Mae&#39;r unigolyn wedi cyflwyno Ffurflen Dreth wallus yn fwriadol.
+whyAreYouMakingThisDisclosure.individual.deliberatelyDidNotFile = Mae&#39;r unigolyn wedi dal gwybodaeth yn ôl yn fwriadol drwy fethu â chyflwyno Ffurflen Dreth.
 whyAreYouMakingThisDisclosure.company.didNotNotifyHasExcuse = Ni wnaeth y cwmni roi gwybod i CThEF am rwymedigaeth treth, ond nid oedd hyn yn fwriadol ac mae esgus rhesymol ganddo.
-whyAreYouMakingThisDisclosure.company.inaccurateReturnWithCare = Mae’r cwmni wedi cyflwyno Ffurflen Dreth wallus er gwaethaf cymryd gofal rhesymol.
+whyAreYouMakingThisDisclosure.company.inaccurateReturnWithCare = Mae&#39;r cwmni wedi cyflwyno Ffurflen Dreth wallus er gwaethaf cymryd gofal rhesymol.
 whyAreYouMakingThisDisclosure.company.notFileHasExcuse = Ni wnaeth y cwmni gyflwyno Ffurflen Dreth, ond mae ganddo esgus rhesymol.
 whyAreYouMakingThisDisclosure.company.inaccurateReturnNoCare = Gwnaeth y cwmni gyflwyno Ffurflen Dreth wallus, oherwydd na chymerodd ofal rhesymol.
 whyAreYouMakingThisDisclosure.company.didNotNotifyNoExcuse = Ni wnaeth y cwmni roi gwybod i CThEF am rwymedigaeth treth, ond nid oedd hyn yn fwriadol ac nid oes esgus rhesymol.
-whyAreYouMakingThisDisclosure.company.deliberatelyDidNotNotify = Mae’r cwmni wedi methu’n fwriadol â rhoi gwybod i CThEF am rwymedigaeth treth.
-whyAreYouMakingThisDisclosure.company.deliberateInaccurateReturn = Mae’r cwmni wedi cyflwyno Ffurflen Dreth wallus yn fwriadol.
-whyAreYouMakingThisDisclosure.company.deliberatelyDidNotFile = Mae’r cwmni wedi dal gwybodaeth yn ôl yn fwriadol drwy fethu â chyflwyno Ffurflen Dreth.
+whyAreYouMakingThisDisclosure.company.deliberatelyDidNotNotify = Mae&#39;r cwmni wedi methu&#39;n fwriadol â rhoi gwybod i CThEF am rwymedigaeth treth.
+whyAreYouMakingThisDisclosure.company.deliberateInaccurateReturn = Mae&#39;r cwmni wedi cyflwyno Ffurflen Dreth wallus yn fwriadol.
+whyAreYouMakingThisDisclosure.company.deliberatelyDidNotFile = Mae&#39;r cwmni wedi dal gwybodaeth yn ôl yn fwriadol drwy fethu â chyflwyno Ffurflen Dreth.
 whyAreYouMakingThisDisclosure.llp.didNotNotifyHasExcuse = Ni wnaeth y bartneriaeth atebolrwydd cyfyngedig roi gwybod i CThEF am rwymedigaeth treth, ond nid oedd hyn yn fwriadol ac mae esgus rhesymol ganddo.
-whyAreYouMakingThisDisclosure.llp.inaccurateReturnWithCare = Mae’r bartneriaeth atebolrwydd cyfyngedig wedi cyflwyno Ffurflen Dreth wallus er gwaethaf cymryd gofal rhesymol.
+whyAreYouMakingThisDisclosure.llp.inaccurateReturnWithCare = Mae&#39;r bartneriaeth atebolrwydd cyfyngedig wedi cyflwyno Ffurflen Dreth wallus er gwaethaf cymryd gofal rhesymol.
 whyAreYouMakingThisDisclosure.llp.notFileHasExcuse = Ni wnaeth y bartneriaeth atebolrwydd cyfyngedig gyflwyno Ffurflen Dreth, ond mae ganddo esgus rhesymol.
 whyAreYouMakingThisDisclosure.llp.inaccurateReturnNoCare = Gwnaeth y bartneriaeth atebolrwydd cyfyngedig gyflwyno Ffurflen Dreth wallus, oherwydd na chymerodd ofal rhesymol.
 whyAreYouMakingThisDisclosure.llp.didNotNotifyNoExcuse = Ni wnaeth y bartneriaeth atebolrwydd cyfyngedig roi gwybod i CThEF am rwymedigaeth treth, ond nid oedd hyn yn fwriadol ac nid oes esgus rhesymol.
-whyAreYouMakingThisDisclosure.llp.deliberatelyDidNotNotify = Mae’r bartneriaeth atebolrwydd cyfyngedig wedi methu’n fwriadol â rhoi gwybod i CThEF am rwymedigaeth treth.
-whyAreYouMakingThisDisclosure.llp.deliberateInaccurateReturn = Mae’r bartneriaeth atebolrwydd cyfyngedig wedi cyflwyno Ffurflen Dreth wallus yn fwriadol.
-whyAreYouMakingThisDisclosure.llp.deliberatelyDidNotFile = Mae’r bartneriaeth atebolrwydd cyfyngedig wedi dal gwybodaeth yn ôl yn fwriadol drwy fethu â chyflwyno Ffurflen Dreth.
+whyAreYouMakingThisDisclosure.llp.deliberatelyDidNotNotify = Mae&#39;r bartneriaeth atebolrwydd cyfyngedig wedi methu&#39;n fwriadol â rhoi gwybod i CThEF am rwymedigaeth treth.
+whyAreYouMakingThisDisclosure.llp.deliberateInaccurateReturn = Mae&#39;r bartneriaeth atebolrwydd cyfyngedig wedi cyflwyno Ffurflen Dreth wallus yn fwriadol.
+whyAreYouMakingThisDisclosure.llp.deliberatelyDidNotFile = Mae&#39;r bartneriaeth atebolrwydd cyfyngedig wedi dal gwybodaeth yn ôl yn fwriadol drwy fethu â chyflwyno Ffurflen Dreth.
 whyAreYouMakingThisDisclosure.trust.didNotNotifyHasExcuse = TNi wnaeth yr ymddiriedolaeth roi gwybod i CThEF am rwymedigaeth treth, ond nid oedd hyn yn fwriadol ac mae esgus rhesymol ganddo.
-whyAreYouMakingThisDisclosure.trust.inaccurateReturnWithCare = Mae’r ymddiriedolaeth wedi cyflwyno Ffurflen Dreth wallus er gwaethaf cymryd gofal rhesymol.
+whyAreYouMakingThisDisclosure.trust.inaccurateReturnWithCare = Mae&#39;r ymddiriedolaeth wedi cyflwyno Ffurflen Dreth wallus er gwaethaf cymryd gofal rhesymol.
 whyAreYouMakingThisDisclosure.trust.notFileHasExcuse = Ni wnaeth yr ymddiriedolaeth gyflwyno Ffurflen Dreth, ond mae ganddo esgus rhesymol.
 whyAreYouMakingThisDisclosure.trust.inaccurateReturnNoCare = Gwnaeth yr ymddiriedolaeth gyflwyno Ffurflen Dreth wallus, oherwydd na chymerodd ofal rhesymol.
 whyAreYouMakingThisDisclosure.trust.didNotNotifyNoExcuse = Ni wnaeth yr ymddiriedolaeth roi gwybod i CThEF am rwymedigaeth treth, ond nid oedd hyn yn fwriadol ac nid oes esgus rhesymol.
-whyAreYouMakingThisDisclosure.trust.deliberatelyDidNotNotify = Mae’r ymddiriedolaeth wedi methu’n fwriadol â rhoi gwybod i CThEF am rwymedigaeth treth.
-whyAreYouMakingThisDisclosure.trust.deliberateInaccurateReturn = Mae’r ymddiriedolaeth wedi cyflwyno Ffurflen Dreth wallus yn fwriadol.
-whyAreYouMakingThisDisclosure.trust.deliberatelyDidNotFile = Mae’r ymddiriedolaeth wedi dal gwybodaeth yn ôl yn fwriadol drwy fethu â chyflwyno Ffurflen Dreth.
+whyAreYouMakingThisDisclosure.trust.deliberatelyDidNotNotify = Mae&#39;r ymddiriedolaeth wedi methu&#39;n fwriadol â rhoi gwybod i CThEF am rwymedigaeth treth.
+whyAreYouMakingThisDisclosure.trust.deliberateInaccurateReturn = Mae&#39;r ymddiriedolaeth wedi cyflwyno Ffurflen Dreth wallus yn fwriadol.
+whyAreYouMakingThisDisclosure.trust.deliberatelyDidNotFile = Mae&#39;r ymddiriedolaeth wedi dal gwybodaeth yn ôl yn fwriadol drwy fethu â chyflwyno Ffurflen Dreth.
 whyAreYouMakingThisDisclosure.estate.didNotNotifyHasExcuse = Ni wnaeth y person a fu farw rhoi gwybod i CThEF am rwymedigaeth treth, ond nid oedd hyn yn fwriadol ac roedd esgus rhesymol ganddo.
 whyAreYouMakingThisDisclosure.estate.inaccurateReturnWithCare = Gwnaeth y person a fu farw cyflwyno Ffurflen Dreth wallus er gwaethaf cymryd gofal rhesymol.
 whyAreYouMakingThisDisclosure.estate.notFileHasExcuse = Ni wnaeth y person a fu farw cyflwyno Ffurflen Dreth, ond roedd ganddo esgus rhesymol.
 whyAreYouMakingThisDisclosure.estate.inaccurateReturnNoCare = Gwnaeth y person a fu farw gyflwyno Ffurflen Dreth wallus oherwydd ni wnaeth gymryd digon o ofal.
 whyAreYouMakingThisDisclosure.estate.didNotNotifyNoExcuse = Ni wnaeth y person a fu farw rhoi gwybod i CThEF am rwymedigaeth treth, ond nid oedd hyn yn fwriadol ac nid oes ganddo esgus rhesymol.
-whyAreYouMakingThisDisclosure.estate.deliberatelyDidNotNotify = Gwnaeth y person a fu farw methu’n fwriadol â rhoi gwybod i CThEF am rwymedigaeth treth.
+whyAreYouMakingThisDisclosure.estate.deliberatelyDidNotNotify = Gwnaeth y person a fu farw methu&#39;n fwriadol â rhoi gwybod i CThEF am rwymedigaeth treth.
 whyAreYouMakingThisDisclosure.estate.deliberateInaccurateReturn = Gwnaeth y person a fu farw cyflwyno Ffurflen Dreth wallus yn fwriadol.
 whyAreYouMakingThisDisclosure.estate.deliberatelyDidNotFile = Gwnaeth y person a fu farw dal gwybodaeth yn ôl yn fwriadol drwy beidio â chyflwyno Ffurflen Dreth.
 
@@ -369,13 +369,13 @@ whyAreYouMakingThisDisclosure.estate.deliberatelyDidNotFile = Gwnaeth y person a
 yourLegalInterpretation.yourResidenceStatus = Eich statws preswylio at ddibenion treth yn y DU
 yourLegalInterpretation.yourDomicileStatus = Eich statws domisil at ddibenion treth yn y DU
 yourLegalInterpretation.theRemittanceBasis = Y sail trosglwyddo ar gyfer trethu incwm pobl nad yw eu domisil yn y DU
-yourLegalInterpretation.howIncomeArisingInATrust = Sut y dylid trethu incwm sy’n codi mewn ymddiriedolaeth
+yourLegalInterpretation.howIncomeArisingInATrust = Sut y dylid trethu incwm sy&#39;n codi mewn ymddiriedolaeth
 yourLegalInterpretation.theTransferOfAssets = The Transfer of Assets legislation at sections 714 – 751 ITA 2007. This legislation counteracts avoidance by individuals who use overseas arrangements, companies, trusts or other entities to reduce UK tax liability
-yourLegalInterpretation.howIncomeArisingInAnOffshore = Sut y dylid trethu incwm sy'n codi mewn strwythur corfforaethol alltraeth
+yourLegalInterpretation.howIncomeArisingInAnOffshore = Sut y dylid trethu incwm sy&#39;n codi mewn strwythur corfforaethol alltraeth
 yourLegalInterpretation.inheritanceTaxIssues = Materion treth etifeddiaeth
 yourLegalInterpretation.whetherIncomeShouldBeTaxed = Whether income should be taxed under the settlements legislation at section 624 onwards of the Income Tax (Trading and Other Income) Act 2005. This legislation applies where an individual gains a tax advantage by making arrangements to divert their income to another person who is liable at a lower rate of tax or is not liable to income tax.
 yourLegalInterpretation.anotherIssue = Mater arall
-yourLegalInterpretation.noExclusion = Nid yw symiau wedi'u heithrio o'r datgeliad hwn
+yourLegalInterpretation.noExclusion = Nid yw symiau wedi&#39;u heithrio o&#39;r datgeliad hwn
 
 #===================================================
 #  Values
@@ -431,37 +431,37 @@ whereDidTheUndeclaredIncomeOrGainIncluded.somewhereElse = Rhywle arall
 #  Are you the entity?
 #===================================================
 
-areYouTheEntity.Individual.heading = Ai chi yw’r unigolyn y bydd y datgeliad yn ymwneud ag ef?
-areYouTheEntity.Individual.yes = Iawn, fi yw’r unigolyn
-areYouTheEntity.Individual.accountant = Rwy’n gyfrifydd neu asiant treth
+areYouTheEntity.Individual.heading = Ai chi yw&#39;r unigolyn y bydd y datgeliad yn ymwneud ag ef?
+areYouTheEntity.Individual.yes = Iawn, fi yw&#39;r unigolyn
+areYouTheEntity.Individual.accountant = Rwy&#39;n gyfrifydd neu asiant treth
 areYouTheEntity.Individual.friend = Fi yw ei ffrind neu berthynas
-areYouTheEntity.Individual.voluntaryOrganisation = Rwy’n gweithio i sefydliad gwirfoddol yn gweithredu fel cyfryngwr
+areYouTheEntity.Individual.voluntaryOrganisation = Rwy&#39;n gweithio i sefydliad gwirfoddol yn gweithredu fel cyfryngwr
 areYouTheEntity.Individual.powerOfAttorney = Rwyf wedi cael fy mhenodi o dan bŵer atwrnai i weithredu ar ei ran
 
 areYouTheEntity.Estate.heading = Ai chi yw ysgutor neu weinyddwr yr ystâd y bydd y datgeliad yn ymwneud ag ef?
-areYouTheEntity.Estate.yes = Iawn, fi yw’r ysgutor neu’r gweinyddwr
-areYouTheEntity.Estate.accountant = Rwy’n gyfrifydd neu asiant treth
+areYouTheEntity.Estate.yes = Iawn, fi yw&#39;r ysgutor neu&#39;r gweinyddwr
+areYouTheEntity.Estate.accountant = Rwy&#39;n gyfrifydd neu asiant treth
 areYouTheEntity.Estate.friend = Fi yw ei ffrind neu berthynas
-areYouTheEntity.Estate.voluntaryOrganisation = Rwy’n gweithio i sefydliad gwirfoddol yn gweithredu fel cyfryngwr
+areYouTheEntity.Estate.voluntaryOrganisation = Rwy&#39;n gweithio i sefydliad gwirfoddol yn gweithredu fel cyfryngwr
 areYouTheEntity.Estate.powerOfAttorney = Rwyf wedi cael fy mhenodi o dan bŵer atwrnai i weithredu ar ei ran
 
-areYouTheEntity.Company.heading = A ydych yn swyddog o’r cwmni y bydd y datgeliad yn ymwneud ag ef?
-areYouTheEntity.Company.yes = Iawn, rwy’n swyddog
-areYouTheEntity.Company.accountant = Rwy’n gyfrifydd neu asiant treth
+areYouTheEntity.Company.heading = A ydych yn swyddog o&#39;r cwmni y bydd y datgeliad yn ymwneud ag ef?
+areYouTheEntity.Company.yes = Iawn, rwy&#39;n swyddog
+areYouTheEntity.Company.accountant = Rwy&#39;n gyfrifydd neu asiant treth
 areYouTheEntity.Company.friend = Fi yw ei ffrind neu berthynas
-areYouTheEntity.Company.voluntaryOrganisation = Rwy’n gweithio i sefydliad gwirfoddol yn gweithredu fel cyfryngwr
+areYouTheEntity.Company.voluntaryOrganisation = Rwy&#39;n gweithio i sefydliad gwirfoddol yn gweithredu fel cyfryngwr
 areYouTheEntity.Company.powerOfAttorney = Rwyf wedi cael fy mhenodi o dan bŵer atwrnai i weithredu ar ei ran
 
-areYouTheEntity.LLP.heading = A ydych yn aelod dynodedig o’r bartneriaeth atebolrwydd cyfyngedig y bydd y datgeliad yn ymwneud ag ef?
-areYouTheEntity.LLP.yes = Iawn, rwy’n aelod dynodedig
-areYouTheEntity.LLP.accountant = Rwy’n gyfrifydd neu asiant treth
+areYouTheEntity.LLP.heading = A ydych yn aelod dynodedig o&#39;r bartneriaeth atebolrwydd cyfyngedig y bydd y datgeliad yn ymwneud ag ef?
+areYouTheEntity.LLP.yes = Iawn, rwy&#39;n aelod dynodedig
+areYouTheEntity.LLP.accountant = Rwy&#39;n gyfrifydd neu asiant treth
 areYouTheEntity.LLP.friend = Fi yw ei ffrind neu berthynas
-areYouTheEntity.LLP.voluntaryOrganisation = Rwy’n gweithio i sefydliad gwirfoddol yn gweithredu fel cyfryngwr
+areYouTheEntity.LLP.voluntaryOrganisation = Rwy&#39;n gweithio i sefydliad gwirfoddol yn gweithredu fel cyfryngwr
 areYouTheEntity.LLP.powerOfAttorney = Rwyf wedi cael fy mhenodi o dan bŵer atwrnai i weithredu ar ei ran
 
 areYouTheEntity.Trust.heading = A ydych yn ymddiriedolwr yr ymddiriedolaeth y bydd y datgeliad yn ymwneud ag ef?
-areYouTheEntity.Trust.yes = Iawn, rwy’n ymddiriedolwr
-areYouTheEntity.Trust.accountant = Rwy’n gyfrifydd neu asiant treth
+areYouTheEntity.Trust.yes = Iawn, rwy&#39;n ymddiriedolwr
+areYouTheEntity.Trust.accountant = Rwy&#39;n gyfrifydd neu asiant treth
 areYouTheEntity.Trust.friend = Fi yw ei ffrind neu berthynas
-areYouTheEntity.Trust.voluntaryOrganisation = Rwy’n gweithio i sefydliad gwirfoddol yn gweithredu fel cyfryngwr
+areYouTheEntity.Trust.voluntaryOrganisation = Rwy&#39;n gweithio i sefydliad gwirfoddol yn gweithredu fel cyfryngwr
 areYouTheEntity.Trust.powerOfAttorney = Rwyf wedi cael fy mhenodi o dan bŵer atwrnai i weithredu ar ei ran
