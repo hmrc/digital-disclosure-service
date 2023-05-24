@@ -6,6 +6,10 @@ service.unsure = Yes, but I do not know it
 
 pdf.title.disclosure = Disclosure - Digital Disclosure Service - GOV UK
 pdf.title.notification = Notification of intent - Digital Disclosure Service - GOV UK
+pdf.meta.subject = Tell HMRC about underpaid tax from previous years
+pdf.meta.about = HMRC PDFA Document
+pdf.meta.author = HMRC
+pdf.meta.description = Disclosure of unpaid tax for previous tax years
 
 site.2DP = {0,number,#,##0.00}
 

@@ -2,10 +2,14 @@ service.name = Gwasanaeth Datgelu Digidol
 
 service.yes = Iawn
 service.no = Na
-service.unsure = Yes, but I do not know it
+service.unsure = Iawn, ond nid wyf yn ei wybod
 
 pdf.title.disclosure = Datgeliad - Gwasanaeth Datgelu Digidol - GOV UK
 pdf.title.notification = Hysbysiad o fwriad - Gwasanaeth Datgelu Digidol - GOV UK
+pdf.meta.subject = Rhowch wybod i CThEF am dreth sydd heb ei thalu o&#39;r blynyddoedd blaenorol
+pdf.meta.about = Dogfen PDFA CThEF
+pdf.meta.author = CThEF
+pdf.meta.description = Datgelu treth sydd heb ei thalu ar gyfer blynyddoedd treth blaenorol
 
 site.2DP = {0,number,#,##0.00}
 
@@ -22,7 +26,7 @@ disclosure.heading.metadata = Manylion y datgeliad
 disclosure.heading.background = Cefndir
 disclosure.heading.aboutYou = Amdanoch chi
 disclosure.heading.completing = Y person sy&#39;n llenwi&#39;r datgeliad
-disclosure.heading.aboutTheIndividual = The individual the disclosure will be about
+disclosure.heading.aboutTheIndividual = Yr unigolyn y bydd y datgeliad yn ei ymwneud ag ef
 disclosure.heading.aboutTheCompany = Y cwmni y mae&#39;r datgeliad yn ymwneud ag ef
 disclosure.heading.aboutTheTrust = Yr ymddiriedolaeth y bydd y datgeliad yn ymwneud â hi
 disclosure.heading.aboutTheLLP = Y bartneriaeth atebolrwydd cyfyngedig mae&#39;r datgeliad yn ymwneud â hi
@@ -35,7 +39,7 @@ notification.heading.metadata = NManylion yr hysbysiad
 notification.heading.background = Cefndir
 notification.heading.aboutYou = Amdanoch chi
 notification.heading.completing = Y person sy&#39;n llenwi&#39;r hysbysiad
-notification.heading.aboutTheIndividual = The individual the disclosure will be about
+notification.heading.aboutTheIndividual = Yr unigolyn y bydd y datgeliad yn ei ymwneud ag ef
 notification.heading.aboutTheCompany = Y cwmni y bydd y datgeliad yn ymwneud ag ef
 notification.heading.aboutTheTrust = Yr ymddiriedolaeth mae&#39;r datgeliad yn ymwneud â hi
 notification.heading.aboutTheLLP = Y bartneriaeth atebolrwydd cyfyngedig y bydd y datgeliad yn ymwneud â hi
@@ -149,7 +153,7 @@ notification.aboutTheEstate.address = Cyfeiriad y person
 #  Countries
 #===================================================
 
-disclosure.offshore.country = Country or territory of the offshore liability
+disclosure.offshore.country = Gwlad neu diriogaeth y rhwymedigaeth alltraeth
 
 #===================================================
 #  Offshore liabilities
@@ -164,16 +168,16 @@ disclosure.offshore.reasonableCare.years = Blynyddoedd treth y mae&#39;r gofal r
 disclosure.offshore.notfileExcuse = Esgus rhesymol dros beidio â chyflwyno Ffurflen Dreth
 disclosure.offshore.notfileExcuse.years = Blynyddoedd treth y mae&#39;r esgus rhesymol hwn yn berthnasol iddynt
 disclosure.offshore.cdf = Ystyriwyd CDF?
-disclosure.offshore.notIncluding = Reason for not including tax years ending {0}
+disclosure.offshore.notIncluding = Rheswm dros beidio â chynnwys blynyddoedd dreth a ddaeth i ben yn {0}
 disclosure.offshore.before = Treth a oedd yn ddyledus cyn 6 Ebrill {0}
 disclosure.offshore.noLiabilities = Dim rhwymedigaethau alltraeth i&#39;w datgelu
 
 #===================================================
 #  Offshore liabilities - per year
 #===================================================
-disclosure.offshore.year = Tax year ending {0}
+disclosure.offshore.year = Y flwyddyn dreth a ddaeth i ben yn {0}
 disclosure.offshore.income = Incwm alltraeth
-disclosure.offshore.gains = Offshore gains
+disclosure.offshore.gains = Enillion alltraeth
 disclosure.offshore.transfers = Trosglwyddiadau trethadwy
 disclosure.offshore.tax = Treth sy&#39;n ddyledus
 disclosure.offshore.ni = Cyfraniadau Yswiriant Gwladol sy&#39;n ddyledus
@@ -205,7 +209,7 @@ disclosure.onshore.noLiabilities = Dim rhwymedigaethau artraeth i&#39;w datgelu
 #===================================================
 #  Onshore liabilities - per year
 #===================================================
-disclosure.onshore.year = Tax year ending {0}
+disclosure.onshore.year = Y flwyddyn dreth a ddaeth i ben yn {0}
 disclosure.onshore.businessIncome = Incwm busnes
 disclosure.onshore.gains = Enillion cyfalaf
 disclosure.onshore.lettingIncome = Incwm o roi eiddo ar osod
@@ -370,10 +374,10 @@ yourLegalInterpretation.yourResidenceStatus = Eich statws preswylio at ddibenion
 yourLegalInterpretation.yourDomicileStatus = Eich statws domisil at ddibenion treth yn y DU
 yourLegalInterpretation.theRemittanceBasis = Y sail trosglwyddo ar gyfer trethu incwm pobl nad yw eu domisil yn y DU
 yourLegalInterpretation.howIncomeArisingInATrust = Sut y dylid trethu incwm sy&#39;n codi mewn ymddiriedolaeth
-yourLegalInterpretation.theTransferOfAssets = The Transfer of Assets legislation at sections 714 – 751 ITA 2007. This legislation counteracts avoidance by individuals who use overseas arrangements, companies, trusts or other entities to reduce UK tax liability
+yourLegalInterpretation.theTransferOfAssets = Y ddeddfwriaeth Trosglwyddo Asedion yn adrannau 714 – 751 ITA 2007. Mae&#39;r ddeddfwriaeth hon yn gwrthweithio unrhyw achosion o arbed treth gan unigolion sy&#39;n defnyddio trefniadau, cwmnïau, ymddiriedolaethau neu endidau tramor eraill i ostwng rhwymedigaeth treth yn y DU
 yourLegalInterpretation.howIncomeArisingInAnOffshore = Sut y dylid trethu incwm sy&#39;n codi mewn strwythur corfforaethol alltraeth
 yourLegalInterpretation.inheritanceTaxIssues = Materion treth etifeddiaeth
-yourLegalInterpretation.whetherIncomeShouldBeTaxed = Whether income should be taxed under the settlements legislation at section 624 onwards of the Income Tax (Trading and Other Income) Act 2005. This legislation applies where an individual gains a tax advantage by making arrangements to divert their income to another person who is liable at a lower rate of tax or is not liable to income tax.
+yourLegalInterpretation.whetherIncomeShouldBeTaxed = P&#39;un a ddylid trethu incwm o dan y ddeddfwriaeth setliadau yn Adran 624 ymlaen o Ddeddf Treth Incwm (Incwm Masnachu ac Arall) 2005. Mae&#39;r ddeddfwriaeth hon yn gymwys pan fo unigolyn yn cael mantais dreth drwy wneud trefniadau i ddargyfeirio ei incwm i berson arall sy&#39;n agored i gyfradd dreth is neu nad yw&#39;n agored i dreth incwm.
 yourLegalInterpretation.anotherIssue = Mater arall
 yourLegalInterpretation.noExclusion = Nid yw symiau wedi&#39;u heithrio o&#39;r datgeliad hwn
 

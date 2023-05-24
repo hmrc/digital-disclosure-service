@@ -37,7 +37,9 @@ class NotificationViewSpec extends AnyWordSpec with Matchers with BaseSpec {
   implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
   implicit val sut = app.injector.instanceOf[NotificationView]
 
-  private def createView(notification: NotificationViewModel): Html = sut.render(notification, "en", messages)
+  private val lang = "en"
+
+  private def createView(notification: NotificationViewModel): Html = sut.render(notification, lang, messages)
   
   val viewModel = NotificationViewModel(Notification("userId", "id", Instant.now(), Metadata(reference = Some("ref")), PersonalDetails(Background(), AboutYou())), false)
   
@@ -63,7 +65,7 @@ class NotificationViewSpec extends AnyWordSpec with Matchers with BaseSpec {
 
   "f" should {
     "render the page" in {
-      sut.f(viewModel, "en")(messages) shouldEqual createView(viewModel)
+      sut.f(viewModel, lang)(messages) shouldEqual createView(viewModel)
     }
   }
 

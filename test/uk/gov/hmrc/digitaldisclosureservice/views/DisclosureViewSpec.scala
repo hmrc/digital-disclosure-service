@@ -39,7 +39,8 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
   implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
   implicit val sut = app.injector.instanceOf[DisclosureView]
 
-  private def createView(disclosure: DisclosureViewModel): Html = sut.render(disclosure, "en", messages)
+  private val lang = "en"
+  private def createView(disclosure: DisclosureViewModel): Html = sut.render(disclosure, lang, messages)
   
   "DisclosureView" when {
 
@@ -128,7 +129,7 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
   "f" should {
     "render the page" in {      
       val viewModel = DisclosureViewModel(FullDisclosure("userId", "id", Instant.now(), Metadata(reference = Some("ref")), CaseReference(), PersonalDetails(Background(), AboutYou()), None, OffshoreLiabilities(), OtherLiabilities(), ReasonForDisclosingNow()), false)
-      sut.f(viewModel, "en")(messages) shouldEqual createView(viewModel)
+      sut.f(viewModel, lang)(messages) shouldEqual createView(viewModel)
     }
   }
 
