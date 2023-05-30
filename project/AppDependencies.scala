@@ -5,7 +5,7 @@ import sbt._
 
 object AppDependencies {
 
-  private val bootstrapVersion = "7.12.0"
+  private val bootstrapVersion = "7.15.0"
   
   private val pdfboxVersion = "2.0.26"
   private val openHtmlVersion = "1.0.10"
@@ -20,14 +20,14 @@ object AppDependencies {
     "com.openhtmltopdf"        %   "openhtmltopdf-core"            % openHtmlVersion,
     "com.openhtmltopdf"        %   "openhtmltopdf-pdfbox"          % openHtmlVersion,
     "com.openhtmltopdf"        %   "openhtmltopdf-svg-support"     % openHtmlVersion,
-    "uk.gov.hmrc"              %%  "play-frontend-hmrc"            % "6.2.0-play-28",
+    "uk.gov.hmrc"              %%  "play-frontend-hmrc"            % "7.7.0-play-28",
     "org.typelevel"            %%  "cats-core"                     % "2.8.0",
     "com.github.pathikrit"     %%  "better-files"                  % "3.9.1",
     "commons-codec"            %   "commons-codec"                 % "1.14",
     "com.thoughtworks.xstream" %   "xstream"                       % "1.4.16",
-    "uk.gov.hmrc.mongo"        %% "hmrc-mongo-play-28"             % "0.74.0",
-    "uk.gov.hmrc"              %% "internal-auth-client-play-28"   % "1.3.0",
-    "uk.gov.hmrc"              %% "tax-year"                       % "3.0.0",
+    "uk.gov.hmrc.mongo"        %% "hmrc-mongo-play-28"             % "1.2.0",
+    "uk.gov.hmrc"              %% "internal-auth-client-play-28"   % "1.4.0",
+    "uk.gov.hmrc"              %% "tax-year"                       % "3.2.0",
     compilerPlugin("com.github.ghik" % "silencer-plugin" % silencerVersion cross CrossVersion.full),
     "com.github.ghik" % "silencer-lib" % silencerVersion % Provided cross CrossVersion.full
   )
