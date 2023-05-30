@@ -20,8 +20,10 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.concurrent.ScalaFutures
+
 import scala.concurrent.Future
-import org.scalamock.handlers.{CallHandler1, CallHandler2, CallHandler3}
+import org.scalamock.handlers.{CallHandler1, CallHandler2, CallHandler4}
+
 import java.time.{Instant, LocalDateTime}
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.test.FakeRequest
@@ -32,10 +34,11 @@ import models.notification._
 import connectors.DMSSubmissionConnector
 import services.SubmissionPdfService
 import utils.MarkCalculator
+
 import java.io.ByteArrayOutputStream
 import scala.concurrent.ExecutionContext.Implicits.global
 import models.PDF
-import models.{Metadata, Notification, NINO}
+import models.{Metadata, NINO, Notification}
 
 class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers 
     with MockFactory with ScalaFutures {
@@ -54,12 +57,12 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
 
   val sut = new DMSSubmissionServiceImpl(mockDmsConnector, mockPdfService, mockMarkCalculator)
 
-  def mockCreatePdf(notification: Notification, caseflowDateFormat: Boolean)(
+  def mockCreatePdf(notification: Notification, caseflowDateFormat: Boolean, lang:String)(
     response: PDF
-  ): CallHandler3[Notification, Boolean, Messages, PDF] =
+  ): CallHandler4[Notification, Boolean, String, Messages, PDF] =
     (mockPdfService
-      .createPdf(_: Notification, _: Boolean)(_: Messages))
-      .expects(notification, *, *)
+      .createPdf(_: Notification, _: Boolean, _:String)(_: Messages))
+      .expects(notification, *, *, *)
       .returning(response)
 
   def mockGetSfMark(xml: String)
@@ -110,11 +113,11 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
         metadata = submissionMetadata
       )
 
-      mockCreatePdf(notification, true)(PDF(stream))
+      mockCreatePdf(notification, true, "en")(PDF(stream))
       mockGetSfMark(notification.toXml)(submissionMark)
       mockSubmit(submissionRequest)(Future.successful(SubmissionResponse.Success("123")))
 
-      val result = sut.submit(notification).futureValue
+      val result = sut.submit(notification, "en").futureValue
       result shouldEqual SubmissionResponse.Success("123")
     }
 
@@ -132,11 +135,11 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
         customerId = None)
       val submissionMark = "mark"
 
-      mockCreatePdf(notification, true)(PDF(stream))
+      mockCreatePdf(notification, true, "en")(PDF(stream))
       mockGetSfMark(notification.toXml)(submissionMark)
       mockSubmitAny(Future.successful(SubmissionResponse.Success("123")))
 
-      val result = sut.submit(notification).futureValue
+      val result = sut.submit(notification, "en").futureValue
       result shouldEqual SubmissionResponse.Success("123")
     }
 

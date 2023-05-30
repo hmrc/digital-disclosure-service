@@ -30,9 +30,9 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class DMSSubmissionServiceImpl @Inject()(dmsConnector: DMSSubmissionConnector, pdfService: SubmissionPdfService, markCalculator: MarkCalculator) extends DMSSubmissionService {
 
-  def submit(submission: Submission)(implicit messages: Messages, ec: ExecutionContext): Future[SubmissionResponse] = {
+  def submit(submission: Submission, lang: String)(implicit messages: Messages, ec: ExecutionContext): Future[SubmissionResponse] = {
 
-    val generatedPdf = pdfService.createPdf(submission, true)
+    val generatedPdf = pdfService.createPdf(submission, true, lang)
     val submissionMark = markCalculator.getSfMark(submission.toXml)
 
     val submissionMetadata = SubmissionMetadata(
@@ -53,5 +53,5 @@ class DMSSubmissionServiceImpl @Inject()(dmsConnector: DMSSubmissionConnector, p
 
 @ImplementedBy(classOf[DMSSubmissionServiceImpl])
 trait DMSSubmissionService {
-  def submit(submission: Submission)(implicit messages: Messages, ec: ExecutionContext): Future[SubmissionResponse]
+  def submit(submission: Submission, lang: String)(implicit messages: Messages, ec: ExecutionContext): Future[SubmissionResponse]
 }

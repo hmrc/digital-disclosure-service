@@ -6,6 +6,10 @@ service.unsure = Yes, but I do not know it
 
 pdf.title.disclosure = Disclosure - Digital Disclosure Service - GOV UK
 pdf.title.notification = Notification of intent - Digital Disclosure Service - GOV UK
+pdf.meta.subject = Tell HMRC about underpaid tax from previous years
+pdf.meta.about = HMRC PDFA Document
+pdf.meta.author = HMRC
+pdf.meta.description = Disclosure of unpaid tax for previous tax years
 
 site.2DP = {0,number,#,##0.00}
 
@@ -59,7 +63,7 @@ disclosure.metadata.submissionTime = Disclosure submitted on
 #  Background
 #===================================================
 
-notification.background.haveYouReceivedALetter = Are you making a disclosure because you have received a letter from HMRC?
+notification.background.haveYouReceivedALetter = Will you be making a disclosure because you received a letter from HMRC?
 notification.background.offshore = Offshore liabilities
 notification.background.onshore = Onshore liabilities
 notification.background.both = Offshore and onshore liabilities
@@ -178,7 +182,7 @@ disclosure.offshore.transfers = Chargeable transfers
 disclosure.offshore.tax = Tax due
 disclosure.offshore.ni = National Insurance contributions due
 disclosure.offshore.interest = Interest due
-disclosure.offshore.penaltyRate = Penalty
+disclosure.offshore.penaltyRate = Penalty rate
 disclosure.offshore.penalty = Penalty amount
 disclosure.offshore.penaltyReason = Reason for penalty rate
 disclosure.offshore.undeclaredIncomeOrGain = Where the income or gain came from
@@ -213,7 +217,7 @@ disclosure.onshore.nonBusinessIncome = Non-business income
 disclosure.onshore.tax = Tax due
 disclosure.onshore.ni = National Insurance contributions due
 disclosure.onshore.interest = Interest due
-disclosure.onshore.penaltyRate = Penalty
+disclosure.onshore.penaltyRate = Penalty rate
 disclosure.onshore.penalty = Penalty amount
 disclosure.onshore.penaltyReason = Reason for penalty rate
 disclosure.onshore.undeclaredIncomeOrGain = Where the income or gain came from

@@ -166,13 +166,9 @@ trait SubmissionPdfServiceHelper extends AnyWordSpecLike
   }
 
   def stripPDFToString(notification: Notification): String = {
-    val pdfStripper = new PDFTextStripper()
-    val response = testPdfService.createPdf(notification, false)
-    val doc = PDDocument.load(response.byteArray)
-    val pdfString = pdfStripper.getText(doc)
-    doc.close()
-
-    pdfString.filter(_ >= ' ').replace("'", "&#39;")
+    testPdfService
+      .generatePdfHtml(notification, false, "en")
+      .replace("&amp;", "&")
   }
 
 }
