@@ -23,8 +23,12 @@ object WhereDidTheUndeclaredIncomeOrGainIncluded extends Enumerable.Implicits {
   case object Dividends extends WithName("dividends") with WhereDidTheUndeclaredIncomeOrGainIncluded
   case object Interest extends WithName("interest") with WhereDidTheUndeclaredIncomeOrGainIncluded
   case object PropertyIncome extends WithName("propertyIncome") with WhereDidTheUndeclaredIncomeOrGainIncluded
-  case object ResidentialPropertyGain extends WithName("residentialPropertyGain") with WhereDidTheUndeclaredIncomeOrGainIncluded
-  case object SelfEmploymentIncome extends WithName("selfEmploymentIncome") with WhereDidTheUndeclaredIncomeOrGainIncluded
+  case object ResidentialPropertyGain
+      extends WithName("residentialPropertyGain")
+      with WhereDidTheUndeclaredIncomeOrGainIncluded
+  case object SelfEmploymentIncome
+      extends WithName("selfEmploymentIncome")
+      with WhereDidTheUndeclaredIncomeOrGainIncluded
   case object OtherGains extends WithName("otherGains") with WhereDidTheUndeclaredIncomeOrGainIncluded
   case object SomewhereElse extends WithName("somewhereElse") with WhereDidTheUndeclaredIncomeOrGainIncluded
 

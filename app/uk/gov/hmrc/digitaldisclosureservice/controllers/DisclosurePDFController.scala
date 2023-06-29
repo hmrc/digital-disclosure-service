@@ -34,24 +34,28 @@ import uk.gov.hmrc.internalauth.client._
 import controllers.Permissions.internalAuthPermission
 
 @Singleton()
-class DisclosurePDFController @Inject()(
-    override val messagesApi: MessagesApi,
-    service: SubmissionPdfService,
-    val auth: BackendAuthComponents,
-    cc: ControllerComponents
-  ) extends BaseController(cc) with I18nSupport with Logging {
+class DisclosurePDFController @Inject() (
+  override val messagesApi: MessagesApi,
+  service: SubmissionPdfService,
+  val auth: BackendAuthComponents,
+  cc: ControllerComponents
+) extends BaseController(cc)
+    with I18nSupport
+    with Logging {
 
-  def generate: Action[JsValue] = auth.authorizedAction(internalAuthPermission("pdf")).async(parse.json) { implicit request =>
-    withValidJson[FullDisclosure]{ disclosure =>
+  def generate: Action[JsValue] =
+    auth.authorizedAction(internalAuthPermission("pdf")).async(parse.json) { implicit request =>
+      withValidJson[FullDisclosure] { disclosure =>
+        val pdf           = service.generatePdfHtml(disclosure, false, getLanguage).getBytes
+        val contentLength = Some(pdf.length.toLong)
 
-      val pdf = service.generatePdfHtml(disclosure, false, getLanguage).getBytes
-      val contentLength = Some(pdf.length.toLong)
-
-      Future.successful(Result(
-        header = ResponseHeader(200, Map.empty),
-        body = HttpEntity.Streamed(Source(Seq(ByteString(pdf))), contentLength, Some("application/octet-stream"))
-      ))
+        Future.successful(
+          Result(
+            header = ResponseHeader(200, Map.empty),
+            body = HttpEntity.Streamed(Source(Seq(ByteString(pdf))), contentLength, Some("application/octet-stream"))
+          )
+        )
+      }
     }
-  }
 
 }

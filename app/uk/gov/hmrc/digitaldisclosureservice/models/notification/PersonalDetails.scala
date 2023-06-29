@@ -30,7 +30,7 @@ final case class PersonalDetails(
 ) {
   lazy val disclosingAboutThemselves: Boolean = background.disclosureEntity match {
     case Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))) => true
-    case _ => false
+    case _                                                                => false
   }
 
 }

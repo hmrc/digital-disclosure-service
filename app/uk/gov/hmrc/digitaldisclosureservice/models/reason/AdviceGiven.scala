@@ -23,4 +23,3 @@ case class AdviceGiven(adviceGiven: String, monthYear: MonthYear, contactPrefere
 object AdviceGiven {
   implicit val format = Json.format[AdviceGiven]
 }
-

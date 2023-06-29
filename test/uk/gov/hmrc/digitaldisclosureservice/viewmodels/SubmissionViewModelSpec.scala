@@ -22,7 +22,7 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import org.scalatest.wordspec.AnyWordSpec
 import java.time.LocalDate
 import viewmodels.implicits._
-import play.api.i18n.{MessagesApi, Messages}
+import play.api.i18n.{Messages, MessagesApi}
 import play.api.test.FakeRequest
 import models._
 import models.address._
@@ -30,16 +30,15 @@ import models.address.Address._
 import models.notification._
 import utils.BaseSpec
 
-
 class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with SummaryListFluency {
 
   object TestSubmissionViewModel extends SubmissionViewModel
 
   implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
-  val address = Address("line1", None, None, None, None, Country("GBR"))
-  val addressString = AddressOps(address).getAddressLines.mkString(", ")
+  val address                     = Address("line1", None, None, None, None, Country("GBR"))
+  val addressString               = AddressOps(address).getAddressLines.mkString(", ")
 
-  val date = LocalDate.of(2023,2,16)
+  val date       = LocalDate.of(2023, 2, 16)
   val dateString = "16 February 2023"
 
   "aboutTheIndividualList" should {
@@ -56,15 +55,17 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         sautr = Some("Some SAUTR"),
         address = Some(address)
       )
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheIndividual.fullName", ValueViewModel("Some full name")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.address", ValueViewModel(addressString)),
-        SummaryListRowViewModel("notification.aboutTheIndividual.dateOfBirth", ValueViewModel(dateString)),
-        SummaryListRowViewModel("notification.aboutTheIndividual.mainOccupation", ValueViewModel("Some occupation")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.nino", ValueViewModel("Some nino")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.vatRegNumber", ValueViewModel("Some reg number")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.sautr", ValueViewModel("Some SAUTR"))
-      ))
+      val expected           = SummaryListViewModel(
+        Seq(
+          SummaryListRowViewModel("notification.aboutTheIndividual.fullName", ValueViewModel("Some full name")),
+          SummaryListRowViewModel("notification.aboutTheIndividual.address", ValueViewModel(addressString)),
+          SummaryListRowViewModel("notification.aboutTheIndividual.dateOfBirth", ValueViewModel(dateString)),
+          SummaryListRowViewModel("notification.aboutTheIndividual.mainOccupation", ValueViewModel("Some occupation")),
+          SummaryListRowViewModel("notification.aboutTheIndividual.nino", ValueViewModel("Some nino")),
+          SummaryListRowViewModel("notification.aboutTheIndividual.vatRegNumber", ValueViewModel("Some reg number")),
+          SummaryListRowViewModel("notification.aboutTheIndividual.sautr", ValueViewModel("Some SAUTR"))
+        )
+      )
       TestSubmissionViewModel.aboutTheIndividualList(aboutTheIndividual, false) shouldEqual expected
     }
 
@@ -81,32 +82,45 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         sautr = Some("Some SAUTR"),
         address = Some(address)
       )
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheIndividual.fullName", ValueViewModel("Some full name")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.address", ValueViewModel(addressString)),
-        SummaryListRowViewModel("notification.aboutTheIndividual.dateOfBirth", ValueViewModel(dateString)),
-        SummaryListRowViewModel("notification.aboutTheIndividual.mainOccupation", ValueViewModel("Some occupation")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.doTheyHaveANino", ValueViewModel(messages("service.no"))),
-        SummaryListRowViewModel("notification.aboutTheIndividual.nino", ValueViewModel("Some nino")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.registeredForVAT", ValueViewModel(messages("service.no"))),
-        SummaryListRowViewModel("notification.aboutTheIndividual.vatRegNumber", ValueViewModel("Some reg number")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.registeredForSA", ValueViewModel(messages("service.unsure"))),
-        SummaryListRowViewModel("notification.aboutTheIndividual.sautr", ValueViewModel("Some SAUTR"))
-      ))
+      val expected           = SummaryListViewModel(
+        Seq(
+          SummaryListRowViewModel("notification.aboutTheIndividual.fullName", ValueViewModel("Some full name")),
+          SummaryListRowViewModel("notification.aboutTheIndividual.address", ValueViewModel(addressString)),
+          SummaryListRowViewModel("notification.aboutTheIndividual.dateOfBirth", ValueViewModel(dateString)),
+          SummaryListRowViewModel("notification.aboutTheIndividual.mainOccupation", ValueViewModel("Some occupation")),
+          SummaryListRowViewModel(
+            "notification.aboutTheIndividual.doTheyHaveANino",
+            ValueViewModel(messages("service.no"))
+          ),
+          SummaryListRowViewModel("notification.aboutTheIndividual.nino", ValueViewModel("Some nino")),
+          SummaryListRowViewModel(
+            "notification.aboutTheIndividual.registeredForVAT",
+            ValueViewModel(messages("service.no"))
+          ),
+          SummaryListRowViewModel("notification.aboutTheIndividual.vatRegNumber", ValueViewModel("Some reg number")),
+          SummaryListRowViewModel(
+            "notification.aboutTheIndividual.registeredForSA",
+            ValueViewModel(messages("service.unsure"))
+          ),
+          SummaryListRowViewModel("notification.aboutTheIndividual.sautr", ValueViewModel("Some SAUTR"))
+        )
+      )
       TestSubmissionViewModel.aboutTheIndividualList(aboutTheIndividual, false) shouldEqual expected
     }
 
     "return unpopulated values as rows with value dash" in {
       val aboutTheIndividual = AboutTheIndividual()
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheIndividual.fullName", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.address", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.dateOfBirth", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.mainOccupation", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.doTheyHaveANino", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.registeredForVAT", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheIndividual.registeredForSA", ValueViewModel("-"))
-      ))
+      val expected           = SummaryListViewModel(
+        Seq(
+          SummaryListRowViewModel("notification.aboutTheIndividual.fullName", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutTheIndividual.address", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutTheIndividual.dateOfBirth", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutTheIndividual.mainOccupation", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutTheIndividual.doTheyHaveANino", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutTheIndividual.registeredForVAT", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutTheIndividual.registeredForSA", ValueViewModel("-"))
+        )
+      )
       TestSubmissionViewModel.aboutTheIndividualList(aboutTheIndividual, false) shouldEqual expected
     }
   }
@@ -125,15 +139,17 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         sautr = Some("Some SAUTR"),
         address = Some(address)
       )
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheEstate.fullName", ValueViewModel("Some full name")),
-        SummaryListRowViewModel("notification.aboutTheEstate.address", ValueViewModel(addressString)),
-        SummaryListRowViewModel("notification.aboutTheEstate.dateOfBirth", ValueViewModel(dateString)),
-        SummaryListRowViewModel("notification.aboutTheEstate.mainOccupation", ValueViewModel("Some occupation")),
-        SummaryListRowViewModel("notification.aboutTheEstate.nino", ValueViewModel("Some nino")),
-        SummaryListRowViewModel("notification.aboutTheEstate.vatRegNumber", ValueViewModel("Some reg number")),
-        SummaryListRowViewModel("notification.aboutTheEstate.sautr", ValueViewModel("Some SAUTR"))
-      ))
+      val expected       = SummaryListViewModel(
+        Seq(
+          SummaryListRowViewModel("notification.aboutTheEstate.fullName", ValueViewModel("Some full name")),
+          SummaryListRowViewModel("notification.aboutTheEstate.address", ValueViewModel(addressString)),
+          SummaryListRowViewModel("notification.aboutTheEstate.dateOfBirth", ValueViewModel(dateString)),
+          SummaryListRowViewModel("notification.aboutTheEstate.mainOccupation", ValueViewModel("Some occupation")),
+          SummaryListRowViewModel("notification.aboutTheEstate.nino", ValueViewModel("Some nino")),
+          SummaryListRowViewModel("notification.aboutTheEstate.vatRegNumber", ValueViewModel("Some reg number")),
+          SummaryListRowViewModel("notification.aboutTheEstate.sautr", ValueViewModel("Some SAUTR"))
+        )
+      )
       TestSubmissionViewModel.aboutTheEstateList(aboutTheEstate, false) shouldEqual expected
     }
 
@@ -150,39 +166,52 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         sautr = Some("Some SAUTR"),
         address = Some(address)
       )
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheEstate.fullName", ValueViewModel("Some full name")),
-        SummaryListRowViewModel("notification.aboutTheEstate.address", ValueViewModel(addressString)),
-        SummaryListRowViewModel("notification.aboutTheEstate.dateOfBirth", ValueViewModel(dateString)),
-        SummaryListRowViewModel("notification.aboutTheEstate.mainOccupation", ValueViewModel("Some occupation")),
-        SummaryListRowViewModel("notification.aboutTheEstate.doTheyHaveANino", ValueViewModel(messages("service.no"))),
-        SummaryListRowViewModel("notification.aboutTheEstate.nino", ValueViewModel("Some nino")),
-        SummaryListRowViewModel("notification.aboutTheEstate.registeredForVAT", ValueViewModel(messages("service.no"))),
-        SummaryListRowViewModel("notification.aboutTheEstate.vatRegNumber", ValueViewModel("Some reg number")),
-        SummaryListRowViewModel("notification.aboutTheEstate.registeredForSA", ValueViewModel(messages("service.unsure"))),
-        SummaryListRowViewModel("notification.aboutTheEstate.sautr", ValueViewModel("Some SAUTR"))
-      ))
+      val expected       = SummaryListViewModel(
+        Seq(
+          SummaryListRowViewModel("notification.aboutTheEstate.fullName", ValueViewModel("Some full name")),
+          SummaryListRowViewModel("notification.aboutTheEstate.address", ValueViewModel(addressString)),
+          SummaryListRowViewModel("notification.aboutTheEstate.dateOfBirth", ValueViewModel(dateString)),
+          SummaryListRowViewModel("notification.aboutTheEstate.mainOccupation", ValueViewModel("Some occupation")),
+          SummaryListRowViewModel(
+            "notification.aboutTheEstate.doTheyHaveANino",
+            ValueViewModel(messages("service.no"))
+          ),
+          SummaryListRowViewModel("notification.aboutTheEstate.nino", ValueViewModel("Some nino")),
+          SummaryListRowViewModel(
+            "notification.aboutTheEstate.registeredForVAT",
+            ValueViewModel(messages("service.no"))
+          ),
+          SummaryListRowViewModel("notification.aboutTheEstate.vatRegNumber", ValueViewModel("Some reg number")),
+          SummaryListRowViewModel(
+            "notification.aboutTheEstate.registeredForSA",
+            ValueViewModel(messages("service.unsure"))
+          ),
+          SummaryListRowViewModel("notification.aboutTheEstate.sautr", ValueViewModel("Some SAUTR"))
+        )
+      )
       TestSubmissionViewModel.aboutTheEstateList(aboutTheEstate, false) shouldEqual expected
     }
 
     "return unpopulated values as rows with value dash" in {
       val aboutTheEstate = AboutTheEstate()
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheEstate.fullName", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheEstate.address", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheEstate.dateOfBirth", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheEstate.mainOccupation", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheEstate.doTheyHaveANino", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheEstate.registeredForVAT", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheEstate.registeredForSA", ValueViewModel("-"))
-      ))
+      val expected       = SummaryListViewModel(
+        Seq(
+          SummaryListRowViewModel("notification.aboutTheEstate.fullName", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutTheEstate.address", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutTheEstate.dateOfBirth", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutTheEstate.mainOccupation", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutTheEstate.doTheyHaveANino", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutTheEstate.registeredForVAT", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutTheEstate.registeredForSA", ValueViewModel("-"))
+        )
+      )
       TestSubmissionViewModel.aboutTheEstateList(aboutTheEstate, false) shouldEqual expected
     }
   }
 
   "aboutYouList" should {
     "return populated values as rows when disclosing as the individual hiding Yes rows" in {
-      val aboutYou = AboutYou(
+      val aboutYou   = AboutYou(
         fullName = Some("Some full name"),
         telephoneNumber = Some("Some phone number"),
         emailAddress = Some("Some email address"),
@@ -197,22 +226,24 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         address = Some(address)
       )
       val background = Background()
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("Some full name")),
-        SummaryListRowViewModel("notification.aboutYou.emailAddress", ValueViewModel("Some email address")),
-        SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
-        SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel(addressString)),
-        SummaryListRowViewModel("notification.aboutYou.dateOfBirth", ValueViewModel(dateString)),
-        SummaryListRowViewModel("notification.aboutYou.mainOccupation", ValueViewModel("Some occupation")),
-        SummaryListRowViewModel("notification.aboutYou.nino", ValueViewModel("Some nino")),
-        SummaryListRowViewModel("notification.aboutYou.vatRegNumber", ValueViewModel("Some reg number")),
-        SummaryListRowViewModel("notification.aboutYou.sautr", ValueViewModel("Some SAUTR"))
-      ))
+      val expected   = SummaryListViewModel(
+        Seq(
+          SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("Some full name")),
+          SummaryListRowViewModel("notification.aboutYou.emailAddress", ValueViewModel("Some email address")),
+          SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
+          SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel(addressString)),
+          SummaryListRowViewModel("notification.aboutYou.dateOfBirth", ValueViewModel(dateString)),
+          SummaryListRowViewModel("notification.aboutYou.mainOccupation", ValueViewModel("Some occupation")),
+          SummaryListRowViewModel("notification.aboutYou.nino", ValueViewModel("Some nino")),
+          SummaryListRowViewModel("notification.aboutYou.vatRegNumber", ValueViewModel("Some reg number")),
+          SummaryListRowViewModel("notification.aboutYou.sautr", ValueViewModel("Some SAUTR"))
+        )
+      )
       TestSubmissionViewModel.aboutYouList(aboutYou, background, true, false) shouldEqual expected
     }
 
     "return populated values as rows when disclosing as the individual, showing No rows" in {
-      val aboutYou = AboutYou(
+      val aboutYou   = AboutYou(
         fullName = Some("Some full name"),
         telephoneNumber = Some("Some phone number"),
         emailAddress = Some("Some email address"),
@@ -227,25 +258,27 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         address = Some(address)
       )
       val background = Background()
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("Some full name")),
-        SummaryListRowViewModel("notification.aboutYou.emailAddress", ValueViewModel("Some email address")),
-        SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
-        SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel(addressString)),
-        SummaryListRowViewModel("notification.aboutYou.dateOfBirth", ValueViewModel(dateString)),
-        SummaryListRowViewModel("notification.aboutYou.mainOccupation", ValueViewModel("Some occupation")),
-        SummaryListRowViewModel("notification.aboutYou.doYouHaveANino", ValueViewModel(messages("service.no"))),
-        SummaryListRowViewModel("notification.aboutYou.nino", ValueViewModel("Some nino")),
-        SummaryListRowViewModel("notification.aboutYou.registeredForVAT", ValueViewModel(messages("service.no"))),
-        SummaryListRowViewModel("notification.aboutYou.vatRegNumber", ValueViewModel("Some reg number")),
-        SummaryListRowViewModel("notification.aboutYou.registeredForSA", ValueViewModel(messages("service.unsure"))),
-        SummaryListRowViewModel("notification.aboutYou.sautr", ValueViewModel("Some SAUTR"))
-      ))
+      val expected   = SummaryListViewModel(
+        Seq(
+          SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("Some full name")),
+          SummaryListRowViewModel("notification.aboutYou.emailAddress", ValueViewModel("Some email address")),
+          SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
+          SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel(addressString)),
+          SummaryListRowViewModel("notification.aboutYou.dateOfBirth", ValueViewModel(dateString)),
+          SummaryListRowViewModel("notification.aboutYou.mainOccupation", ValueViewModel("Some occupation")),
+          SummaryListRowViewModel("notification.aboutYou.doYouHaveANino", ValueViewModel(messages("service.no"))),
+          SummaryListRowViewModel("notification.aboutYou.nino", ValueViewModel("Some nino")),
+          SummaryListRowViewModel("notification.aboutYou.registeredForVAT", ValueViewModel(messages("service.no"))),
+          SummaryListRowViewModel("notification.aboutYou.vatRegNumber", ValueViewModel("Some reg number")),
+          SummaryListRowViewModel("notification.aboutYou.registeredForSA", ValueViewModel(messages("service.unsure"))),
+          SummaryListRowViewModel("notification.aboutYou.sautr", ValueViewModel("Some SAUTR"))
+        )
+      )
       TestSubmissionViewModel.aboutYouList(aboutYou, background, true, false) shouldEqual expected
     }
 
     "return populated values as rows when disclosing on behalf of the individual" in {
-      val aboutYou = AboutYou(
+      val aboutYou   = AboutYou(
         fullName = Some("Some full name"),
         telephoneNumber = Some("Some phone number"),
         emailAddress = Some("Some email address"),
@@ -260,18 +293,23 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         address = Some(address)
       )
       val background = Background(areYouRepresetingAnOrganisation = Some(false))
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("Some full name")),
-        SummaryListRowViewModel("notification.aboutYou.emailAddress", ValueViewModel("Some email address")),
-        SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
-        SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel(addressString)),
-        SummaryListRowViewModel("notification.background.areYouRepresetingAnOrganisation", ValueViewModel(messages("service.no")))
-      ))
+      val expected   = SummaryListViewModel(
+        Seq(
+          SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("Some full name")),
+          SummaryListRowViewModel("notification.aboutYou.emailAddress", ValueViewModel("Some email address")),
+          SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
+          SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel(addressString)),
+          SummaryListRowViewModel(
+            "notification.background.areYouRepresetingAnOrganisation",
+            ValueViewModel(messages("service.no"))
+          )
+        )
+      )
       TestSubmissionViewModel.aboutYouList(aboutYou, background, false, false) shouldEqual expected
     }
 
     "return populated values as rows when disclosing on behalf of the individual and representing an org" in {
-      val aboutYou = AboutYou(
+      val aboutYou   = AboutYou(
         fullName = Some("Some full name"),
         telephoneNumber = Some("Some phone number"),
         emailAddress = Some("Some email address"),
@@ -285,38 +323,45 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
         sautr = Some("Some SAUTR"),
         address = Some(address)
       )
-      val background = Background(areYouRepresetingAnOrganisation = Some(true), organisationName = Some("Some organisation"))
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("Some full name")),
-        SummaryListRowViewModel("notification.aboutYou.emailAddress", ValueViewModel("Some email address")),
-        SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
-        SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel(addressString)),
-        SummaryListRowViewModel("notification.background.organisationName", ValueViewModel("Some organisation")),
-      ))
+      val background =
+        Background(areYouRepresetingAnOrganisation = Some(true), organisationName = Some("Some organisation"))
+      val expected   = SummaryListViewModel(
+        Seq(
+          SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("Some full name")),
+          SummaryListRowViewModel("notification.aboutYou.emailAddress", ValueViewModel("Some email address")),
+          SummaryListRowViewModel("notification.aboutYou.telephoneNumber", ValueViewModel("Some phone number")),
+          SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel(addressString)),
+          SummaryListRowViewModel("notification.background.organisationName", ValueViewModel("Some organisation"))
+        )
+      )
       TestSubmissionViewModel.aboutYouList(aboutYou, background, false, false) shouldEqual expected
     }
 
     "return unpopulated values as rows with value dash when disclosing as the individual" in {
-      val aboutYou = AboutYou()
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutYou.dateOfBirth", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutYou.mainOccupation", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutYou.doYouHaveANino", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutYou.registeredForVAT", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutYou.registeredForSA", ValueViewModel("-"))
-      ))
+      val aboutYou   = AboutYou()
+      val expected   = SummaryListViewModel(
+        Seq(
+          SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutYou.dateOfBirth", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutYou.mainOccupation", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutYou.doYouHaveANino", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutYou.registeredForVAT", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutYou.registeredForSA", ValueViewModel("-"))
+        )
+      )
       val background = Background()
       TestSubmissionViewModel.aboutYouList(aboutYou, background, true, false) shouldEqual expected
     }
 
     "return unpopulated values as rows with value dash when disclosing on behalf of the individual" in {
-      val aboutYou = AboutYou()
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel("-"))
-      ))
+      val aboutYou   = AboutYou()
+      val expected   = SummaryListViewModel(
+        Seq(
+          SummaryListRowViewModel("notification.aboutYou.fullName", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutYou.address", ValueViewModel("-"))
+        )
+      )
       val background = Background()
       TestSubmissionViewModel.aboutYouList(aboutYou, background, false, false) shouldEqual expected
     }
@@ -325,21 +370,25 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
   "companyList" should {
     "return populated values as rows" in {
       val aboutTheCompany = AboutTheCompany(Some("Some company name"), Some("Some reg number"), Some(address))
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheCompany.name", ValueViewModel("Some company name")),
-        SummaryListRowViewModel("notification.aboutTheCompany.registrationNumber", ValueViewModel("Some reg number")),
-        SummaryListRowViewModel("notification.aboutTheCompany.address", ValueViewModel(addressString))
-      ))
+      val expected        = SummaryListViewModel(
+        Seq(
+          SummaryListRowViewModel("notification.aboutTheCompany.name", ValueViewModel("Some company name")),
+          SummaryListRowViewModel("notification.aboutTheCompany.registrationNumber", ValueViewModel("Some reg number")),
+          SummaryListRowViewModel("notification.aboutTheCompany.address", ValueViewModel(addressString))
+        )
+      )
       TestSubmissionViewModel.aboutTheCompanyList(aboutTheCompany) shouldEqual expected
     }
 
     "return unpopulated values as rows with value dash" in {
       val aboutTheCompany = AboutTheCompany()
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheCompany.name", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheCompany.registrationNumber", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheCompany.address", ValueViewModel("-"))
-      ))
+      val expected        = SummaryListViewModel(
+        Seq(
+          SummaryListRowViewModel("notification.aboutTheCompany.name", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutTheCompany.registrationNumber", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutTheCompany.address", ValueViewModel("-"))
+        )
+      )
       TestSubmissionViewModel.aboutTheCompanyList(aboutTheCompany) shouldEqual expected
     }
   }
@@ -347,19 +396,23 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
   "aboutTheTrustList" should {
     "return populated values as rows" in {
       val aboutTheTrust = AboutTheTrust(Some("Some trust name"), Some(address))
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheTrust.name", ValueViewModel("Some trust name")),
-        SummaryListRowViewModel("notification.aboutTheTrust.address", ValueViewModel(addressString))
-      ))
+      val expected      = SummaryListViewModel(
+        Seq(
+          SummaryListRowViewModel("notification.aboutTheTrust.name", ValueViewModel("Some trust name")),
+          SummaryListRowViewModel("notification.aboutTheTrust.address", ValueViewModel(addressString))
+        )
+      )
       TestSubmissionViewModel.aboutTheTrustList(aboutTheTrust) shouldEqual expected
     }
 
     "return unpopulated values as rows with value dash" in {
       val aboutTheTrust = AboutTheTrust()
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheTrust.name", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheTrust.address", ValueViewModel("-"))
-      ))
+      val expected      = SummaryListViewModel(
+        Seq(
+          SummaryListRowViewModel("notification.aboutTheTrust.name", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutTheTrust.address", ValueViewModel("-"))
+        )
+      )
       TestSubmissionViewModel.aboutTheTrustList(aboutTheTrust) shouldEqual expected
     }
   }
@@ -367,19 +420,23 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
   "aboutTheLLPList" should {
     "return populated values as rows" in {
       val aboutTheLLP = AboutTheLLP(Some("Some LLP name"), Some(address))
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheLLP.name", ValueViewModel("Some LLP name")),
-        SummaryListRowViewModel("notification.aboutTheLLP.address", ValueViewModel(addressString))
-      ))
+      val expected    = SummaryListViewModel(
+        Seq(
+          SummaryListRowViewModel("notification.aboutTheLLP.name", ValueViewModel("Some LLP name")),
+          SummaryListRowViewModel("notification.aboutTheLLP.address", ValueViewModel(addressString))
+        )
+      )
       TestSubmissionViewModel.aboutTheLLPList(aboutTheLLP) shouldEqual expected
     }
 
     "return unpopulated values as rows with value dash" in {
       val aboutTheLLP = AboutTheLLP()
-      val expected = SummaryListViewModel(Seq(
-        SummaryListRowViewModel("notification.aboutTheLLP.name", ValueViewModel("-")),
-        SummaryListRowViewModel("notification.aboutTheLLP.address", ValueViewModel("-"))
-      ))
+      val expected    = SummaryListViewModel(
+        Seq(
+          SummaryListRowViewModel("notification.aboutTheLLP.name", ValueViewModel("-")),
+          SummaryListRowViewModel("notification.aboutTheLLP.address", ValueViewModel("-"))
+        )
+      )
       TestSubmissionViewModel.aboutTheLLPList(aboutTheLLP) shouldEqual expected
     }
   }

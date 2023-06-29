@@ -43,48 +43,55 @@ class DMSSubmissionConnectorImpl @Inject() (
   val wsClient: WSClient,
   configuration: Configuration
 )(implicit val ec: ExecutionContext, appConfig: AppConfig)
-  extends DMSSubmissionConnector
+    extends DMSSubmissionConnector
     with Retries {
 
   private val service: Service = configuration.get[Service]("microservice.services.dms-submission")
-  private val clientAuthToken = configuration.get[String]("internal-auth.token")
-  private val appName: String = configuration.get[String]("appName")
+  private val clientAuthToken  = configuration.get[String]("internal-auth.token")
+  private val appName: String  = configuration.get[String]("appName")
 
-  private val selfUrl = configuration.get[Service]("microservice.services.self").baseUrl
+  private val selfUrl               = configuration.get[Service]("microservice.services.self").baseUrl
   private val callbackControllerUrl = routes.SubmissionCallbackController.callback.url
-  private val callbackUrl = s"${selfUrl}/digital-disclosure-service${callbackControllerUrl}"
+  private val callbackUrl           = s"$selfUrl/digital-disclosure-service$callbackControllerUrl"
 
   def submit(submissionRequest: SubmissionRequest, pdf: Array[Byte]): Future[SubmissionResponse] = {
 
     val multipartFormData = constructMultipartFormData(submissionRequest, pdf)
 
     retry {
-      wsClient.url(s"${service.baseUrl}/dms-submission/submit")
+      wsClient
+        .url(s"${service.baseUrl}/dms-submission/submit")
         .withHttpHeaders(AUTHORIZATION -> clientAuthToken, USER_AGENT -> appName)
         .post(multipartFormData)
         .flatMap { response =>
           response.status match {
-            case ACCEPTED => handleResponse[SubmissionResponse.Success](response)
+            case ACCEPTED    => handleResponse[SubmissionResponse.Success](response)
             case BAD_REQUEST => handleResponse[SubmissionResponse.Failure](response)
-            case _ => Future.failed(DMSSubmissionConnector.UnexpectedResponseException(response.status, response.body))
+            case _           => Future.failed(DMSSubmissionConnector.UnexpectedResponseException(response.status, response.body))
           }
         }
     }
   }
-  
-  def handleResponse[A](response: WSResponse)(implicit reads: Reads[A]): Future[A] = {
+
+  def handleResponse[A](response: WSResponse)(implicit reads: Reads[A]): Future[A] =
     response.json.validate[A] match {
       case JsSuccess(a, _) => Future.successful(a)
-      case JsError(e) => Future.failed(DMSSubmissionConnector.UnexpectedResponseException(response.status, response.body))
+      case JsError(e)      =>
+        Future.failed(DMSSubmissionConnector.UnexpectedResponseException(response.status, response.body))
     }
-  }
 
-  private def constructMultipartFormData(submissionRequest: SubmissionRequest, pdf: Array[Byte]): Source[Part[Source[ByteString, Any]], Any] = {
+  private def constructMultipartFormData(
+    submissionRequest: SubmissionRequest,
+    pdf: Array[Byte]
+  ): Source[Part[Source[ByteString, Any]], Any] = {
     val dataParts = Seq(
       DataPart("callbackUrl", callbackUrl),
       DataPart("metadata.store", submissionRequest.metadata.store.toString),
       DataPart("metadata.source", submissionRequest.metadata.formId),
-      DataPart("metadata.timeOfReceipt", DateTimeFormatter.ISO_DATE_TIME.format(submissionRequest.metadata.timeOfReceipt)),
+      DataPart(
+        "metadata.timeOfReceipt",
+        DateTimeFormatter.ISO_DATE_TIME.format(submissionRequest.metadata.timeOfReceipt)
+      ),
       DataPart("metadata.formId", submissionRequest.metadata.formId),
       DataPart("metadata.customerId", submissionRequest.metadata.customerId),
       DataPart("metadata.submissionMark", submissionRequest.metadata.submissionMark),
@@ -101,7 +108,7 @@ class DMSSubmissionConnectorImpl @Inject() (
     )
     submissionRequest.submissionReference match {
       case Some(submissionReference) => Source(DataPart("submissionReference", submissionReference) +: dataParts)
-      case None => Source(dataParts)
+      case None                      => Source(dataParts)
     }
   }
 }
@@ -111,10 +118,10 @@ object DMSSubmissionConnector {
   final case class UnexpectedResponseException(status: Int, body: String) extends Exception with NoStackTrace {
     override def getMessage: String = s"Unexpected response from DMS Submission service, status: $status, body: $body"
   }
-  
+
 }
 
 @ImplementedBy(classOf[DMSSubmissionConnectorImpl])
 trait DMSSubmissionConnector {
-  def submit(submissionRequest: SubmissionRequest, pdf: Array[Byte]): Future[SubmissionResponse] 
+  def submit(submissionRequest: SubmissionRequest, pdf: Array[Byte]): Future[SubmissionResponse]
 }

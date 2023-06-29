@@ -21,7 +21,7 @@ import org.scalatest.wordspec.AnyWordSpec
 
 class ServiceSpec extends AnyWordSpec with Matchers {
 
-  "toString" should {
+  "toString"        should {
     "convert the Service into the baseUrl" in {
       val service = Service("host", "port", "protocol")
       service.toString shouldEqual service.baseUrl
@@ -29,10 +29,10 @@ class ServiceSpec extends AnyWordSpec with Matchers {
   }
   "convertToString" should {
     "implicitly convert the Service into the baseUrl" in {
-      val service = Service("host", "port", "protocol")
+      val service     = Service("host", "port", "protocol")
       val str: String = service
       str shouldEqual service.baseUrl
     }
   }
-  
+
 }

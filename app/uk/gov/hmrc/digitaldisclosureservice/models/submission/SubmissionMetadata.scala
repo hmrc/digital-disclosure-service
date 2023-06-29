@@ -24,11 +24,11 @@ final case class SubmissionMetadata(
   customerId: String,
   submissionMark: String
 ) {
-  val store = true
-  val formId = "DO4SUB"
-  val businessArea = "EC"
+  val store              = true
+  val formId             = "DO4SUB"
+  val businessArea       = "EC"
   val classificationType = "EC-CCO-Digital Disclosure Serv"
-  val casKey = ""
+  val casKey             = ""
 }
 
 object SubmissionMetadata {

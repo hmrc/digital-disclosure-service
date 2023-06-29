@@ -18,7 +18,5 @@ package viewmodels
 
 package object govuk {
 
-  object all
-    extends ImplicitConversions
-      with SummaryListFluency
+  object all extends ImplicitConversions with SummaryListFluency
 }

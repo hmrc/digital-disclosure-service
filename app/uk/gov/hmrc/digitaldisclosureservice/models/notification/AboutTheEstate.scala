@@ -21,7 +21,7 @@ import play.api.libs.json.{Json, OFormat}
 import models.YesNoOrUnsure
 import models.address.Address
 
-final case class AboutTheEstate (
+final case class AboutTheEstate(
   fullName: Option[String] = None,
   dateOfBirth: Option[LocalDate] = None,
   mainOccupation: Option[String] = None,

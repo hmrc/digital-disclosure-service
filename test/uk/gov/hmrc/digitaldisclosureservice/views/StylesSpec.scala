@@ -18,7 +18,7 @@ package views
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import play.api.i18n.{MessagesApi, Messages}
+import play.api.i18n.{Messages, MessagesApi}
 import play.twirl.api.Html
 import play.api.test.FakeRequest
 import uk.gov.hmrc.digitaldisclosureservice.views.html.styles
@@ -33,16 +33,16 @@ class StylesSpec extends AnyWordSpec with Matchers with BaseSpec with SummaryLis
   implicit protected def htmlBodyOf(html: Html): Document = Jsoup.parse(html.toString())
 
   implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
-  implicit val sut = app.injector.instanceOf[styles]
+  implicit val sut                = app.injector.instanceOf[styles]
 
   private def createView(): Html = sut.render()
-  
+
   "styles" should {
 
     val view = createView()
 
     "contain styling" in {
-      Option(view.select("style")) shouldBe (defined)
+      Option(view.select("style")) shouldBe defined
     }
 
   }
@@ -52,6 +52,5 @@ class StylesSpec extends AnyWordSpec with Matchers with BaseSpec with SummaryLis
       sut.f() shouldEqual createView()
     }
   }
-
 
 }

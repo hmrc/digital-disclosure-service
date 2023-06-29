@@ -40,33 +40,34 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import models.PDF
 import models.{Metadata, NINO, Notification}
 
-class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers 
-    with MockFactory with ScalaFutures {
+class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers with MockFactory with ScalaFutures {
 
-  val mockDmsConnector = mock[DMSSubmissionConnector]
-  val mockPdfService = mock[SubmissionPdfService]
+  val mockDmsConnector   = mock[DMSSubmissionConnector]
+  val mockPdfService     = mock[SubmissionPdfService]
   val mockMarkCalculator = mock[MarkCalculator]
 
-  val app = new GuiceApplicationBuilder().overrides(
-    bind[DMSSubmissionConnector].toInstance(mockDmsConnector),
-    bind[SubmissionPdfService].toInstance(mockPdfService),
-    bind[MarkCalculator].toInstance(mockMarkCalculator)
-  ).configure("create-internal-auth-token-on-start" -> false).build()
+  val app = new GuiceApplicationBuilder()
+    .overrides(
+      bind[DMSSubmissionConnector].toInstance(mockDmsConnector),
+      bind[SubmissionPdfService].toInstance(mockPdfService),
+      bind[MarkCalculator].toInstance(mockMarkCalculator)
+    )
+    .configure("create-internal-auth-token-on-start" -> false)
+    .build()
 
   implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
 
   val sut = new DMSSubmissionServiceImpl(mockDmsConnector, mockPdfService, mockMarkCalculator)
 
-  def mockCreatePdf(notification: Notification, caseflowDateFormat: Boolean, lang:String)(
+  def mockCreatePdf(notification: Notification, caseflowDateFormat: Boolean, lang: String)(
     response: PDF
   ): CallHandler4[Notification, Boolean, String, Messages, PDF] =
     (mockPdfService
-      .createPdf(_: Notification, _: Boolean, _:String)(_: Messages))
+      .createPdf(_: Notification, _: Boolean, _: String)(_: Messages))
       .expects(notification, *, *, *)
       .returning(response)
 
-  def mockGetSfMark(xml: String)
-  (response: String): CallHandler1[String, String] =
+  def mockGetSfMark(xml: String)(response: String): CallHandler1[String, String] =
     (mockMarkCalculator
       .getSfMark(_: String))
       .expects(xml)
@@ -80,18 +81,19 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
       .expects(submissionRequest, *)
       .returning(response)
 
-  def mockSubmitAny(response: Future[SubmissionResponse]): CallHandler2[SubmissionRequest, Array[Byte], Future[SubmissionResponse]] =
+  def mockSubmitAny(
+    response: Future[SubmissionResponse]
+  ): CallHandler2[SubmissionRequest, Array[Byte], Future[SubmissionResponse]] =
     (mockDmsConnector
       .submit(_: SubmissionRequest, _: Array[Byte]))
       .expects(*, *)
       .returning(response)
 
-
   "submit" should {
     "create the pdf, generate a Mark, populate a request and send it to the connector" in {
-      val stream = new ByteArrayOutputStream()
+      val stream         = new ByteArrayOutputStream()
       val submissionTime = LocalDateTime.now()
-      val notification = Notification(  
+      val notification   = Notification(
         userId = "userId",
         submissionId = "submissionId",
         lastUpdated = Instant.now,
@@ -100,7 +102,8 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
           background = Background(),
           aboutYou = AboutYou()
         ),
-        customerId = Some(NINO("customerId123")))
+        customerId = Some(NINO("customerId123"))
+      )
       val submissionMark = "mark"
 
       val submissionMetadata = SubmissionMetadata(
@@ -108,7 +111,7 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
         customerId = "customerId123",
         submissionMark = submissionMark
       )
-      val submissionRequest = SubmissionRequest(
+      val submissionRequest  = SubmissionRequest(
         submissionReference = Some("12345678ABCD"),
         metadata = submissionMetadata
       )
@@ -122,8 +125,8 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
     }
 
     "succeed when the time isnt supplied" in {
-      val stream = new ByteArrayOutputStream()
-      val notification = Notification(  
+      val stream         = new ByteArrayOutputStream()
+      val notification   = Notification(
         userId = "userId",
         submissionId = "submissionId",
         lastUpdated = Instant.now,
@@ -132,7 +135,8 @@ class DMSSubmissionServiceSpec extends AnyWordSpec with Matchers
           background = Background(),
           aboutYou = AboutYou()
         ),
-        customerId = None)
+        customerId = None
+      )
       val submissionMark = "mark"
 
       mockCreatePdf(notification, true, "en")(PDF(stream))

@@ -28,16 +28,16 @@ abstract class BaseController(cc: ControllerComponents) extends BackendControlle
   def withValidJson[T](f: T => Future[Result])(implicit request: Request[JsValue], reads: Reads[T]): Future[Result] =
     request.body.validate[T] match {
       case JsSuccess(value, _) => f(value)
-      case _ => Future.successful(BadRequest("Invalid JSON"))
+      case _                   => Future.successful(BadRequest("Invalid JSON"))
     }
 
-  def getLanguage(implicit request:Request[JsValue]): String = {
-    val acceptedLanguages: Seq[Lang] = request.acceptLanguages
+  def getLanguage(implicit request: Request[JsValue]): String = {
+    val acceptedLanguages: Seq[Lang]    = request.acceptLanguages
     val preferredLanguage: Option[Lang] = acceptedLanguages.headOption
 
     preferredLanguage match {
       case Some(lang) => lang.code
-      case None => "en"
+      case None       => "en"
     }
   }
 

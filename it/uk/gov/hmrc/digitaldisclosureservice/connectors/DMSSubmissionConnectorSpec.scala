@@ -27,20 +27,25 @@ import util.WireMockHelper
 import java.time.LocalDateTime
 import play.api.http.Status._
 import connectors.DMSSubmissionConnector
-import play.mvc.Http.HeaderNames.{USER_AGENT, AUTHORIZATION}
-import models.submission.{SubmissionRequest, SubmissionResponse, SubmissionMetadata}
+import play.mvc.Http.HeaderNames.{AUTHORIZATION, USER_AGENT}
+import models.submission.{SubmissionMetadata, SubmissionRequest, SubmissionResponse}
 import java.time.format.DateTimeFormatter
 
-class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFutures with IntegrationPatience with WireMockHelper {
+class DMSSubmissionConnectorSpec
+    extends AnyFreeSpec
+    with Matchers
+    with ScalaFutures
+    with IntegrationPatience
+    with WireMockHelper {
 
   private lazy val app: Application =
     GuiceApplicationBuilder()
       .configure(
-        "microservice.services.dms-submission.port" -> server.port(),
-        "microservice.services.dms-submission.host" -> "localhost",
+        "microservice.services.dms-submission.port"     -> server.port(),
+        "microservice.services.dms-submission.host"     -> "localhost",
         "microservice.services.dms-submission.protocol" -> "http",
-        "internal-auth.token" -> "authToken",
-        "create-internal-auth-token-on-start" -> false
+        "internal-auth.token"                           -> "authToken",
+        "create-internal-auth-token-on-start"           -> false
       )
       .build()
 
@@ -52,13 +57,13 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
 
     val url = "/dms-submission/submit"
 
-    val localDate = LocalDateTime.now() 
+    val localDate         = LocalDateTime.now()
     val submissionRequest = SubmissionRequest(
       submissionReference = None,
       SubmissionMetadata(
         timeOfReceipt = localDate,
         customerId = "customer Id",
-        submissionMark = "mark",
+        submissionMark = "mark"
       )
     )
 
@@ -71,12 +76,18 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
           .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing(expectedCallbackUrl)))
           .withMultipartRequestBody(aMultipart().withName("metadata.store").withBody(containing("true")))
           .withMultipartRequestBody(aMultipart().withName("metadata.source").withBody(containing("DO4SUB")))
-          .withMultipartRequestBody(aMultipart().withName("metadata.timeOfReceipt").withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate))))
+          .withMultipartRequestBody(
+            aMultipart()
+              .withName("metadata.timeOfReceipt")
+              .withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate)))
+          )
           .withMultipartRequestBody(aMultipart().withName("metadata.formId").withBody(containing("DO4SUB")))
           .withMultipartRequestBody(aMultipart().withName("metadata.customerId").withBody(containing("customer Id")))
           .withMultipartRequestBody(aMultipart().withName("metadata.submissionMark").withBody(containing("mark")))
           .withMultipartRequestBody(aMultipart().withName("metadata.casKey").withBody(containing("")))
-          .withMultipartRequestBody(aMultipart().withName("metadata.classificationType").withBody(containing("EC-CCO-Digital Disclosure Serv")))
+          .withMultipartRequestBody(
+            aMultipart().withName("metadata.classificationType").withBody(containing("EC-CCO-Digital Disclosure Serv"))
+          )
           .withMultipartRequestBody(aMultipart().withName("metadata.businessArea").withBody(containing("EC")))
           .withMultipartRequestBody(aMultipart().withName("form").withBody(binaryEqualTo(pdf)))
           .withHeader(AUTHORIZATION, containing("authToken"))
@@ -98,7 +109,7 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
         SubmissionMetadata(
           timeOfReceipt = localDate,
           customerId = "customer Id",
-          submissionMark = "mark",
+          submissionMark = "mark"
         )
       )
 
@@ -108,12 +119,18 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
           .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing(expectedCallbackUrl)))
           .withMultipartRequestBody(aMultipart().withName("metadata.store").withBody(containing("true")))
           .withMultipartRequestBody(aMultipart().withName("metadata.source").withBody(containing("DO4SUB")))
-          .withMultipartRequestBody(aMultipart().withName("metadata.timeOfReceipt").withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate))))
+          .withMultipartRequestBody(
+            aMultipart()
+              .withName("metadata.timeOfReceipt")
+              .withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate)))
+          )
           .withMultipartRequestBody(aMultipart().withName("metadata.formId").withBody(containing("DO4SUB")))
           .withMultipartRequestBody(aMultipart().withName("metadata.customerId").withBody(containing("customer Id")))
           .withMultipartRequestBody(aMultipart().withName("metadata.submissionMark").withBody(containing("mark")))
           .withMultipartRequestBody(aMultipart().withName("metadata.casKey").withBody(containing("")))
-          .withMultipartRequestBody(aMultipart().withName("metadata.classificationType").withBody(containing("EC-CCO-Digital Disclosure Serv")))
+          .withMultipartRequestBody(
+            aMultipart().withName("metadata.classificationType").withBody(containing("EC-CCO-Digital Disclosure Serv"))
+          )
           .withMultipartRequestBody(aMultipart().withName("metadata.businessArea").withBody(containing("EC")))
           .withMultipartRequestBody(aMultipart().withName("form").withBody(binaryEqualTo(pdf)))
           .withHeader(AUTHORIZATION, containing("authToken"))
@@ -135,12 +152,18 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
           .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing(expectedCallbackUrl)))
           .withMultipartRequestBody(aMultipart().withName("metadata.store").withBody(containing("true")))
           .withMultipartRequestBody(aMultipart().withName("metadata.source").withBody(containing("DO4SUB")))
-          .withMultipartRequestBody(aMultipart().withName("metadata.timeOfReceipt").withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate))))
+          .withMultipartRequestBody(
+            aMultipart()
+              .withName("metadata.timeOfReceipt")
+              .withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate)))
+          )
           .withMultipartRequestBody(aMultipart().withName("metadata.formId").withBody(containing("DO4SUB")))
           .withMultipartRequestBody(aMultipart().withName("metadata.customerId").withBody(containing("customer Id")))
           .withMultipartRequestBody(aMultipart().withName("metadata.submissionMark").withBody(containing("mark")))
           .withMultipartRequestBody(aMultipart().withName("metadata.casKey").withBody(containing("")))
-          .withMultipartRequestBody(aMultipart().withName("metadata.classificationType").withBody(containing("EC-CCO-Digital Disclosure Serv")))
+          .withMultipartRequestBody(
+            aMultipart().withName("metadata.classificationType").withBody(containing("EC-CCO-Digital Disclosure Serv"))
+          )
           .withMultipartRequestBody(aMultipart().withName("metadata.businessArea").withBody(containing("EC")))
           .withMultipartRequestBody(aMultipart().withName("form").withBody(binaryEqualTo(pdf)))
           .withHeader(AUTHORIZATION, containing("authToken"))
@@ -159,12 +182,18 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
           .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing(expectedCallbackUrl)))
           .withMultipartRequestBody(aMultipart().withName("metadata.store").withBody(containing("true")))
           .withMultipartRequestBody(aMultipart().withName("metadata.source").withBody(containing("DO4SUB")))
-          .withMultipartRequestBody(aMultipart().withName("metadata.timeOfReceipt").withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate))))
+          .withMultipartRequestBody(
+            aMultipart()
+              .withName("metadata.timeOfReceipt")
+              .withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate)))
+          )
           .withMultipartRequestBody(aMultipart().withName("metadata.formId").withBody(containing("DO4SUB")))
           .withMultipartRequestBody(aMultipart().withName("metadata.customerId").withBody(containing("customer Id")))
           .withMultipartRequestBody(aMultipart().withName("metadata.submissionMark").withBody(containing("mark")))
           .withMultipartRequestBody(aMultipart().withName("metadata.casKey").withBody(containing("")))
-          .withMultipartRequestBody(aMultipart().withName("metadata.classificationType").withBody(containing("EC-CCO-Digital Disclosure Serv")))
+          .withMultipartRequestBody(
+            aMultipart().withName("metadata.classificationType").withBody(containing("EC-CCO-Digital Disclosure Serv"))
+          )
           .withMultipartRequestBody(aMultipart().withName("metadata.businessArea").withBody(containing("EC")))
           .withMultipartRequestBody(aMultipart().withName("form").withBody(binaryEqualTo(pdf)))
           .withHeader(AUTHORIZATION, containing("authToken"))
@@ -176,7 +205,9 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
           )
       )
 
-      connector.submit(submissionRequest, pdf).futureValue mustEqual SubmissionResponse.Failure(Seq("Error 1", "Error 2"))
+      connector.submit(submissionRequest, pdf).futureValue mustEqual SubmissionResponse.Failure(
+        Seq("Error 1", "Error 2")
+      )
     }
 
     "must return a failed future when the store responds with BAD_REQUEST and anything else" in {
@@ -186,12 +217,18 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
           .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing(expectedCallbackUrl)))
           .withMultipartRequestBody(aMultipart().withName("metadata.store").withBody(containing("true")))
           .withMultipartRequestBody(aMultipart().withName("metadata.source").withBody(containing("DO4SUB")))
-          .withMultipartRequestBody(aMultipart().withName("metadata.timeOfReceipt").withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate))))
+          .withMultipartRequestBody(
+            aMultipart()
+              .withName("metadata.timeOfReceipt")
+              .withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate)))
+          )
           .withMultipartRequestBody(aMultipart().withName("metadata.formId").withBody(containing("DO4SUB")))
           .withMultipartRequestBody(aMultipart().withName("metadata.customerId").withBody(containing("customer Id")))
           .withMultipartRequestBody(aMultipart().withName("metadata.submissionMark").withBody(containing("mark")))
           .withMultipartRequestBody(aMultipart().withName("metadata.casKey").withBody(containing("")))
-          .withMultipartRequestBody(aMultipart().withName("metadata.classificationType").withBody(containing("EC-CCO-Digital Disclosure Serv")))
+          .withMultipartRequestBody(
+            aMultipart().withName("metadata.classificationType").withBody(containing("EC-CCO-Digital Disclosure Serv"))
+          )
           .withMultipartRequestBody(aMultipart().withName("metadata.businessArea").withBody(containing("EC")))
           .withMultipartRequestBody(aMultipart().withName("form").withBody(binaryEqualTo(pdf)))
           .withHeader(AUTHORIZATION, containing("authToken"))
@@ -210,12 +247,18 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
           .withMultipartRequestBody(aMultipart().withName("callbackUrl").withBody(containing(expectedCallbackUrl)))
           .withMultipartRequestBody(aMultipart().withName("metadata.store").withBody(containing("true")))
           .withMultipartRequestBody(aMultipart().withName("metadata.source").withBody(containing("DO4SUB")))
-          .withMultipartRequestBody(aMultipart().withName("metadata.timeOfReceipt").withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate))))
+          .withMultipartRequestBody(
+            aMultipart()
+              .withName("metadata.timeOfReceipt")
+              .withBody(containing(DateTimeFormatter.ISO_DATE_TIME.format(localDate)))
+          )
           .withMultipartRequestBody(aMultipart().withName("metadata.formId").withBody(containing("DO4SUB")))
           .withMultipartRequestBody(aMultipart().withName("metadata.customerId").withBody(containing("customer Id")))
           .withMultipartRequestBody(aMultipart().withName("metadata.submissionMark").withBody(containing("mark")))
           .withMultipartRequestBody(aMultipart().withName("metadata.casKey").withBody(containing("")))
-          .withMultipartRequestBody(aMultipart().withName("metadata.classificationType").withBody(containing("EC-CCO-Digital Disclosure Serv")))
+          .withMultipartRequestBody(
+            aMultipart().withName("metadata.classificationType").withBody(containing("EC-CCO-Digital Disclosure Serv"))
+          )
           .withMultipartRequestBody(aMultipart().withName("metadata.businessArea").withBody(containing("EC")))
           .withMultipartRequestBody(aMultipart().withName("form").withBody(binaryEqualTo(pdf)))
           .withHeader(AUTHORIZATION, containing("authToken"))
@@ -226,7 +269,7 @@ class DMSSubmissionConnectorSpec extends AnyFreeSpec with Matchers with ScalaFut
       val exception = connector.submit(submissionRequest, pdf).failed.futureValue
       exception mustEqual DMSSubmissionConnector.UnexpectedResponseException(404, """{"name": "SomeId"}""")
     }
-    
+
   }
 
 }

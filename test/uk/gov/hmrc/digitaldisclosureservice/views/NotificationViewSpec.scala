@@ -18,8 +18,8 @@ package views
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import play.api.i18n.{MessagesApi, Messages}
-import models.{Notification, Metadata}
+import play.api.i18n.{Messages, MessagesApi}
+import models.{Metadata, Notification}
 import models.notification._
 import viewmodels._
 import play.twirl.api.Html
@@ -35,14 +35,23 @@ class NotificationViewSpec extends AnyWordSpec with Matchers with BaseSpec {
   implicit protected def htmlBodyOf(html: Html): Document = Jsoup.parse(html.toString())
 
   implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
-  implicit val sut = app.injector.instanceOf[NotificationView]
+  implicit val sut                = app.injector.instanceOf[NotificationView]
 
   private val lang = "en"
 
   private def createView(notification: NotificationViewModel): Html = sut.render(notification, lang, messages)
-  
-  val viewModel = NotificationViewModel(Notification("userId", "id", Instant.now(), Metadata(reference = Some("ref")), PersonalDetails(Background(), AboutYou())), false)
-  
+
+  val viewModel = NotificationViewModel(
+    Notification(
+      "userId",
+      "id",
+      Instant.now(),
+      Metadata(reference = Some("ref")),
+      PersonalDetails(Background(), AboutYou())
+    ),
+    false
+  )
+
   "NotificationView" should {
 
     val view = createView(viewModel)
@@ -68,6 +77,5 @@ class NotificationViewSpec extends AnyWordSpec with Matchers with BaseSpec {
       sut.f(viewModel, lang)(messages) shouldEqual createView(viewModel)
     }
   }
-
 
 }

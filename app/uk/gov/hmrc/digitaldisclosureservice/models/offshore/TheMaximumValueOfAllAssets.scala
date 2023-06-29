@@ -28,7 +28,12 @@ object TheMaximumValueOfAllAssets extends Enumerable.Implicits {
   case object Over1B extends WithName("over1B") with TheMaximumValueOfAllAssets
 
   val values: Seq[TheMaximumValueOfAllAssets] = Seq(
-    Below500k, Between500kAnd1M, Between1MAnd100M, Between100MAnd500M, Between500MAnd1B, Over1B
+    Below500k,
+    Between500kAnd1M,
+    Between1MAnd100M,
+    Between100MAnd500M,
+    Between500MAnd1B,
+    Over1B
   )
 
   implicit val enumerable: Enumerable[TheMaximumValueOfAllAssets] =

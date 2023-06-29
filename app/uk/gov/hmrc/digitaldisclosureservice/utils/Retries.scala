@@ -35,12 +35,14 @@ trait Retries extends Logging {
 
     def loop(remainingIntervals: Seq[FiniteDuration])(block: => Future[A]): Future[A] =
       remainingIntervals.toList match {
-        case Nil => block
+        case Nil          => block
         case head :: tail =>
-          block.recoverWith {
-            case Upstream5xxResponse(t) =>
-              logger.warn(s"Retrying failed call with message: ${t.message} with status code: ${t.statusCode} response retrying after $head", t)
-              after(head, actorSystem.scheduler)(loop(tail)(f))
+          block.recoverWith { case Upstream5xxResponse(t) =>
+            logger.warn(
+              s"Retrying failed call with message: ${t.message} with status code: ${t.statusCode} response retrying after $head",
+              t
+            )
+            after(head, actorSystem.scheduler)(loop(tail)(f))
           }
       }
 

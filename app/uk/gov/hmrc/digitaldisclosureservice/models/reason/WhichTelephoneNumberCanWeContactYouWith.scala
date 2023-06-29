@@ -24,7 +24,8 @@ object WhichTelephoneNumberCanWeContactYouWith extends Enumerable.Implicits {
   case object DifferentNumber extends WithName("differentNumber") with WhichTelephoneNumberCanWeContactYouWith
 
   val values: Seq[WhichTelephoneNumberCanWeContactYouWith] = Seq(
-    ExistingNumber, DifferentNumber
+    ExistingNumber,
+    DifferentNumber
   )
 
   implicit val enumerable: Enumerable[WhichTelephoneNumberCanWeContactYouWith] =

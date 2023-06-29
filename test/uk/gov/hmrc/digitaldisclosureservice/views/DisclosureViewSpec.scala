@@ -18,7 +18,7 @@ package views
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import play.api.i18n.{MessagesApi, Messages}
+import play.api.i18n.{Messages, MessagesApi}
 import models._
 import models.notification._
 import models.disclosure._
@@ -37,17 +37,31 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
   implicit protected def htmlBodyOf(html: Html): Document = Jsoup.parse(html.toString())
 
   implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
-  implicit val sut = app.injector.instanceOf[DisclosureView]
+  implicit val sut                = app.injector.instanceOf[DisclosureView]
 
-  private val lang = "en"
+  private val lang                                              = "en"
   private def createView(disclosure: DisclosureViewModel): Html = sut.render(disclosure, lang, messages)
-  
+
   "DisclosureView" when {
 
     "neither onshore or offshore are populated" should {
 
-      val viewModel = DisclosureViewModel(FullDisclosure("userId", "id", Instant.now(), Metadata(reference = Some("ref")), CaseReference(), PersonalDetails(Background(), AboutYou()), None, OffshoreLiabilities(), OtherLiabilities(), ReasonForDisclosingNow()), false)
-  
+      val viewModel = DisclosureViewModel(
+        FullDisclosure(
+          "userId",
+          "id",
+          Instant.now(),
+          Metadata(reference = Some("ref")),
+          CaseReference(),
+          PersonalDetails(Background(), AboutYou()),
+          None,
+          OffshoreLiabilities(),
+          OtherLiabilities(),
+          ReasonForDisclosingNow()
+        ),
+        false
+      )
+
       val view = createView(viewModel)
 
       "display the service name" in {
@@ -69,33 +83,37 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
     }
 
     "offshore is populated" should {
-    
+
       val viewModel = DisclosureViewModel(
-        metadataList = SummaryList(rows=Nil),
-        backgroundList = SummaryList(rows=Nil),
-        aboutTheIndividualList = Some(SummaryList(rows=Nil)),
+        metadataList = SummaryList(rows = Nil),
+        backgroundList = SummaryList(rows = Nil),
+        aboutTheIndividualList = Some(SummaryList(rows = Nil)),
         aboutTheCompanyList = None,
         aboutTheTrustList = None,
         aboutTheLLPList = None,
         aboutTheEstateList = None,
-        aboutYouList = SummaryList(rows=Nil),
+        aboutYouList = SummaryList(rows = Nil),
         aboutYouHeading = "disclosure.heading.completing",
-        offshoreLiabilities = Some(OffshoreLiabilitiesViewModel(
-          summaryList = SummaryList(rows=Nil),
-          taxYearLists = Seq((2012, SummaryList(rows=Nil)))
-        )),
-        onshoreLiabilities = Some(OnshoreLiabilitiesViewModel(
-          summaryList = SummaryList(rows=Nil),
-          taxYearLists = Seq((2012, SummaryList(rows=Nil))),
-          corporationTaxLists = Seq((1, SummaryList(rows=Nil))),
-          directorLoanLists = Seq((1, SummaryList(rows=Nil))),
-          lettingPropertyLists = Seq((1, SummaryList(rows=Nil)))
-        )),
-        otherLiabilitiesList = SummaryList(rows=Nil),
-        additionalList = SummaryList(rows=Nil),
-        totalAmountsList = SummaryList(rows=Nil)
+        offshoreLiabilities = Some(
+          OffshoreLiabilitiesViewModel(
+            summaryList = SummaryList(rows = Nil),
+            taxYearLists = Seq((2012, SummaryList(rows = Nil)))
+          )
+        ),
+        onshoreLiabilities = Some(
+          OnshoreLiabilitiesViewModel(
+            summaryList = SummaryList(rows = Nil),
+            taxYearLists = Seq((2012, SummaryList(rows = Nil))),
+            corporationTaxLists = Seq((1, SummaryList(rows = Nil))),
+            directorLoanLists = Seq((1, SummaryList(rows = Nil))),
+            lettingPropertyLists = Seq((1, SummaryList(rows = Nil)))
+          )
+        ),
+        otherLiabilitiesList = SummaryList(rows = Nil),
+        additionalList = SummaryList(rows = Nil),
+        totalAmountsList = SummaryList(rows = Nil)
       )
-      val view = createView(viewModel)
+      val view      = createView(viewModel)
 
       "display the service name" in {
         view.select("title").text() should include(messages("service.name"))
@@ -112,7 +130,9 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
         view.select("h2").text() should include(messages("disclosure.heading.completing"))
         view.select("h2").text() should include(messages("disclosure.onshore.heading"))
         view.select("h2").text() should include(messages("disclosure.onshore.year", "2013"))
-        view.select("h2").text() should include(messages("disclosure.onshore.director.heading", "1").replace("&#39;", "'"))
+        view.select("h2").text() should include(
+          messages("disclosure.onshore.director.heading", "1").replace("&#39;", "'")
+        )
         view.select("h2").text() should include(messages("disclosure.onshore.ct.heading", "1"))
         view.select("h2").text() should include(messages("disclosure.offshore.heading"))
         view.select("h2").text() should include(messages("disclosure.offshore.year", "2013"))
@@ -123,12 +143,26 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
       }
 
     }
-    
+
   }
 
   "f" should {
-    "render the page" in {      
-      val viewModel = DisclosureViewModel(FullDisclosure("userId", "id", Instant.now(), Metadata(reference = Some("ref")), CaseReference(), PersonalDetails(Background(), AboutYou()), None, OffshoreLiabilities(), OtherLiabilities(), ReasonForDisclosingNow()), false)
+    "render the page" in {
+      val viewModel = DisclosureViewModel(
+        FullDisclosure(
+          "userId",
+          "id",
+          Instant.now(),
+          Metadata(reference = Some("ref")),
+          CaseReference(),
+          PersonalDetails(Background(), AboutYou()),
+          None,
+          OffshoreLiabilities(),
+          OtherLiabilities(),
+          ReasonForDisclosingNow()
+        ),
+        false
+      )
       sut.f(viewModel, lang)(messages) shouldEqual createView(viewModel)
     }
   }

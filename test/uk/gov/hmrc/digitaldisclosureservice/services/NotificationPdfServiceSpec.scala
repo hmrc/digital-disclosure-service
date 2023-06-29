@@ -29,22 +29,24 @@ import utils.BaseSpec
 
 import java.time.LocalDate
 
-class SubmissionPdfServiceSpec extends AnyWordSpecLike
-  with Matchers
-  with OptionValues
-  with BaseSpec
-  with SubmissionPdfServiceHelper {
+class SubmissionPdfServiceSpec
+    extends AnyWordSpecLike
+    with Matchers
+    with OptionValues
+    with BaseSpec
+    with SubmissionPdfServiceHelper {
 
   implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
-  val notificationView = app.injector.instanceOf[NotificationView]
-  val disclosureView = app.injector.instanceOf[DisclosureView]
-  val testPdfService = new SubmissionPdfService(notificationView, disclosureView)
+  val notificationView            = app.injector.instanceOf[NotificationView]
+  val disclosureView              = app.injector.instanceOf[DisclosureView]
+  val testPdfService              = new SubmissionPdfService(notificationView, disclosureView)
 
   "PdfGenerationService" should {
     "generate the pdf with background info" when {
       "the user has entered no data" in {
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(Background(), AboutYou()))
-        val parsedText = stripPDFToString(notification)
+        val notification =
+          Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(Background(), AboutYou()))
+        val parsedText   = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
         testNotIndividualQuestions(parsedText)
@@ -54,15 +56,16 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
       }
 
       "the user has entered the full background section" in {
-        val background = Background (
+        val background   = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = Some("1234567890"),
           disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.PowerOfAttorney))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(false)
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, AboutYou()))
-        val parsedText = stripPDFToString(notification)
+        val notification =
+          Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, AboutYou()))
+        val parsedText   = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
         testNotFullAboutYouQuestions(parsedText)
@@ -70,15 +73,16 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
       }
 
       "the user has entered the full background section as a company" in {
-        val background = Background (
+        val background   = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Company, Some(AreYouTheEntity.VoluntaryOrganisation))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(false)
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, AboutYou()))
-        val parsedText = stripPDFToString(notification)
+        val notification =
+          Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, AboutYou()))
+        val parsedText   = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
         testNotFullAboutYouQuestions(parsedText)
@@ -86,15 +90,16 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
       }
 
       "the user has entered the full background section as a trust" in {
-        val background = Background (
+        val background   = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Trust, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(false)
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, AboutYou()))
-        val parsedText = stripPDFToString(notification)
+        val notification =
+          Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, AboutYou()))
+        val parsedText   = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
         testNotFullAboutYouQuestions(parsedText)
@@ -102,15 +107,16 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
       }
 
       "the user has entered the full background section as a limited liability partnership" in {
-        val background = Background (
+        val background   = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(LLP, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, AboutYou()))
-        val parsedText = stripPDFToString(notification)
+        val notification =
+          Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, AboutYou()))
+        val parsedText   = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
         testNotFullAboutYouQuestions(parsedText)
@@ -118,37 +124,37 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
       }
     }
 
-
     "generate the pdf with full about you info" when {
 
       "the user has entered the full background and started the about you section" in {
-        val background = Background (
+        val background   = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, AboutYou()))
-        val parsedText = stripPDFToString(notification)
+        val notification =
+          Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, AboutYou()))
+        val parsedText   = stripPDFToString(notification)
 
         baseNotificationTests(true, parsedText)
         testFullAboutYouQuestions(parsedText)
-        parsedText should not include(messages("notification.aboutYou.emailAddress"))
-        parsedText should not include(messages("notification.aboutYou.nino"))
-        parsedText should not include(messages("notification.aboutYou.vatRegNumber"))
-        parsedText should not include(messages("notification.aboutYou.sautr"))
+        parsedText should not include (messages("notification.aboutYou.emailAddress"))
+        parsedText should not include (messages("notification.aboutYou.nino"))
+        parsedText should not include (messages("notification.aboutYou.vatRegNumber"))
+        parsedText should not include (messages("notification.aboutYou.sautr"))
       }
 
       "the user has entered the full about you section with email address" in {
-        val background = Background (
+        val background   = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val aboutYou = AboutYou(
+        val aboutYou     = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           emailAddress = Some("some.email@address.com"),
@@ -159,14 +165,15 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("you"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou))
-        val parsedText = stripPDFToString(notification)
+        val notification =
+          Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou))
+        val parsedText   = stripPDFToString(notification)
 
         baseNotificationTests(true, parsedText)
         testFullAboutYouQuestions(parsedText)
-        parsedText should not include(messages("notification.aboutYou.nino"))
-        parsedText should not include(messages("notification.aboutYou.vatRegNumber"))
-        parsedText should not include(messages("notification.aboutYou.sautr"))
+        parsedText should not include (messages("notification.aboutYou.nino"))
+        parsedText should not include (messages("notification.aboutYou.vatRegNumber"))
+        parsedText should not include (messages("notification.aboutYou.sautr"))
 
         parsedText should include("Some name")
         parsedText should include("+44 012345678")
@@ -176,14 +183,14 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
       }
 
       "the user has entered the full about you section with nino" in {
-        val background = Background (
+        val background   = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val aboutYou = AboutYou(
+        val aboutYou     = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           emailAddress = Some("some.email@address.com"),
@@ -195,8 +202,9 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("you"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou))
-        val parsedText = stripPDFToString(notification)
+        val notification =
+          Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou))
+        val parsedText   = stripPDFToString(notification)
 
         baseNotificationTests(true, parsedText)
         testFullAboutYouQuestions(parsedText)
@@ -206,14 +214,14 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
       }
 
       "the user has entered the full about you section with vat" in {
-        val background = Background (
+        val background   = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val aboutYou = AboutYou(
+        val aboutYou     = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           emailAddress = Some("some.email@address.com"),
@@ -225,25 +233,26 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("you"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou))
-        val parsedText = stripPDFToString(notification)
+        val notification =
+          Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou))
+        val parsedText   = stripPDFToString(notification)
 
         baseNotificationTests(true, parsedText)
         testFullAboutYouQuestions(parsedText)
-        
+
         parsedText should include(messages("notification.aboutYou.vatRegNumber"))
         parsedText should include("Some VAT reg number")
       }
 
       "the user has entered the full about you section with SA" in {
-        val background = Background (
+        val background   = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val aboutYou = AboutYou(
+        val aboutYou     = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           emailAddress = Some("some.email@address.com"),
@@ -255,25 +264,26 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           sautr = Some("Some SAUTR"),
           address = Some(address("you"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou))
-        val parsedText = stripPDFToString(notification)
+        val notification =
+          Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou))
+        val parsedText   = stripPDFToString(notification)
 
         baseNotificationTests(true, parsedText)
         testFullAboutYouQuestions(parsedText)
-        
+
         parsedText should include(messages("notification.aboutYou.sautr"))
         parsedText should include("Some SAUTR")
       }
 
       "the user has entered the full about you section with values set to Unsure" in {
-        val background = Background (
+        val background   = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val aboutYou = AboutYou(
+        val aboutYou     = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           emailAddress = Some("some.email@address.com"),
@@ -284,28 +294,29 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           registeredForSA = Some(YesNoOrUnsure.Unsure),
           address = Some(address("you"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou))
-        val parsedText = stripPDFToString(notification)
+        val notification =
+          Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou))
+        val parsedText   = stripPDFToString(notification)
 
         baseNotificationTests(true, parsedText)
         testFullAboutYouQuestions(parsedText)
-        
-        parsedText should not include(messages("notification.aboutYou.nino"))
-        parsedText should not include(messages("notification.aboutYou.vatRegNumber"))
-        parsedText should not include(messages("notification.aboutYou.sautr"))
+
+        parsedText should not include (messages("notification.aboutYou.nino"))
+        parsedText should not include (messages("notification.aboutYou.vatRegNumber"))
+        parsedText should not include (messages("notification.aboutYou.sautr"))
 
         parsedText should include("Yes, but I do not know it")
       }
 
       "the user has entered yes to questions" in {
-        val background = Background (
+        val background   = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val aboutYou = AboutYou(
+        val aboutYou     = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           emailAddress = Some("some.email@address.com"),
@@ -316,34 +327,41 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           registeredForSA = Some(YesNoOrUnsure.Yes),
           address = Some(address("you"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou))
-        val parsedText = stripPDFToString(notification)
+        val notification =
+          Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou))
+        val parsedText   = stripPDFToString(notification)
 
-        parsedText should not include(messages("notification.aboutYou.doYouHaveANino"))
-        parsedText should not include(messages("notification.aboutYou.registeredForVAT"))
-        parsedText should not include(messages("notification.aboutYou.registeredForSA"))
+        parsedText should not include (messages("notification.aboutYou.doYouHaveANino"))
+        parsedText should not include (messages("notification.aboutYou.registeredForVAT"))
+        parsedText should not include (messages("notification.aboutYou.registeredForSA"))
       }
-      
-    }  
+
+    }
 
     "generate the pdf with about the individual info" when {
 
       "the user has entered the full background and about you sections and started about the individual" in {
-        val background = Background (
+        val background         = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val aboutYou = AboutYou(
+        val aboutYou           = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           address = Some(address("you"))
         )
         val aboutTheIndividual = AboutTheIndividual()
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, Some(aboutTheIndividual)))
-        val parsedText = stripPDFToString(notification)
+        val notification       = Notification(
+          "userId",
+          "id",
+          Instant.now(),
+          Metadata(),
+          PersonalDetails(background, aboutYou, Some(aboutTheIndividual))
+        )
+        val parsedText         = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
         testNotFullAboutYouQuestions(parsedText)
@@ -352,25 +370,25 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         testNotTrustQuestions(parsedText)
         testNotLLPQuestions(parsedText)
 
-        parsedText should not include(messages("notification.aboutTheIndividual.nino"))
-        parsedText should not include(messages("notification.aboutTheIndividual.vatRegNumber"))
-        parsedText should not include(messages("notification.aboutTheIndividual.sautr"))
+        parsedText should not include (messages("notification.aboutTheIndividual.nino"))
+        parsedText should not include (messages("notification.aboutTheIndividual.vatRegNumber"))
+        parsedText should not include (messages("notification.aboutTheIndividual.sautr"))
       }
 
       "the user has entered the full about the individual section" in {
-        val background = Background (
+        val background         = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val aboutYou = AboutYou(
+        val aboutYou           = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           address = Some(address("you"))
         )
-        val aboutTheIndividual = AboutTheIndividual(  
+        val aboutTheIndividual = AboutTheIndividual(
           fullName = Some("Some individual&#39;s name"),
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some individual&#39;s occupation"),
@@ -379,8 +397,14 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("individual"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, Some(aboutTheIndividual)))
-        val parsedText = stripPDFToString(notification)
+        val notification       = Notification(
+          "userId",
+          "id",
+          Instant.now(),
+          Metadata(),
+          PersonalDetails(background, aboutYou, Some(aboutTheIndividual))
+        )
+        val parsedText         = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
         testNotFullAboutYouQuestions(parsedText)
@@ -393,19 +417,19 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
       }
 
       "the user has entered the full about the individual section with a NINO" in {
-        val background = Background (
+        val background         = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val aboutYou = AboutYou(
+        val aboutYou           = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           address = Some(address("you"))
         )
-        val aboutTheIndividual = AboutTheIndividual(  
+        val aboutTheIndividual = AboutTheIndividual(
           fullName = Some("Some individual&#39;s name"),
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some individual&#39;s occupation"),
@@ -415,8 +439,14 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("individual"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, Some(aboutTheIndividual)))
-        val parsedText = stripPDFToString(notification)
+        val notification       = Notification(
+          "userId",
+          "id",
+          Instant.now(),
+          Metadata(),
+          PersonalDetails(background, aboutYou, Some(aboutTheIndividual))
+        )
+        val parsedText         = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
         testNotFullAboutYouQuestions(parsedText)
@@ -427,19 +457,19 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
       }
 
       "the user has entered the full about the individual section with a VAT Reg Number" in {
-        val background = Background (
+        val background         = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val aboutYou = AboutYou(
+        val aboutYou           = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           address = Some(address("you"))
         )
-        val aboutTheIndividual = AboutTheIndividual(  
+        val aboutTheIndividual = AboutTheIndividual(
           fullName = Some("Some individual&#39;s name"),
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some individual&#39;s occupation"),
@@ -449,8 +479,14 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("individual"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, Some(aboutTheIndividual)))
-        val parsedText = stripPDFToString(notification)
+        val notification       = Notification(
+          "userId",
+          "id",
+          Instant.now(),
+          Metadata(),
+          PersonalDetails(background, aboutYou, Some(aboutTheIndividual))
+        )
+        val parsedText         = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
         testNotFullAboutYouQuestions(parsedText)
@@ -461,19 +497,19 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
       }
 
       "the user has entered the full about the individual section with an SAUTR" in {
-        val background = Background (
+        val background         = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val aboutYou = AboutYou(
+        val aboutYou           = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           address = Some(address("you"))
         )
-        val aboutTheIndividual = AboutTheIndividual(  
+        val aboutTheIndividual = AboutTheIndividual(
           fullName = Some("Some individual&#39;s name"),
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some individual&#39;s occupation"),
@@ -483,8 +519,14 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           sautr = Some("Some individual&#39;s SAUTR"),
           address = Some(address("individual"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, Some(aboutTheIndividual)))
-        val parsedText = stripPDFToString(notification)
+        val notification       = Notification(
+          "userId",
+          "id",
+          Instant.now(),
+          Metadata(),
+          PersonalDetails(background, aboutYou, Some(aboutTheIndividual))
+        )
+        val parsedText         = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
         testNotFullAboutYouQuestions(parsedText)
@@ -499,21 +541,27 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
     "generate the pdf with about company info" when {
 
       "the user has entered the full background and about you sections and started about the company" in {
-        val background = Background (
+        val background      = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Company, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val aboutYou = AboutYou(
+        val aboutYou        = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           address = Some(address("you"))
         )
         val aboutTheCompany = AboutTheCompany()
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheCompany = Some(aboutTheCompany)))
-        val parsedText = stripPDFToString(notification)
+        val notification    = Notification(
+          "userId",
+          "id",
+          Instant.now(),
+          Metadata(),
+          PersonalDetails(background, aboutYou, aboutTheCompany = Some(aboutTheCompany))
+        )
+        val parsedText      = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
         testCompanyQuestions(parsedText)
@@ -525,14 +573,14 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
       }
 
       "the user has entered the full company section" in {
-        val background = Background (
+        val background      = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Company, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val aboutYou = AboutYou(
+        val aboutYou        = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           address = Some(address("you"))
@@ -542,8 +590,14 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           registrationNumber = Some("Some company registration number"),
           address = Some(address("company"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheCompany = Some(aboutTheCompany)))
-        val parsedText = stripPDFToString(notification)
+        val notification    = Notification(
+          "userId",
+          "id",
+          Instant.now(),
+          Metadata(),
+          PersonalDetails(background, aboutYou, aboutTheCompany = Some(aboutTheCompany))
+        )
+        val parsedText      = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
         testCompanyQuestions(parsedText)
@@ -559,21 +613,27 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
     "generate the pdf with about trust info" when {
 
       "the user has entered the full background and about you sections and started about the trust" in {
-        val background = Background (
+        val background    = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Company, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val aboutYou = AboutYou(
+        val aboutYou      = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           address = Some(address("you"))
         )
         val aboutTheTrust = AboutTheTrust()
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheTrust = Some(aboutTheTrust)))
-        val parsedText = stripPDFToString(notification)
+        val notification  = Notification(
+          "userId",
+          "id",
+          Instant.now(),
+          Metadata(),
+          PersonalDetails(background, aboutYou, aboutTheTrust = Some(aboutTheTrust))
+        )
+        val parsedText    = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
         testTrustQuestions(parsedText)
@@ -585,14 +645,14 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
       }
 
       "the user has entered the full company section" in {
-        val background = Background (
+        val background    = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Company, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val aboutYou = AboutYou(
+        val aboutYou      = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           address = Some(address("you"))
@@ -601,8 +661,14 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           name = Some("Some trust name"),
           address = Some(address("trust"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheTrust = Some(aboutTheTrust)))
-        val parsedText = stripPDFToString(notification)
+        val notification  = Notification(
+          "userId",
+          "id",
+          Instant.now(),
+          Metadata(),
+          PersonalDetails(background, aboutYou, aboutTheTrust = Some(aboutTheTrust))
+        )
+        val parsedText    = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
         testTrustQuestions(parsedText)
@@ -616,21 +682,27 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
     "generate the pdf with about LLP info" when {
 
       "the user has entered the full background and about you sections and started about the trust" in {
-        val background = Background (
+        val background   = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Company, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val aboutYou = AboutYou(
+        val aboutYou     = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           address = Some(address("you"))
         )
-        val aboutTheLLP = AboutTheLLP()
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheLLP = Some(aboutTheLLP)))
-        val parsedText = stripPDFToString(notification)
+        val aboutTheLLP  = AboutTheLLP()
+        val notification = Notification(
+          "userId",
+          "id",
+          Instant.now(),
+          Metadata(),
+          PersonalDetails(background, aboutYou, aboutTheLLP = Some(aboutTheLLP))
+        )
+        val parsedText   = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
         testLLPQuestions(parsedText)
@@ -642,24 +714,30 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
       }
 
       "the user has entered the full company section" in {
-        val background = Background (
+        val background   = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Company, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val aboutYou = AboutYou(
+        val aboutYou     = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           address = Some(address("you"))
         )
-        val aboutTheLLP = AboutTheLLP(
+        val aboutTheLLP  = AboutTheLLP(
           name = Some("Some LLP name"),
           address = Some(address("LLP"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheLLP = Some(aboutTheLLP)))
-        val parsedText = stripPDFToString(notification)
+        val notification = Notification(
+          "userId",
+          "id",
+          Instant.now(),
+          Metadata(),
+          PersonalDetails(background, aboutYou, aboutTheLLP = Some(aboutTheLLP))
+        )
+        val parsedText   = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
         testLLPQuestions(parsedText)
@@ -673,21 +751,27 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
     "generate the pdf with about the estate info" when {
 
       "the user has entered the full background and about you sections and started about the estate" in {
-        val background = Background (
+        val background     = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Estate, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val aboutYou = AboutYou(
+        val aboutYou       = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           address = Some(address("you"))
         )
         val aboutTheEstate = AboutTheEstate()
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheEstate = Some(aboutTheEstate)))
-        val parsedText = stripPDFToString(notification)
+        val notification   = Notification(
+          "userId",
+          "id",
+          Instant.now(),
+          Metadata(),
+          PersonalDetails(background, aboutYou, aboutTheEstate = Some(aboutTheEstate))
+        )
+        val parsedText     = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
         testNotFullAboutYouQuestions(parsedText)
@@ -696,25 +780,25 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
         testNotTrustQuestions(parsedText)
         testNotLLPQuestions(parsedText)
 
-        parsedText should not include(messages("notification.aboutTheEstate.nino"))
-        parsedText should not include(messages("notification.aboutTheEstate.vatRegNumber"))
-        parsedText should not include(messages("notification.aboutTheEstate.sautr"))
+        parsedText should not include (messages("notification.aboutTheEstate.nino"))
+        parsedText should not include (messages("notification.aboutTheEstate.vatRegNumber"))
+        parsedText should not include (messages("notification.aboutTheEstate.sautr"))
       }
 
       "the user has entered the full about the estate section" in {
-        val background = Background (
+        val background     = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Estate, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val aboutYou = AboutYou(
+        val aboutYou       = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           address = Some(address("you"))
         )
-        val aboutTheEstate = AboutTheEstate(  
+        val aboutTheEstate = AboutTheEstate(
           fullName = Some("Some estate&#39;s name"),
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some estate&#39;s occupation"),
@@ -723,8 +807,14 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("estate"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheEstate = Some(aboutTheEstate)))
-        val parsedText = stripPDFToString(notification)
+        val notification   = Notification(
+          "userId",
+          "id",
+          Instant.now(),
+          Metadata(),
+          PersonalDetails(background, aboutYou, aboutTheEstate = Some(aboutTheEstate))
+        )
+        val parsedText     = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
         testNotFullAboutYouQuestions(parsedText)
@@ -737,19 +827,19 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
       }
 
       "the user has entered the full about the estate section with a NINO" in {
-        val background = Background (
+        val background     = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Estate, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val aboutYou = AboutYou(
+        val aboutYou       = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           address = Some(address("you"))
         )
-        val aboutTheEstate = AboutTheEstate(  
+        val aboutTheEstate = AboutTheEstate(
           fullName = Some("Some estate&#39;s name"),
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some estate&#39;s occupation"),
@@ -759,8 +849,14 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("estate"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheEstate = Some(aboutTheEstate)))
-        val parsedText = stripPDFToString(notification)
+        val notification   = Notification(
+          "userId",
+          "id",
+          Instant.now(),
+          Metadata(),
+          PersonalDetails(background, aboutYou, aboutTheEstate = Some(aboutTheEstate))
+        )
+        val parsedText     = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
         testNotFullAboutYouQuestions(parsedText)
@@ -771,19 +867,19 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
       }
 
       "the user has entered the full about the estate section with a VAT Reg Number" in {
-        val background = Background (
+        val background     = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Estate, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val aboutYou = AboutYou(
+        val aboutYou       = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           address = Some(address("you"))
         )
-        val aboutTheEstate = AboutTheEstate(  
+        val aboutTheEstate = AboutTheEstate(
           fullName = Some("Some estate&#39;s name"),
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some estate&#39;s occupation"),
@@ -793,8 +889,14 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           registeredForSA = Some(YesNoOrUnsure.No),
           address = Some(address("estate"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheEstate = Some(aboutTheEstate)))
-        val parsedText = stripPDFToString(notification)
+        val notification   = Notification(
+          "userId",
+          "id",
+          Instant.now(),
+          Metadata(),
+          PersonalDetails(background, aboutYou, aboutTheEstate = Some(aboutTheEstate))
+        )
+        val parsedText     = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
         testNotFullAboutYouQuestions(parsedText)
@@ -805,19 +907,19 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
       }
 
       "the user has entered the full about the estate section with an SAUTR" in {
-        val background = Background (
+        val background     = Background(
           haveYouReceivedALetter = Some(false),
           letterReferenceNumber = None,
           disclosureEntity = Some(DisclosureEntity(Estate, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
           offshoreLiabilities = Some(false),
           onshoreLiabilities = Some(true)
         )
-        val aboutYou = AboutYou(
+        val aboutYou       = AboutYou(
           fullName = Some("Some name"),
           telephoneNumber = Some("+44 012345678"),
           address = Some(address("you"))
         )
-        val aboutTheEstate = AboutTheEstate(  
+        val aboutTheEstate = AboutTheEstate(
           fullName = Some("Some estate&#39;s name"),
           dateOfBirth = Some(LocalDate.now()),
           mainOccupation = Some("Some estate&#39;s occupation"),
@@ -827,8 +929,14 @@ class SubmissionPdfServiceSpec extends AnyWordSpecLike
           sautr = Some("Some estate&#39;s SAUTR"),
           address = Some(address("estate"))
         )
-        val notification = Notification("userId", "id", Instant.now(), Metadata(), PersonalDetails(background, aboutYou, aboutTheEstate = Some(aboutTheEstate)))
-        val parsedText = stripPDFToString(notification)
+        val notification   = Notification(
+          "userId",
+          "id",
+          Instant.now(),
+          Metadata(),
+          PersonalDetails(background, aboutYou, aboutTheEstate = Some(aboutTheEstate))
+        )
+        val parsedText     = stripPDFToString(notification)
 
         baseNotificationTests(false, parsedText)
         testNotFullAboutYouQuestions(parsedText)

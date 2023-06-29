@@ -28,11 +28,18 @@ import utils.MarkCalculator
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class DMSSubmissionServiceImpl @Inject()(dmsConnector: DMSSubmissionConnector, pdfService: SubmissionPdfService, markCalculator: MarkCalculator) extends DMSSubmissionService {
+class DMSSubmissionServiceImpl @Inject() (
+  dmsConnector: DMSSubmissionConnector,
+  pdfService: SubmissionPdfService,
+  markCalculator: MarkCalculator
+) extends DMSSubmissionService {
 
-  def submit(submission: Submission, lang: String)(implicit messages: Messages, ec: ExecutionContext): Future[SubmissionResponse] = {
+  def submit(submission: Submission, lang: String)(implicit
+    messages: Messages,
+    ec: ExecutionContext
+  ): Future[SubmissionResponse] = {
 
-    val generatedPdf = pdfService.createPdf(submission, true, lang)
+    val generatedPdf   = pdfService.createPdf(submission, true, lang)
     val submissionMark = markCalculator.getSfMark(submission.toXml)
 
     val submissionMetadata = SubmissionMetadata(
@@ -40,18 +47,21 @@ class DMSSubmissionServiceImpl @Inject()(dmsConnector: DMSSubmissionConnector, p
       customerId = submission.customerId.map(_.id).getOrElse("NO-ID-FOUND"),
       submissionMark = submissionMark
     )
-    val submissionRequest = SubmissionRequest(
+    val submissionRequest  = SubmissionRequest(
       submissionReference = submission.metadata.reference.map(_.replace("-", "")),
       metadata = submissionMetadata
     )
 
     dmsConnector.submit(submissionRequest, generatedPdf.byteArray)
-  
+
   }
 
 }
 
 @ImplementedBy(classOf[DMSSubmissionServiceImpl])
 trait DMSSubmissionService {
-  def submit(submission: Submission, lang: String)(implicit messages: Messages, ec: ExecutionContext): Future[SubmissionResponse]
+  def submit(submission: Submission, lang: String)(implicit
+    messages: Messages,
+    ec: ExecutionContext
+  ): Future[SubmissionResponse]
 }

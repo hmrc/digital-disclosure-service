@@ -24,7 +24,7 @@ final case class OtherLiabilities(
   inheritanceGift: Option[String] = None,
   other: Option[String] = None,
   taxCreditsReceived: Option[Boolean] = None
-) 
+)
 
 object OtherLiabilities {
   implicit val format: OFormat[OtherLiabilities] = Json.format[OtherLiabilities]

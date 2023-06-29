@@ -18,9 +18,8 @@ package models
 
 import play.api.libs.json.Json
 
-final case class CountryOfYourOffshoreLiability(alpha3:String, name:String)
+final case class CountryOfYourOffshoreLiability(alpha3: String, name: String)
 
 object CountryOfYourOffshoreLiability {
   implicit val format = Json.format[CountryOfYourOffshoreLiability]
 }
-

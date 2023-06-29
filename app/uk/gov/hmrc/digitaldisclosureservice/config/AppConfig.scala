@@ -21,7 +21,7 @@ import play.api.Configuration
 import scala.concurrent.duration._
 
 @Singleton
-class AppConfig @Inject()(config: Configuration) {
+class AppConfig @Inject() (config: Configuration) {
 
   val appName: String = config.get[String]("appName")
 

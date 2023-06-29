@@ -31,12 +31,12 @@ import scala.concurrent.ExecutionContext.Implicits.global
 class RetriesSpec extends AnyWordSpec with Matchers with ScalaFutures with MockitoSugar {
 
   val actorSystem: ActorSystem = ActorSystem.create()
-  val mockActorSystem = mock[ActorSystem]
-  val mockAppConfig = mock[AppConfig]
+  val mockActorSystem          = mock[ActorSystem]
+  val mockAppConfig            = mock[AppConfig]
 
   val retries = new Retries {
     override implicit def actorSystem: ActorSystem = mockActorSystem
-    override implicit def ec: ExecutionContext = ExecutionContext.Implicits.global
+    override implicit def ec: ExecutionContext     = ExecutionContext.Implicits.global
   }
 
   "retry" should {
@@ -51,7 +51,7 @@ class RetriesSpec extends AnyWordSpec with Matchers with ScalaFutures with Mocki
         result.onComplete {
           case scala.util.Failure(exception) =>
             fail("the method returned failure when it should have succeeded")
-          case scala.util.Success(value) =>
+          case scala.util.Success(value)     =>
             value shouldBe expected
         }
 
@@ -67,7 +67,7 @@ class RetriesSpec extends AnyWordSpec with Matchers with ScalaFutures with Mocki
         result.onComplete {
           case scala.util.Failure(exception) =>
             exception shouldBe an[UpstreamErrorResponse]
-          case scala.util.Success(value) =>
+          case scala.util.Success(value)     =>
             fail("the method returned successful when it should have failed")
         }
 
@@ -83,7 +83,7 @@ class RetriesSpec extends AnyWordSpec with Matchers with ScalaFutures with Mocki
         result.onComplete {
           case scala.util.Failure(exception) =>
             exception shouldBe an[UpstreamErrorResponse]
-          case scala.util.Success(value) =>
+          case scala.util.Success(value)     =>
             fail("the method returned successful when it should have failed")
         }
 
@@ -115,7 +115,8 @@ class RetriesSpec extends AnyWordSpec with Matchers with ScalaFutures with Mocki
         when(mockActorSystem.scheduler)
           .thenReturn(actorSystem.scheduler)
 
-        val result = retries.retry(Future.failed(UpstreamErrorResponse("Something went wrong", 502, 503)))(mockAppConfig)
+        val result =
+          retries.retry(Future.failed(UpstreamErrorResponse("Something went wrong", 502, 503)))(mockAppConfig)
 
         whenReady(result.failed) {
           _ shouldBe an[UpstreamErrorResponse]
