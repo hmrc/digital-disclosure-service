@@ -19,7 +19,7 @@ package controllers
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import play.api.http.Status
-import play.api.test.{FakeRequest, Helpers, FakeHeaders, DefaultAwaitTimeout}
+import play.api.test.{DefaultAwaitTimeout, FakeHeaders, FakeRequest, Helpers}
 import java.time.{LocalDateTime, ZoneOffset}
 import play.api.libs.json.Json
 import models.{Metadata, Notification}
@@ -28,7 +28,7 @@ import services.SubmissionPdfService
 import utils.BaseSpec
 import akka.util.ByteString
 import akka.actor.ActorSystem
-import play.api.i18n.{MessagesApi, Messages}
+import play.api.i18n.{Messages, MessagesApi}
 import org.mockito.Mockito.when
 import org.mockito.ArgumentMatchers.{any, refEq}
 import org.scalatestplus.mockito.MockitoSugar
@@ -39,31 +39,49 @@ import uk.gov.hmrc.internalauth.client._
 import uk.gov.hmrc.internalauth.client.test.{BackendAuthComponentsStub, StubBehaviour}
 import scala.concurrent.Future
 
-class NotificationPDFControllerSpec extends AnyWordSpec with Matchers with BaseSpec with DefaultAwaitTimeout with MockitoSugar {
+class NotificationPDFControllerSpec
+    extends AnyWordSpec
+    with Matchers
+    with BaseSpec
+    with DefaultAwaitTimeout
+    with MockitoSugar {
 
   implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
-  implicit val actorSystem = ActorSystem()
-  implicit val cc = Helpers.stubControllerComponents()
+  implicit val actorSystem        = ActorSystem()
+  implicit val cc                 = Helpers.stubControllerComponents()
 
-  val pdfService = app.injector.instanceOf[SubmissionPdfService]
-  val mockPdfService = mock[SubmissionPdfService]
+  val pdfService        = app.injector.instanceOf[SubmissionPdfService]
+  val mockPdfService    = mock[SubmissionPdfService]
   val mockStubBehaviour = mock[StubBehaviour]
-  val expectedPredicate = Predicate.Permission(Resource(ResourceType("digital-disclosure-service"), ResourceLocation("pdf")), IAAction("WRITE"))
+  val expectedPredicate = Predicate.Permission(
+    Resource(ResourceType("digital-disclosure-service"), ResourceLocation("pdf")),
+    IAAction("WRITE")
+  )
   when(mockStubBehaviour.stubAuth(Some(expectedPredicate), Retrieval.EmptyRetrieval)).thenReturn(Future.unit)
 
-  private val controller = new NotificationPDFController(new DefaultMessagesApi(), mockPdfService, BackendAuthComponentsStub(mockStubBehaviour), Helpers.stubControllerComponents())
+  private val controller = new NotificationPDFController(
+    new DefaultMessagesApi(),
+    mockPdfService,
+    BackendAuthComponentsStub(mockStubBehaviour),
+    Helpers.stubControllerComponents()
+  )
 
-  val instant = LocalDateTime.of(2022, 1, 1, 0, 0, 0).toInstant(ZoneOffset.UTC)
+  val instant          = LocalDateTime.of(2022, 1, 1, 0, 0, 0).toInstant(ZoneOffset.UTC)
   val testNotification = Notification("123", "123", instant, Metadata(), PersonalDetails(Background(), AboutYou()))
-  
+
   "POST /notification/submit" should {
     "return 200 where the service returns a Success" in {
       val pdf = pdfService.generatePdfHtml(testNotification, false, "en")
       when(mockPdfService.generatePdfHtml(refEq(testNotification), any(), any())(any())) thenReturn pdf
 
-      val fakeRequest = FakeRequest(method = "GET", uri = "/notification", headers = FakeHeaders(Seq("Authorization" -> "Token some-token")), body = Json.toJson(testNotification))
-      val result = controller.generate()(fakeRequest)
-      status(result) shouldBe Status.OK
+      val fakeRequest = FakeRequest(
+        method = "GET",
+        uri = "/notification",
+        headers = FakeHeaders(Seq("Authorization" -> "Token some-token")),
+        body = Json.toJson(testNotification)
+      )
+      val result      = controller.generate()(fakeRequest)
+      status(result)            shouldBe Status.OK
       contentAsBytes(result) shouldEqual ByteString(pdf.getBytes)
     }
   }

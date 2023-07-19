@@ -42,7 +42,7 @@ object YourLegalInterpretation extends Enumerable.Implicits {
     WhetherIncomeShouldBeTaxed,
     AnotherIssue,
     NoExclusion
-  ) 
+  )
 
   implicit val enumerable: Enumerable[YourLegalInterpretation] =
     Enumerable(values.map(v => v.toString -> v): _*)

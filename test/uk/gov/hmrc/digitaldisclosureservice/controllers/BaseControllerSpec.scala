@@ -18,7 +18,7 @@ package controllers
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import play.api.test.{FakeRequest, Helpers, FakeHeaders}
+import play.api.test.{FakeHeaders, FakeRequest, Helpers}
 import scala.concurrent.Future
 import play.api.libs.json.{JsString, Json}
 import models.{Metadata, Notification}
@@ -27,24 +27,31 @@ import org.scalatest.concurrent.ScalaFutures
 import java.time.Instant
 import play.api.mvc.Results._
 
-class BaseControllerSpec extends AnyWordSpec with Matchers with ScalaFutures  {
+class BaseControllerSpec extends AnyWordSpec with Matchers with ScalaFutures {
 
   object TestController extends BaseController(Helpers.stubControllerComponents())
 
-  val testNotification = Notification("123", "123", Instant.now(), Metadata(), PersonalDetails(Background(), AboutYou()))
-  
+  val testNotification =
+    Notification("123", "123", Instant.now(), Metadata(), PersonalDetails(Background(), AboutYou()))
+
   "withValidJson" should {
     "call f when valid json is passed in" in {
-      implicit val fakeRequest = FakeRequest(method = "GET", uri = "/notification", headers = FakeHeaders(Seq.empty), body = Json.toJson(testNotification))
-      val result = TestController.withValidJson[Notification] { _ => Future.successful(Ok("Succeeded")) }
+      implicit val fakeRequest = FakeRequest(
+        method = "GET",
+        uri = "/notification",
+        headers = FakeHeaders(Seq.empty),
+        body = Json.toJson(testNotification)
+      )
+      val result               = TestController.withValidJson[Notification](_ => Future.successful(Ok("Succeeded")))
       result.futureValue shouldEqual Ok("Succeeded")
     }
 
     "return a BadRequest where invalid json is passed in" in {
-      implicit val fakeRequest = FakeRequest(method = "GET", uri = "/notification", headers = FakeHeaders(Seq.empty), body = JsString("1234"))
-      val result = TestController.withValidJson[Notification] { _ => Future.successful(Ok("Succeeded")) }
+      implicit val fakeRequest =
+        FakeRequest(method = "GET", uri = "/notification", headers = FakeHeaders(Seq.empty), body = JsString("1234"))
+      val result               = TestController.withValidJson[Notification](_ => Future.successful(Ok("Succeeded")))
       result.futureValue shouldEqual BadRequest("Invalid JSON")
     }
   }
-  
+
 }

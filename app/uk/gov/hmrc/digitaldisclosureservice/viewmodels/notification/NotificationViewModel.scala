@@ -39,64 +39,100 @@ final case class NotificationViewModel(
 
 object NotificationViewModel extends SummaryListFluency with SubmissionViewModel {
 
-  def apply(notification: Notification, caseflowDateFormat: Boolean)(implicit messages: Messages): NotificationViewModel = {
+  def apply(notification: Notification, caseflowDateFormat: Boolean)(implicit
+    messages: Messages
+  ): NotificationViewModel = {
 
     val isADisclosure = false
 
     NotificationViewModel(
       metadataList(notification.metadata, caseflowDateFormat),
       backgroundList(notification.personalDetails.background),
-      notification.personalDetails.aboutTheIndividual.map(aboutTheIndividual => aboutTheIndividualList(aboutTheIndividual, caseflowDateFormat)),
+      notification.personalDetails.aboutTheIndividual.map(aboutTheIndividual =>
+        aboutTheIndividualList(aboutTheIndividual, caseflowDateFormat)
+      ),
       notification.personalDetails.aboutTheCompany.map(aboutTheCompanyList),
       notification.personalDetails.aboutTheTrust.map(aboutTheTrustList),
       notification.personalDetails.aboutTheLLP.map(aboutTheLLPList),
-      notification.personalDetails.aboutTheEstate.map(aboutTheEstate => aboutTheEstateList(aboutTheEstate, caseflowDateFormat)),
-      aboutYouList(notification.personalDetails.aboutYou, notification.personalDetails.background, notification.disclosingAboutThemselves, caseflowDateFormat),
+      notification.personalDetails.aboutTheEstate.map(aboutTheEstate =>
+        aboutTheEstateList(aboutTheEstate, caseflowDateFormat)
+      ),
+      aboutYouList(
+        notification.personalDetails.aboutYou,
+        notification.personalDetails.background,
+        notification.disclosingAboutThemselves,
+        caseflowDateFormat
+      ),
       aboutYouHeading(notification.personalDetails, isADisclosure)
     )
 
   }
 
-  def metadataList(metadata: Metadata, caseflowDateFormat: Boolean)(implicit messages: Messages): Option[SummaryList] = {
-    metadata.reference.map{ ref =>
-      SummaryListViewModel(rows = Seq(
-        SummaryListRowViewModel(s"notification.metadata.reference", ValueViewModel(ref)),
-        SummaryListRowViewModel(s"notification.metadata.submissionTime", ValueViewModel(metadata.submissionTime.map(time => toPrettyDate(time, caseflowDateFormat))))
-      ))
+  def metadataList(metadata: Metadata, caseflowDateFormat: Boolean)(implicit messages: Messages): Option[SummaryList] =
+    metadata.reference.map { ref =>
+      SummaryListViewModel(rows =
+        Seq(
+          SummaryListRowViewModel(s"notification.metadata.reference", ValueViewModel(ref)),
+          SummaryListRowViewModel(
+            s"notification.metadata.submissionTime",
+            ValueViewModel(metadata.submissionTime.map(time => toPrettyDate(time, caseflowDateFormat)))
+          )
+        )
+      )
     }
-  }
 
   def backgroundList(background: Background)(implicit messages: Messages): SummaryList = SummaryListViewModel(
     rows = Seq(
       displayWhenNo(s"$backgroundKey.haveYouReceivedALetter", background.haveYouReceivedALetter),
-      background.letterReferenceNumber.map(_ => SummaryListRowViewModel("notification.metadata.caseRef", ValueViewModel(background.letterReferenceNumber))),
-      Some(SummaryListRowViewModel("notification.background.disclosureEntity", ValueViewModel(background.disclosureEntity.map(de => messages(s"notification.background.${de.entity.toString}"))))),
-      background.disclosureEntity.map(de => SummaryListRowViewModel(s"areYouTheEntity.${de.entity}.heading", ValueViewModel(s"areYouTheEntity.${de.entity}.${de.areYouTheEntity.getOrElse("yes")}"))),
-      background.areYouRepresetingAnOrganisation.flatMap(areYou => displayWhenNo(s"$backgroundKey.areYouRepresetingAnOrganisation", areYou)),
-      background.organisationName.map(_ => SummaryListRowViewModel(s"$backgroundKey.organisationName", ValueViewModel(background.organisationName))),
+      background.letterReferenceNumber.map(_ =>
+        SummaryListRowViewModel("notification.metadata.caseRef", ValueViewModel(background.letterReferenceNumber))
+      ),
+      Some(
+        SummaryListRowViewModel(
+          "notification.background.disclosureEntity",
+          ValueViewModel(
+            background.disclosureEntity.map(de => messages(s"notification.background.${de.entity.toString}"))
+          )
+        )
+      ),
+      background.disclosureEntity.map(de =>
+        SummaryListRowViewModel(
+          s"areYouTheEntity.${de.entity}.heading",
+          ValueViewModel(s"areYouTheEntity.${de.entity}.${de.areYouTheEntity.getOrElse("yes")}")
+        )
+      ),
+      background.areYouRepresetingAnOrganisation.flatMap(areYou =>
+        displayWhenNo(s"$backgroundKey.areYouRepresetingAnOrganisation", areYou)
+      ),
+      background.organisationName.map(_ =>
+        SummaryListRowViewModel(s"$backgroundKey.organisationName", ValueViewModel(background.organisationName))
+      ),
       Some(liabilitiesRow(background)),
-      Some(incomeFromRow(background)),
+      Some(incomeFromRow(background))
     ).flatten
   )
 
   def incomeFromRow(background: Background)(implicit messages: Messages) = {
 
-    val sources = background.incomeSource.getOrElse(Nil).map(answer => messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.$answer")).toList
+    val sources     = background.incomeSource
+      .getOrElse(Nil)
+      .map(answer => messages(s"whereDidTheUndeclaredIncomeOrGainIncluded.$answer"))
+      .toList
     val otherSource = background.otherIncomeSource.toList
 
     val answers = sources ::: otherSource
 
     val value = ValueViewModel(
       HtmlContent(
-        answers.map {
-          answer => HtmlFormat.escape(answer).toString
-        }
-        .mkString("<br/>")
+        answers
+          .map { answer =>
+            HtmlFormat.escape(answer).toString
+          }
+          .mkString("<br/>")
       )
     )
 
     SummaryListRowViewModel("disclosure.offshore.incomeFrom", value)
   }
-
 
 }

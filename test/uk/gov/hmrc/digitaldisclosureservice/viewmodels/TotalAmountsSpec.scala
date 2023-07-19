@@ -31,9 +31,10 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
   "getPenaltyAmount" should {
 
     "determine the penalty from a rate and an unpaid amount" in {
-      forAll(chooseNum[BigInt](BigInt(0), BigInt(99999999)), chooseNum[BigDecimal](BigDecimal(0), BigDecimal(200))) { (amount, rate) =>
-        val expectedAmount = ((rate * BigDecimal(amount)) / 100).setScale(2, RoundingMode.DOWN)
-        TotalAmounts.getPenaltyAmount(rate, amount) shouldEqual expectedAmount
+      forAll(chooseNum[BigInt](BigInt(0), BigInt(99999999)), chooseNum[BigDecimal](BigDecimal(0), BigDecimal(200))) {
+        (amount, rate) =>
+          val expectedAmount = ((rate * BigDecimal(amount)) / 100).setScale(2, RoundingMode.DOWN)
+          TotalAmounts.getPenaltyAmount(rate, amount) shouldEqual expectedAmount
       }
     }
   }
@@ -41,8 +42,12 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
   "getPeriodTotal" should {
 
     "determine the penalty from a rate and an unpaid amount" in {
-      forAll(chooseNum[BigInt](BigInt(0), BigInt(99999999)), arbitrary[Int], chooseNum[BigInt](BigInt(0), BigInt(99999999))) { (amount, rate, interest) =>
-        val penaltyAmount = ((rate * BigDecimal(amount)) / 100).setScale(2, RoundingMode.DOWN)
+      forAll(
+        chooseNum[BigInt](BigInt(0), BigInt(99999999)),
+        arbitrary[Int],
+        chooseNum[BigInt](BigInt(0), BigInt(99999999))
+      ) { (amount, rate, interest) =>
+        val penaltyAmount  = ((rate * BigDecimal(amount)) / 100).setScale(2, RoundingMode.DOWN)
         val expectedAmount = penaltyAmount + BigDecimal(amount) + BigDecimal(interest)
         TotalAmounts.getPeriodTotal(rate, amount, interest) shouldEqual expectedAmount
       }
@@ -73,7 +78,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
           penaltyRateReason = "Some reason"
         )
       )
-      val expectedTotals = TotalAmounts(
+      val expectedTotals                                   = TotalAmounts(
         unpaidTaxTotal = BigInt(30),
         niContributionsTotal = BigInt(0),
         interestTotal = BigInt(30),
@@ -95,7 +100,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
           penaltyRateReason = "Some reason"
         )
       )
-      val expectedTotals = TotalAmounts(
+      val expectedTotals                                   = TotalAmounts(
         unpaidTaxTotal = BigInt(10),
         niContributionsTotal = BigInt(0),
         interestTotal = BigInt(10),
@@ -139,7 +144,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
           penaltyRateReason = "Some reason"
         )
       )
-      val expectedTotals = TotalAmounts(
+      val expectedTotals                            = TotalAmounts(
         unpaidTaxTotal = BigInt(30),
         niContributionsTotal = BigInt(0),
         interestTotal = BigInt(30),
@@ -160,7 +165,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
           penaltyRateReason = "Some reason"
         )
       )
-      val expectedTotals = TotalAmounts(
+      val expectedTotals                            = TotalAmounts(
         unpaidTaxTotal = BigInt(10),
         niContributionsTotal = BigInt(0),
         interestTotal = BigInt(10),
@@ -185,9 +190,9 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
 
   "getOffshoreTaxYearTotals" should {
     "total up all values for multiple director loan liabilities" in {
-      val liabilities = Map(
+      val liabilities    = Map(
         "2012" -> TaxYearWithLiabilities(
-          TaxYearStarting(2012), 
+          TaxYearStarting(2012),
           TaxYearLiabilities(
             income = BigInt(10),
             chargeableTransfers = BigInt(10),
@@ -201,7 +206,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
           )
         ),
         "2011" -> TaxYearWithLiabilities(
-          TaxYearStarting(2011), 
+          TaxYearStarting(2011),
           TaxYearLiabilities(
             income = BigInt(20),
             chargeableTransfers = BigInt(20),
@@ -213,7 +218,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
             undeclaredIncomeOrGain = Some("Some gain"),
             foreignTaxCredit = false
           )
-        ),
+        )
       )
       val expectedTotals = TotalAmounts(
         unpaidTaxTotal = BigInt(30),
@@ -226,9 +231,9 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
     }
 
     "return the same values where only one element exists" in {
-      val liabilities = Map(
+      val liabilities    = Map(
         "2012" -> TaxYearWithLiabilities(
-          TaxYearStarting(2012), 
+          TaxYearStarting(2012),
           TaxYearLiabilities(
             income = BigInt(10),
             chargeableTransfers = BigInt(10),
@@ -266,9 +271,9 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
 
   "getOnshoreTaxYearTotals" should {
     "total up all values for multiple director loan liabilities" in {
-      val liabilities = Map(
+      val liabilities    = Map(
         "2012" -> OnshoreTaxYearWithLiabilities(
-          OnshoreYearStarting(2012), 
+          OnshoreYearStarting(2012),
           OnshoreTaxYearLiabilities(
             nonBusinessIncome = Some(BigInt(10)),
             businessIncome = Some(BigInt(10)),
@@ -284,7 +289,7 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
           )
         ),
         "2011" -> OnshoreTaxYearWithLiabilities(
-          OnshoreYearStarting(2012), 
+          OnshoreYearStarting(2012),
           OnshoreTaxYearLiabilities(
             nonBusinessIncome = Some(BigInt(20)),
             businessIncome = Some(BigInt(20)),
@@ -311,9 +316,9 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
     }
 
     "return the same values where only one element exists" in {
-      val liabilities = Map(
+      val liabilities    = Map(
         "2012" -> OnshoreTaxYearWithLiabilities(
-          OnshoreYearStarting(2012), 
+          OnshoreYearStarting(2012),
           OnshoreTaxYearLiabilities(
             nonBusinessIncome = Some(BigInt(10)),
             businessIncome = Some(BigInt(10)),

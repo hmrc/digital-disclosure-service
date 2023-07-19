@@ -27,7 +27,11 @@ object AreYouTheEntity extends Enumerable.Implicits {
   case object PowerOfAttorney extends WithName("powerOfAttorney") with AreYouTheEntity
 
   val values: Seq[AreYouTheEntity] = Seq(
-    YesIAm, IAmAnAccountantOrTaxAgent, IAmAFriend, VoluntaryOrganisation, PowerOfAttorney
+    YesIAm,
+    IAmAnAccountantOrTaxAgent,
+    IAmAFriend,
+    VoluntaryOrganisation,
+    PowerOfAttorney
   )
 
   implicit val enumerable: Enumerable[AreYouTheEntity] =

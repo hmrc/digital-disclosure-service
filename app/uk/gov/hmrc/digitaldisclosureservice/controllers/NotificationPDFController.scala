@@ -18,11 +18,11 @@ package controllers
 
 import play.api.mvc.{Action, ControllerComponents}
 import javax.inject.{Inject, Singleton}
-import play.api.libs.json.{JsValue}
+import play.api.libs.json.JsValue
 import models.Notification
 import services.SubmissionPdfService
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Result, ResponseHeader}
+import play.api.mvc.{ResponseHeader, Result}
 import play.api.http.HttpEntity
 import akka.stream.scaladsl.Source
 import akka.util.ByteString
@@ -32,24 +32,28 @@ import uk.gov.hmrc.internalauth.client._
 import controllers.Permissions.internalAuthPermission
 
 @Singleton()
-class NotificationPDFController @Inject()(
-    override val messagesApi: MessagesApi,
-    service: SubmissionPdfService,
-    val auth: BackendAuthComponents,
-    cc: ControllerComponents
-  ) extends BaseController(cc) with I18nSupport with Logging {
+class NotificationPDFController @Inject() (
+  override val messagesApi: MessagesApi,
+  service: SubmissionPdfService,
+  val auth: BackendAuthComponents,
+  cc: ControllerComponents
+) extends BaseController(cc)
+    with I18nSupport
+    with Logging {
 
-  def generate: Action[JsValue] = auth.authorizedAction(internalAuthPermission("pdf")).async(parse.json) { implicit request =>
-    withValidJson[Notification]{ notification =>
+  def generate: Action[JsValue] =
+    auth.authorizedAction(internalAuthPermission("pdf")).async(parse.json) { implicit request =>
+      withValidJson[Notification] { notification =>
+        val pdf           = service.generatePdfHtml(notification, false, getLanguage).getBytes
+        val contentLength = Some(pdf.length.toLong)
 
-      val pdf = service.generatePdfHtml(notification, false, getLanguage).getBytes
-      val contentLength = Some(pdf.length.toLong)
-
-      Future.successful(Result(
-        header = ResponseHeader(200, Map.empty),
-        body = HttpEntity.Streamed(Source(Seq(ByteString(pdf))), contentLength, Some("application/octet-stream"))
-      ))
+        Future.successful(
+          Result(
+            header = ResponseHeader(200, Map.empty),
+            body = HttpEntity.Streamed(Source(Seq(ByteString(pdf))), contentLength, Some("application/octet-stream"))
+          )
+        )
+      }
     }
-  }
 
 }

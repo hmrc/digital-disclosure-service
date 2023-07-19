@@ -26,7 +26,7 @@ final case class Address(
   line4: Option[String],
   postcode: Option[String],
   country: Country
-) 
+)
 
 object Address {
 
@@ -46,9 +46,8 @@ object Address {
       lines.collect { case Some(s) => s }
     }
 
-    def toSeparatedString(implicit messages: Messages): String = {
+    def toSeparatedString(implicit messages: Messages): String =
       AddressOps(a).getAddressLines.mkString(", ")
-    }
   }
 
   implicit val addressFormat: OFormat[Address] = Json.format[Address]

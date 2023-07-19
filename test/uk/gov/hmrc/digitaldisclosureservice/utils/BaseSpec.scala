@@ -19,11 +19,11 @@ package utils
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.Application
 
-trait BaseSpec  {
+trait BaseSpec {
 
   val app: Application =
     GuiceApplicationBuilder()
       .configure("create-internal-auth-token-on-start" -> false)
       .build()
-  
+
 }

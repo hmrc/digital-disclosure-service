@@ -20,7 +20,7 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import play.api.http.Status
 import play.api.test.Helpers._
-import play.api.test.{FakeRequest, Helpers, FakeHeaders}
+import play.api.test.{FakeHeaders, FakeRequest, Helpers}
 import play.api.libs.json.Json
 import java.time.Instant
 import models.callback._
@@ -36,14 +36,19 @@ class SubmissionCallbackControllerSpec extends AnyWordSpec with Matchers {
         status = SubmissionItemStatus.Submitted,
         objectSummary = ObjectSummary(
           location = "/some/location",
-          contentLength= 1337,
+          contentLength = 1337,
           contentMd5 = "<SOME_HASH>",
           lastModified = Instant.now()
         ),
         failureReason = None
       )
-      val fakeRequest = FakeRequest(method = "POST", uri = "/dms-submission/callback", headers = FakeHeaders(Seq.empty), body = Json.toJson(callbackRequest))
-      val result = controller.callback()(fakeRequest)
+      val fakeRequest     = FakeRequest(
+        method = "POST",
+        uri = "/dms-submission/callback",
+        headers = FakeHeaders(Seq.empty),
+        body = Json.toJson(callbackRequest)
+      )
+      val result          = controller.callback()(fakeRequest)
 
       status(result) shouldBe Status.OK
     }

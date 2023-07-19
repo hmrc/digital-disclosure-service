@@ -21,14 +21,12 @@ import akka.stream.testkit.NoMaterializer
 import org.scalatest.{BeforeAndAfterAll, Suite}
 import play.api.test.Helpers._
 
-/**
-  * Provides an implicit Materializer for use in tests. Note that if your test
-  * is starting an app (e.g. via OneAppPerSuite or OneAppPerTest) then you
-  * should probably use the app's Materializer instead.
+/** Provides an implicit Materializer for use in tests. Note that if your test is starting an app (e.g. via
+  * OneAppPerSuite or OneAppPerTest) then you should probably use the app's Materializer instead.
   */
 trait MaterializerSpec extends BeforeAndAfterAll { this: Suite =>
 
-  implicit lazy val actorSystem = ActorSystem()
+  implicit lazy val actorSystem  = ActorSystem()
   implicit lazy val materializer = NoMaterializer
 
   override protected def afterAll(): Unit = {

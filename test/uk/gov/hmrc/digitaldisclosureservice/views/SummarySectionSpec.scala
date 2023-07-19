@@ -18,7 +18,7 @@ package views
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import play.api.i18n.{MessagesApi, Messages}
+import play.api.i18n.{Messages, MessagesApi}
 import play.twirl.api.Html
 import play.api.test.FakeRequest
 import uk.gov.hmrc.digitaldisclosureservice.views.html.summarySection
@@ -33,12 +33,13 @@ class SummarySectionSpec extends AnyWordSpec with Matchers with BaseSpec with Su
   implicit protected def htmlBodyOf(html: Html): Document = Jsoup.parse(html.toString())
 
   implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
-  implicit val sut = app.injector.instanceOf[summarySection]
+  implicit val sut                = app.injector.instanceOf[summarySection]
 
-  private def createView(headingKey: String, list: SummaryList, id: String = "id"): Html = sut.render(headingKey, list, id, messages)
+  private def createView(headingKey: String, list: SummaryList, id: String = "id"): Html =
+    sut.render(headingKey, list, id, messages)
 
   val summaryList = SummaryListViewModel(rows = Nil)
-  
+
   "NotificationView" should {
 
     val view = createView("notification.heading.metadata", summaryList)
@@ -54,6 +55,5 @@ class SummarySectionSpec extends AnyWordSpec with Matchers with BaseSpec with Su
       sut.f("key", summaryList, "id")(messages) shouldEqual createView("key", summaryList)
     }
   }
-
 
 }

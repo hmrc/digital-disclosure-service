@@ -25,16 +25,20 @@ import play.api.i18n.I18nSupport
 import models.callback.CallbackRequest
 
 @Singleton()
-class SubmissionCallbackController @Inject()(
-    cc: ControllerComponents
-  ) extends BaseController(cc) with I18nSupport with Logging {
+class SubmissionCallbackController @Inject() (
+  cc: ControllerComponents
+) extends BaseController(cc)
+    with I18nSupport
+    with Logging {
 
   def callback: Action[JsValue] = Action.async(parse.json) { implicit request =>
-    withValidJson[CallbackRequest]{ request =>
-
+    withValidJson[CallbackRequest] { request =>
       request.failureReason match {
-        case Some(reason) => logger.error(s"Callback for submission ${request.id} failed with status ${request.status}. Failure reason: $reason.")
-        case None => logger.info(s"Callback for submission ${request.id} with status ${request.status}.")
+        case Some(reason) =>
+          logger.error(
+            s"Callback for submission ${request.id} failed with status ${request.status}. Failure reason: $reason."
+          )
+        case None         => logger.info(s"Callback for submission ${request.id} with status ${request.status}.")
       }
 
       Future.successful(Ok("Received"))

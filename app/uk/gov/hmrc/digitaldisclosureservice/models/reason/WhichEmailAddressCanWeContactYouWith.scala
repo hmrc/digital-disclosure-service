@@ -24,7 +24,8 @@ object WhichEmailAddressCanWeContactYouWith extends Enumerable.Implicits {
   case object DifferentEmail extends WithName("differentEmail") with WhichEmailAddressCanWeContactYouWith
 
   val values: Seq[WhichEmailAddressCanWeContactYouWith] = Seq(
-    ExistingEmail, DifferentEmail
+    ExistingEmail,
+    DifferentEmail
   )
 
   implicit val enumerable: Enumerable[WhichEmailAddressCanWeContactYouWith] =

@@ -37,22 +37,23 @@ trait ImplicitConversions {
   implicit def stringOptionToText(stringOpt: Option[String])(implicit messages: Messages): Text =
     stringOpt.map(stringToText).getOrElse(Text("-"))
 
-  implicit def booleanToText(boolean: Boolean)(implicit messages: Messages): Text = {
+  implicit def booleanToText(boolean: Boolean)(implicit messages: Messages): Text =
     if (boolean) Text(messages("service.yes"))
     else Text(messages("service.no"))
-  }
 
   implicit def booleanOptionToText(booleanOption: Option[Boolean])(implicit messages: Messages): Text =
     booleanOption.map(booleanToText).getOrElse(Text("-"))
 
-  implicit def YesNoOrUnsureToText(yesNoOrUnsure: YesNoOrUnsure)(implicit messages: Messages): Text = 
+  implicit def YesNoOrUnsureToText(yesNoOrUnsure: YesNoOrUnsure)(implicit messages: Messages): Text =
     yesNoOrUnsure match {
-      case YesNoOrUnsure.Yes => Text(messages("service.yes"))
-      case YesNoOrUnsure.No => Text(messages("service.no"))
+      case YesNoOrUnsure.Yes    => Text(messages("service.yes"))
+      case YesNoOrUnsure.No     => Text(messages("service.no"))
       case YesNoOrUnsure.Unsure => Text(messages("service.unsure"))
     }
 
-  implicit def yesNoOrUnsureOptionToText(yesNoOrUnsureOption: Option[YesNoOrUnsure])(implicit messages: Messages): Text =
+  implicit def yesNoOrUnsureOptionToText(yesNoOrUnsureOption: Option[YesNoOrUnsure])(implicit
+    messages: Messages
+  ): Text =
     yesNoOrUnsureOption.map(YesNoOrUnsureToText).getOrElse(Text("-"))
-    
+
 }

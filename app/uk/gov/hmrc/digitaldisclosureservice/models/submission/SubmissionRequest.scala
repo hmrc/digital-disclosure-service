@@ -21,7 +21,7 @@ import play.api.libs.json.{Format, Json}
 final case class SubmissionRequest(
   submissionReference: Option[String],
   metadata: SubmissionMetadata
-) 
+)
 
 object SubmissionRequest {
   implicit lazy val formats: Format[SubmissionRequest] = Json.format

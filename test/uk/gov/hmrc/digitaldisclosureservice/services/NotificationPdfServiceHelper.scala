@@ -27,16 +27,13 @@ import models.address._
 import models.address.Address.AddressOps
 import org.scalatest.concurrent.ScalaFutures
 
-trait SubmissionPdfServiceHelper extends AnyWordSpecLike
-  with Matchers
-  with OptionValues
-  with ScalaFutures {
-  
+trait SubmissionPdfServiceHelper extends AnyWordSpecLike with Matchers with OptionValues with ScalaFutures {
+
   def testPdfService: SubmissionPdfService
 
-  implicit val messages: Messages 
+  implicit val messages: Messages
 
-  def address(line1: String) = Address(line1, None, None, None, None, Country("GBR"))
+  def address(line1: String)          = Address(line1, None, None, None, None, Country("GBR"))
   def addressString(address: Address) = AddressOps(address).getAddressLines.mkString(", ")
 
   def baseNotificationTests(areYouTheIndividual: Boolean, parsedText: String) = {
@@ -68,11 +65,11 @@ trait SubmissionPdfServiceHelper extends AnyWordSpecLike
   }
 
   def testNotFullAboutYouQuestions(parsedText: String) = {
-    parsedText should not include(messages("notification.aboutYou.dateOfBirth"))
-    parsedText should not include(messages("notification.aboutYou.mainOccupation"))
-    parsedText should not include(messages("notification.aboutYou.doYouHaveANino"))
-    parsedText should not include(messages("notification.aboutYou.registeredForVAT"))
-    parsedText should not include(messages("notification.aboutYou.registeredForSA"))
+    parsedText should not include (messages("notification.aboutYou.dateOfBirth"))
+    parsedText should not include (messages("notification.aboutYou.mainOccupation"))
+    parsedText should not include (messages("notification.aboutYou.doYouHaveANino"))
+    parsedText should not include (messages("notification.aboutYou.registeredForVAT"))
+    parsedText should not include (messages("notification.aboutYou.registeredForSA"))
   }
 
   def testIndividualQuestions(parsedText: String) = {
@@ -88,15 +85,15 @@ trait SubmissionPdfServiceHelper extends AnyWordSpecLike
   }
 
   def testNotIndividualQuestions(parsedText: String) = {
-    parsedText should not include(messages("notification.heading.aboutTheIndividual"))
+    parsedText should not include (messages("notification.heading.aboutTheIndividual"))
 
-    parsedText should not include(messages("notification.aboutTheIndividual.fullName"))
-    parsedText should not include(messages("notification.aboutTheIndividual.dateOfBirth"))
-    parsedText should not include(messages("notification.aboutTheIndividual.mainOccupation"))
-    parsedText should not include(messages("notification.aboutTheIndividual.doTheyHaveANino"))
-    parsedText should not include(messages("notification.aboutTheIndividual.registeredForVAT"))
-    parsedText should not include(messages("notification.aboutTheIndividual.registeredForSA"))
-    parsedText should not include(messages("notification.aboutTheIndividual.address"))
+    parsedText should not include (messages("notification.aboutTheIndividual.fullName"))
+    parsedText should not include (messages("notification.aboutTheIndividual.dateOfBirth"))
+    parsedText should not include (messages("notification.aboutTheIndividual.mainOccupation"))
+    parsedText should not include (messages("notification.aboutTheIndividual.doTheyHaveANino"))
+    parsedText should not include (messages("notification.aboutTheIndividual.registeredForVAT"))
+    parsedText should not include (messages("notification.aboutTheIndividual.registeredForSA"))
+    parsedText should not include (messages("notification.aboutTheIndividual.address"))
   }
 
   def testCompanyQuestions(parsedText: String) = {
@@ -108,11 +105,11 @@ trait SubmissionPdfServiceHelper extends AnyWordSpecLike
   }
 
   def testNotCompanyQuestions(parsedText: String) = {
-    parsedText should not include(messages("notification.heading.aboutTheCompany"))
+    parsedText should not include (messages("notification.heading.aboutTheCompany"))
 
-    parsedText should not include(messages("notification.aboutTheCompany.name"))
-    parsedText should not include(messages("notification.aboutTheCompany.registrationNumber"))
-    parsedText should not include(messages("notification.aboutTheCompany.address"))
+    parsedText should not include (messages("notification.aboutTheCompany.name"))
+    parsedText should not include (messages("notification.aboutTheCompany.registrationNumber"))
+    parsedText should not include (messages("notification.aboutTheCompany.address"))
   }
 
   def testTrustQuestions(parsedText: String) = {
@@ -123,10 +120,10 @@ trait SubmissionPdfServiceHelper extends AnyWordSpecLike
   }
 
   def testNotTrustQuestions(parsedText: String) = {
-    parsedText should not include(messages("notification.heading.aboutTheTrust"))
+    parsedText should not include (messages("notification.heading.aboutTheTrust"))
 
-    parsedText should not include(messages("notification.aboutTheTrust.name"))
-    parsedText should not include(messages("notification.aboutTheTrust.address"))
+    parsedText should not include (messages("notification.aboutTheTrust.name"))
+    parsedText should not include (messages("notification.aboutTheTrust.address"))
   }
 
   def testLLPQuestions(parsedText: String) = {
@@ -137,10 +134,10 @@ trait SubmissionPdfServiceHelper extends AnyWordSpecLike
   }
 
   def testNotLLPQuestions(parsedText: String) = {
-    parsedText should not include(messages("notification.heading.aboutTheLLP"))
+    parsedText should not include (messages("notification.heading.aboutTheLLP"))
 
-    parsedText should not include(messages("notification.aboutTheLLP.name"))
-    parsedText should not include(messages("notification.aboutTheLLP.address"))
+    parsedText should not include (messages("notification.aboutTheLLP.name"))
+    parsedText should not include (messages("notification.aboutTheLLP.address"))
   }
 
   def testEstateQuestions(parsedText: String) = {
@@ -155,20 +152,19 @@ trait SubmissionPdfServiceHelper extends AnyWordSpecLike
   }
 
   def testNotEstateQuestions(parsedText: String) = {
-    parsedText should not include(messages("notification.heading.aboutTheEstate"))
+    parsedText should not include (messages("notification.heading.aboutTheEstate"))
 
-    parsedText should not include(messages("notification.aboutTheEstate.fullName"))
-    parsedText should not include(messages("notification.aboutTheEstate.dateOfBirth"))
-    parsedText should not include(messages("notification.aboutTheEstate.mainOccupation"))
-    parsedText should not include(messages("notification.aboutTheEstate.registeredForVAT"))
-    parsedText should not include(messages("notification.aboutTheEstate.registeredForSA"))
-    parsedText should not include(messages("notification.aboutTheEstate.address"))
+    parsedText should not include (messages("notification.aboutTheEstate.fullName"))
+    parsedText should not include (messages("notification.aboutTheEstate.dateOfBirth"))
+    parsedText should not include (messages("notification.aboutTheEstate.mainOccupation"))
+    parsedText should not include (messages("notification.aboutTheEstate.registeredForVAT"))
+    parsedText should not include (messages("notification.aboutTheEstate.registeredForSA"))
+    parsedText should not include (messages("notification.aboutTheEstate.address"))
   }
 
-  def stripPDFToString(notification: Notification): String = {
+  def stripPDFToString(notification: Notification): String =
     testPdfService
       .generatePdfHtml(notification, false, "en")
       .replace("&amp;", "&")
-  }
 
 }

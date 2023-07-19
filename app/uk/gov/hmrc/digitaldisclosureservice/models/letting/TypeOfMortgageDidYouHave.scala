@@ -25,7 +25,9 @@ object TypeOfMortgageDidYouHave extends Enumerable.Implicits {
   case object Other extends WithName("other") with TypeOfMortgageDidYouHave
 
   val values: Seq[TypeOfMortgageDidYouHave] = Seq(
-    CapitalRepayment, InterestOnly, Other
+    CapitalRepayment,
+    InterestOnly,
+    Other
   )
 
   implicit val enumerable: Enumerable[TypeOfMortgageDidYouHave] =

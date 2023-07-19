@@ -25,7 +25,9 @@ object AdviceContactPreference extends Enumerable.Implicits {
   case object No extends WithName("no") with AdviceContactPreference
 
   val values: Seq[AdviceContactPreference] = Seq(
-    Email, Telephone, No
+    Email,
+    Telephone,
+    No
   )
 
   implicit val enumerable: Enumerable[AdviceContactPreference] =

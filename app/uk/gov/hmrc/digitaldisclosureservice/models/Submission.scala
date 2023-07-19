@@ -40,7 +40,7 @@ object Submission {
   implicit val format: OFormat[Submission] = Json.format[Submission]
 }
 
-final case class FullDisclosure (
+final case class FullDisclosure(
   userId: String,
   submissionId: String,
   lastUpdated: Instant,
@@ -57,12 +57,11 @@ final case class FullDisclosure (
   def disclosingAboutThemselves = personalDetails.disclosingAboutThemselves
 }
 
-
 object FullDisclosure {
   implicit val format: OFormat[FullDisclosure] = Json.format[FullDisclosure]
 }
 
-final case class Notification (
+final case class Notification(
   userId: String,
   submissionId: String,
   lastUpdated: Instant,
@@ -71,7 +70,7 @@ final case class Notification (
   customerId: Option[CustomerId] = None
 ) extends Submission {
   def disclosingAboutThemselves = personalDetails.disclosingAboutThemselves
-} 
+}
 
 object Notification {
   implicit val format: OFormat[Notification] = Json.format[Notification]

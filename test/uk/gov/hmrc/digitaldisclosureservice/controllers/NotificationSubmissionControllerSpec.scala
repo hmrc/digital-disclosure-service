@@ -20,7 +20,7 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import play.api.http.Status
 import play.api.test.Helpers._
-import play.api.test.{FakeRequest, Helpers, FakeHeaders}
+import play.api.test.{FakeHeaders, FakeRequest, Helpers}
 import org.mockito.Mockito.when
 import org.mockito.ArgumentMatchers.{any, refEq}
 import org.mockito.Mockito
@@ -38,7 +38,12 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import uk.gov.hmrc.internalauth.client._
 import uk.gov.hmrc.internalauth.client.test.{BackendAuthComponentsStub, StubBehaviour}
 
-class NotificationSubmissionControllerSpec extends AnyWordSpec with Matchers with MockitoSugar with BeforeAndAfterEach with MaterializerSpec {
+class NotificationSubmissionControllerSpec
+    extends AnyWordSpec
+    with Matchers
+    with MockitoSugar
+    with BeforeAndAfterEach
+    with MaterializerSpec {
 
   implicit val cc = Helpers.stubControllerComponents()
 
@@ -48,20 +53,35 @@ class NotificationSubmissionControllerSpec extends AnyWordSpec with Matchers wit
   }
 
   val mockSubmissionService = mock[DMSSubmissionService]
-  val mockStubBehaviour = mock[StubBehaviour]
-  val expectedPredicate = Predicate.Permission(Resource(ResourceType("digital-disclosure-service"), ResourceLocation("submit")), IAAction("WRITE"))
+  val mockStubBehaviour     = mock[StubBehaviour]
+  val expectedPredicate     = Predicate.Permission(
+    Resource(ResourceType("digital-disclosure-service"), ResourceLocation("submit")),
+    IAAction("WRITE")
+  )
   when(mockStubBehaviour.stubAuth(Some(expectedPredicate), Retrieval.EmptyRetrieval)).thenReturn(Future.unit)
-  private val controller = new NotificationSubmissionController(new DefaultMessagesApi(), mockSubmissionService, BackendAuthComponentsStub(mockStubBehaviour), Helpers.stubControllerComponents())
+  private val controller    = new NotificationSubmissionController(
+    new DefaultMessagesApi(),
+    mockSubmissionService,
+    BackendAuthComponentsStub(mockStubBehaviour),
+    Helpers.stubControllerComponents()
+  )
 
-  val instant = LocalDateTime.of(2022, 1, 1, 0, 0, 0).toInstant(ZoneOffset.UTC)
+  val instant          = LocalDateTime.of(2022, 1, 1, 0, 0, 0).toInstant(ZoneOffset.UTC)
   val testNotification = Notification("123", "123", instant, Metadata(), PersonalDetails(Background(), AboutYou()))
-  
+
   "POST /notification/submit" should {
     "return 202 where the service returns a Success" in {
-      when(mockSubmissionService.submit(refEq(testNotification), any())(any(), any())) thenReturn Future.successful(SubmissionResponse.Success("id"))
+      when(mockSubmissionService.submit(refEq(testNotification), any())(any(), any())) thenReturn Future.successful(
+        SubmissionResponse.Success("id")
+      )
 
-      val fakeRequest = FakeRequest(method = "GET", uri = "/notification", headers = FakeHeaders(Seq("Authorization" -> "Token some-token")), body = Json.toJson(testNotification))
-      val result = controller.submit()(fakeRequest)
+      val fakeRequest = FakeRequest(
+        method = "GET",
+        uri = "/notification",
+        headers = FakeHeaders(Seq("Authorization" -> "Token some-token")),
+        body = Json.toJson(testNotification)
+      )
+      val result      = controller.submit()(fakeRequest)
       status(result) shouldBe Status.ACCEPTED
       val body = contentAsJson(result).as[SubmissionResponse.Success]
       body shouldBe SubmissionResponse.Success("id")
@@ -70,15 +90,21 @@ class NotificationSubmissionControllerSpec extends AnyWordSpec with Matchers wit
 
   "POST /notification/submit" should {
     "return 500 where the service returns a Failure" in {
-      when(mockSubmissionService.submit(refEq(testNotification), any())(any(), any())) thenReturn Future.successful(SubmissionResponse.Failure(Seq("error1", "error2")))
+      when(mockSubmissionService.submit(refEq(testNotification), any())(any(), any())) thenReturn Future.successful(
+        SubmissionResponse.Failure(Seq("error1", "error2"))
+      )
 
-      val fakeRequest = FakeRequest(method = "GET", uri = "/notification", headers = FakeHeaders(Seq("Authorization" -> "Token some-token")), body = Json.toJson(testNotification))
-      val result = controller.submit()(fakeRequest)
+      val fakeRequest = FakeRequest(
+        method = "GET",
+        uri = "/notification",
+        headers = FakeHeaders(Seq("Authorization" -> "Token some-token")),
+        body = Json.toJson(testNotification)
+      )
+      val result      = controller.submit()(fakeRequest)
       status(result) shouldBe Status.INTERNAL_SERVER_ERROR
       val body = contentAsJson(result).as[SubmissionResponse.Failure]
       body shouldBe SubmissionResponse.Failure(Seq("error1", "error2"))
     }
   }
-
 
 }

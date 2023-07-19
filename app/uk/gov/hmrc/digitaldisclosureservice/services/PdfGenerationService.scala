@@ -22,12 +22,12 @@ import com.openhtmltopdf.svgsupport.BatikSVGDrawer
 import org.apache.commons.io.IOUtils
 import models.PDF
 
-trait PdfGenerationService { 
+trait PdfGenerationService {
 
   def buildPdf(html: String): PDF = {
 
-    val os = new ByteArrayOutputStream()
-    val builder = new PdfRendererBuilder
+    val os       = new ByteArrayOutputStream()
+    val builder  = new PdfRendererBuilder
     val renderer = builder
       .useColorProfile(IOUtils.toByteArray(getClass.getResourceAsStream("/resources/sRGB-Color-Space-Profile.icm")))
       .useFont(new File(getClass.getResource("/resources/ArialMT.ttf").toURI), "arial")
@@ -41,7 +41,7 @@ trait PdfGenerationService {
     renderer.close()
 
     PDF(os)
-    
+
   }
 
 }

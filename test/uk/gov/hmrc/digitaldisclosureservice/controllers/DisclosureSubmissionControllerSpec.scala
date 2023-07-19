@@ -20,7 +20,7 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import play.api.http.Status
 import play.api.test.Helpers._
-import play.api.test.{FakeRequest, Helpers, FakeHeaders}
+import play.api.test.{FakeHeaders, FakeRequest, Helpers}
 import org.mockito.Mockito.when
 import org.mockito.ArgumentMatchers.{any, refEq}
 import org.mockito.Mockito
@@ -29,7 +29,7 @@ import org.scalatestplus.mockito.MockitoSugar
 import java.time.{LocalDateTime, ZoneOffset}
 import scala.concurrent.Future
 import play.api.libs.json.Json
-import models.{Metadata, FullDisclosure}
+import models.{FullDisclosure, Metadata}
 import models.notification._
 import models.disclosure._
 import services.DMSSubmissionService
@@ -39,7 +39,12 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import uk.gov.hmrc.internalauth.client._
 import uk.gov.hmrc.internalauth.client.test.{BackendAuthComponentsStub, StubBehaviour}
 
-class DisclosureSubmissionControllerSpec extends AnyWordSpec with Matchers with MockitoSugar with BeforeAndAfterEach with MaterializerSpec {
+class DisclosureSubmissionControllerSpec
+    extends AnyWordSpec
+    with Matchers
+    with MockitoSugar
+    with BeforeAndAfterEach
+    with MaterializerSpec {
 
   implicit val cc = Helpers.stubControllerComponents()
 
@@ -49,20 +54,46 @@ class DisclosureSubmissionControllerSpec extends AnyWordSpec with Matchers with 
   }
 
   val mockSubmissionService = mock[DMSSubmissionService]
-  val mockStubBehaviour = mock[StubBehaviour]
-  val expectedPredicate = Predicate.Permission(Resource(ResourceType("digital-disclosure-service"), ResourceLocation("submit")), IAAction("WRITE"))
+  val mockStubBehaviour     = mock[StubBehaviour]
+  val expectedPredicate     = Predicate.Permission(
+    Resource(ResourceType("digital-disclosure-service"), ResourceLocation("submit")),
+    IAAction("WRITE")
+  )
   when(mockStubBehaviour.stubAuth(Some(expectedPredicate), Retrieval.EmptyRetrieval)).thenReturn(Future.unit)
-  private val controller = new DisclosureSubmissionController(new DefaultMessagesApi(), mockSubmissionService, BackendAuthComponentsStub(mockStubBehaviour), Helpers.stubControllerComponents())
+  private val controller    = new DisclosureSubmissionController(
+    new DefaultMessagesApi(),
+    mockSubmissionService,
+    BackendAuthComponentsStub(mockStubBehaviour),
+    Helpers.stubControllerComponents()
+  )
 
-  val instant = LocalDateTime.of(2022, 1, 1, 0, 0, 0).toInstant(ZoneOffset.UTC)
-  val testDisclosure = FullDisclosure("123", "123", instant, Metadata(), CaseReference(), PersonalDetails(Background(), AboutYou()), None, OffshoreLiabilities(), OtherLiabilities(), ReasonForDisclosingNow())
-  
+  val instant        = LocalDateTime.of(2022, 1, 1, 0, 0, 0).toInstant(ZoneOffset.UTC)
+  val testDisclosure = FullDisclosure(
+    "123",
+    "123",
+    instant,
+    Metadata(),
+    CaseReference(),
+    PersonalDetails(Background(), AboutYou()),
+    None,
+    OffshoreLiabilities(),
+    OtherLiabilities(),
+    ReasonForDisclosingNow()
+  )
+
   "POST /disclosure/submit" should {
     "return 202 where the service returns a Success" in {
-      when(mockSubmissionService.submit(refEq(testDisclosure), any())(any(), any())) thenReturn Future.successful(SubmissionResponse.Success("id"))
+      when(mockSubmissionService.submit(refEq(testDisclosure), any())(any(), any())) thenReturn Future.successful(
+        SubmissionResponse.Success("id")
+      )
 
-      val fakeRequest = FakeRequest(method = "GET", uri = "/disclosure", headers = FakeHeaders(Seq("Authorization" -> "Token some-token")), body = Json.toJson(testDisclosure))
-      val result = controller.submit()(fakeRequest)
+      val fakeRequest = FakeRequest(
+        method = "GET",
+        uri = "/disclosure",
+        headers = FakeHeaders(Seq("Authorization" -> "Token some-token")),
+        body = Json.toJson(testDisclosure)
+      )
+      val result      = controller.submit()(fakeRequest)
       status(result) shouldBe Status.ACCEPTED
       val body = contentAsJson(result).as[SubmissionResponse.Success]
       body shouldBe SubmissionResponse.Success("id")
@@ -71,15 +102,21 @@ class DisclosureSubmissionControllerSpec extends AnyWordSpec with Matchers with 
 
   "POST /disclosure/submit" should {
     "return 500 where the service returns a Failure" in {
-      when(mockSubmissionService.submit(refEq(testDisclosure), any())(any(), any())) thenReturn Future.successful(SubmissionResponse.Failure(Seq("error1", "error2")))
+      when(mockSubmissionService.submit(refEq(testDisclosure), any())(any(), any())) thenReturn Future.successful(
+        SubmissionResponse.Failure(Seq("error1", "error2"))
+      )
 
-      val fakeRequest = FakeRequest(method = "GET", uri = "/disclosure", headers = FakeHeaders(Seq("Authorization" -> "Token some-token")), body = Json.toJson(testDisclosure))
-      val result = controller.submit()(fakeRequest)
+      val fakeRequest = FakeRequest(
+        method = "GET",
+        uri = "/disclosure",
+        headers = FakeHeaders(Seq("Authorization" -> "Token some-token")),
+        body = Json.toJson(testDisclosure)
+      )
+      val result      = controller.submit()(fakeRequest)
       status(result) shouldBe Status.INTERNAL_SERVER_ERROR
       val body = contentAsJson(result).as[SubmissionResponse.Failure]
       body shouldBe SubmissionResponse.Failure(Seq("error1", "error2"))
     }
   }
-
 
 }

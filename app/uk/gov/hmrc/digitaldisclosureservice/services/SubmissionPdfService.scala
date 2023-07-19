@@ -17,42 +17,43 @@
 package services
 
 import play.api.i18n.Messages
-import javax.inject.{Singleton, Inject}
+import javax.inject.{Inject, Singleton}
 
-import models.{Submission, Notification, FullDisclosure}
-import uk.gov.hmrc.digitaldisclosureservice.views.html.{NotificationView, DisclosureView}
+import models.{FullDisclosure, Notification, Submission}
+import uk.gov.hmrc.digitaldisclosureservice.views.html.{DisclosureView, NotificationView}
 import viewmodels.govuk.SummaryListFluency
 import viewmodels.{DisclosureViewModel, NotificationViewModel}
 import models.PDF
 
 @Singleton
-class SubmissionPdfService @Inject()(notificationView: NotificationView, diclosureView: DisclosureView) extends PdfGenerationService with SummaryListFluency {
+class SubmissionPdfService @Inject() (notificationView: NotificationView, diclosureView: DisclosureView)
+    extends PdfGenerationService
+    with SummaryListFluency {
 
-  def createPdf(submission: Submission, caseflowDateFormat: Boolean, lang:String)(implicit messages: Messages): PDF = {
+  def createPdf(submission: Submission, caseflowDateFormat: Boolean, lang: String)(implicit messages: Messages): PDF = {
 
     val html = submission match {
-      case notification: Notification => 
+      case notification: Notification =>
         val viewModel = NotificationViewModel(notification, caseflowDateFormat)
         notificationView(viewModel, lang).toString
       case disclosure: FullDisclosure =>
         val viewModel = DisclosureViewModel(disclosure, caseflowDateFormat)
         diclosureView(viewModel, lang).toString
     }
-    
+
     buildPdf(html)
   }
 
-  def generatePdfHtml(submission: Submission, caseflowDateFormat: Boolean, lang:String)(implicit messages: Messages): String = {
-
+  def generatePdfHtml(submission: Submission, caseflowDateFormat: Boolean, lang: String)(implicit
+    messages: Messages
+  ): String =
     submission match {
-      case notification: Notification => 
+      case notification: Notification =>
         val viewModel = NotificationViewModel(notification, caseflowDateFormat)
         notificationView(viewModel, lang).toString
       case disclosure: FullDisclosure =>
         val viewModel = DisclosureViewModel(disclosure, caseflowDateFormat)
         diclosureView(viewModel, lang).toString
     }
-
-  }
 
 }

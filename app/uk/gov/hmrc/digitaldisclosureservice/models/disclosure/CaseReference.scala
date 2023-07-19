@@ -18,7 +18,7 @@ package models.disclosure
 
 import play.api.libs.json.{Json, OFormat}
 
-final case class CaseReference (
+final case class CaseReference(
   doYouHaveACaseReference: Option[Boolean] = None,
   whatIsTheCaseReference: Option[String] = None
 )
