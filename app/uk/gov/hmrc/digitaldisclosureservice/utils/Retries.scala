@@ -16,8 +16,8 @@
 
 package utils
 
-import akka.actor.ActorSystem
-import akka.pattern.after
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.pattern.after
 import play.api.Logging
 import config.AppConfig
 import uk.gov.hmrc.http.UpstreamErrorResponse.Upstream5xxResponse

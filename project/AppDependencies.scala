@@ -5,41 +5,34 @@ import sbt._
 
 object AppDependencies {
 
-  private val bootstrapVersion = "7.15.0"
-  
+  private val bootstrapVersion = "8.4.0"
   private val pdfboxVersion = "2.0.26"
   private val openHtmlVersion = "1.0.10"
-  private val silencerVersion = "1.7.12"
+  private val playV = "play-30"
 
   val compile = Seq(
-    "uk.gov.hmrc"              %%  "bootstrap-backend-play-28"     % bootstrapVersion,
+    "uk.gov.hmrc"              %%  s"bootstrap-backend-$playV"     % bootstrapVersion,
+    "uk.gov.hmrc"              %%  s"internal-auth-client-$playV"  % "1.10.0",
+    "uk.gov.hmrc.mongo"        %%  s"hmrc-mongo-$playV"            % "1.7.0",
+    "uk.gov.hmrc"              %%  s"play-frontend-hmrc-$playV"    % "8.5.0",
     "org.apache.pdfbox"        %   "pdfbox"                        % pdfboxVersion,
     "org.apache.pdfbox"        %   "xmpbox"                        % pdfboxVersion,
-    "org.apache.xmlgraphics"   %   "batik-transcoder"              % "1.16",
-    "org.apache.xmlgraphics"   %   "batik-codec"                   % "1.16",
+    "org.apache.xmlgraphics"   %   "batik-transcoder"              % "1.17",
+    "org.apache.xmlgraphics"   %   "batik-codec"                   % "1.17",
     "com.openhtmltopdf"        %   "openhtmltopdf-core"            % openHtmlVersion,
     "com.openhtmltopdf"        %   "openhtmltopdf-pdfbox"          % openHtmlVersion,
     "com.openhtmltopdf"        %   "openhtmltopdf-svg-support"     % openHtmlVersion,
-    "uk.gov.hmrc"              %%  "play-frontend-hmrc"            % "7.7.0-play-28",
-    "org.typelevel"            %%  "cats-core"                     % "2.8.0",
-    "com.github.pathikrit"     %%  "better-files"                  % "3.9.1",
-    "commons-codec"            %   "commons-codec"                 % "1.14",
+    "org.typelevel"            %%  "cats-core"                     % "2.10.0",
+    "com.github.pathikrit"     %%  "better-files"                  % "3.9.2",
+    "commons-codec"            %   "commons-codec"                 % "1.16.0",
     "com.thoughtworks.xstream" %   "xstream"                       % "1.4.20",
-    "uk.gov.hmrc.mongo"        %% "hmrc-mongo-play-28"             % "1.2.0",
-    "uk.gov.hmrc"              %% "internal-auth-client-play-28"   % "1.4.0",
-    "uk.gov.hmrc"              %% "tax-year"                       % "3.2.0",
-    compilerPlugin("com.github.ghik" % "silencer-plugin" % silencerVersion cross CrossVersion.full),
-    "com.github.ghik" % "silencer-lib" % silencerVersion % Provided cross CrossVersion.full
+    "uk.gov.hmrc"              %%  "tax-year"                      % "3.2.0"
   )
 
   val test = Seq(
-    "com.vladsch.flexmark"    % "flexmark-all"                % "0.62.2"                    % "test, it",
-    "uk.gov.hmrc"             %% "bootstrap-test-play-28"     % bootstrapVersion            % "test, it",
-    "org.scalatestplus"       %% "mockito-4-6"                % "3.2.14.0"                  % "test, it",
-    "com.github.tomakehurst"  %  "wiremock-standalone"        % "2.27.2"                    % "test, it",
-    "org.scalatestplus.play"  %% "scalatestplus-play"         % "5.1.0"                     % "test, it",
-    "org.scalamock"           %% "scalamock"                  % "5.1.0"                     % "test, it",
-    "org.scalatestplus"       %% "scalacheck-1-15"            % "3.2.10.0"                  % "test, it",
-    "org.scalacheck"          %% "scalacheck"                 % "1.15.4"                    % "test, it"
+    "uk.gov.hmrc"             %% s"bootstrap-test-$playV"     % bootstrapVersion            % "test, it",
+    "org.scalamock"           %% "scalamock"                  % "5.2.0"                     % "test, it",
+    "org.scalatestplus"       %% "scalacheck-1-15"            % "3.2.11.0"                  % "test, it",
+    "org.scalacheck"          %% "scalacheck"                 % "1.17.0"                    % "test, it"
   )
 }

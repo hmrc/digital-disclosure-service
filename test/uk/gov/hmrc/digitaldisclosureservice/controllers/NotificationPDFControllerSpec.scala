@@ -26,8 +26,8 @@ import models.{Metadata, Notification}
 import models.notification._
 import services.SubmissionPdfService
 import utils.BaseSpec
-import akka.util.ByteString
-import akka.actor.ActorSystem
+import org.apache.pekko.util.ByteString
+import org.apache.pekko.actor.ActorSystem
 import play.api.i18n.{Messages, MessagesApi}
 import org.mockito.Mockito.when
 import org.mockito.ArgumentMatchers.{any, refEq}

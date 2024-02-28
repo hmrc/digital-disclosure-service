@@ -16,7 +16,7 @@
 
 package connectors
 
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import config.Service
 import play.api.Configuration
 import play.api.http.Status._
@@ -28,10 +28,10 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NoStackTrace
 import models.submission.{SubmissionRequest, SubmissionResponse}
 import play.api.mvc.MultipartFormData.{DataPart, FilePart, Part}
-import akka.stream.scaladsl.Source
+import org.apache.pekko.stream.scaladsl.Source
 
 import java.time.format.DateTimeFormatter
-import akka.util.ByteString
+import org.apache.pekko.util.ByteString
 import play.mvc.Http.HeaderNames.{AUTHORIZATION, USER_AGENT}
 import controllers.routes
 import config.AppConfig

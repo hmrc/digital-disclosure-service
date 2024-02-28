@@ -25,8 +25,8 @@ import services.SubmissionPdfService
 import play.api.i18n.{I18nSupport, Lang, Langs, MessagesApi}
 import play.api.mvc.{ResponseHeader, Result}
 import play.api.http.HttpEntity
-import akka.stream.scaladsl.Source
-import akka.util.ByteString
+import org.apache.pekko.stream.scaladsl.Source
+import org.apache.pekko.util.ByteString
 
 import scala.concurrent.Future
 import play.api.Logging
