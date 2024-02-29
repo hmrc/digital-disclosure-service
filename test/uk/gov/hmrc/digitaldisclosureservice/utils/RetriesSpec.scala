@@ -16,7 +16,7 @@
 
 package utils
 
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import org.mockito.Mockito._
 import uk.gov.hmrc.http.{HttpResponse, UpstreamErrorResponse}
 import org.scalatest.wordspec.AnyWordSpec

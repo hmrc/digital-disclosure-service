@@ -16,8 +16,8 @@
 
 package controllers
 
-import akka.actor.ActorSystem
-import akka.stream.testkit.NoMaterializer
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.stream.testkit.NoMaterializer
 import org.scalatest.{BeforeAndAfterAll, Suite}
 import play.api.test.Helpers._
 
