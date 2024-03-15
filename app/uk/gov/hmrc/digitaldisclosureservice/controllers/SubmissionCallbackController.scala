@@ -36,7 +36,7 @@ class SubmissionCallbackController @Inject() (
       request.failureReason match {
         case Some(reason) =>
           logger.error(
-            s"Callback for submission ${request.id} failed with status ${request.status}. Failure reason: $reason."
+            s"Callback failed for submission ${request.id} with status ${request.status}. Failure reason: $reason."
           )
         case None         => logger.info(s"Callback for submission ${request.id} with status ${request.status}.")
       }
