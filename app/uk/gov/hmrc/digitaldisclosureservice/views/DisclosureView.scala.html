@@ -19,6 +19,7 @@
 
 @this(
     govukSummaryList: GovukSummaryList,
+    govukInput: GovukInput,
     summarySection: summarySection,
     styles: styles,
     assetsConfig: AssetsConfig
@@ -53,6 +54,142 @@
         <hr/>
 
         <main>
+
+        @if(viewModel.fullDisclosure.exists(_.personalDetails.aboutTheTrust.isDefined)) {
+            <h1>@messages("disclosure.trust.h1")</h1>
+            <p>@messages("disclosure.trust.p1", viewModel.totalAmountsList.rows(4).value.content.asHtml.body)</p>
+            <h3>@messages("disclosure.trust.h3")</h3>
+            <p>@messages("disclosure.trust.p2")</p>
+            <p>@messages("disclosure.trust.p3")</p>
+            <p>@messages("disclosure.trust.p4", viewModel.fullDisclosure.flatMap(_.personalDetails.aboutYou.fullName).getOrElse(""), viewModel.fullDisclosure.flatMap(_.personalDetails.aboutTheTrust.flatMap(_.name)).getOrElse(""))</p>
+            <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheTrust.flatMap(trust => trust.address.map(_.line1)))</p>
+            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheTrust.exists(trust => trust.address.exists(_.line2.isDefined)))) {
+                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheTrust.flatMap(trust => trust.address.map(_.line2)))</p>
+            }
+
+            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheTrust.exists(trust => trust.address.exists(_.line3.isDefined)))) {
+                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheTrust.flatMap(trust => trust.address.map(_.line3)))</p>
+            }
+
+            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheTrust.exists(trust => trust.address.exists(_.line4.isDefined)))) {
+                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheTrust.flatMap(trust => trust.address.map(_.line4)))</p>
+            }
+
+            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheTrust.exists(trust => trust.address.exists(_.postcode.isDefined)))) {
+                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheTrust.flatMap(trust => trust.address.map(_.postcode)))</p>
+            }
+            <p>@messages("disclosure.trust.p5")</p>
+            <p>@messages("disclosure.trust.p6", viewModel.fullDisclosure.flatMap(_.offerAmount.map(_.toString())).getOrElse("£0"))</p>
+        }
+
+        @if(viewModel.fullDisclosure.exists(_.personalDetails.aboutTheIndividual.isDefined)) {
+            <h1>@messages("disclosure.individual.h1")</h1>
+            <p>@messages("disclosure.individual.p1", viewModel.totalAmountsList.rows(4).value.content.asHtml.body)</p>
+            <h3>@messages("disclosure.individual.h3")</h3>
+            <p>@messages("disclosure.individual.p2")</p>
+            <p>@messages("disclosure.individual.p3")</p>
+            <p>@messages("disclosure.individual.p4", viewModel.fullDisclosure.flatMap(_.personalDetails.aboutTheIndividual.flatMap(_.fullName)).getOrElse(""))</p>
+            <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheIndividual.flatMap(individual => individual.address.map(_.line1)))</p>
+            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheIndividual.exists(individual => individual.address.exists(_.line2.isDefined)))) {
+                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheIndividual.flatMap(individual => individual.address.map(_.line2)))</p>
+            }
+
+            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheIndividual.exists(individual => individual.address.exists(_.line3.isDefined)))) {
+                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheIndividual.flatMap(individual => individual.address.map(_.line3)))</p>
+            }
+
+            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheIndividual.exists(individual => individual.address.exists(_.line4.isDefined)))) {
+                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheIndividual.flatMap(individual => individual.address.map(_.line4)))</p>
+            }
+
+            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheIndividual.exists(individual => individual.address.exists(_.postcode.isDefined)))) {
+                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheIndividual.flatMap(individual => individual.address.map(_.postcode)))</p>
+            }
+            <p>@messages("disclosure.individual.p5")</p>
+            <p>@messages("disclosure.individual.p6", viewModel.fullDisclosure.flatMap(_.offerAmount.map(_.toString())).getOrElse("£0"))</p>
+        }
+
+        @if(viewModel.fullDisclosure.exists(_.personalDetails.aboutTheCompany.isDefined)) {
+            <h1>@messages("disclosure.company.h1")</h1>
+            <p>@messages("disclosure.company.p1", viewModel.totalAmountsList.rows(4).value.content.asHtml.body)</p>
+            <h3>@messages("disclosure.company.h3")</h3>
+            <p>@messages("disclosure.company.p4")</p>
+            <p>@messages("disclosure.company.p5")</p>
+            <p>@messages("disclosure.company.p6", viewModel.fullDisclosure.flatMap(_.personalDetails.aboutYou.fullName).getOrElse(""), viewModel.fullDisclosure.flatMap(_.personalDetails.aboutTheCompany.flatMap(_.name)).getOrElse(""))</p>
+            <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheCompany.flatMap(company => company.address.map(_.line1)))</p>
+            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheCompany.exists(company => company.address.exists(_.line2.isDefined)))) {
+                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheCompany.flatMap(company => company.address.map(_.line2)))</p>
+            }
+
+            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheCompany.exists(company => company.address.exists(_.line3.isDefined)))) {
+                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheCompany.flatMap(company => company.address.map(_.line3)))</p>
+            }
+
+            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheCompany.exists(company => company.address.exists(_.line4.isDefined)))) {
+                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheCompany.flatMap(company => company.address.map(_.line4)))</p>
+            }
+
+            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheCompany.exists(company => company.address.exists(_.postcode.isDefined)))) {
+                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheCompany.flatMap(company => company.address.map(_.postcode)))</p>
+            }
+            <p>@messages("disclosure.company.p7")</p>
+            <p>@messages("disclosure.company.p8", viewModel.fullDisclosure.flatMap(_.offerAmount.map(_.toString())).getOrElse("£0"))</p>
+        }
+
+        @if(viewModel.fullDisclosure.exists(_.personalDetails.aboutTheLLP.isDefined)) {
+            <h1>@messages("disclosure.llp.h1")</h1>
+            <p>@messages("disclosure.llp.p1", viewModel.totalAmountsList.rows(4).value.content.asHtml.body)</p>
+            <h3>@messages("disclosure.company.h3")</h3>
+            <p>@messages("disclosure.llp.p2")</p>
+            <p>@messages("disclosure.llp.p3")</p>
+            <p>@messages("disclosure.llp.p4", viewModel.fullDisclosure.flatMap(_.personalDetails.aboutYou.fullName).getOrElse(""), viewModel.fullDisclosure.flatMap(_.personalDetails.aboutTheLLP.flatMap(_.name)).getOrElse(""))</p>
+            <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheLLP.flatMap(llp => llp.address.map(_.line1)))</p>
+            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheLLP.exists(llp => llp.address.exists(_.line2.isDefined)))) {
+                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheLLP.flatMap(llp => llp.address.map(_.line2)))</p>
+            }
+
+            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheLLP.exists(llp => llp.address.exists(_.line3.isDefined)))) {
+                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheLLP.flatMap(llp => llp.address.map(_.line3)))</p>
+            }
+
+            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheLLP.exists(llp => llp.address.exists(_.line4.isDefined)))) {
+                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheLLP.flatMap(llp => llp.address.map(_.line4)))</p>
+            }
+
+            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheLLP.exists(llp => llp.address.exists(_.postcode.isDefined)))) {
+                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheLLP.flatMap(llp => llp.address.map(_.postcode)))</p>
+            }
+            <p>@messages("disclosure.llp.p5")</p>
+            <p>@messages("disclosure.llp.p6", viewModel.fullDisclosure.flatMap(_.offerAmount.map(_.toString())).getOrElse("£0"))</p>
+        }
+
+        @if(viewModel.fullDisclosure.exists(_.personalDetails.aboutTheEstate.isDefined)) {
+            <h1>@messages("disclosure.estate.h1")</h1>
+            <p>@messages("disclosure.estate.p1", viewModel.totalAmountsList.rows(4).value.content.asHtml.body)</p>
+            <h3>@messages("disclosure.estate.h3")</h3>
+            <p>@messages("disclosure.estate.p2")</p>
+            <p>@messages("disclosure.estate.p3")</p>
+            <p>@messages("disclosure.estate.p4", viewModel.fullDisclosure.flatMap(_.personalDetails.aboutYou.fullName).getOrElse(""), viewModel.fullDisclosure.flatMap(_.personalDetails.aboutTheLLP.flatMap(_.name)).getOrElse(""))</p>
+            <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheEstate.flatMap(estate => estate.address.map(_.line1)))</p>
+            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheEstate.exists(estate => estate.address.exists(_.line2.isDefined)))) {
+                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheEstate.flatMap(estate => estate.address.map(_.line2)))</p>
+            }
+
+            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheEstate.exists(estate => estate.address.exists(_.line3.isDefined)))) {
+                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheEstate.flatMap(estate => estate.address.map(_.line3)))</p>
+            }
+
+            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheEstate.exists(estate => estate.address.exists(_.line4.isDefined)))) {
+                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheEstate.flatMap(estate => estate.address.map(_.line4)))</p>
+            }
+
+            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheEstate.exists(estate => estate.address.exists(_.postcode.isDefined)))) {
+                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheEstate.flatMap(estate => estate.address.map(_.postcode)))</p>
+            }
+            <p>@messages("disclosure.estate.p5")</p>
+            <p>@messages("disclosure.estate.p6", viewModel.fullDisclosure.flatMap(_.offerAmount.map(_.toString())).getOrElse("£0"))</p>
+        }
+
 
         <h1>@messages("disclosure.h1")</h1>
 
