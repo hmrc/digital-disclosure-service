@@ -58,7 +58,7 @@
         @if(viewModel.fullDisclosure.exists(_.personalDetails.aboutTheTrust.isDefined)) {
             <h1>@messages("disclosure.trust.h1")</h1>
             <p>@messages("disclosure.trust.p1", viewModel.totalAmountsList.rows(4).value.content.asHtml.body)</p>
-            <h3>@messages("disclosure.trust.h3")</h3>
+            <h2>@messages("disclosure.trust.h2")</h2>
             <p>@messages("disclosure.trust.p2")</p>
             <p>@messages("disclosure.trust.p3")</p>
             <p>@messages("disclosure.trust.p4", viewModel.fullDisclosure.flatMap(_.personalDetails.aboutYou.fullName).getOrElse(""), viewModel.fullDisclosure.flatMap(_.personalDetails.aboutTheTrust.flatMap(_.name)).getOrElse(""))</p>
@@ -85,7 +85,7 @@
         @if(viewModel.fullDisclosure.exists(_.personalDetails.aboutTheIndividual.isDefined)) {
             <h1>@messages("disclosure.individual.h1")</h1>
             <p>@messages("disclosure.individual.p1", viewModel.totalAmountsList.rows(4).value.content.asHtml.body)</p>
-            <h3>@messages("disclosure.individual.h3")</h3>
+            <h2>@messages("disclosure.individual.h2")</h2>
             <p>@messages("disclosure.individual.p2")</p>
             <p>@messages("disclosure.individual.p3")</p>
             <p>@messages("disclosure.individual.p4", viewModel.fullDisclosure.flatMap(_.personalDetails.aboutTheIndividual.flatMap(_.fullName)).getOrElse(""))</p>
@@ -112,7 +112,7 @@
         @if(viewModel.fullDisclosure.exists(_.personalDetails.aboutTheCompany.isDefined)) {
             <h1>@messages("disclosure.company.h1")</h1>
             <p>@messages("disclosure.company.p1", viewModel.totalAmountsList.rows(4).value.content.asHtml.body)</p>
-            <h3>@messages("disclosure.company.h3")</h3>
+            <h2>@messages("disclosure.company.h2")</h2>
             <p>@messages("disclosure.company.p4")</p>
             <p>@messages("disclosure.company.p5")</p>
             <p>@messages("disclosure.company.p6", viewModel.fullDisclosure.flatMap(_.personalDetails.aboutYou.fullName).getOrElse(""), viewModel.fullDisclosure.flatMap(_.personalDetails.aboutTheCompany.flatMap(_.name)).getOrElse(""))</p>
@@ -139,7 +139,7 @@
         @if(viewModel.fullDisclosure.exists(_.personalDetails.aboutTheLLP.isDefined)) {
             <h1>@messages("disclosure.llp.h1")</h1>
             <p>@messages("disclosure.llp.p1", viewModel.totalAmountsList.rows(4).value.content.asHtml.body)</p>
-            <h3>@messages("disclosure.company.h3")</h3>
+            <h2>@messages("disclosure.llp.h2")</h2>
             <p>@messages("disclosure.llp.p2")</p>
             <p>@messages("disclosure.llp.p3")</p>
             <p>@messages("disclosure.llp.p4", viewModel.fullDisclosure.flatMap(_.personalDetails.aboutYou.fullName).getOrElse(""), viewModel.fullDisclosure.flatMap(_.personalDetails.aboutTheLLP.flatMap(_.name)).getOrElse(""))</p>
@@ -166,7 +166,7 @@
         @if(viewModel.fullDisclosure.exists(_.personalDetails.aboutTheEstate.isDefined)) {
             <h1>@messages("disclosure.estate.h1")</h1>
             <p>@messages("disclosure.estate.p1", viewModel.totalAmountsList.rows(4).value.content.asHtml.body)</p>
-            <h3>@messages("disclosure.estate.h3")</h3>
+            <h2>@messages("disclosure.estate.h2")</h2>
             <p>@messages("disclosure.estate.p2")</p>
             <p>@messages("disclosure.estate.p3")</p>
             <p>@messages("disclosure.estate.p4", viewModel.fullDisclosure.flatMap(_.personalDetails.aboutYou.fullName).getOrElse(""), viewModel.fullDisclosure.flatMap(_.personalDetails.aboutTheLLP.flatMap(_.name)).getOrElse(""))</p>
