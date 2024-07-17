@@ -111,7 +111,8 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
         ),
         otherLiabilitiesList = SummaryList(rows = Nil),
         additionalList = SummaryList(rows = Nil),
-        totalAmountsList = SummaryList(rows = Nil)
+        totalAmountsList = SummaryList(rows = Nil),
+        fullDisclosure = None
       )
       val view      = createView(viewModel)
 

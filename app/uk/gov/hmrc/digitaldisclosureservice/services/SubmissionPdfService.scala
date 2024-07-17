@@ -16,15 +16,13 @@
 
 package services
 
+import models.{FullDisclosure, Notification, PDF, Submission}
 import play.api.i18n.Messages
-
-import javax.inject.{Inject, Singleton}
-import models.{FullDisclosure, Notification, Submission}
 import uk.gov.hmrc.digitaldisclosureservice.views.html.{DisclosureView, NotificationView}
 import viewmodels.govuk.SummaryListFluency
 import viewmodels.{DisclosureViewModel, NotificationViewModel}
-import models.PDF
-import models.address.Country
+
+import javax.inject.{Inject, Singleton}
 
 @Singleton
 class SubmissionPdfService @Inject() (notificationView: NotificationView, diclosureView: DisclosureView)
@@ -54,7 +52,6 @@ class SubmissionPdfService @Inject() (notificationView: NotificationView, diclos
         notificationView(viewModel, lang).toString
       case disclosure: FullDisclosure =>
         val viewModel = DisclosureViewModel(disclosure, caseflowDateFormat)
-        val amount = viewModel.fullDisclosure.flatMap(_.offerAmount.map(_.toString())).getOrElse("£0")
         diclosureView(viewModel, lang).toString
     }
 
