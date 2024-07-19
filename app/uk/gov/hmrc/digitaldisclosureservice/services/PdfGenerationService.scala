@@ -17,7 +17,7 @@
 package services
 
 import java.io.{ByteArrayOutputStream, File}
-import com.openhtmltopdf.pdfboxout.PdfRendererBuilder
+import com.openhtmltopdf.pdfboxout.{PdfBoxRenderer, PdfRendererBuilder}
 import com.openhtmltopdf.svgsupport.BatikSVGDrawer
 import org.apache.commons.io.IOUtils
 import models.PDF
@@ -28,7 +28,7 @@ trait PdfGenerationService {
 
     val os       = new ByteArrayOutputStream()
     val builder  = new PdfRendererBuilder
-    val renderer = builder
+    val renderer: PdfBoxRenderer = builder
       .useColorProfile(IOUtils.toByteArray(getClass.getResourceAsStream("/resources/sRGB-Color-Space-Profile.icm")))
       .useFont(new File(getClass.getResource("/resources/ArialMT.ttf").toURI), "arial")
       .usePdfUaAccessbility(true)

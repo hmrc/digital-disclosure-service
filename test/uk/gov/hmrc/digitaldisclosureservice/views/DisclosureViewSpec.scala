@@ -20,6 +20,7 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import play.api.i18n.{Messages, MessagesApi}
 import models._
+import models.address.{Address, Country}
 import models.notification._
 import models.disclosure._
 import viewmodels._
@@ -28,6 +29,7 @@ import play.api.test.FakeRequest
 import uk.gov.hmrc.digitaldisclosureservice.views.html.DisclosureView
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+
 import java.time.Instant
 import utils.BaseSpec
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist._
@@ -41,6 +43,54 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
 
   private val lang                                              = "en"
   private def createView(disclosure: DisclosureViewModel): Html = sut.render(disclosure, lang, messages)
+
+  val pd = PersonalDetails(Background(), AboutYou(fullName = Some("Jessica Carter"),
+    address = Some(Address("39 Decant Avenue", Some("Rochdale"), None, None, Some("DE1 5XD"), Country("GB")))))
+
+  val fullDisclosure = FullDisclosure(
+    "userId",
+    "id",
+    Instant.now(),
+    Metadata(reference = Some("ref")),
+    CaseReference(),
+    pd,
+    None,
+    OffshoreLiabilities(),
+    OtherLiabilities(),
+    ReasonForDisclosingNow(),
+    None,
+    Some(BigInt.apply(230000))
+  )
+
+  val viewModel = DisclosureViewModel(
+    fullDisclosure,
+    false
+  )
+
+  val estate = AboutTheEstate(
+    fullName = Some("Spacious Lettings Ltd"),
+    address = Some(Address("24 Barnes Road", Some("Skegness"), Some("line 3"), Some("line 4"), Some("PE25 2PR"), Country("GB")))
+  )
+
+  val trust = AboutTheTrust(
+    name = Some("Fidelity European Trust"),
+    address = Some(Address("30 Gordon Road", Some("London"), Some("line 3"), Some("line 4"), Some("W5 2AH"), Country("GB")))
+  )
+
+  val company = AboutTheCompany(
+    name = Some("The Chocolate Museum"),
+    address = Some(Address("Meadowcroft", Some("Saves Lane"), Some("Askam-In-Furness"), Some("line 4"), Some("LA16 7DZ"), Country("GB")))
+  )
+
+  val partnership = AboutTheLLP(
+    name = Some("Crazy Debt Ltd"),
+    address = Some(Address("Parklands Barn", Some("Godminster Lane"), Some("Bruton"), Some("line 4"), Some("BA10 0ND"), Country("GB")))
+  )
+
+  val individual = AboutTheIndividual(
+    fullName = Some("Dan Johns"),
+    address = Some(Address("Whitcliffe Lodge Cottage", Some("Whitcliffe Cottages"), Some("Ludlow"), Some("line 4"), Some("SY8 1PN"), Country("GB")))
+  )
 
   "DisclosureView" when {
 
@@ -145,6 +195,198 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
 
     }
 
+    "display the address" when {
+
+      "an estate" in {
+        // Given
+        val updatedViewModel = viewModel.copy(fullDisclosure = Some(fullDisclosure.copy(personalDetails = pd.copy(aboutTheEstate = Some(estate)))))
+
+        // When
+        val view = createView(updatedViewModel)
+
+        // Then
+        view.select("main > p:nth-child(7)").text() shouldEqual "24 Barnes Road"
+        view.select("main > p:nth-child(8)").text() shouldEqual "Skegness"
+        view.select("main > p:nth-child(9)").text() shouldEqual "line 3"
+        view.select("main > p:nth-child(10)").text() shouldEqual "line 4"
+        view.select("main > p:nth-child(11)").text() shouldEqual "PE25 2PR"
+      }
+
+      "a trust" in {
+        // Given
+        val updatedViewModel = viewModel.copy(fullDisclosure = Some(fullDisclosure.copy(personalDetails = pd.copy(aboutTheTrust = Some(trust)))))
+
+        // When
+        val view = createView(updatedViewModel)
+
+        // Then
+        view.select("main > p:nth-child(7)").text() shouldEqual "30 Gordon Road"
+        view.select("main > p:nth-child(8)").text() shouldEqual "London"
+        view.select("main > p:nth-child(9)").text() shouldEqual "line 3"
+        view.select("main > p:nth-child(10)").text() shouldEqual "line 4"
+        view.select("main > p:nth-child(11)").text() shouldEqual "W5 2AH"
+      }
+
+      "a company" in {
+        // Given
+        val updatedViewModel = viewModel.copy(fullDisclosure = Some(fullDisclosure.copy(personalDetails = pd.copy(aboutTheCompany = Some(company)))))
+
+        // When
+        val view = createView(updatedViewModel)
+
+        // Then
+        view.select("main > p:nth-child(7)").text() shouldEqual "Meadowcroft"
+        view.select("main > p:nth-child(8)").text() shouldEqual "Saves Lane"
+        view.select("main > p:nth-child(9)").text() shouldEqual "Askam-In-Furness"
+        view.select("main > p:nth-child(10)").text() shouldEqual "line 4"
+        view.select("main > p:nth-child(11)").text() shouldEqual "LA16 7DZ"
+      }
+
+      "a partnership" in {
+        // Given
+        val updatedViewModel = viewModel.copy(fullDisclosure = Some(fullDisclosure.copy(personalDetails = pd.copy(aboutTheLLP = Some(partnership)))))
+
+        // When
+        val view = createView(updatedViewModel)
+
+        // Then
+        view.select("main > p:nth-child(7)").text() shouldEqual "Parklands Barn"
+        view.select("main > p:nth-child(8)").text() shouldEqual "Godminster Lane"
+        view.select("main > p:nth-child(9)").text() shouldEqual "Bruton"
+        view.select("main > p:nth-child(10)").text() shouldEqual "line 4"
+        view.select("main > p:nth-child(11)").text() shouldEqual "BA10 0ND"
+      }
+
+      "an individual" in {
+        // Given
+        val updatedViewModel = viewModel.copy(fullDisclosure = Some(fullDisclosure.copy(personalDetails = pd.copy(aboutTheIndividual = Some(individual)))))
+
+        // When
+        val view = createView(updatedViewModel)
+
+        // Then
+        view.select("main > p:nth-child(7)").text() shouldEqual "Whitcliffe Lodge Cottage"
+        view.select("main > p:nth-child(8)").text() shouldEqual "Whitcliffe Cottages"
+        view.select("main > p:nth-child(9)").text() shouldEqual "Ludlow"
+        view.select("main > p:nth-child(10)").text() shouldEqual "line 4"
+        view.select("main > p:nth-child(11)").text() shouldEqual "SY8 1PN"
+      }
+    }
+
+    "display the right offer heading" when {
+
+      "an estate" in {
+        // Given
+        val updatedViewModel = viewModel.copy(fullDisclosure = Some(fullDisclosure.copy(personalDetails = pd.copy(aboutTheEstate = Some(estate)))))
+
+        // When
+        val view = createView(updatedViewModel)
+
+        // Then
+        view.select("main > h1:nth-child(1)").text() shouldEqual "Your estate's offer"
+      }
+
+      "a trust" in {
+        // Given
+        val updatedViewModel = viewModel.copy(fullDisclosure = Some(fullDisclosure.copy(personalDetails = pd.copy(aboutTheTrust = Some(trust)))))
+
+        // When
+        val view = createView(updatedViewModel)
+
+        // Then
+        view.select("main > h1:nth-child(1)").text() shouldEqual "Your trust's offer"
+      }
+
+      "a company" in {
+        // Given
+        val updatedViewModel = viewModel.copy(fullDisclosure = Some(fullDisclosure.copy(personalDetails = pd.copy(aboutTheCompany = Some(company)))))
+
+        // When
+        val view = createView(updatedViewModel)
+
+        // Then
+        view.select("main > h1:nth-child(1)").text() shouldEqual "Your company's offer"
+      }
+
+      "a partnership" in {
+        // Given
+        val updatedViewModel = viewModel.copy(fullDisclosure = Some(fullDisclosure.copy(personalDetails = pd.copy(aboutTheLLP = Some(partnership)))))
+
+        // When
+        val view = createView(updatedViewModel)
+
+        // Then
+        view.select("main > h1:nth-child(1)").text() shouldEqual "Your partnership's offer"
+      }
+
+      "an individual" in {
+        // Given
+        val updatedViewModel = viewModel.copy(fullDisclosure = Some(fullDisclosure.copy(personalDetails = pd.copy(aboutTheIndividual = Some(individual)))))
+
+        // When
+        val view = createView(updatedViewModel)
+
+        // Then
+        view.select("main > h1:nth-child(1)").text() shouldEqual "Your offer"
+      }
+    }
+
+    "display the offered amount" when {
+      "an estate" in {
+        // Given
+        val updatedViewModel = viewModel.copy(fullDisclosure = Some(fullDisclosure.copy(personalDetails = pd.copy(aboutTheEstate = Some(estate)))))
+
+        // When
+        val view = createView(updatedViewModel)
+
+        // Then
+        view.select("main > p:nth-child(13)").text() shouldEqual "Amount: £230000"
+      }
+
+      "a trust" in {
+        // Given
+        val updatedViewModel = viewModel.copy(fullDisclosure = Some(fullDisclosure.copy(personalDetails = pd.copy(aboutTheTrust = Some(trust)))))
+
+        // When
+        val view = createView(updatedViewModel)
+
+        // Then
+        view.select("main > p:nth-child(13)").text() shouldEqual "Amount: £230000"
+      }
+
+      "a company" in {
+        // Given
+        val updatedViewModel = viewModel.copy(fullDisclosure = Some(fullDisclosure.copy(personalDetails = pd.copy(aboutTheCompany = Some(company)))))
+
+        // When
+        val view = createView(updatedViewModel)
+
+        // Then
+        view.select("main > p:nth-child(13)").text() shouldEqual "Amount: £230000"
+      }
+
+      "a partnership" in {
+        // Given
+        val updatedViewModel = viewModel.copy(fullDisclosure = Some(fullDisclosure.copy(personalDetails = pd.copy(aboutTheLLP = Some(partnership)))))
+
+        // When
+        val view = createView(updatedViewModel)
+
+        // Then
+        view.select("main > p:nth-child(13)").text() shouldEqual "Amount: £230000"
+      }
+
+      "an individual" in {
+        // Given
+        val updatedViewModel = viewModel.copy(fullDisclosure = Some(fullDisclosure.copy(personalDetails = pd.copy(aboutTheIndividual = Some(individual)))))
+
+        // When
+        val view = createView(updatedViewModel)
+
+        // Then
+        view.select("main > p:nth-child(13)").text() shouldEqual "Amount: £230000"
+      }
+    }
   }
 
   "f" should {

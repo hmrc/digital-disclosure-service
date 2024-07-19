@@ -42,7 +42,7 @@ disclosure.trust.p2 = The taxes, duties, National Insurance contributions and ot
 disclosure.trust.p3 = On the basis that no proceedings are taken against the trust for these liabilities or for the penalties, surcharge and interest on them,
 disclosure.trust.p4 = I, {0} as trustee on behalf of {1} of
 disclosure.trust.p5 = offer the sum of
-disclosure.trust.p6 = Amount: {0}
+disclosure.trust.p6 = Amount: £{0}
 
 #===================================================
 #  Individual Offer
@@ -54,7 +54,7 @@ disclosure.individual.p2 = The taxes, duties, National Insurance contributions a
 disclosure.individual.p3 = On the basis that no proceedings are taken against myself for these liabilities or for the penalties, surcharge and interest on them,
 disclosure.individual.p4 = I, {0} of
 disclosure.individual.p5 = offer the sum of
-disclosure.individual.p6 = Amount: {0}
+disclosure.individual.p6 = Amount: £{0}
 
 
 #===================================================
@@ -67,7 +67,7 @@ disclosure.company.p4 = The taxes, duties, National Insurance contributions and 
 disclosure.company.p5 = On the basis that no proceedings are taken against the company for these liabilities or for the penalties, surcharge and interest on them,
 disclosure.company.p6 = I, {0} as trustee on behalf of {1} of
 disclosure.company.p7 = offer the sum of
-disclosure.company.p8 = Amount: {0}
+disclosure.company.p8 = Amount: £{0}
 
 #===================================================
 #  Partnership Offer (LLP)
@@ -79,7 +79,7 @@ disclosure.llp.p2 = The taxes, duties, National Insurance contributions and othe
 disclosure.llp.p3 = On the basis that no proceedings are taken against the partnership for these liabilities or for the penalties, surcharge and interest on them,
 disclosure.llp.p4 = I, {0} as trustee on behalf of {1} of
 disclosure.llp.p5 = offer the sum of
-disclosure.llp.p6 = Amount: {0}
+disclosure.llp.p6 = Amount: £{0}
 
 #===================================================
 #  Estate Offer
@@ -91,7 +91,7 @@ disclosure.estate.p2 = The taxes, duties, National Insurance contributions and o
 disclosure.estate.p3 = On the basis that no proceedings are taken against the estate for these liabilities or for the penalties, surcharge and interest on them,
 disclosure.estate.p4 = I, {0} as trustee on behalf of {1} of
 disclosure.estate.p5 = offer the sum of
-disclosure.estate.p6 = Amount: {0}
+disclosure.estate.p6 = Amount: £{0}
 
 
 #===================================================
