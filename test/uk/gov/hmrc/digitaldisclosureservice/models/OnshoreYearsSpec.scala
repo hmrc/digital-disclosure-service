@@ -43,15 +43,24 @@ class OnshoreYearsSpec extends AnyWordSpec with Matchers {
 
   "writes" should {
     "convert PriorToThreeYears" in {
-      Json.toJson[OnshoreYears](PriorToThreeYears)(OnshoreYears.writes).asOpt[String].getOrElse("") shouldEqual PriorToThreeYears.toString
+      Json
+        .toJson[OnshoreYears](PriorToThreeYears)(OnshoreYears.writes)
+        .asOpt[String]
+        .getOrElse("") shouldEqual PriorToThreeYears.toString
     }
 
     "convert PriorToFiveYears" in {
-      Json.toJson[OnshoreYears](PriorToFiveYears)(OnshoreYears.writes).asOpt[String].getOrElse("") shouldEqual PriorToFiveYears.toString
+      Json
+        .toJson[OnshoreYears](PriorToFiveYears)(OnshoreYears.writes)
+        .asOpt[String]
+        .getOrElse("") shouldEqual PriorToFiveYears.toString
     }
 
     "convert PriorToNineteenYears" in {
-      Json.toJson[OnshoreYears](PriorToNineteenYears)(OnshoreYears.writes).asOpt[String].getOrElse("") shouldEqual PriorToNineteenYears.toString
+      Json
+        .toJson[OnshoreYears](PriorToNineteenYears)(OnshoreYears.writes)
+        .asOpt[String]
+        .getOrElse("") shouldEqual PriorToNineteenYears.toString
     }
   }
 }

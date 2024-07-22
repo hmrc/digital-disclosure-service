@@ -24,7 +24,7 @@ import services.PdfGenerationService
 class PdfGenerationServiceSpec extends AnyWordSpecLike with Matchers {
 
   val pdfGenerationService = new PdfGenerationService() {}
-  
+
   val blankHtml =
     """
       |<!DOCTYPE html>
@@ -46,7 +46,7 @@ class PdfGenerationServiceSpec extends AnyWordSpecLike with Matchers {
       |</body>
       |</html>
       |""".stripMargin
-  
+
   "PdfGenerationService.buildPdf" should {
     "use UA Accessibility" in {
       pdfGenerationService.buildPdf(blankHtml).byteStream.size() should be > 0

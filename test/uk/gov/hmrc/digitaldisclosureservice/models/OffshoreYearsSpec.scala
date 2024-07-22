@@ -43,15 +43,24 @@ class OffshoreYearsSpec extends AnyWordSpec with Matchers {
 
   "writes" should {
     "convert ReasonableExcusePriorTo" in {
-      Json.toJson[OffshoreYears](ReasonableExcusePriorTo)(OffshoreYears.writes).asOpt[String].getOrElse("") shouldEqual ReasonableExcusePriorTo.toString
+      Json
+        .toJson[OffshoreYears](ReasonableExcusePriorTo)(OffshoreYears.writes)
+        .asOpt[String]
+        .getOrElse("") shouldEqual ReasonableExcusePriorTo.toString
     }
 
     "convert CarelessPriorTo" in {
-      Json.toJson[OffshoreYears](CarelessPriorTo)(OffshoreYears.writes).asOpt[String].getOrElse("") shouldEqual CarelessPriorTo.toString
+      Json
+        .toJson[OffshoreYears](CarelessPriorTo)(OffshoreYears.writes)
+        .asOpt[String]
+        .getOrElse("") shouldEqual CarelessPriorTo.toString
     }
 
     "convert DeliberatePriorTo" in {
-      Json.toJson[OffshoreYears](DeliberatePriorTo)(OffshoreYears.writes).asOpt[String].getOrElse("") shouldEqual DeliberatePriorTo.toString
+      Json
+        .toJson[OffshoreYears](DeliberatePriorTo)(OffshoreYears.writes)
+        .asOpt[String]
+        .getOrElse("") shouldEqual DeliberatePriorTo.toString
     }
   }
 }
