@@ -19,7 +19,7 @@ package uk.gov.hmrc.digitaldisclosureservice.models
 import models.{CarelessPriorTo, DeliberatePriorTo, OffshoreYears, ReasonableExcusePriorTo}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import play.api.libs.json.{JsError, JsString, JsSuccess}
+import play.api.libs.json.{JsError, JsString, JsSuccess, Json}
 
 class OffshoreYearsSpec extends AnyWordSpec with Matchers {
 
@@ -38,6 +38,20 @@ class OffshoreYearsSpec extends AnyWordSpec with Matchers {
 
     "convert unknown" in {
       JsString("random").validate[OffshoreYears] shouldEqual JsError("error.invalid")
+    }
+  }
+
+  "writes" should {
+    "convert ReasonableExcusePriorTo" in {
+      Json.toJson[OffshoreYears](ReasonableExcusePriorTo)(OffshoreYears.writes).asOpt[String].getOrElse("") shouldEqual ReasonableExcusePriorTo.toString
+    }
+
+    "convert CarelessPriorTo" in {
+      Json.toJson[OffshoreYears](CarelessPriorTo)(OffshoreYears.writes).asOpt[String].getOrElse("") shouldEqual CarelessPriorTo.toString
+    }
+
+    "convert DeliberatePriorTo" in {
+      Json.toJson[OffshoreYears](DeliberatePriorTo)(OffshoreYears.writes).asOpt[String].getOrElse("") shouldEqual DeliberatePriorTo.toString
     }
   }
 }

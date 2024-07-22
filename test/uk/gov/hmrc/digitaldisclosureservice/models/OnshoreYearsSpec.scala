@@ -19,7 +19,7 @@ package uk.gov.hmrc.digitaldisclosureservice.models
 import models.{OnshoreYears, PriorToFiveYears, PriorToNineteenYears, PriorToThreeYears}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import play.api.libs.json.{JsError, JsString, JsSuccess}
+import play.api.libs.json.{JsError, JsString, JsSuccess, Json}
 
 class OnshoreYearsSpec extends AnyWordSpec with Matchers {
 
@@ -38,6 +38,20 @@ class OnshoreYearsSpec extends AnyWordSpec with Matchers {
 
     "convert unknown" in {
       JsString("someRandomValue").validate[OnshoreYears] shouldEqual JsError("error.invalid")
+    }
+  }
+
+  "writes" should {
+    "convert PriorToThreeYears" in {
+      Json.toJson[OnshoreYears](PriorToThreeYears)(OnshoreYears.writes).asOpt[String].getOrElse("") shouldEqual PriorToThreeYears.toString
+    }
+
+    "convert PriorToFiveYears" in {
+      Json.toJson[OnshoreYears](PriorToFiveYears)(OnshoreYears.writes).asOpt[String].getOrElse("") shouldEqual PriorToFiveYears.toString
+    }
+
+    "convert PriorToNineteenYears" in {
+      Json.toJson[OnshoreYears](PriorToNineteenYears)(OnshoreYears.writes).asOpt[String].getOrElse("") shouldEqual PriorToNineteenYears.toString
     }
   }
 }
