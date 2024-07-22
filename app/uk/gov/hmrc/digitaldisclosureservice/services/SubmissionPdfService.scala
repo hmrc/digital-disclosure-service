@@ -16,14 +16,13 @@
 
 package services
 
+import models.{FullDisclosure, Notification, PDF, Submission}
 import play.api.i18n.Messages
-import javax.inject.{Inject, Singleton}
-
-import models.{FullDisclosure, Notification, Submission}
 import uk.gov.hmrc.digitaldisclosureservice.views.html.{DisclosureView, NotificationView}
 import viewmodels.govuk.SummaryListFluency
 import viewmodels.{DisclosureViewModel, NotificationViewModel}
-import models.PDF
+
+import javax.inject.{Inject, Singleton}
 
 @Singleton
 class SubmissionPdfService @Inject() (notificationView: NotificationView, diclosureView: DisclosureView)

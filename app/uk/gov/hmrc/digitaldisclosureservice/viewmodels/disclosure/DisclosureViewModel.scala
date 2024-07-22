@@ -42,7 +42,8 @@ final case class DisclosureViewModel(
   onshoreLiabilities: Option[OnshoreLiabilitiesViewModel],
   otherLiabilitiesList: SummaryList,
   additionalList: SummaryList,
-  totalAmountsList: SummaryList
+  totalAmountsList: SummaryList,
+  fullDisclosure: Option[FullDisclosure]
 )
 
 object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
@@ -120,7 +121,8 @@ object DisclosureViewModel extends SummaryListFluency with SubmissionViewModel {
         fullDisclosure.disclosingAboutThemselves,
         entity
       ),
-      totalAmountsSummaryList(totalAmounts, fullDisclosure.offerAmount)
+      totalAmountsSummaryList(totalAmounts, fullDisclosure.offerAmount),
+      Some(fullDisclosure)
     )
 
   }
