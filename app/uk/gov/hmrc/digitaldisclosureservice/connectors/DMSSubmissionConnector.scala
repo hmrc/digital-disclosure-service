@@ -16,6 +16,7 @@
 
 package connectors
 
+import com.google.common.annotations.VisibleForTesting
 import org.apache.pekko.actor.ActorSystem
 import config.Service
 import play.api.Configuration
@@ -80,7 +81,7 @@ class DMSSubmissionConnectorImpl @Inject() (
         Future.failed(DMSSubmissionConnector.UnexpectedResponseException(response.status, response.body))
     }
 
-  private def constructMultipartFormData(
+  @VisibleForTesting def constructMultipartFormData(
     submissionRequest: SubmissionRequest,
     pdf: Array[Byte]
   ): Source[Part[Source[ByteString, Any]], Any] = {
