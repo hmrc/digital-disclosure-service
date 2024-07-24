@@ -19,7 +19,7 @@ This service depends on multiple other services, including:
 - DMS Submission
 
 The easiest way to set up required microservices is to use Service Manager and the DDS_ALL profile from service-manager-config repository:
-`sm --start DDS_ALL`
+`sm2 --start DDS_ALL`
 
 ### Accessing the service
 Endpoints will be available from the host `http://localhost:15004/digital-disclosure-service`. The easiest way to test the functionality of this microservice is to access the `digital-disclosure-service-frontend` microservice which will be available on `http://localhost:15003/digital-disclosure` if you started the above Service Manager profile
