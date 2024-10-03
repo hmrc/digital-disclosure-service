@@ -40,7 +40,7 @@ disclosure.trust.p1 = You must now make an offer of the amount you are going to 
 disclosure.trust.h2 = To the commissioners for HM Revenue and Customs
 disclosure.trust.p2 = The taxes, duties, National Insurance contributions and other liabilities on the statements attached are unpaid, wholly or in part, because of the failure of the trust to meet all its obligations under the relevant acts and regulations.
 disclosure.trust.p3 = On the basis that no proceedings are taken against the trust for these liabilities or for the penalties, surcharge and interest on them,
-disclosure.trust.p4 = I, {0} as trustee on behalf of {1} of
+disclosure.trust.p4 = {0} of
 disclosure.trust.p5 = offer the sum of
 disclosure.trust.p6 = Amount: £{0}
 
@@ -65,7 +65,7 @@ disclosure.company.p1 = You must now make an offer of the amount you are going t
 disclosure.company.h2 = To the Commissioners for HM Revenue and Customs
 disclosure.company.p4 = The taxes, duties, National Insurance contributions and other liabilities on the statements attached are unpaid, wholly or in part, because of the failure of the company to meet all its obligations under the relevant acts and regulations.
 disclosure.company.p5 = On the basis that no proceedings are taken against the company for these liabilities or for the penalties, surcharge and interest on them,
-disclosure.company.p6 = I, {0} as trustee on behalf of {1} of
+disclosure.company.p6 = {0} of
 disclosure.company.p7 = offer the sum of
 disclosure.company.p8 = Amount: £{0}
 
@@ -77,7 +77,7 @@ disclosure.llp.p1 = You must now make an offer of the amount you are going to pa
 disclosure.llp.h2 = To the Commissioners for HM Revenue and Customs
 disclosure.llp.p2 = The taxes, duties, National Insurance contributions and other liabilities on the statements attached are unpaid, wholly or in part, because of the failure of the partnership to meet all its obligations under the relevant acts and regulations.
 disclosure.llp.p3 = On the basis that no proceedings are taken against the partnership for these liabilities or for the penalties, surcharge and interest on them,
-disclosure.llp.p4 = I, {0} as trustee on behalf of {1} of
+disclosure.llp.p4 = {0} of
 disclosure.llp.p5 = offer the sum of
 disclosure.llp.p6 = Amount: £{0}
 
@@ -92,6 +92,13 @@ disclosure.estate.p3 = On the basis that no proceedings are taken against the es
 disclosure.estate.p4 = I, {0} as trustee on behalf of {1} of
 disclosure.estate.p5 = offer the sum of
 disclosure.estate.p6 = Amount: £{0}
+
+#===================================================
+#  Payment Terms On Letter
+#===================================================
+paymentTerms.p1 = to be paid on the same date that the disclosure is submitted to HMRC.
+paymentTerms.p2 = If the same full sum has not been paid by that day, interest at the rate which applies for Section 86 Taxes Management Act 1970, which may be varied from time to time, will also be payable ony any unpaid balance from that day. \
+    This interest will be payable without deduction of tax and shall not be claimed or allowed as a deduction in recording any income, profits or losses for tax purposes.
 
 
 #===================================================
