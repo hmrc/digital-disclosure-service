@@ -34,6 +34,6 @@ object AppDependencies {
     "org.scalamock"           %% "scalamock"                  % "5.2.0"                     % "test, it",
     "org.scalatestplus"       %% "scalacheck-1-15"            % "3.2.11.0"                  % "test, it",
     "org.scalacheck"          %% "scalacheck"                 % "1.17.0"                    % "test, it",
-    "org.apache.pekko"        %% "pekko-testkit"              % "1.0.3"                     % Test  // Update this line
+    "org.apache.pekko"        %% "pekko-testkit"              % "1.0.3"                     % Test
   )
 }
