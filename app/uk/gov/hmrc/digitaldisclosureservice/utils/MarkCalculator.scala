@@ -22,10 +22,10 @@ import java.io.{ByteArrayInputStream, InputStream}
 import javax.xml.parsers.{DocumentBuilder, DocumentBuilderFactory}
 import org.w3c.dom.Document
 import java.security.MessageDigest
-import com.sun.org.apache.xml.internal.security.transforms.Transforms
-import com.sun.org.apache.xml.internal.security.signature.XMLSignatureInput
-import com.sun.org.apache.xml.internal.security.Init
 
+import org.apache.xml.security.transforms.Transforms
+import org.apache.xml.security.signature.XMLSignatureInput
+import org.apache.xml.security.Init
 @Singleton
 class MarkCalculatorImpl extends MarkCalculator {
 

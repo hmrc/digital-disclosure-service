@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.dfs.utils
+package uk.gov.hmrc.digitaldisclosureservice.utils
 
 import org.scalatestplus.play.PlaySpec
 import play.api.Logging
 import utils.MarkCalculatorImpl
 import models.notification._
+
 import java.time.{LocalDate, ZoneOffset}
 import models._
 import models.address._
+
+
 
 class MarkCalculatorSpec extends PlaySpec with Logging {
 
