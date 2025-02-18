@@ -25,8 +25,6 @@ import java.time.{LocalDate, ZoneOffset}
 import models._
 import models.address._
 
-
-
 class MarkCalculatorSpec extends PlaySpec with Logging {
 
   val sut = new MarkCalculatorImpl
