@@ -26,7 +26,8 @@ object AppDependencies {
     "com.github.pathikrit"     %%  "better-files"                  % "3.9.2",
     "commons-codec"            %   "commons-codec"                 % "1.16.0",
     "com.thoughtworks.xstream" %   "xstream"                       % "1.4.20",
-    "uk.gov.hmrc"              %%  "tax-year"                      % "5.0.0"
+    "uk.gov.hmrc"              %%  "tax-year"                      % "5.0.0",
+    "org.apache.santuario"     % "xmlsec"                          % "3.0.2"
   )
 
   val test = Seq(
