@@ -1,18 +1,18 @@
 /*
- * Copyright 2024 HM Revenue & Customs
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* Copyright 2024 HM Revenue & Customs
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
 package models
 
@@ -20,8 +20,7 @@ import java.time.Instant
 import models.notification._
 import models.disclosure._
 import play.api.libs.json.{Json, OFormat}
-import com.thoughtworks.xstream._
-import com.thoughtworks.xstream.io.xml.DomDriver
+import scala.xml._
 
 sealed trait Submission {
   def userId: String
@@ -31,8 +30,35 @@ sealed trait Submission {
   def customerId: Option[CustomerId]
 
   def toXml: String = {
-    val xstream = new XStream(new DomDriver)
-    xstream.toXML(this)
+    val elem = this match {
+      case f: FullDisclosure =>
+        <fullDisclosure>
+          <userId>{f.userId}</userId>
+          <submissionId>{f.submissionId}</submissionId>
+          <lastUpdated>{f.lastUpdated.toString}</lastUpdated>
+          <metadata>{f.metadata.toXml}</metadata>
+          <caseReference>{f.caseReference.toXml}</caseReference>
+          <personalDetails>{f.personalDetails.toXml}</personalDetails>
+          {f.onshoreLiabilities.map(ol => <onshoreLiabilities>{ol.toXml}</onshoreLiabilities>).getOrElse(NodeSeq.Empty)}
+          <offshoreLiabilities>{f.offshoreLiabilities.toXml}</offshoreLiabilities>
+          <otherLiabilities>{f.otherLiabilities.toXml}</otherLiabilities>
+          <reasonForDisclosingNow>{f.reasonForDisclosingNow.toXml}</reasonForDisclosingNow>
+          {f.customerId.map(id => <customerId>{id.toXml}</customerId>).getOrElse(NodeSeq.Empty)}
+          {f.offerAmount.map(amount => <offerAmount>{amount}</offerAmount>).getOrElse(NodeSeq.Empty)}
+        </fullDisclosure>
+
+      case n: Notification =>
+        <notification>
+          <userId>{n.userId}</userId>
+          <submissionId>{n.submissionId}</submissionId>
+          <lastUpdated>{n.lastUpdated.toString}</lastUpdated>
+          <metadata>{n.metadata.toXml}</metadata>
+          <personalDetails>{n.personalDetails.toXml}</personalDetails>
+          {n.customerId.map(id => <customerId>{id.toXml}</customerId>).getOrElse(NodeSeq.Empty)}
+        </notification>
+    }
+
+    elem.toString()
   }
 }
 
@@ -41,19 +67,19 @@ object Submission {
 }
 
 final case class FullDisclosure(
-  userId: String,
-  submissionId: String,
-  lastUpdated: Instant,
-  metadata: Metadata,
-  caseReference: CaseReference,
-  personalDetails: PersonalDetails,
-  onshoreLiabilities: Option[OnshoreLiabilities] = None,
-  offshoreLiabilities: OffshoreLiabilities,
-  otherLiabilities: OtherLiabilities,
-  reasonForDisclosingNow: ReasonForDisclosingNow,
-  customerId: Option[CustomerId] = None,
-  offerAmount: Option[BigInt] = None
-) extends Submission {
+                                 userId: String,
+                                 submissionId: String,
+                                 lastUpdated: Instant,
+                                 metadata: Metadata,
+                                 caseReference: CaseReference,
+                                 personalDetails: PersonalDetails,
+                                 onshoreLiabilities: Option[OnshoreLiabilities] = None,
+                                 offshoreLiabilities: OffshoreLiabilities,
+                                 otherLiabilities: OtherLiabilities,
+                                 reasonForDisclosingNow: ReasonForDisclosingNow,
+                                 customerId: Option[CustomerId] = None,
+                                 offerAmount: Option[BigInt] = None
+                               ) extends Submission {
   def disclosingAboutThemselves = personalDetails.disclosingAboutThemselves
 }
 
@@ -62,13 +88,13 @@ object FullDisclosure {
 }
 
 final case class Notification(
-  userId: String,
-  submissionId: String,
-  lastUpdated: Instant,
-  metadata: Metadata,
-  personalDetails: PersonalDetails,
-  customerId: Option[CustomerId] = None
-) extends Submission {
+                               userId: String,
+                               submissionId: String,
+                               lastUpdated: Instant,
+                               metadata: Metadata,
+                               personalDetails: PersonalDetails,
+                               customerId: Option[CustomerId] = None
+                             ) extends Submission {
   def disclosingAboutThemselves = personalDetails.disclosingAboutThemselves
 }
 

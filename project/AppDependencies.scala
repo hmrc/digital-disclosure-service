@@ -25,7 +25,7 @@ object AppDependencies {
     "org.typelevel"            %%  "cats-core"                     % "2.10.0",
     "com.github.pathikrit"     %%  "better-files"                  % "3.9.2",
     "commons-codec"            %   "commons-codec"                 % "1.16.0",
-    "com.thoughtworks.xstream" %   "xstream"                       % "1.4.21",
+    "org.scala-lang.modules"   %%  "scala-xml"                     % "2.1.0",
     "uk.gov.hmrc"              %%  "tax-year"                      % "5.0.0",
     "org.apache.santuario"     %   "xmlsec"                        % "3.0.3",
     "commons-io"               %   "commons-io"                    % "2.14.0"
