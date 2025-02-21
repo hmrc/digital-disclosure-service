@@ -17,8 +17,15 @@
 package models
 
 import play.api.libs.json._
+import scala.xml._
 
-sealed trait YesNoOrUnsure
+sealed trait YesNoOrUnsure {
+  def toXml: String = this match {
+    case YesNoOrUnsure.Yes => "Yes"
+    case YesNoOrUnsure.No => "No"
+    case YesNoOrUnsure.Unsure => "Unsure"
+  }
+}
 
 object YesNoOrUnsure {
   case object Yes extends YesNoOrUnsure

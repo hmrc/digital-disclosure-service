@@ -18,13 +18,18 @@ package models
 
 import play.api.libs.json._
 import scala.util.Try
+import scala.xml._
 
-sealed trait OffshoreYears
+sealed trait OffshoreYears {
+  def toXml: NodeSeq
+}
 
 final case class TaxYearStarting(startYear: Int) extends OffshoreYears with Ordered[TaxYearStarting] {
-  override def toString = startYear.toString
+  override def toString: String = startYear.toString
 
-  def compare(that: TaxYearStarting) = (that.startYear) - (this.startYear)
+  def compare(that: TaxYearStarting): Int = that.startYear - this.startYear
+
+  override def toXml: NodeSeq = <taxYearStarting>{startYear}</taxYearStarting>
 }
 
 object TaxYearStarting {
@@ -41,15 +46,18 @@ object TaxYearStarting {
 }
 
 case object ReasonableExcusePriorTo extends OffshoreYears {
-  override def toString = "reasonableExcusePriorTo"
+  override def toString: String = "reasonableExcusePriorTo"
+  override def toXml: NodeSeq = <offshoreYears>reasonableExcusePriorTo</offshoreYears>
 }
 
 case object CarelessPriorTo extends OffshoreYears {
-  override def toString = "carelessPriorTo"
+  override def toString: String = "carelessPriorTo"
+  override def toXml: NodeSeq = <offshoreYears>carelessPriorTo</offshoreYears>
 }
 
 case object DeliberatePriorTo extends OffshoreYears {
-  override def toString = "deliberatePriorTo"
+  override def toString: String = "deliberatePriorTo"
+  override def toXml: NodeSeq = <offshoreYears>deliberatePriorTo</offshoreYears>
 }
 
 object RawOffshoreYears {
@@ -57,7 +65,6 @@ object RawOffshoreYears {
 }
 
 object OffshoreYears {
-
   def fromString(str: String): Option[OffshoreYears] =
     str match {
       case "reasonableExcusePriorTo" => Some(ReasonableExcusePriorTo)
@@ -78,10 +85,15 @@ object OffshoreYears {
       JsError("error.invalid")
   }
 
-  implicit val writes = Writes[OffshoreYears] { value =>
+  implicit val writes: Writes[OffshoreYears] = Writes[OffshoreYears] { value =>
     JsString(value.toString)
   }
 
   implicit val format: Format[OffshoreYears] = Format(reads, writes)
 
+  def toXml(years: List[OffshoreYears]): NodeSeq = {
+    <offshoreYears>
+      {years.map(_.toXml)}
+    </offshoreYears>
+  }
 }

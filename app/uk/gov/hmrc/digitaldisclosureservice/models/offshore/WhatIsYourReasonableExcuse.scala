@@ -17,8 +17,16 @@
 package models
 
 import play.api.libs.json._
+import scala.xml._
 
-case class WhatIsYourReasonableExcuse(excuse: String, years: String)
+case class WhatIsYourReasonableExcuse(excuse: String, years: String) {
+  def toXml: NodeSeq = {
+    <whatIsYourReasonableExcuse>
+      <excuse>{excuse}</excuse>
+      <years>{years}</years>
+    </whatIsYourReasonableExcuse>
+  }
+}
 
 object WhatIsYourReasonableExcuse {
   implicit val format = Json.format[WhatIsYourReasonableExcuse]

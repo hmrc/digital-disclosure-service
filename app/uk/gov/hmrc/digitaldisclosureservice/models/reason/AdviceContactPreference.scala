@@ -16,7 +16,9 @@
 
 package models
 
-sealed trait AdviceContactPreference
+sealed trait AdviceContactPreference {
+  def toXml: String = this.toString
+}
 
 object AdviceContactPreference extends Enumerable.Implicits {
 

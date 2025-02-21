@@ -17,9 +17,20 @@
 package models
 
 import play.api.libs.json._
+import scala.xml._
 
-case class WhatIsYourReasonableExcuseForNotFilingReturn(reasonableExcuse: String, yearsThisAppliesTo: String)
+case class WhatIsYourReasonableExcuseForNotFilingReturn(
+                                                         reasonableExcuse: String,
+                                                         yearsThisAppliesTo: String
+                                                       ) {
+  def toXml: NodeSeq = {
+    <whatIsYourReasonableExcuseForNotFilingReturn>
+      <reasonableExcuse>{reasonableExcuse}</reasonableExcuse>
+      <yearsThisAppliesTo>{yearsThisAppliesTo}</yearsThisAppliesTo>
+    </whatIsYourReasonableExcuseForNotFilingReturn>
+  }
+}
 
 object WhatIsYourReasonableExcuseForNotFilingReturn {
-  implicit val format = Json.format[WhatIsYourReasonableExcuseForNotFilingReturn]
+  implicit val format: OFormat[WhatIsYourReasonableExcuseForNotFilingReturn] = Json.format[WhatIsYourReasonableExcuseForNotFilingReturn]
 }

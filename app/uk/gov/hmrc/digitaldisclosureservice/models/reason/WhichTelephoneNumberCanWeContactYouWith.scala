@@ -16,7 +16,9 @@
 
 package models
 
-sealed trait WhichTelephoneNumberCanWeContactYouWith
+sealed trait WhichTelephoneNumberCanWeContactYouWith {
+  def toXml: String = this.toString
+}
 
 object WhichTelephoneNumberCanWeContactYouWith extends Enumerable.Implicits {
 
