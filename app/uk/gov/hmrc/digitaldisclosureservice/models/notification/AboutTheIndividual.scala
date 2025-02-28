@@ -20,6 +20,8 @@ import java.time.LocalDate
 import play.api.libs.json.{Json, OFormat}
 import models.YesNoOrUnsure
 import models.address.Address
+import uk.gov.hmrc.digitaldisclosureservice.utils.XmlHelper.extractChildNodes
+
 import scala.xml._
 
 final case class AboutTheIndividual(
@@ -45,7 +47,7 @@ final case class AboutTheIndividual(
       {vatRegNumber.map(vat => <vatRegNumber>{vat}</vatRegNumber>).getOrElse(NodeSeq.Empty)}
       {registeredForSA.map(saStatus => <registeredForSA>{saStatus}</registeredForSA>).getOrElse(NodeSeq.Empty)}
       {sautr.map(s => <sautr>{s}</sautr>).getOrElse(NodeSeq.Empty)}
-      {address.map(addr => <address>{addr.toXml}</address>).getOrElse(NodeSeq.Empty)}
+      {address.map(addr => <address>{extractChildNodes(addr.toXml)}</address>).getOrElse(NodeSeq.Empty)}
     </aboutTheIndividual>
 }
 

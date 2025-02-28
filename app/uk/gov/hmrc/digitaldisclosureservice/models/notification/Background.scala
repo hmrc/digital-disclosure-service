@@ -18,6 +18,8 @@ package models.notification
 
 import models.IncomeOrGainSource
 import play.api.libs.json.{Json, OFormat}
+import uk.gov.hmrc.digitaldisclosureservice.utils.XmlHelper.extractChildNodes
+
 import scala.xml._
 
 final case class Background(
@@ -35,7 +37,7 @@ final case class Background(
     <background>
       {haveYouReceivedALetter.map(answer => <haveYouReceivedALetter>{answer}</haveYouReceivedALetter>).getOrElse(NodeSeq.Empty)}
       {letterReferenceNumber.map(ref => <letterReferenceNumber>{ref}</letterReferenceNumber>).getOrElse(NodeSeq.Empty)}
-      {disclosureEntity.map(entity => <disclosureEntity>{entity.toXml}</disclosureEntity>).getOrElse(NodeSeq.Empty)}
+      {disclosureEntity.map(entity => <disclosureEntity>{extractChildNodes(entity.toXml)}</disclosureEntity>).getOrElse(NodeSeq.Empty)}
       {areYouRepresetingAnOrganisation.map(answer => <areYouRepresetingAnOrganisation>{answer}</areYouRepresetingAnOrganisation>).getOrElse(NodeSeq.Empty)}
       {organisationName.map(name => <organisationName>{name}</organisationName>).getOrElse(NodeSeq.Empty)}
       {offshoreLiabilities.map(answer => <offshoreLiabilities>{answer}</offshoreLiabilities>).getOrElse(NodeSeq.Empty)}

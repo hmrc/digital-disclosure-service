@@ -36,14 +36,14 @@ sealed trait Submission {
           <userId>{f.userId}</userId>
           <submissionId>{f.submissionId}</submissionId>
           <lastUpdated>{f.lastUpdated.toString}</lastUpdated>
-          <metadata>{f.metadata.toXml}</metadata>
-          <caseReference>{f.caseReference.toXml}</caseReference>
-          <personalDetails>{f.personalDetails.toXml}</personalDetails>
-          {f.onshoreLiabilities.map(ol => <onshoreLiabilities>{ol.toXml}</onshoreLiabilities>).getOrElse(NodeSeq.Empty)}
-          <offshoreLiabilities>{f.offshoreLiabilities.toXml}</offshoreLiabilities>
-          <otherLiabilities>{f.otherLiabilities.toXml}</otherLiabilities>
-          <reasonForDisclosingNow>{f.reasonForDisclosingNow.toXml}</reasonForDisclosingNow>
-          {f.customerId.map(id => <customerId>{id.toXml}</customerId>).getOrElse(NodeSeq.Empty)}
+          {f.metadata.toXml}
+          {f.caseReference.toXml}
+          {f.personalDetails.toXml}
+          {f.onshoreLiabilities.map(ol => ol.toXml).getOrElse(NodeSeq.Empty)}
+          {f.offshoreLiabilities.toXml}
+          {f.otherLiabilities.toXml}
+          {f.reasonForDisclosingNow.toXml}
+          {f.customerId.map(id => id.toXml).getOrElse(NodeSeq.Empty)}
           {f.offerAmount.map(amount => <offerAmount>{amount}</offerAmount>).getOrElse(NodeSeq.Empty)}
         </fullDisclosure>
 
@@ -52,9 +52,9 @@ sealed trait Submission {
           <userId>{n.userId}</userId>
           <submissionId>{n.submissionId}</submissionId>
           <lastUpdated>{n.lastUpdated.toString}</lastUpdated>
-          <metadata>{n.metadata.toXml}</metadata>
-          <personalDetails>{n.personalDetails.toXml}</personalDetails>
-          {n.customerId.map(id => <customerId>{id.toXml}</customerId>).getOrElse(NodeSeq.Empty)}
+          {n.metadata.toXml}
+          {n.personalDetails.toXml}
+          {n.customerId.map(id => id.toXml).getOrElse(NodeSeq.Empty)}
         </notification>
     }
 

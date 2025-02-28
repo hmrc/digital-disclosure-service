@@ -31,25 +31,31 @@ class MarkCalculatorSpec extends PlaySpec with Logging {
 
   "mark" must {
     "create mhrc mark" in {
-      val xml            =
-        "<?xml version=\"1.0\" encoding=\"UTF-8\"?><?xfa generator=\"XFA2_4\" APIVersion=\"3.6.13063.0\"?><xdp:xdp xmlns:xdp=\"http://ns.adobe.com/xdp/\" timeStamp=\"2014-03-07T17:12:35Z\" uuid=\"3ceb2fb9-565e-47b3-9c92-19500f382e87\"><xfa:datasets xmlns:xfa=\"http://www.xfa.org/schema/xfa-data/1.0/\"><xfa:data><form1><ErrorArea><fmErrorMessage><ThereAreXErrors/></fmErrorMessage></ErrorArea><fmContent><fmAboutThisForm><fmIntroduction xfa:dataNode=\"dataGroup\"/></fmAboutThisForm><fmClaimant><ErrorTextArea><ErrorMessageText/></ErrorTextArea><HelpButton xfa:dataNode=\"dataGroup\"/><Answer/><Help xfa:dataNode=\"dataGroup\"/><ErrorTextArea><ErrorMessageText/></ErrorTextArea><HelpButton xfa:dataNode=\"dataGroup\"/><Answer/><Help xfa:dataNode=\"dataGroup\"/></fmClaimant><submit xfa:dataNode=\"dataGroup\"/></fmContent><fmFooter><sfPosn xfa:dataNode=\"dataGroup\"/></fmFooter><fmFormNumber xfa:dataNode=\"dataGroup\"/><fmNotes><Table3><Row1 xfa:dataNode=\"dataGroup\"/><Row2 xfa:dataNode=\"dataGroup\"/><Row3 xfa:dataNode=\"dataGroup\"/><Row4 xfa:dataNode=\"dataGroup\"/><Row5 xfa:dataNode=\"dataGroup\"/><Row6 xfa:dataNode=\"dataGroup\"/><Row7 xfa:dataNode=\"dataGroup\"/><Row8 xfa:dataNode=\"dataGroup\"/><Row9 xfa:dataNode=\"dataGroup\"/><Row10 xfa:dataNode=\"dataGroup\"/><Row11 xfa:dataNode=\"dataGroup\"/><Row12 xfa:dataNode=\"dataGroup\"/><Row13 xfa:dataNode=\"dataGroup\"/><Row13 xfa:dataNode=\"dataGroup\"/></Table3></fmNotes></form1></xfa:data></xfa:datasets></xdp:xdp>"
+      val xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><?xfa generator=\"XFA2_4\" APIVersion=\"3.6.13063.0\"?><xdp:xdp xmlns:xdp=\"http://ns.adobe.com/xdp/\" timeStamp=\"2014-03-07T17:12:35Z\" uuid=\"3ceb2fb9-565e-47b3-9c92-19500f382e87\"><xfa:datasets xmlns:xfa=\"http://www.xfa.org/schema/xfa-data/1.0/\"><xfa:data><form1><ErrorArea><fmErrorMessage><ThereAreXErrors/></fmErrorMessage></ErrorArea><fmContent><fmAboutThisForm><fmIntroduction xfa:dataNode=\"dataGroup\"/></fmAboutThisForm><fmClaimant><ErrorTextArea><ErrorMessageText/></ErrorTextArea><HelpButton xfa:dataNode=\"dataGroup\"/><Answer/><Help xfa:dataNode=\"dataGroup\"/><ErrorTextArea><ErrorMessageText/></ErrorTextArea><HelpButton xfa:dataNode=\"dataGroup\"/><Answer/><Help xfa:dataNode=\"dataGroup\"/></fmClaimant><submit xfa:dataNode=\"dataGroup\"/></fmContent><fmFooter><sfPosn xfa:dataNode=\"dataGroup\"/></fmFooter><fmFormNumber xfa:dataNode=\"dataGroup\"/><fmNotes><Table3><Row1 xfa:dataNode=\"dataGroup\"/><Row2 xfa:dataNode=\"dataGroup\"/><Row3 xfa:dataNode=\"dataGroup\"/><Row4 xfa:dataNode=\"dataGroup\"/><Row5 xfa:dataNode=\"dataGroup\"/><Row6 xfa:dataNode=\"dataGroup\"/><Row7 xfa:dataNode=\"dataGroup\"/><Row8 xfa:dataNode=\"dataGroup\"/><Row9 xfa:dataNode=\"dataGroup\"/><Row10 xfa:dataNode=\"dataGroup\"/><Row11 xfa:dataNode=\"dataGroup\"/><Row12 xfa:dataNode=\"dataGroup\"/><Row13 xfa:dataNode=\"dataGroup\"/><Row13 xfa:dataNode=\"dataGroup\"/></Table3></fmNotes></form1></xfa:data></xfa:datasets></xdp:xdp>"
+
+      println("Raw XML before hashing:")
+      println(xml)
+
       val submissionMark = sut.getSfMark(xml)
+
+      println(s"Generated Submission Mark: $submissionMark")
+
       submissionMark mustBe "vQRlt09HvGQOxycnaEb0Q3riq+U="
     }
 
     "create mhrc mark from Notification" in {
-      val date    = LocalDate.of(2005, 11, 12)
+      val date = LocalDate.of(2005, 11, 12)
       val instant = date.atStartOfDay().toInstant(ZoneOffset.UTC)
 
-      val address            = Address("line1", None, None, None, None, Country("GBR"))
-      val background         = Background(
+      val address = Address("line1", None, None, None, None, Country("GBR"))
+      val background = Background(
         haveYouReceivedALetter = Some(false),
         letterReferenceNumber = None,
         disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.IAmAnAccountantOrTaxAgent))),
         offshoreLiabilities = Some(false),
         onshoreLiabilities = Some(true)
       )
-      val aboutYou           = AboutYou(
+      val aboutYou = AboutYou(
         fullName = Some("Some name"),
         telephoneNumber = Some("+44 012345678"),
         address = Some(address)
@@ -64,14 +70,23 @@ class MarkCalculatorSpec extends PlaySpec with Logging {
         registeredForSA = Some(YesNoOrUnsure.No),
         address = Some(address)
       )
-      val notification       = Notification(
+      val notification = Notification(
         "userId",
         "id",
         instant,
         Metadata(),
         PersonalDetails(background, aboutYou, Some(aboutTheIndividual))
       )
-      val submissionMark     = sut.getSfMark(notification.toXml)
+
+      val xmlString = notification.toXml.toString()
+
+      println("Notification XML before hashing:")
+      println(xmlString)
+
+      val submissionMark = sut.getSfMark(xmlString)
+
+      println(s"Generated Submission Mark: $submissionMark")
+
       submissionMark mustBe "eYc0dAMDjqFVY9Qjk27qZMa8kYw="
     }
   }
