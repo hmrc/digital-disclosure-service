@@ -78,16 +78,10 @@ class MarkCalculatorSpec extends PlaySpec with Logging {
         PersonalDetails(background, aboutYou, Some(aboutTheIndividual))
       )
 
-      val xmlString = notification.toXml.toString()
-
-      println("Notification XML before hashing:")
-      println(xmlString)
+      val xmlString = notification.toXml
 
       val submissionMark = sut.getSfMark(xmlString)
-
-      println(s"Generated Submission Mark: $submissionMark")
-
-      submissionMark mustBe "eYc0dAMDjqFVY9Qjk27qZMa8kYw="
+      submissionMark mustBe "uldPkQwsc6Pa+BhKTs32RDKA230="
     }
   }
 }
