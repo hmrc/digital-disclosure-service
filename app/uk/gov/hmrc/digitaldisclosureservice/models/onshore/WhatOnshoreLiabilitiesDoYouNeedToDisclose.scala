@@ -25,17 +25,17 @@ sealed trait WhatOnshoreLiabilitiesDoYouNeedToDisclose {
 object WhatOnshoreLiabilitiesDoYouNeedToDisclose extends Enumerable.Implicits {
 
   case object BusinessIncome
-    extends WithName("businessIncomeLiabilities")
+      extends WithName("businessIncomeLiabilities")
       with WhatOnshoreLiabilitiesDoYouNeedToDisclose
   case object Gains extends WithName("capitalGainsTaxLiabilities") with WhatOnshoreLiabilitiesDoYouNeedToDisclose
   case object CorporationTax
-    extends WithName("company.corporationTaxLiabilities")
+      extends WithName("company.corporationTaxLiabilities")
       with WhatOnshoreLiabilitiesDoYouNeedToDisclose
   case object DirectorLoan
-    extends WithName("company.directorLoanLiabilities")
+      extends WithName("company.directorLoanLiabilities")
       with WhatOnshoreLiabilitiesDoYouNeedToDisclose
   case object LettingIncome
-    extends WithName("lettingIncomeFromResidential")
+      extends WithName("lettingIncomeFromResidential")
       with WhatOnshoreLiabilitiesDoYouNeedToDisclose
   case object NonBusinessIncome extends WithName("nonBusinessIncome") with WhatOnshoreLiabilitiesDoYouNeedToDisclose
 

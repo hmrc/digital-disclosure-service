@@ -22,10 +22,10 @@ import scala.xml._
 sealed trait CustomerId {
   def id: String
   def toXml: NodeSeq = this match {
-    case NINO(id) => <nino>{id}</nino>
-    case CAUTR(id) => <cautr>{id}</cautr>
-    case SAUTR(id) => <sautr>{id}</sautr>
-    case ARN(id) => <arn>{id}</arn>
+    case NINO(id)       => <nino>{id}</nino>
+    case CAUTR(id)      => <cautr>{id}</cautr>
+    case SAUTR(id)      => <sautr>{id}</sautr>
+    case ARN(id)        => <arn>{id}</arn>
     case ExternalId(id) => <externalId>{id}</externalId>
   }
 }

@@ -21,10 +21,10 @@ import models.address.Address
 import scala.xml._
 
 final case class AboutTheCompany(
-                                  name: Option[String] = None,
-                                  registrationNumber: Option[String] = None,
-                                  address: Option[Address] = None
-                                ) {
+  name: Option[String] = None,
+  registrationNumber: Option[String] = None,
+  address: Option[Address] = None
+) {
   def toXml: NodeSeq =
     <aboutTheCompany>
       {name.map(n => <name>{n}</name>).getOrElse(NodeSeq.Empty)}

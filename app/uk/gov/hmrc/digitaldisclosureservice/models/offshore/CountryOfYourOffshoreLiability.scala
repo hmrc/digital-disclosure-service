@@ -20,12 +20,11 @@ import play.api.libs.json.Json
 import scala.xml._
 
 final case class CountryOfYourOffshoreLiability(alpha3: String, name: String) {
-  def toXml: NodeSeq = {
+  def toXml: NodeSeq =
     <countryOfYourOffshoreLiability>
       <alpha3>{alpha3}</alpha3>
       <name>{name}</name>
     </countryOfYourOffshoreLiability>
-  }
 }
 
 object CountryOfYourOffshoreLiability {

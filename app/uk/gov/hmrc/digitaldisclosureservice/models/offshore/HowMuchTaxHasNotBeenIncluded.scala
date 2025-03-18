@@ -24,7 +24,7 @@ object HowMuchTaxHasNotBeenIncluded extends Enumerable.Implicits {
 
   case object TenThousandOrLess extends WithName("tenThousandOrLess") with HowMuchTaxHasNotBeenIncluded
   case object MoreThanTenThousandAndLessThanOneLakh
-    extends WithName("moreThanTenThousandLessThanOneLakh")
+      extends WithName("moreThanTenThousandLessThanOneLakh")
       with HowMuchTaxHasNotBeenIncluded
   case object OneLakhAndMore extends WithName("oneLakhAndMore") with HowMuchTaxHasNotBeenIncluded
 

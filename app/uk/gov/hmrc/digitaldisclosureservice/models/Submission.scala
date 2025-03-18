@@ -67,19 +67,19 @@ object Submission {
 }
 
 final case class FullDisclosure(
-                                 userId: String,
-                                 submissionId: String,
-                                 lastUpdated: Instant,
-                                 metadata: Metadata,
-                                 caseReference: CaseReference,
-                                 personalDetails: PersonalDetails,
-                                 onshoreLiabilities: Option[OnshoreLiabilities] = None,
-                                 offshoreLiabilities: OffshoreLiabilities,
-                                 otherLiabilities: OtherLiabilities,
-                                 reasonForDisclosingNow: ReasonForDisclosingNow,
-                                 customerId: Option[CustomerId] = None,
-                                 offerAmount: Option[BigInt] = None
-                               ) extends Submission {
+  userId: String,
+  submissionId: String,
+  lastUpdated: Instant,
+  metadata: Metadata,
+  caseReference: CaseReference,
+  personalDetails: PersonalDetails,
+  onshoreLiabilities: Option[OnshoreLiabilities] = None,
+  offshoreLiabilities: OffshoreLiabilities,
+  otherLiabilities: OtherLiabilities,
+  reasonForDisclosingNow: ReasonForDisclosingNow,
+  customerId: Option[CustomerId] = None,
+  offerAmount: Option[BigInt] = None
+) extends Submission {
   def disclosingAboutThemselves = personalDetails.disclosingAboutThemselves
 }
 
@@ -88,13 +88,13 @@ object FullDisclosure {
 }
 
 final case class Notification(
-                               userId: String,
-                               submissionId: String,
-                               lastUpdated: Instant,
-                               metadata: Metadata,
-                               personalDetails: PersonalDetails,
-                               customerId: Option[CustomerId] = None
-                             ) extends Submission {
+  userId: String,
+  submissionId: String,
+  lastUpdated: Instant,
+  metadata: Metadata,
+  personalDetails: PersonalDetails,
+  customerId: Option[CustomerId] = None
+) extends Submission {
   def disclosingAboutThemselves = personalDetails.disclosingAboutThemselves
 }
 

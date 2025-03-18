@@ -20,12 +20,11 @@ import play.api.libs.json._
 import scala.xml._
 
 final case class MonthYear(month: Int, year: Int) {
-  def toXml: NodeSeq = {
+  def toXml: NodeSeq =
     <monthYear>
       <month>{month}</month>
       <year>{year}</year>
     </monthYear>
-  }
 }
 
 object MonthYear {

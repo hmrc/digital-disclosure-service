@@ -20,15 +20,14 @@ import play.api.libs.json._
 import scala.xml._
 
 case class WhatReasonableCareDidYouTake(
-                                         reasonableCare: String,
-                                         yearsThisAppliesTo: String
-                                       ) {
-  def toXml: NodeSeq = {
+  reasonableCare: String,
+  yearsThisAppliesTo: String
+) {
+  def toXml: NodeSeq =
     <whatReasonableCareDidYouTake>
       <reasonableCare>{reasonableCare}</reasonableCare>
       <yearsThisAppliesTo>{yearsThisAppliesTo}</yearsThisAppliesTo>
     </whatReasonableCareDidYouTake>
-  }
 }
 
 object WhatReasonableCareDidYouTake {

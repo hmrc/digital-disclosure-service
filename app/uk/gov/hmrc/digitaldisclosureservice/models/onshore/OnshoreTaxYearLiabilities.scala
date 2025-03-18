@@ -20,19 +20,19 @@ import play.api.libs.json._
 import scala.xml._
 
 final case class OnshoreTaxYearLiabilities(
-                                            nonBusinessIncome: Option[BigInt] = None,
-                                            businessIncome: Option[BigInt] = None,
-                                            lettingIncome: Option[BigInt] = None,
-                                            gains: Option[BigInt],
-                                            unpaidTax: BigInt,
-                                            niContributions: BigInt,
-                                            interest: BigInt,
-                                            penaltyRate: BigDecimal,
-                                            penaltyRateReason: String,
-                                            undeclaredIncomeOrGain: Option[String] = None,
-                                            residentialTaxReduction: Option[Boolean]
-                                          ) {
-  def toXml: NodeSeq = {
+  nonBusinessIncome: Option[BigInt] = None,
+  businessIncome: Option[BigInt] = None,
+  lettingIncome: Option[BigInt] = None,
+  gains: Option[BigInt],
+  unpaidTax: BigInt,
+  niContributions: BigInt,
+  interest: BigInt,
+  penaltyRate: BigDecimal,
+  penaltyRateReason: String,
+  undeclaredIncomeOrGain: Option[String] = None,
+  residentialTaxReduction: Option[Boolean]
+) {
+  def toXml: NodeSeq =
     <onshoreTaxYearLiabilities>
       {nonBusinessIncome.map(income => <nonBusinessIncome>{income}</nonBusinessIncome>).getOrElse(NodeSeq.Empty)}
       {businessIncome.map(income => <businessIncome>{income}</businessIncome>).getOrElse(NodeSeq.Empty)}
@@ -43,10 +43,17 @@ final case class OnshoreTaxYearLiabilities(
       <interest>{interest}</interest>
       <penaltyRate>{penaltyRate}</penaltyRate>
       <penaltyRateReason>{penaltyRateReason}</penaltyRateReason>
-      {undeclaredIncomeOrGain.map(income => <undeclaredIncomeOrGain>{income}</undeclaredIncomeOrGain>).getOrElse(NodeSeq.Empty)}
-      {residentialTaxReduction.map(reduction => <residentialTaxReduction>{reduction}</residentialTaxReduction>).getOrElse(NodeSeq.Empty)}
+      {
+      undeclaredIncomeOrGain
+        .map(income => <undeclaredIncomeOrGain>{income}</undeclaredIncomeOrGain>)
+        .getOrElse(NodeSeq.Empty)
+    }
+      {
+      residentialTaxReduction
+        .map(reduction => <residentialTaxReduction>{reduction}</residentialTaxReduction>)
+        .getOrElse(NodeSeq.Empty)
+    }
     </onshoreTaxYearLiabilities>
-  }
 }
 
 object OnshoreTaxYearLiabilities {

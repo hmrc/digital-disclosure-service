@@ -20,12 +20,11 @@ import play.api.libs.json._
 import scala.xml._
 
 case class WhatIsYourReasonableExcuse(excuse: String, years: String) {
-  def toXml: NodeSeq = {
+  def toXml: NodeSeq =
     <whatIsYourReasonableExcuse>
       <excuse>{excuse}</excuse>
       <years>{years}</years>
     </whatIsYourReasonableExcuse>
-  }
 }
 
 object WhatIsYourReasonableExcuse {

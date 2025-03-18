@@ -20,13 +20,12 @@ import play.api.libs.json._
 import scala.xml._
 
 case class AdviceGiven(adviceGiven: String, monthYear: MonthYear, contactPreference: AdviceContactPreference) {
-  def toXml: NodeSeq = {
+  def toXml: NodeSeq =
     <adviceGiven>
       <advice>{adviceGiven}</advice>
       <monthYear>{monthYear.toXml}</monthYear>
       <contactPreference>{contactPreference.toXml}</contactPreference>
     </adviceGiven>
-  }
 }
 
 object AdviceGiven {

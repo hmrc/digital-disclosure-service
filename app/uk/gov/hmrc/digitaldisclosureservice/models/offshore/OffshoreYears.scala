@@ -47,17 +47,17 @@ object TaxYearStarting {
 
 case object ReasonableExcusePriorTo extends OffshoreYears {
   override def toString: String = "reasonableExcusePriorTo"
-  override def toXml: NodeSeq = <offshoreYears>reasonableExcusePriorTo</offshoreYears>
+  override def toXml: NodeSeq   = <offshoreYears>reasonableExcusePriorTo</offshoreYears>
 }
 
 case object CarelessPriorTo extends OffshoreYears {
   override def toString: String = "carelessPriorTo"
-  override def toXml: NodeSeq = <offshoreYears>carelessPriorTo</offshoreYears>
+  override def toXml: NodeSeq   = <offshoreYears>carelessPriorTo</offshoreYears>
 }
 
 case object DeliberatePriorTo extends OffshoreYears {
   override def toString: String = "deliberatePriorTo"
-  override def toXml: NodeSeq = <offshoreYears>deliberatePriorTo</offshoreYears>
+  override def toXml: NodeSeq   = <offshoreYears>deliberatePriorTo</offshoreYears>
 }
 
 object RawOffshoreYears {
@@ -91,9 +91,8 @@ object OffshoreYears {
 
   implicit val format: Format[OffshoreYears] = Format(reads, writes)
 
-  def toXml(years: List[OffshoreYears]): NodeSeq = {
+  def toXml(years: List[OffshoreYears]): NodeSeq =
     <offshoreYears>
       {years.map(_.toXml)}
     </offshoreYears>
-  }
 }

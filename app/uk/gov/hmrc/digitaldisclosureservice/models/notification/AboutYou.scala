@@ -25,20 +25,20 @@ import uk.gov.hmrc.digitaldisclosureservice.utils.XmlHelper.extractChildNodes
 import scala.xml._
 
 final case class AboutYou(
-                           fullName: Option[String] = None,
-                           telephoneNumber: Option[String] = None,
-                           emailAddress: Option[String] = None,
-                           dateOfBirth: Option[LocalDate] = None,
-                           mainOccupation: Option[String] = None,
-                           doYouHaveANino: Option[YesNoOrUnsure] = None,
-                           nino: Option[String] = None,
-                           registeredForVAT: Option[YesNoOrUnsure] = None,
-                           vatRegNumber: Option[String] = None,
-                           registeredForSA: Option[YesNoOrUnsure] = None,
-                           sautr: Option[String] = None,
-                           address: Option[Address] = None
-                         ) {
-  def toXml: NodeSeq = {
+  fullName: Option[String] = None,
+  telephoneNumber: Option[String] = None,
+  emailAddress: Option[String] = None,
+  dateOfBirth: Option[LocalDate] = None,
+  mainOccupation: Option[String] = None,
+  doYouHaveANino: Option[YesNoOrUnsure] = None,
+  nino: Option[String] = None,
+  registeredForVAT: Option[YesNoOrUnsure] = None,
+  vatRegNumber: Option[String] = None,
+  registeredForSA: Option[YesNoOrUnsure] = None,
+  sautr: Option[String] = None,
+  address: Option[Address] = None
+) {
+  def toXml: NodeSeq =
     <aboutYou>
       {fullName.map(name => <fullName>{name}</fullName>).getOrElse(NodeSeq.Empty)}
       {telephoneNumber.map(phone => <telephoneNumber>{phone}</telephoneNumber>).getOrElse(NodeSeq.Empty)}
@@ -53,7 +53,6 @@ final case class AboutYou(
       {sautr.map(s => <sautr>{s}</sautr>).getOrElse(NodeSeq.Empty)}
       {address.map(addr => <address>{extractChildNodes(addr.toXml)}</address>).getOrElse(NodeSeq.Empty)}
     </aboutYou>
-  }
 }
 
 object AboutYou {

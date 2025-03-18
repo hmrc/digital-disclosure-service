@@ -20,9 +20,9 @@ import play.api.libs.json._
 import scala.xml._
 
 final case class TaxYearWithLiabilities(
-                                         taxYear: TaxYearStarting,
-                                         taxYearLiabilities: TaxYearLiabilities
-                                       ) {
+  taxYear: TaxYearStarting,
+  taxYearLiabilities: TaxYearLiabilities
+) {
   def toXml: NodeSeq =
     <taxYearWithLiabilities>
       <taxYear>{taxYear.toXml}</taxYear>

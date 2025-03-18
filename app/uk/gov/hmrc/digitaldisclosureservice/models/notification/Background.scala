@@ -23,33 +23,46 @@ import uk.gov.hmrc.digitaldisclosureservice.utils.XmlHelper.extractChildNodes
 import scala.xml._
 
 final case class Background(
-                             haveYouReceivedALetter: Option[Boolean] = None,
-                             letterReferenceNumber: Option[String] = None,
-                             disclosureEntity: Option[DisclosureEntity] = None,
-                             areYouRepresetingAnOrganisation: Option[Boolean] = None,
-                             organisationName: Option[String] = None,
-                             offshoreLiabilities: Option[Boolean] = None,
-                             onshoreLiabilities: Option[Boolean] = None,
-                             incomeSource: Option[Set[IncomeOrGainSource]] = None,
-                             otherIncomeSource: Option[String] = None
-                           ) {
-  def toXml: NodeSeq = {
+  haveYouReceivedALetter: Option[Boolean] = None,
+  letterReferenceNumber: Option[String] = None,
+  disclosureEntity: Option[DisclosureEntity] = None,
+  areYouRepresetingAnOrganisation: Option[Boolean] = None,
+  organisationName: Option[String] = None,
+  offshoreLiabilities: Option[Boolean] = None,
+  onshoreLiabilities: Option[Boolean] = None,
+  incomeSource: Option[Set[IncomeOrGainSource]] = None,
+  otherIncomeSource: Option[String] = None
+) {
+  def toXml: NodeSeq =
     <background>
-      {haveYouReceivedALetter.map(answer => <haveYouReceivedALetter>{answer}</haveYouReceivedALetter>).getOrElse(NodeSeq.Empty)}
+      {
+      haveYouReceivedALetter
+        .map(answer => <haveYouReceivedALetter>{answer}</haveYouReceivedALetter>)
+        .getOrElse(NodeSeq.Empty)
+    }
       {letterReferenceNumber.map(ref => <letterReferenceNumber>{ref}</letterReferenceNumber>).getOrElse(NodeSeq.Empty)}
-      {disclosureEntity.map(entity => <disclosureEntity>{extractChildNodes(entity.toXml)}</disclosureEntity>).getOrElse(NodeSeq.Empty)}
-      {areYouRepresetingAnOrganisation.map(answer => <areYouRepresetingAnOrganisation>{answer}</areYouRepresetingAnOrganisation>).getOrElse(NodeSeq.Empty)}
+      {
+      disclosureEntity
+        .map(entity => <disclosureEntity>{extractChildNodes(entity.toXml)}</disclosureEntity>)
+        .getOrElse(NodeSeq.Empty)
+    }
+      {
+      areYouRepresetingAnOrganisation
+        .map(answer => <areYouRepresetingAnOrganisation>{answer}</areYouRepresetingAnOrganisation>)
+        .getOrElse(NodeSeq.Empty)
+    }
       {organisationName.map(name => <organisationName>{name}</organisationName>).getOrElse(NodeSeq.Empty)}
       {offshoreLiabilities.map(answer => <offshoreLiabilities>{answer}</offshoreLiabilities>).getOrElse(NodeSeq.Empty)}
       {onshoreLiabilities.map(answer => <onshoreLiabilities>{answer}</onshoreLiabilities>).getOrElse(NodeSeq.Empty)}
-      {incomeSource.map(sources =>
-      <incomeSource>
+      {
+      incomeSource
+        .map(sources => <incomeSource>
         {sources.map(source => <source>{source}</source>)}
-      </incomeSource>
-    ).getOrElse(NodeSeq.Empty)}
+      </incomeSource>)
+        .getOrElse(NodeSeq.Empty)
+    }
       {otherIncomeSource.map(source => <otherIncomeSource>{source}</otherIncomeSource>).getOrElse(NodeSeq.Empty)}
     </background>
-  }
 }
 
 object Background {

@@ -20,16 +20,16 @@ import play.api.libs.json._
 import scala.xml._
 
 final case class TaxYearLiabilities(
-                                     income: BigInt,
-                                     chargeableTransfers: BigInt,
-                                     capitalGains: BigInt,
-                                     unpaidTax: BigInt,
-                                     interest: BigInt,
-                                     penaltyRate: BigDecimal,
-                                     penaltyRateReason: String,
-                                     undeclaredIncomeOrGain: Option[String] = None,
-                                     foreignTaxCredit: Boolean
-                                   ) {
+  income: BigInt,
+  chargeableTransfers: BigInt,
+  capitalGains: BigInt,
+  unpaidTax: BigInt,
+  interest: BigInt,
+  penaltyRate: BigDecimal,
+  penaltyRateReason: String,
+  undeclaredIncomeOrGain: Option[String] = None,
+  foreignTaxCredit: Boolean
+) {
   def toXml: NodeSeq =
     <taxYearLiabilities>
       <income>{income}</income>
@@ -39,7 +39,11 @@ final case class TaxYearLiabilities(
       <interest>{interest}</interest>
       <penaltyRate>{penaltyRate}</penaltyRate>
       <penaltyRateReason>{penaltyRateReason}</penaltyRateReason>
-      {undeclaredIncomeOrGain.map(value => <undeclaredIncomeOrGain>{value}</undeclaredIncomeOrGain>).getOrElse(NodeSeq.Empty)}
+      {
+      undeclaredIncomeOrGain
+        .map(value => <undeclaredIncomeOrGain>{value}</undeclaredIncomeOrGain>)
+        .getOrElse(NodeSeq.Empty)
+    }
       <foreignTaxCredit>{foreignTaxCredit}</foreignTaxCredit>
     </taxYearLiabilities>
 }

@@ -25,17 +25,17 @@ import uk.gov.hmrc.digitaldisclosureservice.utils.XmlHelper.extractChildNodes
 import scala.xml._
 
 final case class AboutTheIndividual(
-                                     fullName: Option[String] = None,
-                                     dateOfBirth: Option[LocalDate] = None,
-                                     mainOccupation: Option[String] = None,
-                                     doTheyHaveANino: Option[YesNoOrUnsure] = None,
-                                     nino: Option[String] = None,
-                                     registeredForVAT: Option[YesNoOrUnsure] = None,
-                                     vatRegNumber: Option[String] = None,
-                                     registeredForSA: Option[YesNoOrUnsure] = None,
-                                     sautr: Option[String] = None,
-                                     address: Option[Address] = None
-                                   ) {
+  fullName: Option[String] = None,
+  dateOfBirth: Option[LocalDate] = None,
+  mainOccupation: Option[String] = None,
+  doTheyHaveANino: Option[YesNoOrUnsure] = None,
+  nino: Option[String] = None,
+  registeredForVAT: Option[YesNoOrUnsure] = None,
+  vatRegNumber: Option[String] = None,
+  registeredForSA: Option[YesNoOrUnsure] = None,
+  sautr: Option[String] = None,
+  address: Option[Address] = None
+) {
   def toXml: NodeSeq =
     <aboutTheIndividual>
       {fullName.map(name => <fullName>{name}</fullName>).getOrElse(NodeSeq.Empty)}

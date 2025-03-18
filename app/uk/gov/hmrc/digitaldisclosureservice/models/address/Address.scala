@@ -21,14 +21,14 @@ import play.api.libs.json.{Json, OFormat}
 import scala.xml._
 
 final case class Address(
-                          line1: String,
-                          line2: Option[String],
-                          line3: Option[String],
-                          line4: Option[String],
-                          postcode: Option[String],
-                          country: Country
-                        ) {
-  def toXml: NodeSeq = {
+  line1: String,
+  line2: Option[String],
+  line3: Option[String],
+  line4: Option[String],
+  postcode: Option[String],
+  country: Country
+) {
+  def toXml: NodeSeq =
     <address>
       <line1>{line1}</line1>
       {line2.map(l2 => <line2>{l2}</line2>).getOrElse(NodeSeq.Empty)}
@@ -37,7 +37,6 @@ final case class Address(
       {postcode.map(pc => <postcode>{pc}</postcode>).getOrElse(NodeSeq.Empty)}
       <country>{country.code}</country>
     </address>
-  }
 }
 
 object Address {

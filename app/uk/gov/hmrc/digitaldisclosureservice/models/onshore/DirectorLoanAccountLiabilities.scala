@@ -21,15 +21,15 @@ import scala.xml._
 import java.time.LocalDate
 
 case class DirectorLoanAccountLiabilities(
-                                           name: String,
-                                           periodEnd: LocalDate,
-                                           overdrawn: BigInt,
-                                           unpaidTax: BigInt,
-                                           interest: BigInt,
-                                           penaltyRate: BigDecimal,
-                                           penaltyRateReason: String
-                                         ) {
-  def toXml: NodeSeq = {
+  name: String,
+  periodEnd: LocalDate,
+  overdrawn: BigInt,
+  unpaidTax: BigInt,
+  interest: BigInt,
+  penaltyRate: BigDecimal,
+  penaltyRateReason: String
+) {
+  def toXml: NodeSeq =
     <directorLoanAccountLiabilities>
       <name>{name}</name>
       <periodEnd>{periodEnd}</periodEnd>
@@ -39,10 +39,8 @@ case class DirectorLoanAccountLiabilities(
       <penaltyRate>{penaltyRate}</penaltyRate>
       <penaltyRateReason>{penaltyRateReason}</penaltyRateReason>
     </directorLoanAccountLiabilities>
-  }
 }
 
 object DirectorLoanAccountLiabilities {
   implicit val format = Json.format[DirectorLoanAccountLiabilities]
 }
-

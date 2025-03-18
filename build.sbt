@@ -8,7 +8,6 @@ lazy val microservice = Project("digital-disclosure-service", file("."))
   .settings(
     majorVersion        := 0,
     scalaVersion        := "2.13.12",
-    targetJvm           := "jvm-11",
     libraryDependencies ++= AppDependencies.compile ++ AppDependencies.test,
     // https://www.scala-lang.org/2021/01/12/configuring-and-suppressing-warnings.html
     // suppress warnings in generated routes files

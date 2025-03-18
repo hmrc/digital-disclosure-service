@@ -21,23 +21,24 @@ import models.OtherLiabilityIssues
 import scala.xml._
 
 final case class OtherLiabilities(
-                                   issues: Option[Set[OtherLiabilityIssues]] = None,
-                                   inheritanceGift: Option[String] = None,
-                                   other: Option[String] = None,
-                                   taxCreditsReceived: Option[Boolean] = None
-                                 ) {
-  def toXml: NodeSeq = {
+  issues: Option[Set[OtherLiabilityIssues]] = None,
+  inheritanceGift: Option[String] = None,
+  other: Option[String] = None,
+  taxCreditsReceived: Option[Boolean] = None
+) {
+  def toXml: NodeSeq =
     <otherLiabilities>
-      {issues.map(i =>
-      <issues>
+      {
+      issues
+        .map(i => <issues>
         {i.map(issue => <issue>{issue.toXml}</issue>)}
-      </issues>
-    ).getOrElse(NodeSeq.Empty)}
+      </issues>)
+        .getOrElse(NodeSeq.Empty)
+    }
       {inheritanceGift.map(gift => <inheritanceGift>{gift}</inheritanceGift>).getOrElse(NodeSeq.Empty)}
       {other.map(o => <other>{o}</other>).getOrElse(NodeSeq.Empty)}
       {taxCreditsReceived.map(received => <taxCreditsReceived>{received}</taxCreditsReceived>).getOrElse(NodeSeq.Empty)}
     </otherLiabilities>
-  }
 }
 
 object OtherLiabilities {

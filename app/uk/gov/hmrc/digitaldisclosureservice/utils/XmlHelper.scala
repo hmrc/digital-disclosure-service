@@ -19,11 +19,11 @@ package uk.gov.hmrc.digitaldisclosureservice.utils
 import scala.xml.{Elem, NodeSeq}
 
 object XmlHelper {
-  def extractChildNodes(nodeSeq: NodeSeq): NodeSeq = {
+  def extractChildNodes(nodeSeq: NodeSeq): NodeSeq =
     if (nodeSeq.isEmpty) NodeSeq.Empty
-    else nodeSeq.head match {
-      case elem: Elem => elem.child
-      case _ => nodeSeq
-    }
-  }
+    else
+      nodeSeq.head match {
+        case elem: Elem => elem.child
+        case _          => nodeSeq
+      }
 }

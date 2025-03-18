@@ -20,15 +20,20 @@ import play.api.libs.json.{Json, OFormat}
 import scala.xml._
 
 final case class CaseReference(
-                                doYouHaveACaseReference: Option[Boolean] = None,
-                                whatIsTheCaseReference: Option[String] = None
-                              ) {
-  def toXml: NodeSeq = {
+  doYouHaveACaseReference: Option[Boolean] = None,
+  whatIsTheCaseReference: Option[String] = None
+) {
+  def toXml: NodeSeq =
     <caseReference>
-      {doYouHaveACaseReference.map(ref => <doYouHaveACaseReference>{ref}</doYouHaveACaseReference>).getOrElse(NodeSeq.Empty)}
-      {whatIsTheCaseReference.map(ref => <whatIsTheCaseReference>{ref}</whatIsTheCaseReference>).getOrElse(NodeSeq.Empty)}
+      {
+      doYouHaveACaseReference
+        .map(ref => <doYouHaveACaseReference>{ref}</doYouHaveACaseReference>)
+        .getOrElse(NodeSeq.Empty)
+    }
+      {
+      whatIsTheCaseReference.map(ref => <whatIsTheCaseReference>{ref}</whatIsTheCaseReference>).getOrElse(NodeSeq.Empty)
+    }
     </caseReference>
-  }
 }
 
 object CaseReference {

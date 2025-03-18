@@ -20,11 +20,11 @@ import scala.xml._
 
 sealed trait AreYouTheEntity {
   def toXml: String = this match {
-    case AreYouTheEntity.YesIAm => "yes"
+    case AreYouTheEntity.YesIAm                    => "yes"
     case AreYouTheEntity.IAmAnAccountantOrTaxAgent => "accountant"
-    case AreYouTheEntity.IAmAFriend => "friend"
-    case AreYouTheEntity.VoluntaryOrganisation => "voluntaryOrganisation"
-    case AreYouTheEntity.PowerOfAttorney => "powerOfAttorney"
+    case AreYouTheEntity.IAmAFriend                => "friend"
+    case AreYouTheEntity.VoluntaryOrganisation     => "voluntaryOrganisation"
+    case AreYouTheEntity.PowerOfAttorney           => "powerOfAttorney"
   }
 }
 

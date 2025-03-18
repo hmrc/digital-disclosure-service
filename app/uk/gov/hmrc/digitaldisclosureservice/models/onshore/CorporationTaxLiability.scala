@@ -21,14 +21,14 @@ import scala.xml._
 import java.time.LocalDate
 
 case class CorporationTaxLiability(
-                                    periodEnd: LocalDate,
-                                    howMuchIncome: BigInt,
-                                    howMuchUnpaid: BigInt,
-                                    howMuchInterest: BigInt,
-                                    penaltyRate: BigDecimal,
-                                    penaltyRateReason: String
-                                  ) {
-  def toXml: NodeSeq = {
+  periodEnd: LocalDate,
+  howMuchIncome: BigInt,
+  howMuchUnpaid: BigInt,
+  howMuchInterest: BigInt,
+  penaltyRate: BigDecimal,
+  penaltyRateReason: String
+) {
+  def toXml: NodeSeq =
     <corporationTaxLiability>
       <periodEnd>{periodEnd}</periodEnd>
       <howMuchIncome>{howMuchIncome}</howMuchIncome>
@@ -37,7 +37,6 @@ case class CorporationTaxLiability(
       <penaltyRate>{penaltyRate}</penaltyRate>
       <penaltyRateReason>{penaltyRateReason}</penaltyRateReason>
     </corporationTaxLiability>
-  }
 }
 
 object CorporationTaxLiability {

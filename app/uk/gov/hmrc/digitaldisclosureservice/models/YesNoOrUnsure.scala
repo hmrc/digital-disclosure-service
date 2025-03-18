@@ -21,8 +21,8 @@ import scala.xml._
 
 sealed trait YesNoOrUnsure {
   def toXml: String = this match {
-    case YesNoOrUnsure.Yes => "Yes"
-    case YesNoOrUnsure.No => "No"
+    case YesNoOrUnsure.Yes    => "Yes"
+    case YesNoOrUnsure.No     => "No"
     case YesNoOrUnsure.Unsure => "Unsure"
   }
 }

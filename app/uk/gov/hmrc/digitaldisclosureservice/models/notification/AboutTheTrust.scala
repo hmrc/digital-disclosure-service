@@ -21,9 +21,9 @@ import models.address.Address
 import scala.xml._
 
 final case class AboutTheTrust(
-                                name: Option[String] = None,
-                                address: Option[Address] = None
-                              ) {
+  name: Option[String] = None,
+  address: Option[Address] = None
+) {
   def toXml: NodeSeq =
     <aboutTheTrust>
       {name.map(n => <name>{n}</name>).getOrElse(NodeSeq.Empty)}

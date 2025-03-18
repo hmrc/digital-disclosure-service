@@ -22,32 +22,36 @@ import uk.gov.hmrc.digitaldisclosureservice.utils.XmlHelper.extractChildNodes
 
 import scala.xml._
 
-
 final case class PersonalDetails(
-                                  background: Background,
-                                  aboutYou: AboutYou,
-                                  aboutTheIndividual: Option[AboutTheIndividual] = None,
-                                  aboutTheCompany: Option[AboutTheCompany] = None,
-                                  aboutTheTrust: Option[AboutTheTrust] = None,
-                                  aboutTheLLP: Option[AboutTheLLP] = None,
-                                  aboutTheEstate: Option[AboutTheEstate] = None
-                                ) {
+  background: Background,
+  aboutYou: AboutYou,
+  aboutTheIndividual: Option[AboutTheIndividual] = None,
+  aboutTheCompany: Option[AboutTheCompany] = None,
+  aboutTheTrust: Option[AboutTheTrust] = None,
+  aboutTheLLP: Option[AboutTheLLP] = None,
+  aboutTheEstate: Option[AboutTheEstate] = None
+) {
   lazy val disclosingAboutThemselves: Boolean = background.disclosureEntity match {
     case Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))) => true
     case _                                                                => false
   }
 
-  def toXml: NodeSeq = {
+  def toXml: NodeSeq =
     <personalDetails>
       <background>{extractChildNodes(background.toXml)}</background>
       <aboutYou>{extractChildNodes(aboutYou.toXml)}</aboutYou>
-      {aboutTheIndividual.map(i => <aboutTheIndividual>{extractChildNodes(i.toXml)}</aboutTheIndividual>).getOrElse(NodeSeq.Empty)}
-      {aboutTheCompany.map(c => <aboutTheCompany>{extractChildNodes(c.toXml)}</aboutTheCompany>).getOrElse(NodeSeq.Empty)}
+      {
+      aboutTheIndividual
+        .map(i => <aboutTheIndividual>{extractChildNodes(i.toXml)}</aboutTheIndividual>)
+        .getOrElse(NodeSeq.Empty)
+    }
+      {
+      aboutTheCompany.map(c => <aboutTheCompany>{extractChildNodes(c.toXml)}</aboutTheCompany>).getOrElse(NodeSeq.Empty)
+    }
       {aboutTheTrust.map(t => <aboutTheTrust>{extractChildNodes(t.toXml)}</aboutTheTrust>).getOrElse(NodeSeq.Empty)}
       {aboutTheLLP.map(l => <aboutTheLLP>{extractChildNodes(l.toXml)}</aboutTheLLP>).getOrElse(NodeSeq.Empty)}
       {aboutTheEstate.map(e => <aboutTheEstate>{extractChildNodes(e.toXml)}</aboutTheEstate>).getOrElse(NodeSeq.Empty)}
     </personalDetails>
-  }
 }
 
 object PersonalDetails {

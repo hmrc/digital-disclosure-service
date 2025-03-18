@@ -24,21 +24,21 @@ object WhyAreYouMakingThisOnshoreDisclosure extends Enumerable.Implicits {
 
   case object DidNotNotifyHasExcuse extends WithName("didNotNotifyHasExcuse") with WhyAreYouMakingThisOnshoreDisclosure
   case object InaccurateReturnWithCare
-    extends WithName("inaccurateReturnWithCare")
+      extends WithName("inaccurateReturnWithCare")
       with WhyAreYouMakingThisOnshoreDisclosure
   case object NotFileHasExcuse extends WithName("notFileHasExcuse") with WhyAreYouMakingThisOnshoreDisclosure
   case object InaccurateReturnNoCare
-    extends WithName("inaccurateReturnNoCare")
+      extends WithName("inaccurateReturnNoCare")
       with WhyAreYouMakingThisOnshoreDisclosure
   case object DidNotNotifyNoExcuse extends WithName("didNotNotifyNoExcuse") with WhyAreYouMakingThisOnshoreDisclosure
   case object DeliberatelyDidNotNotify
-    extends WithName("deliberatelyDidNotNotify")
+      extends WithName("deliberatelyDidNotNotify")
       with WhyAreYouMakingThisOnshoreDisclosure
   case object DeliberateInaccurateReturn
-    extends WithName("deliberateInaccurateReturn")
+      extends WithName("deliberateInaccurateReturn")
       with WhyAreYouMakingThisOnshoreDisclosure
   case object DeliberatelyDidNotFile
-    extends WithName("deliberatelyDidNotFile")
+      extends WithName("deliberatelyDidNotFile")
       with WhyAreYouMakingThisOnshoreDisclosure
 
   val values: Seq[WhyAreYouMakingThisOnshoreDisclosure] = Seq(

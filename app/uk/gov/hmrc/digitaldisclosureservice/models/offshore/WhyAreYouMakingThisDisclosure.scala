@@ -31,7 +31,7 @@ object WhyAreYouMakingThisDisclosure extends Enumerable.Implicits {
   case object DidNotNotifyNoExcuse extends WithName("didNotNotifyNoExcuse") with WhyAreYouMakingThisDisclosure
   case object DeliberatelyDidNotNotify extends WithName("deliberatelyDidNotNotify") with WhyAreYouMakingThisDisclosure
   case object DeliberateInaccurateReturn
-    extends WithName("deliberateInaccurateReturn")
+      extends WithName("deliberateInaccurateReturn")
       with WhyAreYouMakingThisDisclosure
   case object DeliberatelyDidNotFile extends WithName("deliberatelyDidNotFile") with WhyAreYouMakingThisDisclosure
 
