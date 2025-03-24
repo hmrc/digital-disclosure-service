@@ -32,9 +32,9 @@ class CaseReferenceSpec extends AnyWordSpec with Matchers {
 
         val xml = caseReference.toXml
 
-        xml.headOption.map(_.label) shouldBe Some("caseReference")
+        xml.headOption.map(_.label)            shouldBe Some("caseReference")
         (xml \ "doYouHaveACaseReference").text shouldBe "true"
-        (xml \ "whatIsTheCaseReference").text shouldBe "ABC123456"
+        (xml \ "whatIsTheCaseReference").text  shouldBe "ABC123456"
       }
 
       "no fields are populated" in {
@@ -42,9 +42,9 @@ class CaseReferenceSpec extends AnyWordSpec with Matchers {
 
         val xml = caseReference.toXml
 
-        xml.headOption.map(_.label) shouldBe Some("caseReference")
+        xml.headOption.map(_.label)               shouldBe Some("caseReference")
         (xml \ "doYouHaveACaseReference").isEmpty shouldBe true
-        (xml \ "whatIsTheCaseReference").isEmpty shouldBe true
+        (xml \ "whatIsTheCaseReference").isEmpty  shouldBe true
       }
     }
 
@@ -55,23 +55,23 @@ class CaseReferenceSpec extends AnyWordSpec with Matchers {
           whatIsTheCaseReference = Some("ABC123456")
         )
 
-        val json = Json.toJson(caseReference)
+        val json   = Json.toJson(caseReference)
         val parsed = json.validate[CaseReference]
 
-        parsed shouldBe JsSuccess(caseReference)
+        parsed                                         shouldBe JsSuccess(caseReference)
         (json \ "doYouHaveACaseReference").as[Boolean] shouldBe true
-        (json \ "whatIsTheCaseReference").as[String] shouldBe "ABC123456"
+        (json \ "whatIsTheCaseReference").as[String]   shouldBe "ABC123456"
       }
 
       "no fields are populated" in {
         val caseReference = CaseReference()
 
-        val json = Json.toJson(caseReference)
+        val json   = Json.toJson(caseReference)
         val parsed = json.validate[CaseReference]
 
-        parsed shouldBe JsSuccess(caseReference)
+        parsed                                      shouldBe JsSuccess(caseReference)
         (json \ "doYouHaveACaseReference").toOption shouldBe None
-        (json \ "whatIsTheCaseReference").toOption shouldBe None
+        (json \ "whatIsTheCaseReference").toOption  shouldBe None
       }
     }
   }

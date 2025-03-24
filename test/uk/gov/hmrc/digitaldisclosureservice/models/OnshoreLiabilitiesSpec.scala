@@ -29,33 +29,33 @@ class OnshoreLiabilitiesSpec extends AnyWordSpec with Matchers {
 
       val xml = onshoreLiabilities.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("onshoreLiabilities")
-      (xml \ "behaviour").isEmpty shouldBe true
-      (xml \ "excuseForNotNotifying").isEmpty shouldBe true
-      (xml \ "reasonableCare").isEmpty shouldBe true
-      (xml \ "excuseForNotFiling").isEmpty shouldBe true
-      (xml \ "whatLiabilities").isEmpty shouldBe true
-      (xml \ "whichYears").isEmpty shouldBe true
-      (xml \ "youHaveNotIncludedTheTaxYear").isEmpty shouldBe true
+      xml.headOption.map(_.label)                         shouldBe Some("onshoreLiabilities")
+      (xml \ "behaviour").isEmpty                         shouldBe true
+      (xml \ "excuseForNotNotifying").isEmpty             shouldBe true
+      (xml \ "reasonableCare").isEmpty                    shouldBe true
+      (xml \ "excuseForNotFiling").isEmpty                shouldBe true
+      (xml \ "whatLiabilities").isEmpty                   shouldBe true
+      (xml \ "whichYears").isEmpty                        shouldBe true
+      (xml \ "youHaveNotIncludedTheTaxYear").isEmpty      shouldBe true
       (xml \ "youHaveNotSelectedCertainTaxYears").isEmpty shouldBe true
-      (xml \ "taxBeforeThreeYears").isEmpty shouldBe true
-      (xml \ "taxBeforeFiveYears").isEmpty shouldBe true
-      (xml \ "taxBeforeNineteenYears").isEmpty shouldBe true
-      (xml \ "disregardedCDF").isEmpty shouldBe true
-      (xml \ "taxYearLiabilities").isEmpty shouldBe true
-      (xml \ "lettingDeductions").isEmpty shouldBe true
-      (xml \ "lettingProperties").isEmpty shouldBe true
-      (xml \ "memberOfLandlordAssociations").isEmpty shouldBe true
-      (xml \ "landlordAssociations").isEmpty shouldBe true
-      (xml \ "howManyProperties").isEmpty shouldBe true
-      (xml \ "corporationTaxLiabilities").isEmpty shouldBe true
-      (xml \ "directorLoanAccountLiabilities").isEmpty shouldBe true
+      (xml \ "taxBeforeThreeYears").isEmpty               shouldBe true
+      (xml \ "taxBeforeFiveYears").isEmpty                shouldBe true
+      (xml \ "taxBeforeNineteenYears").isEmpty            shouldBe true
+      (xml \ "disregardedCDF").isEmpty                    shouldBe true
+      (xml \ "taxYearLiabilities").isEmpty                shouldBe true
+      (xml \ "lettingDeductions").isEmpty                 shouldBe true
+      (xml \ "lettingProperties").isEmpty                 shouldBe true
+      (xml \ "memberOfLandlordAssociations").isEmpty      shouldBe true
+      (xml \ "landlordAssociations").isEmpty              shouldBe true
+      (xml \ "howManyProperties").isEmpty                 shouldBe true
+      (xml \ "corporationTaxLiabilities").isEmpty         shouldBe true
+      (xml \ "directorLoanAccountLiabilities").isEmpty    shouldBe true
     }
 
     "serialize and deserialize correctly with minimal fields" in {
       val onshoreLiabilities = OnshoreLiabilities()
 
-      val json = Json.toJson(onshoreLiabilities)
+      val json   = Json.toJson(onshoreLiabilities)
       val parsed = json.validate[OnshoreLiabilities]
 
       parsed shouldBe JsSuccess(onshoreLiabilities)
@@ -78,18 +78,18 @@ class OnshoreLiabilitiesSpec extends AnyWordSpec with Matchers {
 
       val xml = onshoreLiabilities.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("onshoreLiabilities")
-      (xml \ "behaviour").nonEmpty shouldBe true
-      (xml \ "excuseForNotNotifying").nonEmpty shouldBe true
-      (xml \ "youHaveNotIncludedTheTaxYear").text shouldBe "test year"
+      xml.headOption.map(_.label)                      shouldBe Some("onshoreLiabilities")
+      (xml \ "behaviour").nonEmpty                     shouldBe true
+      (xml \ "excuseForNotNotifying").nonEmpty         shouldBe true
+      (xml \ "youHaveNotIncludedTheTaxYear").text      shouldBe "test year"
       (xml \ "youHaveNotSelectedCertainTaxYears").text shouldBe "test years"
-      (xml \ "taxBeforeThreeYears").text shouldBe "test tax"
-      (xml \ "taxBeforeFiveYears").text shouldBe "test tax"
-      (xml \ "taxBeforeNineteenYears").text shouldBe "test tax"
-      (xml \ "disregardedCDF").text shouldBe "true"
-      (xml \ "memberOfLandlordAssociations").text shouldBe "false"
-      (xml \ "landlordAssociations").text shouldBe "test associations"
-      (xml \ "howManyProperties").text shouldBe "test properties"
+      (xml \ "taxBeforeThreeYears").text               shouldBe "test tax"
+      (xml \ "taxBeforeFiveYears").text                shouldBe "test tax"
+      (xml \ "taxBeforeNineteenYears").text            shouldBe "test tax"
+      (xml \ "disregardedCDF").text                    shouldBe "true"
+      (xml \ "memberOfLandlordAssociations").text      shouldBe "false"
+      (xml \ "landlordAssociations").text              shouldBe "test associations"
+      (xml \ "howManyProperties").text                 shouldBe "test properties"
     }
 
     "serialize and deserialize correctly with some fields populated" in {
@@ -107,7 +107,7 @@ class OnshoreLiabilitiesSpec extends AnyWordSpec with Matchers {
         howManyProperties = Some("test properties")
       )
 
-      val json = Json.toJson(onshoreLiabilities)
+      val json   = Json.toJson(onshoreLiabilities)
       val parsed = json.validate[OnshoreLiabilities]
 
       parsed shouldBe JsSuccess(onshoreLiabilities)

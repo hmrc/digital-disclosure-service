@@ -77,11 +77,11 @@ class AreYouTheEntitySpec extends AnyWordSpec with Matchers {
     }
 
     "properly implement toString" in {
-      AreYouTheEntity.YesIAm.toString shouldEqual "yes"
+      AreYouTheEntity.YesIAm.toString                    shouldEqual "yes"
       AreYouTheEntity.IAmAnAccountantOrTaxAgent.toString shouldEqual "accountant"
-      AreYouTheEntity.IAmAFriend.toString shouldEqual "friend"
-      AreYouTheEntity.VoluntaryOrganisation.toString shouldEqual "voluntaryOrganisation"
-      AreYouTheEntity.PowerOfAttorney.toString shouldEqual "powerOfAttorney"
+      AreYouTheEntity.IAmAFriend.toString                shouldEqual "friend"
+      AreYouTheEntity.VoluntaryOrganisation.toString     shouldEqual "voluntaryOrganisation"
+      AreYouTheEntity.PowerOfAttorney.toString           shouldEqual "powerOfAttorney"
     }
   }
 }

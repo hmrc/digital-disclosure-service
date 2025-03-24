@@ -31,8 +31,8 @@ class WhatIsYourReasonableExcuseForNotFilingReturnSpec extends AnyWordSpec with 
 
       val xml = excuse.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("whatIsYourReasonableExcuseForNotFilingReturn")
-      (xml \ "reasonableExcuse").text shouldBe "Natural Disaster"
+      xml.headOption.map(_.label)       shouldBe Some("whatIsYourReasonableExcuseForNotFilingReturn")
+      (xml \ "reasonableExcuse").text   shouldBe "Natural Disaster"
       (xml \ "yearsThisAppliesTo").text shouldBe "2019-2020"
     }
 
@@ -42,11 +42,11 @@ class WhatIsYourReasonableExcuseForNotFilingReturnSpec extends AnyWordSpec with 
         yearsThisAppliesTo = "2019-2020"
       )
 
-      val json = Json.toJson(excuse)
+      val json   = Json.toJson(excuse)
       val parsed = json.validate[WhatIsYourReasonableExcuseForNotFilingReturn]
 
-      parsed shouldBe JsSuccess(excuse)
-      (json \ "reasonableExcuse").as[String] shouldBe "Natural Disaster"
+      parsed                                   shouldBe JsSuccess(excuse)
+      (json \ "reasonableExcuse").as[String]   shouldBe "Natural Disaster"
       (json \ "yearsThisAppliesTo").as[String] shouldBe "2019-2020"
     }
   }

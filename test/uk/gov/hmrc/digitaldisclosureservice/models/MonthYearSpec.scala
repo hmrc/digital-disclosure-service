@@ -25,21 +25,21 @@ class MonthYearSpec extends AnyWordSpec with Matchers {
   "MonthYear" should {
     "convert to XML correctly" in {
       val monthYear = MonthYear(month = 3, year = 2023)
-      val xml = monthYear.toXml
+      val xml       = monthYear.toXml
 
       xml.headOption.map(_.label) shouldBe Some("monthYear")
-      (xml \ "month").text shouldBe "3"
-      (xml \ "year").text shouldBe "2023"
+      (xml \ "month").text        shouldBe "3"
+      (xml \ "year").text         shouldBe "2023"
     }
 
     "serialize and deserialize correctly" in {
       val monthYear = MonthYear(month = 3, year = 2023)
-      val json = Json.toJson(monthYear)
-      val parsed = json.validate[MonthYear]
+      val json      = Json.toJson(monthYear)
+      val parsed    = json.validate[MonthYear]
 
-      parsed shouldBe JsSuccess(monthYear)
+      parsed                   shouldBe JsSuccess(monthYear)
       (json \ "month").as[Int] shouldBe 3
-      (json \ "year").as[Int] shouldBe 2023
+      (json \ "year").as[Int]  shouldBe 2023
     }
   }
 }

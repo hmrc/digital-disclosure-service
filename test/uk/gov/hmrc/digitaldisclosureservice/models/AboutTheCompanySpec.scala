@@ -29,16 +29,16 @@ class AboutTheCompanySpec extends AnyWordSpec with Matchers {
 
       val xml = aboutTheCompany.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("aboutTheCompany")
-      (xml \ "name").isEmpty shouldBe true
+      xml.headOption.map(_.label)          shouldBe Some("aboutTheCompany")
+      (xml \ "name").isEmpty               shouldBe true
       (xml \ "registrationNumber").isEmpty shouldBe true
-      (xml \ "address").isEmpty shouldBe true
+      (xml \ "address").isEmpty            shouldBe true
     }
 
     "serialize and deserialize correctly with minimal fields" in {
       val aboutTheCompany = AboutTheCompany()
 
-      val json = Json.toJson(aboutTheCompany)
+      val json   = Json.toJson(aboutTheCompany)
       val parsed = json.validate[AboutTheCompany]
 
       parsed shouldBe JsSuccess(aboutTheCompany)
@@ -62,10 +62,10 @@ class AboutTheCompanySpec extends AnyWordSpec with Matchers {
 
       val xml = aboutTheCompany.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("aboutTheCompany")
-      (xml \ "name").text shouldBe "Test Company Name"
+      xml.headOption.map(_.label)       shouldBe Some("aboutTheCompany")
+      (xml \ "name").text               shouldBe "Test Company Name"
       (xml \ "registrationNumber").text shouldBe "12345678"
-      (xml \ "address").nonEmpty shouldBe true
+      (xml \ "address").nonEmpty        shouldBe true
     }
 
     "serialize and deserialize correctly with all fields populated" in {
@@ -84,7 +84,7 @@ class AboutTheCompanySpec extends AnyWordSpec with Matchers {
         address = Some(address)
       )
 
-      val json = Json.toJson(aboutTheCompany)
+      val json   = Json.toJson(aboutTheCompany)
       val parsed = json.validate[AboutTheCompany]
 
       parsed shouldBe JsSuccess(aboutTheCompany)

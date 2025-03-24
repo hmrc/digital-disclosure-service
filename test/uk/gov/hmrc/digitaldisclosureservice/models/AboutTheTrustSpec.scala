@@ -30,14 +30,14 @@ class AboutTheTrustSpec extends AnyWordSpec with Matchers {
       val xml = aboutTheTrust.toXml
 
       xml.headOption.map(_.label) shouldBe Some("aboutTheTrust")
-      (xml \ "name").isEmpty shouldBe true
-      (xml \ "address").isEmpty shouldBe true
+      (xml \ "name").isEmpty      shouldBe true
+      (xml \ "address").isEmpty   shouldBe true
     }
 
     "serialize and deserialize correctly with minimal fields" in {
       val aboutTheTrust = AboutTheTrust()
 
-      val json = Json.toJson(aboutTheTrust)
+      val json   = Json.toJson(aboutTheTrust)
       val parsed = json.validate[AboutTheTrust]
 
       parsed shouldBe JsSuccess(aboutTheTrust)
@@ -61,8 +61,8 @@ class AboutTheTrustSpec extends AnyWordSpec with Matchers {
       val xml = aboutTheTrust.toXml
 
       xml.headOption.map(_.label) shouldBe Some("aboutTheTrust")
-      (xml \ "name").text shouldBe "Test Trust Name"
-      (xml \ "address").nonEmpty shouldBe true
+      (xml \ "name").text         shouldBe "Test Trust Name"
+      (xml \ "address").nonEmpty  shouldBe true
     }
 
     "serialize and deserialize correctly with all fields populated" in {
@@ -80,7 +80,7 @@ class AboutTheTrustSpec extends AnyWordSpec with Matchers {
         address = Some(address)
       )
 
-      val json = Json.toJson(aboutTheTrust)
+      val json   = Json.toJson(aboutTheTrust)
       val parsed = json.validate[AboutTheTrust]
 
       parsed shouldBe JsSuccess(aboutTheTrust)

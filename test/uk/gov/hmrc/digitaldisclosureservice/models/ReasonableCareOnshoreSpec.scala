@@ -31,8 +31,8 @@ class ReasonableCareOnshoreSpec extends AnyWordSpec with Matchers {
 
       val xml = reasonableCare.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("reasonableCareOnshore")
-      (xml \ "reasonableCare").text shouldBe "abc"
+      xml.headOption.map(_.label)       shouldBe Some("reasonableCareOnshore")
+      (xml \ "reasonableCare").text     shouldBe "abc"
       (xml \ "yearsThisAppliesTo").text shouldBe "123"
     }
 
@@ -42,11 +42,11 @@ class ReasonableCareOnshoreSpec extends AnyWordSpec with Matchers {
         yearsThisAppliesTo = "123"
       )
 
-      val json = Json.toJson(reasonableCare)
+      val json   = Json.toJson(reasonableCare)
       val parsed = json.validate[ReasonableCareOnshore]
 
-      parsed shouldBe JsSuccess(reasonableCare)
-      (json \ "reasonableCare").as[String] shouldBe "abc"
+      parsed                                   shouldBe JsSuccess(reasonableCare)
+      (json \ "reasonableCare").as[String]     shouldBe "abc"
       (json \ "yearsThisAppliesTo").as[String] shouldBe "123"
     }
   }

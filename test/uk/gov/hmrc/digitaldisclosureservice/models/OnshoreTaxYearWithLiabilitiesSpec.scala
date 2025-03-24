@@ -44,20 +44,19 @@ class OnshoreTaxYearWithLiabilitiesSpec extends AnyWordSpec with Matchers {
       val xml = taxYearWithLiabilities.toXml
 
       xml.headOption.map(_.label) shouldBe Some("onshoreTaxYearWithLiabilities")
-      (xml \ "taxYear").text shouldBe "2020"
-
+      (xml \ "taxYear").text      shouldBe "2020"
 
       val liabilitiesXml = (xml \ "taxYearLiabilities").headOption.map(_.child).getOrElse(Nil)
-      (liabilitiesXml \ "nonBusinessIncome").text shouldBe "10000"
-      (liabilitiesXml \ "businessIncome").text shouldBe "20000"
-      (liabilitiesXml \ "lettingIncome").text shouldBe ""
-      (liabilitiesXml \ "gains").text shouldBe "5000"
-      (liabilitiesXml \ "unpaidTax").text shouldBe "3000"
-      (liabilitiesXml \ "niContributions").text shouldBe "1500"
-      (liabilitiesXml \ "interest").text shouldBe "200"
-      (liabilitiesXml \ "penaltyRate").text shouldBe "15.5"
-      (liabilitiesXml \ "penaltyRateReason").text shouldBe "Late submission"
-      (liabilitiesXml \ "undeclaredIncomeOrGain").text shouldBe "Investments"
+      (liabilitiesXml \ "nonBusinessIncome").text       shouldBe "10000"
+      (liabilitiesXml \ "businessIncome").text          shouldBe "20000"
+      (liabilitiesXml \ "lettingIncome").text           shouldBe ""
+      (liabilitiesXml \ "gains").text                   shouldBe "5000"
+      (liabilitiesXml \ "unpaidTax").text               shouldBe "3000"
+      (liabilitiesXml \ "niContributions").text         shouldBe "1500"
+      (liabilitiesXml \ "interest").text                shouldBe "200"
+      (liabilitiesXml \ "penaltyRate").text             shouldBe "15.5"
+      (liabilitiesXml \ "penaltyRateReason").text       shouldBe "Late submission"
+      (liabilitiesXml \ "undeclaredIncomeOrGain").text  shouldBe "Investments"
       (liabilitiesXml \ "residentialTaxReduction").text shouldBe "true"
     }
 
@@ -79,21 +78,21 @@ class OnshoreTaxYearWithLiabilitiesSpec extends AnyWordSpec with Matchers {
         )
       )
 
-      val json = Json.toJson(taxYearWithLiabilities)
+      val json   = Json.toJson(taxYearWithLiabilities)
       val parsed = json.validate[OnshoreTaxYearWithLiabilities]
 
-      parsed shouldBe JsSuccess(taxYearWithLiabilities)
-      (json \ "taxYear" \ "startYear").as[Int] shouldBe 2020
-      (json \ "taxYearLiabilities" \ "nonBusinessIncome").asOpt[BigInt] shouldBe Some(BigInt(10000))
-      (json \ "taxYearLiabilities" \ "businessIncome").asOpt[BigInt] shouldBe Some(BigInt(20000))
-      (json \ "taxYearLiabilities" \ "lettingIncome").asOpt[BigInt] shouldBe None
-      (json \ "taxYearLiabilities" \ "gains").asOpt[BigInt] shouldBe Some(BigInt(5000))
-      (json \ "taxYearLiabilities" \ "unpaidTax").as[BigInt] shouldBe BigInt(3000)
-      (json \ "taxYearLiabilities" \ "niContributions").as[BigInt] shouldBe BigInt(1500)
-      (json \ "taxYearLiabilities" \ "interest").as[BigInt] shouldBe BigInt(200)
-      (json \ "taxYearLiabilities" \ "penaltyRate").as[BigDecimal] shouldBe BigDecimal(15.5)
-      (json \ "taxYearLiabilities" \ "penaltyRateReason").as[String] shouldBe "Late submission"
-      (json \ "taxYearLiabilities" \ "undeclaredIncomeOrGain").asOpt[String] shouldBe Some("Investments")
+      parsed                                                                   shouldBe JsSuccess(taxYearWithLiabilities)
+      (json \ "taxYear" \ "startYear").as[Int]                                 shouldBe 2020
+      (json \ "taxYearLiabilities" \ "nonBusinessIncome").asOpt[BigInt]        shouldBe Some(BigInt(10000))
+      (json \ "taxYearLiabilities" \ "businessIncome").asOpt[BigInt]           shouldBe Some(BigInt(20000))
+      (json \ "taxYearLiabilities" \ "lettingIncome").asOpt[BigInt]            shouldBe None
+      (json \ "taxYearLiabilities" \ "gains").asOpt[BigInt]                    shouldBe Some(BigInt(5000))
+      (json \ "taxYearLiabilities" \ "unpaidTax").as[BigInt]                   shouldBe BigInt(3000)
+      (json \ "taxYearLiabilities" \ "niContributions").as[BigInt]             shouldBe BigInt(1500)
+      (json \ "taxYearLiabilities" \ "interest").as[BigInt]                    shouldBe BigInt(200)
+      (json \ "taxYearLiabilities" \ "penaltyRate").as[BigDecimal]             shouldBe BigDecimal(15.5)
+      (json \ "taxYearLiabilities" \ "penaltyRateReason").as[String]           shouldBe "Late submission"
+      (json \ "taxYearLiabilities" \ "undeclaredIncomeOrGain").asOpt[String]   shouldBe Some("Investments")
       (json \ "taxYearLiabilities" \ "residentialTaxReduction").asOpt[Boolean] shouldBe Some(true)
     }
   }

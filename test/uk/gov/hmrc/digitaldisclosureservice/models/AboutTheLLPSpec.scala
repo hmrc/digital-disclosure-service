@@ -30,14 +30,14 @@ class AboutTheLLPSpec extends AnyWordSpec with Matchers {
       val xml = aboutTheLLP.toXml
 
       xml.headOption.map(_.label) shouldBe Some("aboutTheLLP")
-      (xml \ "name").isEmpty shouldBe true
-      (xml \ "address").isEmpty shouldBe true
+      (xml \ "name").isEmpty      shouldBe true
+      (xml \ "address").isEmpty   shouldBe true
     }
 
     "serialize and deserialize correctly with minimal fields" in {
       val aboutTheLLP = AboutTheLLP()
 
-      val json = Json.toJson(aboutTheLLP)
+      val json   = Json.toJson(aboutTheLLP)
       val parsed = json.validate[AboutTheLLP]
 
       parsed shouldBe JsSuccess(aboutTheLLP)
@@ -61,8 +61,8 @@ class AboutTheLLPSpec extends AnyWordSpec with Matchers {
       val xml = aboutTheLLP.toXml
 
       xml.headOption.map(_.label) shouldBe Some("aboutTheLLP")
-      (xml \ "name").text shouldBe "Test LLP Name"
-      (xml \ "address").nonEmpty shouldBe true
+      (xml \ "name").text         shouldBe "Test LLP Name"
+      (xml \ "address").nonEmpty  shouldBe true
     }
 
     "serialize and deserialize correctly with all fields populated" in {
@@ -80,7 +80,7 @@ class AboutTheLLPSpec extends AnyWordSpec with Matchers {
         address = Some(address)
       )
 
-      val json = Json.toJson(aboutTheLLP)
+      val json   = Json.toJson(aboutTheLLP)
       val parsed = json.validate[AboutTheLLP]
 
       parsed shouldBe JsSuccess(aboutTheLLP)

@@ -32,9 +32,9 @@ class AdviceGivenSpec extends AnyWordSpec with Matchers {
 
       val xml = adviceGiven.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("adviceGiven")
-      (xml \ "advice").text shouldBe "Test advice"
-      (xml \ "monthYear").nonEmpty shouldBe true
+      xml.headOption.map(_.label)      shouldBe Some("adviceGiven")
+      (xml \ "advice").text            shouldBe "Test advice"
+      (xml \ "monthYear").nonEmpty     shouldBe true
       (xml \ "contactPreference").text shouldBe "email"
     }
 
@@ -45,7 +45,7 @@ class AdviceGivenSpec extends AnyWordSpec with Matchers {
         contactPreference = AdviceContactPreference.Email
       )
 
-      val json = Json.toJson(adviceGiven)
+      val json   = Json.toJson(adviceGiven)
       val parsed = json.validate[AdviceGiven]
 
       parsed shouldBe JsSuccess(adviceGiven)

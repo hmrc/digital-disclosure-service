@@ -32,30 +32,30 @@ class AboutTheEstateSpec extends AnyWordSpec with Matchers {
 
       val xml = aboutTheEstate.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("aboutTheEstate")
-      (xml \ "fullName").isEmpty shouldBe true
-      (xml \ "dateOfBirth").isEmpty shouldBe true
-      (xml \ "mainOccupation").isEmpty shouldBe true
-      (xml \ "doTheyHaveANino").isEmpty shouldBe true
-      (xml \ "nino").isEmpty shouldBe true
+      xml.headOption.map(_.label)        shouldBe Some("aboutTheEstate")
+      (xml \ "fullName").isEmpty         shouldBe true
+      (xml \ "dateOfBirth").isEmpty      shouldBe true
+      (xml \ "mainOccupation").isEmpty   shouldBe true
+      (xml \ "doTheyHaveANino").isEmpty  shouldBe true
+      (xml \ "nino").isEmpty             shouldBe true
       (xml \ "registeredForVAT").isEmpty shouldBe true
-      (xml \ "vatRegNumber").isEmpty shouldBe true
-      (xml \ "registeredForSA").isEmpty shouldBe true
-      (xml \ "sautr").isEmpty shouldBe true
-      (xml \ "address").isEmpty shouldBe true
+      (xml \ "vatRegNumber").isEmpty     shouldBe true
+      (xml \ "registeredForSA").isEmpty  shouldBe true
+      (xml \ "sautr").isEmpty            shouldBe true
+      (xml \ "address").isEmpty          shouldBe true
     }
 
     "serialize and deserialize correctly with minimal fields" in {
       val aboutTheEstate = AboutTheEstate()
 
-      val json = Json.toJson(aboutTheEstate)
+      val json   = Json.toJson(aboutTheEstate)
       val parsed = json.validate[AboutTheEstate]
 
       parsed shouldBe JsSuccess(aboutTheEstate)
     }
 
     "convert to XML correctly with all fields populated" in {
-      val date = LocalDate.of(1980, 1, 1)
+      val date    = LocalDate.of(1980, 1, 1)
       val address = Address(
         line1 = "Test Line 1",
         line2 = Some("Test Line 2"),
@@ -80,21 +80,21 @@ class AboutTheEstateSpec extends AnyWordSpec with Matchers {
 
       val xml = aboutTheEstate.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("aboutTheEstate")
-      (xml \ "fullName").text shouldBe "Test Name"
-      (xml \ "dateOfBirth").text shouldBe "1980-01-01"
-      (xml \ "mainOccupation").text shouldBe "Test Occupation"
-      (xml \ "doTheyHaveANino").text.toLowerCase shouldBe "yes"
-      (xml \ "nino").text shouldBe "AA123456A"
+      xml.headOption.map(_.label)                 shouldBe Some("aboutTheEstate")
+      (xml \ "fullName").text                     shouldBe "Test Name"
+      (xml \ "dateOfBirth").text                  shouldBe "1980-01-01"
+      (xml \ "mainOccupation").text               shouldBe "Test Occupation"
+      (xml \ "doTheyHaveANino").text.toLowerCase  shouldBe "yes"
+      (xml \ "nino").text                         shouldBe "AA123456A"
       (xml \ "registeredForVAT").text.toLowerCase shouldBe "yes"
-      (xml \ "vatRegNumber").text shouldBe "123456789"
-      (xml \ "registeredForSA").text.toLowerCase shouldBe "yes"
-      (xml \ "sautr").text shouldBe "1234567890"
-      (xml \ "address").nonEmpty shouldBe true
+      (xml \ "vatRegNumber").text                 shouldBe "123456789"
+      (xml \ "registeredForSA").text.toLowerCase  shouldBe "yes"
+      (xml \ "sautr").text                        shouldBe "1234567890"
+      (xml \ "address").nonEmpty                  shouldBe true
     }
 
     "serialize and deserialize correctly with all fields populated" in {
-      val date = LocalDate.of(1980, 1, 1)
+      val date    = LocalDate.of(1980, 1, 1)
       val address = Address(
         line1 = "Test Line 1",
         line2 = Some("Test Line 2"),
@@ -117,7 +117,7 @@ class AboutTheEstateSpec extends AnyWordSpec with Matchers {
         address = Some(address)
       )
 
-      val json = Json.toJson(aboutTheEstate)
+      val json   = Json.toJson(aboutTheEstate)
       val parsed = json.validate[AboutTheEstate]
 
       parsed shouldBe JsSuccess(aboutTheEstate)

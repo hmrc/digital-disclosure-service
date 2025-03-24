@@ -55,23 +55,22 @@ class AboutYouSpec extends AnyWordSpec with Matchers {
     "serialize to JSON correctly" in {
       val json = Json.toJson(fullAboutYou)
 
-      (json \ "fullName").asOpt[String] shouldBe Some("Test Name")
-      (json \ "telephoneNumber").asOpt[String] shouldBe Some("00000000000")
-      (json \ "emailAddress").asOpt[String] shouldBe Some("test@example.com")
-      (json \ "dateOfBirth").asOpt[String] shouldBe Some("2000-01-01")
-      (json \ "mainOccupation").asOpt[String] shouldBe Some("Test Occupation")
-      (json \ "doYouHaveANino").asOpt[String] shouldBe Some("Yes")
-      (json \ "nino").asOpt[String] shouldBe Some("XX000000X")
+      (json \ "fullName").asOpt[String]         shouldBe Some("Test Name")
+      (json \ "telephoneNumber").asOpt[String]  shouldBe Some("00000000000")
+      (json \ "emailAddress").asOpt[String]     shouldBe Some("test@example.com")
+      (json \ "dateOfBirth").asOpt[String]      shouldBe Some("2000-01-01")
+      (json \ "mainOccupation").asOpt[String]   shouldBe Some("Test Occupation")
+      (json \ "doYouHaveANino").asOpt[String]   shouldBe Some("Yes")
+      (json \ "nino").asOpt[String]             shouldBe Some("XX000000X")
       (json \ "registeredForVAT").asOpt[String] shouldBe Some("Yes")
-      (json \ "vatRegNumber").asOpt[String] shouldBe Some("000000000")
-      (json \ "registeredForSA").asOpt[String] shouldBe Some("Yes")
-      (json \ "sautr").asOpt[String] shouldBe Some("0000000000")
-      (json \ "address").isDefined shouldBe true
+      (json \ "vatRegNumber").asOpt[String]     shouldBe Some("000000000")
+      (json \ "registeredForSA").asOpt[String]  shouldBe Some("Yes")
+      (json \ "sautr").asOpt[String]            shouldBe Some("0000000000")
+      (json \ "address").isDefined              shouldBe true
     }
 
     "deserialize from JSON correctly" in {
-      val json = Json.parse(
-        """
+      val json = Json.parse("""
           |{
           |  "fullName": "Test Name",
           |  "telephoneNumber": "00000000000",
@@ -100,47 +99,47 @@ class AboutYouSpec extends AnyWordSpec with Matchers {
       result shouldBe a[JsSuccess[_]]
 
       val aboutYou = result.get
-      aboutYou.fullName shouldBe Some("Test Name")
+      aboutYou.fullName        shouldBe Some("Test Name")
       aboutYou.telephoneNumber shouldBe Some("00000000000")
-      aboutYou.emailAddress shouldBe Some("test@example.com")
-      aboutYou.dateOfBirth shouldBe Some(LocalDate.of(2000, 1, 1))
-      aboutYou.mainOccupation shouldBe Some("Test Occupation")
+      aboutYou.emailAddress    shouldBe Some("test@example.com")
+      aboutYou.dateOfBirth     shouldBe Some(LocalDate.of(2000, 1, 1))
+      aboutYou.mainOccupation  shouldBe Some("Test Occupation")
     }
 
     "convert to XML correctly with all fields populated" in {
       val xml = fullAboutYou.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("aboutYou")
-      (xml \ "fullName").text shouldBe "Test Name"
-      (xml \ "telephoneNumber").text shouldBe "00000000000"
-      (xml \ "emailAddress").text shouldBe "test@example.com"
-      (xml \ "dateOfBirth").text shouldBe "2000-01-01"
-      (xml \ "mainOccupation").text shouldBe "Test Occupation"
-      (xml \ "doYouHaveANino").nonEmpty shouldBe true
-      (xml \ "nino").text shouldBe "XX000000X"
+      xml.headOption.map(_.label)         shouldBe Some("aboutYou")
+      (xml \ "fullName").text             shouldBe "Test Name"
+      (xml \ "telephoneNumber").text      shouldBe "00000000000"
+      (xml \ "emailAddress").text         shouldBe "test@example.com"
+      (xml \ "dateOfBirth").text          shouldBe "2000-01-01"
+      (xml \ "mainOccupation").text       shouldBe "Test Occupation"
+      (xml \ "doYouHaveANino").nonEmpty   shouldBe true
+      (xml \ "nino").text                 shouldBe "XX000000X"
       (xml \ "registeredForVAT").nonEmpty shouldBe true
-      (xml \ "vatRegNumber").text shouldBe "000000000"
-      (xml \ "registeredForSA").nonEmpty shouldBe true
-      (xml \ "sautr").text shouldBe "0000000000"
-      (xml \ "address").nonEmpty shouldBe true
+      (xml \ "vatRegNumber").text         shouldBe "000000000"
+      (xml \ "registeredForSA").nonEmpty  shouldBe true
+      (xml \ "sautr").text                shouldBe "0000000000"
+      (xml \ "address").nonEmpty          shouldBe true
     }
 
     "convert to XML correctly with no fields populated" in {
       val xml = emptyAboutYou.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("aboutYou")
-      (xml \ "fullName").isEmpty shouldBe true
-      (xml \ "telephoneNumber").isEmpty shouldBe true
-      (xml \ "emailAddress").isEmpty shouldBe true
-      (xml \ "dateOfBirth").isEmpty shouldBe true
-      (xml \ "mainOccupation").isEmpty shouldBe true
-      (xml \ "doYouHaveANino").isEmpty shouldBe true
-      (xml \ "nino").isEmpty shouldBe true
+      xml.headOption.map(_.label)        shouldBe Some("aboutYou")
+      (xml \ "fullName").isEmpty         shouldBe true
+      (xml \ "telephoneNumber").isEmpty  shouldBe true
+      (xml \ "emailAddress").isEmpty     shouldBe true
+      (xml \ "dateOfBirth").isEmpty      shouldBe true
+      (xml \ "mainOccupation").isEmpty   shouldBe true
+      (xml \ "doYouHaveANino").isEmpty   shouldBe true
+      (xml \ "nino").isEmpty             shouldBe true
       (xml \ "registeredForVAT").isEmpty shouldBe true
-      (xml \ "vatRegNumber").isEmpty shouldBe true
-      (xml \ "registeredForSA").isEmpty shouldBe true
-      (xml \ "sautr").isEmpty shouldBe true
-      (xml \ "address").isEmpty shouldBe true
+      (xml \ "vatRegNumber").isEmpty     shouldBe true
+      (xml \ "registeredForSA").isEmpty  shouldBe true
+      (xml \ "sautr").isEmpty            shouldBe true
+      (xml \ "address").isEmpty          shouldBe true
     }
 
     "convert to XML correctly with partial fields populated" in {
@@ -153,19 +152,19 @@ class AboutYouSpec extends AnyWordSpec with Matchers {
 
       val xml = partialAboutYou.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("aboutYou")
-      (xml \ "fullName").text shouldBe "Test Name"
-      (xml \ "telephoneNumber").isEmpty shouldBe true
-      (xml \ "emailAddress").text shouldBe "test@example.com"
-      (xml \ "dateOfBirth").isEmpty shouldBe true
-      (xml \ "mainOccupation").isEmpty shouldBe true
-      (xml \ "doYouHaveANino").nonEmpty shouldBe true
-      (xml \ "nino").isEmpty shouldBe true
+      xml.headOption.map(_.label)         shouldBe Some("aboutYou")
+      (xml \ "fullName").text             shouldBe "Test Name"
+      (xml \ "telephoneNumber").isEmpty   shouldBe true
+      (xml \ "emailAddress").text         shouldBe "test@example.com"
+      (xml \ "dateOfBirth").isEmpty       shouldBe true
+      (xml \ "mainOccupation").isEmpty    shouldBe true
+      (xml \ "doYouHaveANino").nonEmpty   shouldBe true
+      (xml \ "nino").isEmpty              shouldBe true
       (xml \ "registeredForVAT").nonEmpty shouldBe true
-      (xml \ "vatRegNumber").isEmpty shouldBe true
-      (xml \ "registeredForSA").isEmpty shouldBe true
-      (xml \ "sautr").isEmpty shouldBe true
-      (xml \ "address").isEmpty shouldBe true
+      (xml \ "vatRegNumber").isEmpty      shouldBe true
+      (xml \ "registeredForSA").isEmpty   shouldBe true
+      (xml \ "sautr").isEmpty             shouldBe true
+      (xml \ "address").isEmpty           shouldBe true
     }
   }
 }

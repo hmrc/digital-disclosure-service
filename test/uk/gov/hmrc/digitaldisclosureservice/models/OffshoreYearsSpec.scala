@@ -98,7 +98,7 @@ class OffshoreYearsSpec extends AnyWordSpec with Matchers {
 
     "generate correct XML for TaxYearStarting" in {
       val taxYear = TaxYearStarting(2020)
-      val xml = taxYear.toXml
+      val xml     = taxYear.toXml
       xml.toString shouldEqual "<taxYearStarting>2020</taxYearStarting>"
     }
 
@@ -112,7 +112,7 @@ class OffshoreYearsSpec extends AnyWordSpec with Matchers {
 
       val xml = OffshoreYears.toXml(years)
 
-      (xml \ "taxYearStarting").text shouldBe "2020"
+      (xml \ "taxYearStarting").text          shouldBe "2020"
       (xml \ "offshoreYears").map(_.text).toSet should contain("carelessPriorTo")
       (xml \ "offshoreYears").map(_.text).toSet should contain("deliberatePriorTo")
       (xml \ "offshoreYears").map(_.text).toSet should contain("reasonableExcusePriorTo")
@@ -160,8 +160,8 @@ class OffshoreYearsSpec extends AnyWordSpec with Matchers {
 
       val missingYears = TaxYearStarting.findMissingYears(years)
 
-      missingYears should contain(TaxYearStarting(2019))
-      missingYears should contain(TaxYearStarting(2021))
+      missingYears        should contain(TaxYearStarting(2019))
+      missingYears        should contain(TaxYearStarting(2021))
       missingYears.size shouldBe 2
     }
 
@@ -177,7 +177,7 @@ class OffshoreYearsSpec extends AnyWordSpec with Matchers {
 
     "return empty list for list with fewer than 2 elements" in {
       TaxYearStarting.findMissingYears(List(TaxYearStarting(2020))) shouldBe empty
-      TaxYearStarting.findMissingYears(List()) shouldBe empty
+      TaxYearStarting.findMissingYears(List())                      shouldBe empty
     }
   }
 }

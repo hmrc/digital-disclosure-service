@@ -41,16 +41,16 @@ class OnshoreTaxYearLiabilitiesSpec extends AnyWordSpec with Matchers {
 
         val xml = model.toXml
 
-        (xml \ "nonBusinessIncome").text shouldBe "1000"
-        (xml \ "businessIncome").text shouldBe "2000"
-        (xml \ "lettingIncome").text shouldBe "3000"
-        (xml \ "gains").text shouldBe "4000"
-        (xml \ "unpaidTax").text shouldBe "5000"
-        (xml \ "niContributions").text shouldBe "6000"
-        (xml \ "interest").text shouldBe "7000"
-        (xml \ "penaltyRate").text shouldBe "15.5"
-        (xml \ "penaltyRateReason").text shouldBe "Test reason"
-        (xml \ "undeclaredIncomeOrGain").text shouldBe "Test income source"
+        (xml \ "nonBusinessIncome").text       shouldBe "1000"
+        (xml \ "businessIncome").text          shouldBe "2000"
+        (xml \ "lettingIncome").text           shouldBe "3000"
+        (xml \ "gains").text                   shouldBe "4000"
+        (xml \ "unpaidTax").text               shouldBe "5000"
+        (xml \ "niContributions").text         shouldBe "6000"
+        (xml \ "interest").text                shouldBe "7000"
+        (xml \ "penaltyRate").text             shouldBe "15.5"
+        (xml \ "penaltyRateReason").text       shouldBe "Test reason"
+        (xml \ "undeclaredIncomeOrGain").text  shouldBe "Test income source"
         (xml \ "residentialTaxReduction").text shouldBe "true"
       }
 
@@ -67,16 +67,16 @@ class OnshoreTaxYearLiabilitiesSpec extends AnyWordSpec with Matchers {
 
         val xml = model.toXml
 
-        (xml \ "nonBusinessIncome").isEmpty shouldBe true
-        (xml \ "businessIncome").isEmpty shouldBe true
-        (xml \ "lettingIncome").isEmpty shouldBe true
-        (xml \ "gains").isEmpty shouldBe true
-        (xml \ "unpaidTax").text shouldBe "5000"
-        (xml \ "niContributions").text shouldBe "6000"
-        (xml \ "interest").text shouldBe "7000"
-        (xml \ "penaltyRate").text shouldBe "15.5"
-        (xml \ "penaltyRateReason").text shouldBe "Test reason"
-        (xml \ "undeclaredIncomeOrGain").isEmpty shouldBe true
+        (xml \ "nonBusinessIncome").isEmpty       shouldBe true
+        (xml \ "businessIncome").isEmpty          shouldBe true
+        (xml \ "lettingIncome").isEmpty           shouldBe true
+        (xml \ "gains").isEmpty                   shouldBe true
+        (xml \ "unpaidTax").text                  shouldBe "5000"
+        (xml \ "niContributions").text            shouldBe "6000"
+        (xml \ "interest").text                   shouldBe "7000"
+        (xml \ "penaltyRate").text                shouldBe "15.5"
+        (xml \ "penaltyRateReason").text          shouldBe "Test reason"
+        (xml \ "undeclaredIncomeOrGain").isEmpty  shouldBe true
         (xml \ "residentialTaxReduction").isEmpty shouldBe true
       }
     }
@@ -97,20 +97,20 @@ class OnshoreTaxYearLiabilitiesSpec extends AnyWordSpec with Matchers {
           residentialTaxReduction = Some(true)
         )
 
-        val json = Json.toJson(model)
+        val json   = Json.toJson(model)
         val parsed = json.validate[OnshoreTaxYearLiabilities]
 
-        parsed shouldBe JsSuccess(model)
-        (json \ "nonBusinessIncome").as[BigInt] shouldBe BigInt(1000)
-        (json \ "businessIncome").as[BigInt] shouldBe BigInt(2000)
-        (json \ "lettingIncome").as[BigInt] shouldBe BigInt(3000)
-        (json \ "gains").as[BigInt] shouldBe BigInt(4000)
-        (json \ "unpaidTax").as[BigInt] shouldBe BigInt(5000)
-        (json \ "niContributions").as[BigInt] shouldBe BigInt(6000)
-        (json \ "interest").as[BigInt] shouldBe BigInt(7000)
-        (json \ "penaltyRate").as[BigDecimal] shouldBe BigDecimal(15.5)
-        (json \ "penaltyRateReason").as[String] shouldBe "Test reason"
-        (json \ "undeclaredIncomeOrGain").as[String] shouldBe "Test income source"
+        parsed                                         shouldBe JsSuccess(model)
+        (json \ "nonBusinessIncome").as[BigInt]        shouldBe BigInt(1000)
+        (json \ "businessIncome").as[BigInt]           shouldBe BigInt(2000)
+        (json \ "lettingIncome").as[BigInt]            shouldBe BigInt(3000)
+        (json \ "gains").as[BigInt]                    shouldBe BigInt(4000)
+        (json \ "unpaidTax").as[BigInt]                shouldBe BigInt(5000)
+        (json \ "niContributions").as[BigInt]          shouldBe BigInt(6000)
+        (json \ "interest").as[BigInt]                 shouldBe BigInt(7000)
+        (json \ "penaltyRate").as[BigDecimal]          shouldBe BigDecimal(15.5)
+        (json \ "penaltyRateReason").as[String]        shouldBe "Test reason"
+        (json \ "undeclaredIncomeOrGain").as[String]   shouldBe "Test income source"
         (json \ "residentialTaxReduction").as[Boolean] shouldBe true
       }
 
@@ -125,20 +125,20 @@ class OnshoreTaxYearLiabilitiesSpec extends AnyWordSpec with Matchers {
           residentialTaxReduction = None
         )
 
-        val json = Json.toJson(model)
+        val json   = Json.toJson(model)
         val parsed = json.validate[OnshoreTaxYearLiabilities]
 
-        parsed shouldBe JsSuccess(model)
-        (json \ "nonBusinessIncome").toOption shouldBe None
-        (json \ "businessIncome").toOption shouldBe None
-        (json \ "lettingIncome").toOption shouldBe None
-        (json \ "gains").toOption shouldBe None
-        (json \ "unpaidTax").as[BigInt] shouldBe BigInt(5000)
-        (json \ "niContributions").as[BigInt] shouldBe BigInt(6000)
-        (json \ "interest").as[BigInt] shouldBe BigInt(7000)
-        (json \ "penaltyRate").as[BigDecimal] shouldBe BigDecimal(15.5)
-        (json \ "penaltyRateReason").as[String] shouldBe "Test reason"
-        (json \ "undeclaredIncomeOrGain").toOption shouldBe None
+        parsed                                      shouldBe JsSuccess(model)
+        (json \ "nonBusinessIncome").toOption       shouldBe None
+        (json \ "businessIncome").toOption          shouldBe None
+        (json \ "lettingIncome").toOption           shouldBe None
+        (json \ "gains").toOption                   shouldBe None
+        (json \ "unpaidTax").as[BigInt]             shouldBe BigInt(5000)
+        (json \ "niContributions").as[BigInt]       shouldBe BigInt(6000)
+        (json \ "interest").as[BigInt]              shouldBe BigInt(7000)
+        (json \ "penaltyRate").as[BigDecimal]       shouldBe BigDecimal(15.5)
+        (json \ "penaltyRateReason").as[String]     shouldBe "Test reason"
+        (json \ "undeclaredIncomeOrGain").toOption  shouldBe None
         (json \ "residentialTaxReduction").toOption shouldBe None
       }
     }

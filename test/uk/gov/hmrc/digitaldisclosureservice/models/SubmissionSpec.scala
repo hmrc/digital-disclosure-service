@@ -26,8 +26,8 @@ class SubmissionSpec extends AnyWordSpec with Matchers {
 
   "Submission" should {
 
-    val testInstant = Instant.parse("2024-03-24T12:00:00Z")
-    val testMetadata = Metadata(Some("REF123"), Some(LocalDateTime.now()))
+    val testInstant         = Instant.parse("2024-03-24T12:00:00Z")
+    val testMetadata        = Metadata(Some("REF123"), Some(LocalDateTime.now()))
     val testPersonalDetails = PersonalDetails(Background(), AboutYou())
 
     "generate XML correctly for Notification" in {
@@ -143,10 +143,10 @@ class SubmissionSpec extends AnyWordSpec with Matchers {
         val xml = notification.toXml
 
         id match {
-          case NINO(value) => xml should include(s"<nino>$value</nino>")
-          case CAUTR(value) => xml should include(s"<cautr>$value</cautr>")
-          case SAUTR(value) => xml should include(s"<sautr>$value</sautr>")
-          case ARN(value) => xml should include(s"<arn>$value</arn>")
+          case NINO(value)       => xml should include(s"<nino>$value</nino>")
+          case CAUTR(value)      => xml should include(s"<cautr>$value</cautr>")
+          case SAUTR(value)      => xml should include(s"<sautr>$value</sautr>")
+          case ARN(value)        => xml should include(s"<arn>$value</arn>")
           case ExternalId(value) => xml should include(s"<externalId>$value</externalId>")
         }
       }

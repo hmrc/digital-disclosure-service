@@ -32,8 +32,8 @@ class WhatIsYourReasonableExcuseSpec extends AnyWordSpec with Matchers {
       val xml = excuse.toXml
 
       xml.headOption.map(_.label) shouldBe Some("whatIsYourReasonableExcuse")
-      (xml \ "excuse").text shouldBe "Bereavement"
-      (xml \ "years").text shouldBe "2021-2022"
+      (xml \ "excuse").text       shouldBe "Bereavement"
+      (xml \ "years").text        shouldBe "2021-2022"
     }
 
     "serialize and deserialize correctly" in {
@@ -42,12 +42,12 @@ class WhatIsYourReasonableExcuseSpec extends AnyWordSpec with Matchers {
         years = "2021-2022"
       )
 
-      val json = Json.toJson(excuse)
+      val json   = Json.toJson(excuse)
       val parsed = json.validate[WhatIsYourReasonableExcuse]
 
-      parsed shouldBe JsSuccess(excuse)
+      parsed                       shouldBe JsSuccess(excuse)
       (json \ "excuse").as[String] shouldBe "Bereavement"
-      (json \ "years").as[String] shouldBe "2021-2022"
+      (json \ "years").as[String]  shouldBe "2021-2022"
     }
   }
 }

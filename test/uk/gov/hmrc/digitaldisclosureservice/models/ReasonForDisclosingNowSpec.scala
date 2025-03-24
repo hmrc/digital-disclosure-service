@@ -29,26 +29,26 @@ class ReasonForDisclosingNowSpec extends AnyWordSpec with Matchers {
 
       val xml = reasonForDisclosingNow.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("reasonForDisclosingNow")
-      (xml \ "reason").isEmpty shouldBe true
-      (xml \ "otherReason").isEmpty shouldBe true
-      (xml \ "whyNotBeforeNow").isEmpty shouldBe true
-      (xml \ "receivedAdvice").isEmpty shouldBe true
-      (xml \ "personWhoGaveAdvice").isEmpty shouldBe true
+      xml.headOption.map(_.label)                shouldBe Some("reasonForDisclosingNow")
+      (xml \ "reason").isEmpty                   shouldBe true
+      (xml \ "otherReason").isEmpty              shouldBe true
+      (xml \ "whyNotBeforeNow").isEmpty          shouldBe true
+      (xml \ "receivedAdvice").isEmpty           shouldBe true
+      (xml \ "personWhoGaveAdvice").isEmpty      shouldBe true
       (xml \ "adviceOnBehalfOfBusiness").isEmpty shouldBe true
-      (xml \ "adviceBusinessName").isEmpty shouldBe true
-      (xml \ "personProfession").isEmpty shouldBe true
-      (xml \ "adviceGiven").isEmpty shouldBe true
-      (xml \ "whichEmail").isEmpty shouldBe true
-      (xml \ "whichPhone").isEmpty shouldBe true
-      (xml \ "email").isEmpty shouldBe true
-      (xml \ "telephone").isEmpty shouldBe true
+      (xml \ "adviceBusinessName").isEmpty       shouldBe true
+      (xml \ "personProfession").isEmpty         shouldBe true
+      (xml \ "adviceGiven").isEmpty              shouldBe true
+      (xml \ "whichEmail").isEmpty               shouldBe true
+      (xml \ "whichPhone").isEmpty               shouldBe true
+      (xml \ "email").isEmpty                    shouldBe true
+      (xml \ "telephone").isEmpty                shouldBe true
     }
 
     "serialize and deserialize correctly with minimal fields" in {
       val reasonForDisclosingNow = ReasonForDisclosingNow()
 
-      val json = Json.toJson(reasonForDisclosingNow)
+      val json   = Json.toJson(reasonForDisclosingNow)
       val parsed = json.validate[ReasonForDisclosingNow]
 
       parsed shouldBe JsSuccess(reasonForDisclosingNow)
@@ -70,17 +70,17 @@ class ReasonForDisclosingNowSpec extends AnyWordSpec with Matchers {
 
       val xml = reasonForDisclosingNow.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("reasonForDisclosingNow")
-      (xml \ "reason").nonEmpty shouldBe true
-      (xml \ "otherReason").text shouldBe "test other reason"
-      (xml \ "whyNotBeforeNow").text shouldBe "test why not before now"
-      (xml \ "receivedAdvice").text shouldBe "true"
-      (xml \ "personWhoGaveAdvice").text shouldBe "test person"
+      xml.headOption.map(_.label)             shouldBe Some("reasonForDisclosingNow")
+      (xml \ "reason").nonEmpty               shouldBe true
+      (xml \ "otherReason").text              shouldBe "test other reason"
+      (xml \ "whyNotBeforeNow").text          shouldBe "test why not before now"
+      (xml \ "receivedAdvice").text           shouldBe "true"
+      (xml \ "personWhoGaveAdvice").text      shouldBe "test person"
       (xml \ "adviceOnBehalfOfBusiness").text shouldBe "false"
-      (xml \ "adviceBusinessName").text shouldBe "test business name"
-      (xml \ "personProfession").text shouldBe "test profession"
-      (xml \ "email").text shouldBe "test@example.com"
-      (xml \ "telephone").text shouldBe "01234567890"
+      (xml \ "adviceBusinessName").text       shouldBe "test business name"
+      (xml \ "personProfession").text         shouldBe "test profession"
+      (xml \ "email").text                    shouldBe "test@example.com"
+      (xml \ "telephone").text                shouldBe "01234567890"
     }
 
     "serialize and deserialize correctly with some fields populated" in {
@@ -97,16 +97,16 @@ class ReasonForDisclosingNowSpec extends AnyWordSpec with Matchers {
         telephone = Some("01234567890")
       )
 
-      val json = Json.toJson(reasonForDisclosingNow)
+      val json   = Json.toJson(reasonForDisclosingNow)
       val parsed = json.validate[ReasonForDisclosingNow]
 
       parsed shouldBe JsSuccess(reasonForDisclosingNow)
     }
 
     "convert to XML correctly with all fields populated" in {
-      val monthYear = MonthYear(1, 2022)
+      val monthYear         = MonthYear(1, 2022)
       val contactPreference = AdviceContactPreference.Email
-      val adviceGiven = AdviceGiven(
+      val adviceGiven       = AdviceGiven(
         adviceGiven = "test advice",
         monthYear = monthYear,
         contactPreference = contactPreference
@@ -130,26 +130,26 @@ class ReasonForDisclosingNowSpec extends AnyWordSpec with Matchers {
 
       val xml = reasonForDisclosingNow.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("reasonForDisclosingNow")
-      (xml \ "reason").nonEmpty shouldBe true
-      (xml \ "otherReason").text shouldBe "test other reason"
-      (xml \ "whyNotBeforeNow").text shouldBe "test why not before now"
-      (xml \ "receivedAdvice").text shouldBe "true"
-      (xml \ "personWhoGaveAdvice").text shouldBe "test person"
+      xml.headOption.map(_.label)             shouldBe Some("reasonForDisclosingNow")
+      (xml \ "reason").nonEmpty               shouldBe true
+      (xml \ "otherReason").text              shouldBe "test other reason"
+      (xml \ "whyNotBeforeNow").text          shouldBe "test why not before now"
+      (xml \ "receivedAdvice").text           shouldBe "true"
+      (xml \ "personWhoGaveAdvice").text      shouldBe "test person"
       (xml \ "adviceOnBehalfOfBusiness").text shouldBe "false"
-      (xml \ "adviceBusinessName").text shouldBe "test business name"
-      (xml \ "personProfession").text shouldBe "test profession"
-      (xml \ "adviceGiven").nonEmpty shouldBe true
-      (xml \ "whichEmail").text shouldBe "differentEmail"
-      (xml \ "whichPhone").text shouldBe "differentNumber"
-      (xml \ "email").text shouldBe "test@example.com"
-      (xml \ "telephone").text shouldBe "01234567890"
+      (xml \ "adviceBusinessName").text       shouldBe "test business name"
+      (xml \ "personProfession").text         shouldBe "test profession"
+      (xml \ "adviceGiven").nonEmpty          shouldBe true
+      (xml \ "whichEmail").text               shouldBe "differentEmail"
+      (xml \ "whichPhone").text               shouldBe "differentNumber"
+      (xml \ "email").text                    shouldBe "test@example.com"
+      (xml \ "telephone").text                shouldBe "01234567890"
     }
 
     "serialize and deserialize correctly with all fields populated" in {
-      val monthYear = MonthYear(1, 2022)
+      val monthYear         = MonthYear(1, 2022)
       val contactPreference = AdviceContactPreference.Email
-      val adviceGiven = AdviceGiven(
+      val adviceGiven       = AdviceGiven(
         adviceGiven = "test advice",
         monthYear = monthYear,
         contactPreference = contactPreference
@@ -171,7 +171,7 @@ class ReasonForDisclosingNowSpec extends AnyWordSpec with Matchers {
         telephone = Some("01234567890")
       )
 
-      val json = Json.toJson(reasonForDisclosingNow)
+      val json   = Json.toJson(reasonForDisclosingNow)
       val parsed = json.validate[ReasonForDisclosingNow]
 
       parsed shouldBe JsSuccess(reasonForDisclosingNow)

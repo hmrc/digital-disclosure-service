@@ -25,7 +25,7 @@ class NoLongerBeingLetOutSpec extends AnyWordSpec with Matchers {
 
   "NoLongerBeingLetOut" should {
     "convert to XML correctly" in {
-      val date = LocalDate.of(2023, 4, 15)
+      val date                = LocalDate.of(2023, 4, 15)
       val noLongerBeingLetOut = NoLongerBeingLetOut(
         stopDate = date,
         whatHasHappenedToProperty = "abc"
@@ -33,23 +33,23 @@ class NoLongerBeingLetOutSpec extends AnyWordSpec with Matchers {
 
       val xml = noLongerBeingLetOut.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("noLongerBeingLetOut")
-      (xml \ "stopDate").text shouldBe "2023-04-15"
+      xml.headOption.map(_.label)              shouldBe Some("noLongerBeingLetOut")
+      (xml \ "stopDate").text                  shouldBe "2023-04-15"
       (xml \ "whatHasHappenedToProperty").text shouldBe "abc"
     }
 
     "serialize and deserialize correctly" in {
-      val date = LocalDate.of(2023, 4, 15)
+      val date                = LocalDate.of(2023, 4, 15)
       val noLongerBeingLetOut = NoLongerBeingLetOut(
         stopDate = date,
         whatHasHappenedToProperty = "abc"
       )
 
-      val json = Json.toJson(noLongerBeingLetOut)
+      val json   = Json.toJson(noLongerBeingLetOut)
       val parsed = json.validate[NoLongerBeingLetOut]
 
-      parsed shouldBe JsSuccess(noLongerBeingLetOut)
-      (json \ "stopDate").as[String] shouldBe "2023-04-15"
+      parsed                                          shouldBe JsSuccess(noLongerBeingLetOut)
+      (json \ "stopDate").as[String]                  shouldBe "2023-04-15"
       (json \ "whatHasHappenedToProperty").as[String] shouldBe "abc"
     }
   }

@@ -31,8 +31,8 @@ class WhatReasonableCareDidYouTakeSpec extends AnyWordSpec with Matchers {
 
       val xml = care.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("whatReasonableCareDidYouTake")
-      (xml \ "reasonableCare").text shouldBe "abc"
+      xml.headOption.map(_.label)       shouldBe Some("whatReasonableCareDidYouTake")
+      (xml \ "reasonableCare").text     shouldBe "abc"
       (xml \ "yearsThisAppliesTo").text shouldBe "123"
     }
 
@@ -42,11 +42,11 @@ class WhatReasonableCareDidYouTakeSpec extends AnyWordSpec with Matchers {
         yearsThisAppliesTo = "123"
       )
 
-      val json = Json.toJson(care)
+      val json   = Json.toJson(care)
       val parsed = json.validate[WhatReasonableCareDidYouTake]
 
-      parsed shouldBe JsSuccess(care)
-      (json \ "reasonableCare").as[String] shouldBe "abc"
+      parsed                                   shouldBe JsSuccess(care)
+      (json \ "reasonableCare").as[String]     shouldBe "abc"
       (json \ "yearsThisAppliesTo").as[String] shouldBe "123"
     }
   }

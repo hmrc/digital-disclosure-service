@@ -26,9 +26,9 @@ class LettingPropertySpec extends AnyWordSpec with Matchers {
 
   "LettingProperty" should {
     "convert to XML correctly with all fields populated" in {
-      val date = LocalDate.of(2020, 1, 1)
-      val stopDate = LocalDate.of(2022, 1, 1)
-      val address = Address(
+      val date                = LocalDate.of(2020, 1, 1)
+      val stopDate            = LocalDate.of(2022, 1, 1)
+      val address             = Address(
         line1 = "1 Test Street",
         line2 = Some("Test Area"),
         line3 = Some("Test Town"),
@@ -59,18 +59,18 @@ class LettingPropertySpec extends AnyWordSpec with Matchers {
 
       val xml = lettingProperty.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("lettingProperty")
-      (xml \ "address").nonEmpty shouldBe true
-      (xml \ "dateFirstLetOut").text shouldBe "2020-01-01"
-      (xml \ "stoppedBeingLetOut").text shouldBe "true"
-      (xml \ "noLongerBeingLetOut").nonEmpty shouldBe true
-      (xml \ "fhl").text shouldBe "true"
-      (xml \ "isJointOwnership").text shouldBe "false"
-      (xml \ "isMortgageOnProperty").text shouldBe "true"
-      (xml \ "percentageIncomeOnProperty").text shouldBe "75"
-      (xml \ "wasFurnished").text shouldBe "true"
-      (xml \ "typeOfMortgage").text shouldBe "interestOnly"
-      (xml \ "wasPropertyManagerByAgent").text shouldBe "false"
+      xml.headOption.map(_.label)                              shouldBe Some("lettingProperty")
+      (xml \ "address").nonEmpty                               shouldBe true
+      (xml \ "dateFirstLetOut").text                           shouldBe "2020-01-01"
+      (xml \ "stoppedBeingLetOut").text                        shouldBe "true"
+      (xml \ "noLongerBeingLetOut").nonEmpty                   shouldBe true
+      (xml \ "fhl").text                                       shouldBe "true"
+      (xml \ "isJointOwnership").text                          shouldBe "false"
+      (xml \ "isMortgageOnProperty").text                      shouldBe "true"
+      (xml \ "percentageIncomeOnProperty").text                shouldBe "75"
+      (xml \ "wasFurnished").text                              shouldBe "true"
+      (xml \ "typeOfMortgage").text                            shouldBe "interestOnly"
+      (xml \ "wasPropertyManagerByAgent").text                 shouldBe "false"
       (xml \ "didTheLettingAgentCollectRentOnYourBehalf").text shouldBe "false"
     }
 
@@ -79,26 +79,26 @@ class LettingPropertySpec extends AnyWordSpec with Matchers {
 
       val xml = lettingProperty.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("lettingProperty")
-      (xml \ "address").isEmpty shouldBe true
-      (xml \ "dateFirstLetOut").isEmpty shouldBe true
-      (xml \ "stoppedBeingLetOut").isEmpty shouldBe true
-      (xml \ "noLongerBeingLetOut").isEmpty shouldBe true
-      (xml \ "fhl").isEmpty shouldBe true
-      (xml \ "isJointOwnership").isEmpty shouldBe true
-      (xml \ "isMortgageOnProperty").isEmpty shouldBe true
-      (xml \ "percentageIncomeOnProperty").isEmpty shouldBe true
-      (xml \ "wasFurnished").isEmpty shouldBe true
-      (xml \ "typeOfMortgage").isEmpty shouldBe true
-      (xml \ "otherTypeOfMortgage").isEmpty shouldBe true
-      (xml \ "wasPropertyManagerByAgent").isEmpty shouldBe true
+      xml.headOption.map(_.label)                                 shouldBe Some("lettingProperty")
+      (xml \ "address").isEmpty                                   shouldBe true
+      (xml \ "dateFirstLetOut").isEmpty                           shouldBe true
+      (xml \ "stoppedBeingLetOut").isEmpty                        shouldBe true
+      (xml \ "noLongerBeingLetOut").isEmpty                       shouldBe true
+      (xml \ "fhl").isEmpty                                       shouldBe true
+      (xml \ "isJointOwnership").isEmpty                          shouldBe true
+      (xml \ "isMortgageOnProperty").isEmpty                      shouldBe true
+      (xml \ "percentageIncomeOnProperty").isEmpty                shouldBe true
+      (xml \ "wasFurnished").isEmpty                              shouldBe true
+      (xml \ "typeOfMortgage").isEmpty                            shouldBe true
+      (xml \ "otherTypeOfMortgage").isEmpty                       shouldBe true
+      (xml \ "wasPropertyManagerByAgent").isEmpty                 shouldBe true
       (xml \ "didTheLettingAgentCollectRentOnYourBehalf").isEmpty shouldBe true
     }
 
     "serialize and deserialize correctly with all fields populated" in {
-      val date = LocalDate.of(2020, 1, 1)
-      val stopDate = LocalDate.of(2022, 1, 1)
-      val address = Address(
+      val date                = LocalDate.of(2020, 1, 1)
+      val stopDate            = LocalDate.of(2022, 1, 1)
+      val address             = Address(
         line1 = "1 Test Street",
         line2 = Some("Test Area"),
         line3 = Some("Test Town"),
@@ -127,7 +127,7 @@ class LettingPropertySpec extends AnyWordSpec with Matchers {
         didTheLettingAgentCollectRentOnYourBehalf = Some(false)
       )
 
-      val json = Json.toJson(lettingProperty)
+      val json   = Json.toJson(lettingProperty)
       val parsed = json.validate[LettingProperty]
 
       parsed shouldBe JsSuccess(lettingProperty)
@@ -136,7 +136,7 @@ class LettingPropertySpec extends AnyWordSpec with Matchers {
     "serialize and deserialize correctly with minimal fields" in {
       val lettingProperty = LettingProperty()
 
-      val json = Json.toJson(lettingProperty)
+      val json   = Json.toJson(lettingProperty)
       val parsed = json.validate[LettingProperty]
 
       parsed shouldBe JsSuccess(lettingProperty)
@@ -145,7 +145,7 @@ class LettingPropertySpec extends AnyWordSpec with Matchers {
 
   "NoLongerBeingLetOut" should {
     "convert to XML correctly" in {
-      val stopDate = LocalDate.of(2022, 1, 1)
+      val stopDate            = LocalDate.of(2022, 1, 1)
       val noLongerBeingLetOut = NoLongerBeingLetOut(
         stopDate = stopDate,
         whatHasHappenedToProperty = "Sold"
@@ -153,19 +153,19 @@ class LettingPropertySpec extends AnyWordSpec with Matchers {
 
       val xml = noLongerBeingLetOut.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("noLongerBeingLetOut")
-      (xml \ "stopDate").text shouldBe "2022-01-01"
+      xml.headOption.map(_.label)              shouldBe Some("noLongerBeingLetOut")
+      (xml \ "stopDate").text                  shouldBe "2022-01-01"
       (xml \ "whatHasHappenedToProperty").text shouldBe "Sold"
     }
 
     "serialize and deserialize correctly" in {
-      val stopDate = LocalDate.of(2022, 1, 1)
+      val stopDate            = LocalDate.of(2022, 1, 1)
       val noLongerBeingLetOut = NoLongerBeingLetOut(
         stopDate = stopDate,
         whatHasHappenedToProperty = "Sold"
       )
 
-      val json = Json.toJson(noLongerBeingLetOut)
+      val json   = Json.toJson(noLongerBeingLetOut)
       val parsed = json.validate[NoLongerBeingLetOut]
 
       parsed shouldBe JsSuccess(noLongerBeingLetOut)

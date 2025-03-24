@@ -25,7 +25,7 @@ class CorporationTaxLiabilitySpec extends AnyWordSpec with Matchers {
 
   "CorporationTaxLiability" should {
     "convert to XML correctly" in {
-      val periodEnd = LocalDate.of(2024, 3, 31)
+      val periodEnd        = LocalDate.of(2024, 3, 31)
       val corpTaxLiability = CorporationTaxLiability(
         periodEnd = periodEnd,
         howMuchIncome = BigInt(50000),
@@ -37,17 +37,17 @@ class CorporationTaxLiabilitySpec extends AnyWordSpec with Matchers {
 
       val xml = corpTaxLiability.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("corporationTaxLiability")
-      (xml \ "periodEnd").text shouldBe "2024-03-31"
-      (xml \ "howMuchIncome").text shouldBe "50000"
-      (xml \ "howMuchUnpaid").text shouldBe "10000"
-      (xml \ "howMuchInterest").text shouldBe "500"
-      (xml \ "penaltyRate").text shouldBe "12.75"
+      xml.headOption.map(_.label)      shouldBe Some("corporationTaxLiability")
+      (xml \ "periodEnd").text         shouldBe "2024-03-31"
+      (xml \ "howMuchIncome").text     shouldBe "50000"
+      (xml \ "howMuchUnpaid").text     shouldBe "10000"
+      (xml \ "howMuchInterest").text   shouldBe "500"
+      (xml \ "penaltyRate").text       shouldBe "12.75"
       (xml \ "penaltyRateReason").text shouldBe "Late payment"
     }
 
     "serialize and deserialize correctly" in {
-      val periodEnd = LocalDate.of(2024, 3, 31)
+      val periodEnd        = LocalDate.of(2024, 3, 31)
       val corpTaxLiability = CorporationTaxLiability(
         periodEnd = periodEnd,
         howMuchIncome = BigInt(50000),
@@ -57,15 +57,15 @@ class CorporationTaxLiabilitySpec extends AnyWordSpec with Matchers {
         penaltyRateReason = "Late payment"
       )
 
-      val json = Json.toJson(corpTaxLiability)
+      val json   = Json.toJson(corpTaxLiability)
       val parsed = json.validate[CorporationTaxLiability]
 
-      parsed shouldBe JsSuccess(corpTaxLiability)
-      (json \ "periodEnd").as[String] shouldBe "2024-03-31"
-      (json \ "howMuchIncome").as[BigInt] shouldBe BigInt(50000)
-      (json \ "howMuchUnpaid").as[BigInt] shouldBe BigInt(10000)
-      (json \ "howMuchInterest").as[BigInt] shouldBe BigInt(500)
-      (json \ "penaltyRate").as[BigDecimal] shouldBe BigDecimal(12.75)
+      parsed                                  shouldBe JsSuccess(corpTaxLiability)
+      (json \ "periodEnd").as[String]         shouldBe "2024-03-31"
+      (json \ "howMuchIncome").as[BigInt]     shouldBe BigInt(50000)
+      (json \ "howMuchUnpaid").as[BigInt]     shouldBe BigInt(10000)
+      (json \ "howMuchInterest").as[BigInt]   shouldBe BigInt(500)
+      (json \ "penaltyRate").as[BigDecimal]   shouldBe BigDecimal(12.75)
       (json \ "penaltyRateReason").as[String] shouldBe "Late payment"
     }
   }

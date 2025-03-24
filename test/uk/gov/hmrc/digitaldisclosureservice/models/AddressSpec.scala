@@ -36,12 +36,12 @@ class AddressSpec extends AnyWordSpec with Matchers {
       val xml = address.toXml
 
       xml.headOption.map(_.label) shouldBe Some("address")
-      (xml \ "line1").text shouldBe "123 Main Street"
-      (xml \ "line2").text shouldBe "Apartment 4B"
-      (xml \ "line3").text shouldBe ""
-      (xml \ "line4").text shouldBe "London"
-      (xml \ "postcode").text shouldBe "SW1A 1AA"
-      (xml \ "country").text shouldBe "UK"
+      (xml \ "line1").text        shouldBe "123 Main Street"
+      (xml \ "line2").text        shouldBe "Apartment 4B"
+      (xml \ "line3").text        shouldBe ""
+      (xml \ "line4").text        shouldBe "London"
+      (xml \ "postcode").text     shouldBe "SW1A 1AA"
+      (xml \ "country").text      shouldBe "UK"
     }
 
     "serialize and deserialize correctly" in {
@@ -54,15 +54,15 @@ class AddressSpec extends AnyWordSpec with Matchers {
         country = Country("UK")
       )
 
-      val json = Json.toJson(address)
+      val json   = Json.toJson(address)
       val parsed = json.validate[Address]
 
-      parsed shouldBe JsSuccess(address)
-      (json \ "line1").as[String] shouldBe "123 Main Street"
-      (json \ "line2").asOpt[String] shouldBe Some("Apartment 4B")
-      (json \ "line3").asOpt[String] shouldBe None
-      (json \ "line4").asOpt[String] shouldBe Some("London")
-      (json \ "postcode").asOpt[String] shouldBe Some("SW1A 1AA")
+      parsed                                 shouldBe JsSuccess(address)
+      (json \ "line1").as[String]            shouldBe "123 Main Street"
+      (json \ "line2").asOpt[String]         shouldBe Some("Apartment 4B")
+      (json \ "line3").asOpt[String]         shouldBe None
+      (json \ "line4").asOpt[String]         shouldBe Some("London")
+      (json \ "postcode").asOpt[String]      shouldBe Some("SW1A 1AA")
       (json \ "country" \ "code").as[String] shouldBe "UK"
     }
   }

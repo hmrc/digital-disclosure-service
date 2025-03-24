@@ -29,27 +29,27 @@ class OffshoreLiabilitiesSpec extends AnyWordSpec with Matchers {
 
       val xml = offshoreLiabilities.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("offshoreLiabilities")
-      (xml \ "behaviour").nonEmpty shouldBe true
-      (xml \ "excuseForNotNotifying").nonEmpty shouldBe true
-      (xml \ "reasonableCare").nonEmpty shouldBe true
-      (xml \ "excuseForNotFiling").nonEmpty shouldBe true
-      (xml \ "whichYears").nonEmpty shouldBe true
-      (xml \ "youHaveNotIncludedTheTaxYear").nonEmpty shouldBe true
+      xml.headOption.map(_.label)                          shouldBe Some("offshoreLiabilities")
+      (xml \ "behaviour").nonEmpty                         shouldBe true
+      (xml \ "excuseForNotNotifying").nonEmpty             shouldBe true
+      (xml \ "reasonableCare").nonEmpty                    shouldBe true
+      (xml \ "excuseForNotFiling").nonEmpty                shouldBe true
+      (xml \ "whichYears").nonEmpty                        shouldBe true
+      (xml \ "youHaveNotIncludedTheTaxYear").nonEmpty      shouldBe true
       (xml \ "youHaveNotSelectedCertainTaxYears").nonEmpty shouldBe true
-      (xml \ "taxBeforeFiveYears").nonEmpty shouldBe true
-      (xml \ "taxBeforeSevenYears").nonEmpty shouldBe true
-      (xml \ "taxBeforeNineteenYears").nonEmpty shouldBe true
-      (xml \ "missingYear").nonEmpty shouldBe true
-      (xml \ "missingYears").nonEmpty shouldBe true
-      (xml \ "disregardedCDF").nonEmpty shouldBe true
-      (xml \ "taxYearLiabilities").nonEmpty shouldBe true
-      (xml \ "taxYearForeignTaxDeductions").nonEmpty shouldBe true
-      (xml \ "countryOfYourOffshoreLiability").nonEmpty shouldBe true
-      (xml \ "legalInterpretation").nonEmpty shouldBe true
-      (xml \ "otherInterpretation").nonEmpty shouldBe true
-      (xml \ "notIncludedDueToInterpretation").nonEmpty shouldBe true
-      (xml \ "maximumValueOfAssets").nonEmpty shouldBe true
+      (xml \ "taxBeforeFiveYears").nonEmpty                shouldBe true
+      (xml \ "taxBeforeSevenYears").nonEmpty               shouldBe true
+      (xml \ "taxBeforeNineteenYears").nonEmpty            shouldBe true
+      (xml \ "missingYear").nonEmpty                       shouldBe true
+      (xml \ "missingYears").nonEmpty                      shouldBe true
+      (xml \ "disregardedCDF").nonEmpty                    shouldBe true
+      (xml \ "taxYearLiabilities").nonEmpty                shouldBe true
+      (xml \ "taxYearForeignTaxDeductions").nonEmpty       shouldBe true
+      (xml \ "countryOfYourOffshoreLiability").nonEmpty    shouldBe true
+      (xml \ "legalInterpretation").nonEmpty               shouldBe true
+      (xml \ "otherInterpretation").nonEmpty               shouldBe true
+      (xml \ "notIncludedDueToInterpretation").nonEmpty    shouldBe true
+      (xml \ "maximumValueOfAssets").nonEmpty              shouldBe true
     }
 
     "convert to XML correctly with minimal fields" in {
@@ -57,33 +57,33 @@ class OffshoreLiabilitiesSpec extends AnyWordSpec with Matchers {
 
       val xml = offshoreLiabilities.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("offshoreLiabilities")
-      (xml \ "behaviour").isEmpty shouldBe true
-      (xml \ "excuseForNotNotifying").isEmpty shouldBe true
-      (xml \ "reasonableCare").isEmpty shouldBe true
-      (xml \ "excuseForNotFiling").isEmpty shouldBe true
-      (xml \ "whichYears").isEmpty shouldBe true
-      (xml \ "youHaveNotIncludedTheTaxYear").isEmpty shouldBe true
+      xml.headOption.map(_.label)                         shouldBe Some("offshoreLiabilities")
+      (xml \ "behaviour").isEmpty                         shouldBe true
+      (xml \ "excuseForNotNotifying").isEmpty             shouldBe true
+      (xml \ "reasonableCare").isEmpty                    shouldBe true
+      (xml \ "excuseForNotFiling").isEmpty                shouldBe true
+      (xml \ "whichYears").isEmpty                        shouldBe true
+      (xml \ "youHaveNotIncludedTheTaxYear").isEmpty      shouldBe true
       (xml \ "youHaveNotSelectedCertainTaxYears").isEmpty shouldBe true
-      (xml \ "taxBeforeFiveYears").isEmpty shouldBe true
-      (xml \ "taxBeforeSevenYears").isEmpty shouldBe true
-      (xml \ "taxBeforeNineteenYears").isEmpty shouldBe true
-      (xml \ "missingYear").isEmpty shouldBe true
-      (xml \ "missingYears").isEmpty shouldBe true
-      (xml \ "disregardedCDF").isEmpty shouldBe true
-      (xml \ "taxYearLiabilities").isEmpty shouldBe true
-      (xml \ "taxYearForeignTaxDeductions").isEmpty shouldBe true
-      (xml \ "countryOfYourOffshoreLiability").isEmpty shouldBe true
-      (xml \ "legalInterpretation").isEmpty shouldBe true
-      (xml \ "otherInterpretation").isEmpty shouldBe true
-      (xml \ "notIncludedDueToInterpretation").isEmpty shouldBe true
-      (xml \ "maximumValueOfAssets").isEmpty shouldBe true
+      (xml \ "taxBeforeFiveYears").isEmpty                shouldBe true
+      (xml \ "taxBeforeSevenYears").isEmpty               shouldBe true
+      (xml \ "taxBeforeNineteenYears").isEmpty            shouldBe true
+      (xml \ "missingYear").isEmpty                       shouldBe true
+      (xml \ "missingYears").isEmpty                      shouldBe true
+      (xml \ "disregardedCDF").isEmpty                    shouldBe true
+      (xml \ "taxYearLiabilities").isEmpty                shouldBe true
+      (xml \ "taxYearForeignTaxDeductions").isEmpty       shouldBe true
+      (xml \ "countryOfYourOffshoreLiability").isEmpty    shouldBe true
+      (xml \ "legalInterpretation").isEmpty               shouldBe true
+      (xml \ "otherInterpretation").isEmpty               shouldBe true
+      (xml \ "notIncludedDueToInterpretation").isEmpty    shouldBe true
+      (xml \ "maximumValueOfAssets").isEmpty              shouldBe true
     }
 
     "serialize and deserialize correctly with all fields populated" in {
       val offshoreLiabilities = createFullOffshoreLiabilities()
 
-      val json = Json.toJson(offshoreLiabilities)
+      val json   = Json.toJson(offshoreLiabilities)
       val parsed = json.validate[OffshoreLiabilities]
 
       parsed shouldBe JsSuccess(offshoreLiabilities)
@@ -92,7 +92,7 @@ class OffshoreLiabilitiesSpec extends AnyWordSpec with Matchers {
     "serialize and deserialize correctly with minimal fields" in {
       val offshoreLiabilities = OffshoreLiabilities()
 
-      val json = Json.toJson(offshoreLiabilities)
+      val json   = Json.toJson(offshoreLiabilities)
       val parsed = json.validate[OffshoreLiabilities]
 
       parsed shouldBe JsSuccess(offshoreLiabilities)

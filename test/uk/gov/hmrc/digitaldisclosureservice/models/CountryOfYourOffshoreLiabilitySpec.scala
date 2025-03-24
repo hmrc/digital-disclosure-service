@@ -32,8 +32,8 @@ class CountryOfYourOffshoreLiabilitySpec extends AnyWordSpec with Matchers {
       val xml = countryLiability.toXml
 
       xml.headOption.map(_.label) shouldBe Some("countryOfYourOffshoreLiability")
-      (xml \ "alpha3").text shouldBe "FRA"
-      (xml \ "name").text shouldBe "France"
+      (xml \ "alpha3").text       shouldBe "FRA"
+      (xml \ "name").text         shouldBe "France"
     }
 
     "serialize and deserialize correctly" in {
@@ -42,12 +42,12 @@ class CountryOfYourOffshoreLiabilitySpec extends AnyWordSpec with Matchers {
         name = "France"
       )
 
-      val json = Json.toJson(countryLiability)
+      val json   = Json.toJson(countryLiability)
       val parsed = json.validate[CountryOfYourOffshoreLiability]
 
-      parsed shouldBe JsSuccess(countryLiability)
+      parsed                       shouldBe JsSuccess(countryLiability)
       (json \ "alpha3").as[String] shouldBe "FRA"
-      (json \ "name").as[String] shouldBe "France"
+      (json \ "name").as[String]   shouldBe "France"
     }
   }
 }

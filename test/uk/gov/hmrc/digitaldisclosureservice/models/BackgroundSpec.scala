@@ -38,16 +38,16 @@ class BackgroundSpec extends AnyWordSpec with Matchers {
 
       val xml = background.toXml
 
-      (xml \ "haveYouReceivedALetter").text shouldBe "true"
-      (xml \ "letterReferenceNumber").text shouldBe "ABC123"
-      (xml \ "disclosureEntity" \ "entity").text shouldBe "Individual"
+      (xml \ "haveYouReceivedALetter").text               shouldBe "true"
+      (xml \ "letterReferenceNumber").text                shouldBe "ABC123"
+      (xml \ "disclosureEntity" \ "entity").text          shouldBe "Individual"
       (xml \ "disclosureEntity" \ "areYouTheEntity").text shouldBe "yes"
-      (xml \ "areYouRepresetingAnOrganisation").text shouldBe "false"
-      (xml \ "organisationName").text shouldBe "Test Org"
-      (xml \ "offshoreLiabilities").text shouldBe "true"
-      (xml \ "onshoreLiabilities").text shouldBe "false"
+      (xml \ "areYouRepresetingAnOrganisation").text      shouldBe "false"
+      (xml \ "organisationName").text                     shouldBe "Test Org"
+      (xml \ "offshoreLiabilities").text                  shouldBe "true"
+      (xml \ "onshoreLiabilities").text                   shouldBe "false"
       (xml \ "incomeSource" \ "source").map(_.text).toSet shouldBe Set("dividends", "interest")
-      (xml \ "otherIncomeSource").text shouldBe "Other source"
+      (xml \ "otherIncomeSource").text                    shouldBe "Other source"
     }
 
     "convert to XML correctly with only some fields populated" in {
@@ -59,16 +59,16 @@ class BackgroundSpec extends AnyWordSpec with Matchers {
 
       val xml = background.toXml
 
-      (xml \ "haveYouReceivedALetter").text shouldBe "false"
-      (xml \ "letterReferenceNumber").isEmpty shouldBe true
-      (xml \ "disclosureEntity" \ "entity").text shouldBe "Company"
+      (xml \ "haveYouReceivedALetter").text                  shouldBe "false"
+      (xml \ "letterReferenceNumber").isEmpty                shouldBe true
+      (xml \ "disclosureEntity" \ "entity").text             shouldBe "Company"
       (xml \ "disclosureEntity" \ "areYouTheEntity").isEmpty shouldBe true
-      (xml \ "areYouRepresetingAnOrganisation").isEmpty shouldBe true
-      (xml \ "organisationName").isEmpty shouldBe true
-      (xml \ "offshoreLiabilities").text shouldBe "true"
-      (xml \ "onshoreLiabilities").isEmpty shouldBe true
-      (xml \ "incomeSource").isEmpty shouldBe true
-      (xml \ "otherIncomeSource").isEmpty shouldBe true
+      (xml \ "areYouRepresetingAnOrganisation").isEmpty      shouldBe true
+      (xml \ "organisationName").isEmpty                     shouldBe true
+      (xml \ "offshoreLiabilities").text                     shouldBe "true"
+      (xml \ "onshoreLiabilities").isEmpty                   shouldBe true
+      (xml \ "incomeSource").isEmpty                         shouldBe true
+      (xml \ "otherIncomeSource").isEmpty                    shouldBe true
     }
 
     "convert to XML correctly with no fields populated" in {
@@ -76,15 +76,15 @@ class BackgroundSpec extends AnyWordSpec with Matchers {
 
       val xml = background.toXml
 
-      (xml \ "haveYouReceivedALetter").isEmpty shouldBe true
-      (xml \ "letterReferenceNumber").isEmpty shouldBe true
-      (xml \ "disclosureEntity").isEmpty shouldBe true
+      (xml \ "haveYouReceivedALetter").isEmpty          shouldBe true
+      (xml \ "letterReferenceNumber").isEmpty           shouldBe true
+      (xml \ "disclosureEntity").isEmpty                shouldBe true
       (xml \ "areYouRepresetingAnOrganisation").isEmpty shouldBe true
-      (xml \ "organisationName").isEmpty shouldBe true
-      (xml \ "offshoreLiabilities").isEmpty shouldBe true
-      (xml \ "onshoreLiabilities").isEmpty shouldBe true
-      (xml \ "incomeSource").isEmpty shouldBe true
-      (xml \ "otherIncomeSource").isEmpty shouldBe true
+      (xml \ "organisationName").isEmpty                shouldBe true
+      (xml \ "offshoreLiabilities").isEmpty             shouldBe true
+      (xml \ "onshoreLiabilities").isEmpty              shouldBe true
+      (xml \ "incomeSource").isEmpty                    shouldBe true
+      (xml \ "otherIncomeSource").isEmpty               shouldBe true
     }
 
     "convert to XML correctly with all different entity types" in {
@@ -107,7 +107,7 @@ class BackgroundSpec extends AnyWordSpec with Matchers {
         incomeSource = Some(allSources)
       )
 
-      val xml = background.toXml
+      val xml            = background.toXml
       val sourcesFromXml = (xml \ "incomeSource" \ "source").map(_.text).toSet
 
       sourcesFromXml.size shouldBe allSources.size

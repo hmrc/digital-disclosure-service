@@ -24,24 +24,38 @@ class WhereDidTheUndeclaredIncomeOrGainIncludedSpec extends AnyWordSpec with Mat
 
   "WhereDidTheUndeclaredIncomeOrGainIncluded" should {
     "encode correctly to strings" in {
-      WhereDidTheUndeclaredIncomeOrGainIncluded.Dividends.toString shouldBe "dividends"
-      WhereDidTheUndeclaredIncomeOrGainIncluded.Interest.toString shouldBe "interest"
-      WhereDidTheUndeclaredIncomeOrGainIncluded.PropertyIncome.toString shouldBe "propertyIncome"
+      WhereDidTheUndeclaredIncomeOrGainIncluded.Dividends.toString               shouldBe "dividends"
+      WhereDidTheUndeclaredIncomeOrGainIncluded.Interest.toString                shouldBe "interest"
+      WhereDidTheUndeclaredIncomeOrGainIncluded.PropertyIncome.toString          shouldBe "propertyIncome"
       WhereDidTheUndeclaredIncomeOrGainIncluded.ResidentialPropertyGain.toString shouldBe "residentialPropertyGain"
-      WhereDidTheUndeclaredIncomeOrGainIncluded.SelfEmploymentIncome.toString shouldBe "selfEmploymentIncome"
-      WhereDidTheUndeclaredIncomeOrGainIncluded.OtherGains.toString shouldBe "otherGains"
-      WhereDidTheUndeclaredIncomeOrGainIncluded.SomewhereElse.toString shouldBe "somewhereElse"
+      WhereDidTheUndeclaredIncomeOrGainIncluded.SelfEmploymentIncome.toString    shouldBe "selfEmploymentIncome"
+      WhereDidTheUndeclaredIncomeOrGainIncluded.OtherGains.toString              shouldBe "otherGains"
+      WhereDidTheUndeclaredIncomeOrGainIncluded.SomewhereElse.toString           shouldBe "somewhereElse"
     }
 
     "contain all expected values" in {
       WhereDidTheUndeclaredIncomeOrGainIncluded.values.size shouldBe 7
-      WhereDidTheUndeclaredIncomeOrGainIncluded.values should contain(WhereDidTheUndeclaredIncomeOrGainIncluded.Dividends)
-      WhereDidTheUndeclaredIncomeOrGainIncluded.values should contain(WhereDidTheUndeclaredIncomeOrGainIncluded.Interest)
-      WhereDidTheUndeclaredIncomeOrGainIncluded.values should contain(WhereDidTheUndeclaredIncomeOrGainIncluded.PropertyIncome)
-      WhereDidTheUndeclaredIncomeOrGainIncluded.values should contain(WhereDidTheUndeclaredIncomeOrGainIncluded.ResidentialPropertyGain)
-      WhereDidTheUndeclaredIncomeOrGainIncluded.values should contain(WhereDidTheUndeclaredIncomeOrGainIncluded.SelfEmploymentIncome)
-      WhereDidTheUndeclaredIncomeOrGainIncluded.values should contain(WhereDidTheUndeclaredIncomeOrGainIncluded.OtherGains)
-      WhereDidTheUndeclaredIncomeOrGainIncluded.values should contain(WhereDidTheUndeclaredIncomeOrGainIncluded.SomewhereElse)
+      WhereDidTheUndeclaredIncomeOrGainIncluded.values        should contain(
+        WhereDidTheUndeclaredIncomeOrGainIncluded.Dividends
+      )
+      WhereDidTheUndeclaredIncomeOrGainIncluded.values        should contain(
+        WhereDidTheUndeclaredIncomeOrGainIncluded.Interest
+      )
+      WhereDidTheUndeclaredIncomeOrGainIncluded.values        should contain(
+        WhereDidTheUndeclaredIncomeOrGainIncluded.PropertyIncome
+      )
+      WhereDidTheUndeclaredIncomeOrGainIncluded.values        should contain(
+        WhereDidTheUndeclaredIncomeOrGainIncluded.ResidentialPropertyGain
+      )
+      WhereDidTheUndeclaredIncomeOrGainIncluded.values        should contain(
+        WhereDidTheUndeclaredIncomeOrGainIncluded.SelfEmploymentIncome
+      )
+      WhereDidTheUndeclaredIncomeOrGainIncluded.values        should contain(
+        WhereDidTheUndeclaredIncomeOrGainIncluded.OtherGains
+      )
+      WhereDidTheUndeclaredIncomeOrGainIncluded.values        should contain(
+        WhereDidTheUndeclaredIncomeOrGainIncluded.SomewhereElse
+      )
     }
   }
 }

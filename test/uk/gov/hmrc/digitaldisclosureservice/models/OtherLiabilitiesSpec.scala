@@ -29,17 +29,17 @@ class OtherLiabilitiesSpec extends AnyWordSpec with Matchers {
 
       val xml = otherLiabilities.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("otherLiabilities")
-      (xml \ "issues").isEmpty shouldBe true
-      (xml \ "inheritanceGift").isEmpty shouldBe true
-      (xml \ "other").isEmpty shouldBe true
+      xml.headOption.map(_.label)          shouldBe Some("otherLiabilities")
+      (xml \ "issues").isEmpty             shouldBe true
+      (xml \ "inheritanceGift").isEmpty    shouldBe true
+      (xml \ "other").isEmpty              shouldBe true
       (xml \ "taxCreditsReceived").isEmpty shouldBe true
     }
 
     "serialize and deserialize correctly with minimal fields" in {
       val otherLiabilities = OtherLiabilities()
 
-      val json = Json.toJson(otherLiabilities)
+      val json   = Json.toJson(otherLiabilities)
       val parsed = json.validate[OtherLiabilities]
 
       parsed shouldBe JsSuccess(otherLiabilities)
@@ -60,11 +60,11 @@ class OtherLiabilitiesSpec extends AnyWordSpec with Matchers {
 
       val xml = otherLiabilities.toXml
 
-      xml.headOption.map(_.label) shouldBe Some("otherLiabilities")
-      (xml \ "issues").nonEmpty shouldBe true
-      (xml \ "issues" \ "issue").size shouldBe 2
-      (xml \ "inheritanceGift").text shouldBe "Test inheritance gift"
-      (xml \ "other").text shouldBe "Test other liability"
+      xml.headOption.map(_.label)       shouldBe Some("otherLiabilities")
+      (xml \ "issues").nonEmpty         shouldBe true
+      (xml \ "issues" \ "issue").size   shouldBe 2
+      (xml \ "inheritanceGift").text    shouldBe "Test inheritance gift"
+      (xml \ "other").text              shouldBe "Test other liability"
       (xml \ "taxCreditsReceived").text shouldBe "true"
     }
 
@@ -81,7 +81,7 @@ class OtherLiabilitiesSpec extends AnyWordSpec with Matchers {
         taxCreditsReceived = Some(true)
       )
 
-      val json = Json.toJson(otherLiabilities)
+      val json   = Json.toJson(otherLiabilities)
       val parsed = json.validate[OtherLiabilities]
 
       parsed shouldBe JsSuccess(otherLiabilities)
