@@ -37,7 +37,7 @@ final case class OnshoreTaxYearLiabilities(
       {nonBusinessIncome.map(income => <nonBusinessIncome>{income}</nonBusinessIncome>).getOrElse(NodeSeq.Empty)}
       {businessIncome.map(income => <businessIncome>{income}</businessIncome>).getOrElse(NodeSeq.Empty)}
       {lettingIncome.map(income => <lettingIncome>{income}</lettingIncome>).getOrElse(NodeSeq.Empty)}
-      {gains.map(g => <gains>{g}</gains>).getOrElse(NodeSeq.Empty)}
+      {gains.map(gain => <gains>{gain}</gains>).getOrElse(NodeSeq.Empty)}
       <unpaidTax>{unpaidTax}</unpaidTax>
       <niContributions>{niContributions}</niContributions>
       <interest>{interest}</interest>
