@@ -18,12 +18,20 @@ package models.notification
 
 import play.api.libs.json.{Json, OFormat}
 import models.address.Address
+import scala.xml._
 
 final case class AboutTheCompany(
   name: Option[String] = None,
   registrationNumber: Option[String] = None,
   address: Option[Address] = None
-)
+) {
+  def toXml: NodeSeq =
+    <aboutTheCompany>
+      {name.map(n => <name>{n}</name>).getOrElse(NodeSeq.Empty)}
+      {registrationNumber.map(rn => <registrationNumber>{rn}</registrationNumber>).getOrElse(NodeSeq.Empty)}
+      {address.map(addr => <address>{addr.toXml}</address>).getOrElse(NodeSeq.Empty)}
+    </aboutTheCompany>
+}
 
 object AboutTheCompany {
   implicit val format: OFormat[AboutTheCompany] = Json.format[AboutTheCompany]

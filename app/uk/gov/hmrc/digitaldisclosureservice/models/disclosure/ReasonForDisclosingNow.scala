@@ -18,6 +18,7 @@ package models.disclosure
 
 import play.api.libs.json.{Json, OFormat}
 import models.{AdviceGiven, WhichEmailAddressCanWeContactYouWith, WhichTelephoneNumberCanWeContactYouWith, WhyAreYouMakingADisclosure}
+import scala.xml._
 
 final case class ReasonForDisclosingNow(
   reason: Option[Set[WhyAreYouMakingADisclosure]] = None,
@@ -33,7 +34,34 @@ final case class ReasonForDisclosingNow(
   whichPhone: Option[WhichTelephoneNumberCanWeContactYouWith] = None,
   email: Option[String] = None,
   telephone: Option[String] = None
-)
+) {
+  def toXml: NodeSeq =
+    <reasonForDisclosingNow>
+      {
+      reason
+        .map(r => <reason>
+        {r.map(reason => <disclosureReason>{reason.toXml}</disclosureReason>)}
+      </reason>)
+        .getOrElse(NodeSeq.Empty)
+    }
+      {otherReason.map(r => <otherReason>{r}</otherReason>).getOrElse(NodeSeq.Empty)}
+      {whyNotBeforeNow.map(why => <whyNotBeforeNow>{why}</whyNotBeforeNow>).getOrElse(NodeSeq.Empty)}
+      {receivedAdvice.map(received => <receivedAdvice>{received}</receivedAdvice>).getOrElse(NodeSeq.Empty)}
+      {personWhoGaveAdvice.map(person => <personWhoGaveAdvice>{person}</personWhoGaveAdvice>).getOrElse(NodeSeq.Empty)}
+      {
+      adviceOnBehalfOfBusiness
+        .map(onBehalf => <adviceOnBehalfOfBusiness>{onBehalf}</adviceOnBehalfOfBusiness>)
+        .getOrElse(NodeSeq.Empty)
+    }
+      {adviceBusinessName.map(name => <adviceBusinessName>{name}</adviceBusinessName>).getOrElse(NodeSeq.Empty)}
+      {personProfession.map(profession => <personProfession>{profession}</personProfession>).getOrElse(NodeSeq.Empty)}
+      {adviceGiven.map(advice => <adviceGiven>{advice.toXml}</adviceGiven>).getOrElse(NodeSeq.Empty)}
+      {whichEmail.map(email => <whichEmail>{email.toXml}</whichEmail>).getOrElse(NodeSeq.Empty)}
+      {whichPhone.map(phone => <whichPhone>{phone.toXml}</whichPhone>).getOrElse(NodeSeq.Empty)}
+      {email.map(e => <email>{e}</email>).getOrElse(NodeSeq.Empty)}
+      {telephone.map(t => <telephone>{t}</telephone>).getOrElse(NodeSeq.Empty)}
+    </reasonForDisclosingNow>
+}
 
 object ReasonForDisclosingNow {
   implicit val format: OFormat[ReasonForDisclosingNow] = Json.format[ReasonForDisclosingNow]

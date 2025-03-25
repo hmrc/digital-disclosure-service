@@ -17,9 +17,17 @@
 package models
 
 import play.api.libs.json.{Json, OFormat}
+import scala.xml._
 
 sealed trait CustomerId {
   def id: String
+  def toXml: NodeSeq = this match {
+    case NINO(id)       => <nino>{id}</nino>
+    case CAUTR(id)      => <cautr>{id}</cautr>
+    case SAUTR(id)      => <sautr>{id}</sautr>
+    case ARN(id)        => <arn>{id}</arn>
+    case ExternalId(id) => <externalId>{id}</externalId>
+  }
 }
 
 final case class NINO(id: String) extends CustomerId
@@ -31,6 +39,7 @@ final case class CAUTR(id: String) extends CustomerId
 object CAUTR {
   implicit val format: OFormat[CAUTR] = Json.format[CAUTR]
 }
+
 final case class SAUTR(id: String) extends CustomerId
 object SAUTR {
   implicit val format: OFormat[SAUTR] = Json.format[SAUTR]

@@ -18,8 +18,20 @@ package models.notification
 
 import play.api.libs.json._
 import models.AreYouTheEntity
+import scala.xml._
 
-sealed trait Entity
+sealed trait Entity {
+  def toXml: NodeSeq = <entity>{
+    this match {
+      case Individual => "Individual"
+      case Estate     => "Estate"
+      case Company    => "Company"
+      case LLP        => "LLP"
+      case Trust      => "Trust"
+    }
+  }</entity>
+}
+
 object Entity {
   implicit val reads: Reads[Entity] = Reads {
     case JsString("Individual") => JsSuccess(Individual)
@@ -47,7 +59,13 @@ case object Company extends Entity
 case object LLP extends Entity
 case object Trust extends Entity
 
-final case class DisclosureEntity(entity: Entity, areYouTheEntity: Option[AreYouTheEntity] = None)
+final case class DisclosureEntity(entity: Entity, areYouTheEntity: Option[AreYouTheEntity] = None) {
+  def toXml: NodeSeq =
+    <disclosureEntity>
+      {entity.toXml}
+      {areYouTheEntity.map(answer => <areYouTheEntity>{answer.toXml}</areYouTheEntity>).getOrElse(NodeSeq.Empty)}
+    </disclosureEntity>
+}
 
 object DisclosureEntity {
   implicit val format: OFormat[DisclosureEntity] = Json.format[DisclosureEntity]

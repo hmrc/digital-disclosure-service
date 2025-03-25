@@ -20,6 +20,7 @@ import java.time.LocalDate
 import play.api.libs.json.{Json, OFormat}
 import models.YesNoOrUnsure
 import models.address.Address
+import scala.xml._
 
 final case class AboutTheEstate(
   fullName: Option[String] = None,
@@ -32,7 +33,21 @@ final case class AboutTheEstate(
   registeredForSA: Option[YesNoOrUnsure] = None,
   sautr: Option[String] = None,
   address: Option[Address] = None
-)
+) {
+  def toXml: NodeSeq =
+    <aboutTheEstate>
+      {fullName.map(name => <fullName>{name}</fullName>).getOrElse(NodeSeq.Empty)}
+      {dateOfBirth.map(dob => <dateOfBirth>{dob}</dateOfBirth>).getOrElse(NodeSeq.Empty)}
+      {mainOccupation.map(occupation => <mainOccupation>{occupation}</mainOccupation>).getOrElse(NodeSeq.Empty)}
+      {doTheyHaveANino.map(ninoStatus => <doTheyHaveANino>{ninoStatus}</doTheyHaveANino>).getOrElse(NodeSeq.Empty)}
+      {nino.map(n => <nino>{n}</nino>).getOrElse(NodeSeq.Empty)}
+      {registeredForVAT.map(vatStatus => <registeredForVAT>{vatStatus}</registeredForVAT>).getOrElse(NodeSeq.Empty)}
+      {vatRegNumber.map(vat => <vatRegNumber>{vat}</vatRegNumber>).getOrElse(NodeSeq.Empty)}
+      {registeredForSA.map(saStatus => <registeredForSA>{saStatus}</registeredForSA>).getOrElse(NodeSeq.Empty)}
+      {sautr.map(s => <sautr>{s}</sautr>).getOrElse(NodeSeq.Empty)}
+      {address.map(addr => <address>{addr.toXml}</address>).getOrElse(NodeSeq.Empty)}
+    </aboutTheEstate>
+}
 
 object AboutTheEstate {
   implicit val format: OFormat[AboutTheEstate] = Json.format[AboutTheEstate]

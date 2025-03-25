@@ -16,7 +16,9 @@
 
 package models
 
-sealed trait WhichEmailAddressCanWeContactYouWith
+sealed trait WhichEmailAddressCanWeContactYouWith {
+  def toXml: String = this.toString
+}
 
 object WhichEmailAddressCanWeContactYouWith extends Enumerable.Implicits {
 

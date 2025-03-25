@@ -18,6 +18,7 @@ package models.disclosure
 
 import play.api.libs.json.{Json, OFormat}
 import models._
+import scala.xml._
 
 final case class OffshoreLiabilities(
   behaviour: Option[Set[WhyAreYouMakingThisDisclosure]] = None,
@@ -40,7 +41,109 @@ final case class OffshoreLiabilities(
   otherInterpretation: Option[String] = None,
   notIncludedDueToInterpretation: Option[HowMuchTaxHasNotBeenIncluded] = None,
   maximumValueOfAssets: Option[TheMaximumValueOfAllAssets] = None
-)
+) {
+  def toXml: NodeSeq =
+    <offshoreLiabilities>
+      {
+      behaviour
+        .map(b => <behaviour>
+        {b.map(reason => <reason>{reason.toXml}</reason>)}
+      </behaviour>)
+        .getOrElse(NodeSeq.Empty)
+    }
+      {
+      excuseForNotNotifying
+        .map(excuse => <excuseForNotNotifying>{excuse.toXml}</excuseForNotNotifying>)
+        .getOrElse(NodeSeq.Empty)
+    }
+      {reasonableCare.map(care => <reasonableCare>{care.toXml}</reasonableCare>).getOrElse(NodeSeq.Empty)}
+      {
+      excuseForNotFiling.map(excuse => <excuseForNotFiling>{excuse.toXml}</excuseForNotFiling>).getOrElse(NodeSeq.Empty)
+    }
+      {
+      whichYears
+        .map(years => <whichYears>
+        {years.map(year => <year>{year.toXml}</year>)}
+      </whichYears>)
+        .getOrElse(NodeSeq.Empty)
+    }
+      {
+      youHaveNotIncludedTheTaxYear
+        .map(year => <youHaveNotIncludedTheTaxYear>{year}</youHaveNotIncludedTheTaxYear>)
+        .getOrElse(NodeSeq.Empty)
+    }
+      {
+      youHaveNotSelectedCertainTaxYears
+        .map(years => <youHaveNotSelectedCertainTaxYears>{years}</youHaveNotSelectedCertainTaxYears>)
+        .getOrElse(NodeSeq.Empty)
+    }
+      {taxBeforeFiveYears.map(tax => <taxBeforeFiveYears>{tax}</taxBeforeFiveYears>).getOrElse(NodeSeq.Empty)}
+      {taxBeforeSevenYears.map(tax => <taxBeforeSevenYears>{tax}</taxBeforeSevenYears>).getOrElse(NodeSeq.Empty)}
+      {
+      taxBeforeNineteenYears.map(tax => <taxBeforeNineteenYears>{tax}</taxBeforeNineteenYears>).getOrElse(NodeSeq.Empty)
+    }
+      {missingYear.map(year => <missingYear>{year}</missingYear>).getOrElse(NodeSeq.Empty)}
+      {missingYears.map(years => <missingYears>{years}</missingYears>).getOrElse(NodeSeq.Empty)}
+      {disregardedCDF.map(cdf => <disregardedCDF>{cdf}</disregardedCDF>).getOrElse(NodeSeq.Empty)}
+      {
+      taxYearLiabilities
+        .map(liabilities =>
+          <taxYearLiabilities>
+        {
+            liabilities.map { case (year, liability) =>
+              <taxYear year={year}>{liability.toXml}</taxYear>
+            }
+          }
+      </taxYearLiabilities>
+        )
+        .getOrElse(NodeSeq.Empty)
+    }
+      {
+      taxYearForeignTaxDeductions
+        .map(deductions =>
+          <taxYearForeignTaxDeductions>
+        {
+            deductions.map { case (year, amount) =>
+              <deduction year={year}>{amount}</deduction>
+            }
+          }
+      </taxYearForeignTaxDeductions>
+        )
+        .getOrElse(NodeSeq.Empty)
+    }
+      {
+      countryOfYourOffshoreLiability
+        .map(countries =>
+          <countryOfYourOffshoreLiability>
+        {
+            countries.map { case (country, liability) =>
+              <country name={country}>{liability.toXml}</country>
+            }
+          }
+      </countryOfYourOffshoreLiability>
+        )
+        .getOrElse(NodeSeq.Empty)
+    }
+      {
+      legalInterpretation
+        .map(interpretations => <legalInterpretation>
+        {interpretations.map(interpretation => <interpretation>{interpretation.toXml}</interpretation>)}
+      </legalInterpretation>)
+        .getOrElse(NodeSeq.Empty)
+    }
+      {otherInterpretation.map(other => <otherInterpretation>{other}</otherInterpretation>).getOrElse(NodeSeq.Empty)}
+      {
+      notIncludedDueToInterpretation
+        .map(notIncluded => <notIncludedDueToInterpretation>{notIncluded.toXml}</notIncludedDueToInterpretation>)
+        .getOrElse(NodeSeq.Empty)
+    }
+      {
+      maximumValueOfAssets
+        .map(value => <maximumValueOfAssets>{value.toXml}</maximumValueOfAssets>)
+        .getOrElse(NodeSeq.Empty)
+    }
+    </offshoreLiabilities>
+}
 
 object OffshoreLiabilities {
   implicit val format: OFormat[OffshoreLiabilities] = Json.format[OffshoreLiabilities]

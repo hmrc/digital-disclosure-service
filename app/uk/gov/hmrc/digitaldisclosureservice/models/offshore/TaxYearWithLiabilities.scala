@@ -17,12 +17,19 @@
 package models
 
 import play.api.libs.json._
+import scala.xml._
 
 final case class TaxYearWithLiabilities(
   taxYear: TaxYearStarting,
   taxYearLiabilities: TaxYearLiabilities
-)
+) {
+  def toXml: NodeSeq =
+    <taxYearWithLiabilities>
+      <taxYear>{taxYear.toXml}</taxYear>
+      <taxYearLiabilities>{taxYearLiabilities.toXml}</taxYearLiabilities>
+    </taxYearWithLiabilities>
+}
 
 object TaxYearWithLiabilities {
-  implicit val format = Json.format[TaxYearWithLiabilities]
+  implicit val format: Format[TaxYearWithLiabilities] = Json.format[TaxYearWithLiabilities]
 }

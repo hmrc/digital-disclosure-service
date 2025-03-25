@@ -17,7 +17,7 @@
 package models
 
 import play.api.libs.json._
-
+import scala.xml._
 import java.time.LocalDate
 
 case class CorporationTaxLiability(
@@ -27,7 +27,17 @@ case class CorporationTaxLiability(
   howMuchInterest: BigInt,
   penaltyRate: BigDecimal,
   penaltyRateReason: String
-)
+) {
+  def toXml: NodeSeq =
+    <corporationTaxLiability>
+      <periodEnd>{periodEnd}</periodEnd>
+      <howMuchIncome>{howMuchIncome}</howMuchIncome>
+      <howMuchUnpaid>{howMuchUnpaid}</howMuchUnpaid>
+      <howMuchInterest>{howMuchInterest}</howMuchInterest>
+      <penaltyRate>{penaltyRate}</penaltyRate>
+      <penaltyRateReason>{penaltyRateReason}</penaltyRateReason>
+    </corporationTaxLiability>
+}
 
 object CorporationTaxLiability {
   implicit val format = Json.format[CorporationTaxLiability]

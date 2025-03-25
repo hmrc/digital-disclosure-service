@@ -16,7 +16,11 @@
 
 package models
 
-sealed trait WhatOnshoreLiabilitiesDoYouNeedToDisclose
+import scala.xml._
+
+sealed trait WhatOnshoreLiabilitiesDoYouNeedToDisclose {
+  def toXml: String = this.toString
+}
 
 object WhatOnshoreLiabilitiesDoYouNeedToDisclose extends Enumerable.Implicits {
 

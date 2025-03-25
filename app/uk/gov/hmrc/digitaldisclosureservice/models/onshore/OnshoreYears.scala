@@ -18,8 +18,11 @@ package models
 
 import play.api.libs.json._
 import scala.util.Try
+import scala.xml._
 
-sealed trait OnshoreYears
+sealed trait OnshoreYears {
+  def toXml: String = this.toString
+}
 
 final case class OnshoreYearStarting(startYear: Int) extends OnshoreYears with Ordered[OnshoreYearStarting] {
   override def toString = startYear.toString
@@ -85,5 +88,4 @@ object OnshoreYears {
   }
 
   implicit val format: Format[OnshoreYears] = Format(reads, writes)
-
 }

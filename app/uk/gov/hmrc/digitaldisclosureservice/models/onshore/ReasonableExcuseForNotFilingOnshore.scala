@@ -17,8 +17,15 @@
 package models
 
 import play.api.libs.json._
+import scala.xml._
 
-case class ReasonableExcuseForNotFilingOnshore(reasonableExcuse: String, yearsThisAppliesTo: String)
+case class ReasonableExcuseForNotFilingOnshore(reasonableExcuse: String, yearsThisAppliesTo: String) {
+  def toXml: NodeSeq =
+    <reasonableExcuseForNotFilingOnshore>
+      <reasonableExcuse>{reasonableExcuse}</reasonableExcuse>
+      <yearsThisAppliesTo>{yearsThisAppliesTo}</yearsThisAppliesTo>
+    </reasonableExcuseForNotFilingOnshore>
+}
 
 object ReasonableExcuseForNotFilingOnshore {
   implicit val format = Json.format[ReasonableExcuseForNotFilingOnshore]

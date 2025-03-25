@@ -16,7 +16,11 @@
 
 package models
 
-sealed trait OtherLiabilityIssues
+import scala.xml._
+
+sealed trait OtherLiabilityIssues {
+  def toXml: String = this.toString
+}
 
 object OtherLiabilityIssues extends Enumerable.Implicits {
 

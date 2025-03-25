@@ -17,6 +17,7 @@
 package models
 
 import play.api.libs.json._
+import scala.xml._
 
 final case class OnshoreTaxYearLiabilities(
   nonBusinessIncome: Option[BigInt] = None,
@@ -30,7 +31,30 @@ final case class OnshoreTaxYearLiabilities(
   penaltyRateReason: String,
   undeclaredIncomeOrGain: Option[String] = None,
   residentialTaxReduction: Option[Boolean]
-)
+) {
+  def toXml: NodeSeq =
+    <onshoreTaxYearLiabilities>
+      {nonBusinessIncome.map(income => <nonBusinessIncome>{income}</nonBusinessIncome>).getOrElse(NodeSeq.Empty)}
+      {businessIncome.map(income => <businessIncome>{income}</businessIncome>).getOrElse(NodeSeq.Empty)}
+      {lettingIncome.map(income => <lettingIncome>{income}</lettingIncome>).getOrElse(NodeSeq.Empty)}
+      {gains.map(gain => <gains>{gain}</gains>).getOrElse(NodeSeq.Empty)}
+      <unpaidTax>{unpaidTax}</unpaidTax>
+      <niContributions>{niContributions}</niContributions>
+      <interest>{interest}</interest>
+      <penaltyRate>{penaltyRate}</penaltyRate>
+      <penaltyRateReason>{penaltyRateReason}</penaltyRateReason>
+      {
+      undeclaredIncomeOrGain
+        .map(income => <undeclaredIncomeOrGain>{income}</undeclaredIncomeOrGain>)
+        .getOrElse(NodeSeq.Empty)
+    }
+      {
+      residentialTaxReduction
+        .map(reduction => <residentialTaxReduction>{reduction}</residentialTaxReduction>)
+        .getOrElse(NodeSeq.Empty)
+    }
+    </onshoreTaxYearLiabilities>
+}
 
 object OnshoreTaxYearLiabilities {
   implicit val format = Json.format[OnshoreTaxYearLiabilities]

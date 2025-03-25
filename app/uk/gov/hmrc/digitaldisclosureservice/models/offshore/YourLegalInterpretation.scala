@@ -16,7 +16,9 @@
 
 package models
 
-sealed trait YourLegalInterpretation
+sealed trait YourLegalInterpretation {
+  def toXml: String = this.toString
+}
 
 object YourLegalInterpretation extends Enumerable.Implicits {
 

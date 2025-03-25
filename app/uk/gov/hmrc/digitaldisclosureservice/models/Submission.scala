@@ -20,8 +20,7 @@ import java.time.Instant
 import models.notification._
 import models.disclosure._
 import play.api.libs.json.{Json, OFormat}
-import com.thoughtworks.xstream._
-import com.thoughtworks.xstream.io.xml.DomDriver
+import scala.xml._
 
 sealed trait Submission {
   def userId: String
@@ -31,8 +30,35 @@ sealed trait Submission {
   def customerId: Option[CustomerId]
 
   def toXml: String = {
-    val xstream = new XStream(new DomDriver)
-    xstream.toXML(this)
+    val elem = this match {
+      case f: FullDisclosure =>
+        <fullDisclosure>
+          <userId>{f.userId}</userId>
+          <submissionId>{f.submissionId}</submissionId>
+          <lastUpdated>{f.lastUpdated.toString}</lastUpdated>
+          {f.metadata.toXml}
+          {f.caseReference.toXml}
+          {f.personalDetails.toXml}
+          {f.onshoreLiabilities.map(ol => ol.toXml).getOrElse(NodeSeq.Empty)}
+          {f.offshoreLiabilities.toXml}
+          {f.otherLiabilities.toXml}
+          {f.reasonForDisclosingNow.toXml}
+          {f.customerId.map(id => id.toXml).getOrElse(NodeSeq.Empty)}
+          {f.offerAmount.map(amount => <offerAmount>{amount}</offerAmount>).getOrElse(NodeSeq.Empty)}
+        </fullDisclosure>
+
+      case n: Notification =>
+        <notification>
+          <userId>{n.userId}</userId>
+          <submissionId>{n.submissionId}</submissionId>
+          <lastUpdated>{n.lastUpdated.toString}</lastUpdated>
+          {n.metadata.toXml}
+          {n.personalDetails.toXml}
+          {n.customerId.map(id => id.toXml).getOrElse(NodeSeq.Empty)}
+        </notification>
+    }
+
+    elem.toString()
   }
 }
 

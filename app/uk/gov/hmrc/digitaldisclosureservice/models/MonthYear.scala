@@ -17,8 +17,15 @@
 package models
 
 import play.api.libs.json._
+import scala.xml._
 
-final case class MonthYear(month: Int, year: Int)
+final case class MonthYear(month: Int, year: Int) {
+  def toXml: NodeSeq =
+    <monthYear>
+      <month>{month}</month>
+      <year>{year}</year>
+    </monthYear>
+}
 
 object MonthYear {
   implicit val format = Json.format[MonthYear]

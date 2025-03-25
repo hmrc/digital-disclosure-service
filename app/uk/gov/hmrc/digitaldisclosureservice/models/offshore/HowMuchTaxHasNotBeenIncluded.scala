@@ -16,7 +16,9 @@
 
 package models
 
-sealed trait HowMuchTaxHasNotBeenIncluded
+sealed trait HowMuchTaxHasNotBeenIncluded {
+  def toXml: String = this.toString
+}
 
 object HowMuchTaxHasNotBeenIncluded extends Enumerable.Implicits {
 

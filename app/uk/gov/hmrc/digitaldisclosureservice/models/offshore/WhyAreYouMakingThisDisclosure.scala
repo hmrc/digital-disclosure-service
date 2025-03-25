@@ -16,7 +16,11 @@
 
 package models
 
-sealed trait WhyAreYouMakingThisDisclosure
+import scala.xml._
+
+sealed trait WhyAreYouMakingThisDisclosure {
+  def toXml: String = this.toString
+}
 
 object WhyAreYouMakingThisDisclosure extends Enumerable.Implicits {
 

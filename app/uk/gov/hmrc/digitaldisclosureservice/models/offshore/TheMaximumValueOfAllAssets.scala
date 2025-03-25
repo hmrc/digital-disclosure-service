@@ -16,7 +16,11 @@
 
 package models
 
-sealed trait TheMaximumValueOfAllAssets
+import scala.xml._
+
+sealed trait TheMaximumValueOfAllAssets {
+  def toXml: String = this.toString
+}
 
 object TheMaximumValueOfAllAssets extends Enumerable.Implicits {
 

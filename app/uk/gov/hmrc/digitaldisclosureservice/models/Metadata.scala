@@ -18,11 +18,18 @@ package models
 
 import java.time.LocalDateTime
 import play.api.libs.json.{Json, OFormat}
+import scala.xml._
 
 final case class Metadata(
   reference: Option[String] = None,
   submissionTime: Option[LocalDateTime] = None
-)
+) {
+  def toXml: NodeSeq =
+    <metadata>
+      {reference.map(ref => <reference>{ref}</reference>).getOrElse(NodeSeq.Empty)}
+      {submissionTime.map(time => <submissionTime>{time.toString}</submissionTime>).getOrElse(NodeSeq.Empty)}
+    </metadata>
+}
 
 object Metadata {
   implicit val format: OFormat[Metadata] = Json.format[Metadata]

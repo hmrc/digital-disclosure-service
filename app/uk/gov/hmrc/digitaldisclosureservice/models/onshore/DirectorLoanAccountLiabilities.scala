@@ -17,7 +17,7 @@
 package models
 
 import play.api.libs.json._
-
+import scala.xml._
 import java.time.LocalDate
 
 case class DirectorLoanAccountLiabilities(
@@ -28,7 +28,18 @@ case class DirectorLoanAccountLiabilities(
   interest: BigInt,
   penaltyRate: BigDecimal,
   penaltyRateReason: String
-)
+) {
+  def toXml: NodeSeq =
+    <directorLoanAccountLiabilities>
+      <name>{name}</name>
+      <periodEnd>{periodEnd}</periodEnd>
+      <overdrawn>{overdrawn}</overdrawn>
+      <unpaidTax>{unpaidTax}</unpaidTax>
+      <interest>{interest}</interest>
+      <penaltyRate>{penaltyRate}</penaltyRate>
+      <penaltyRateReason>{penaltyRateReason}</penaltyRateReason>
+    </directorLoanAccountLiabilities>
+}
 
 object DirectorLoanAccountLiabilities {
   implicit val format = Json.format[DirectorLoanAccountLiabilities]

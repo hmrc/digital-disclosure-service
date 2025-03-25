@@ -16,7 +16,9 @@
 
 package models
 
-sealed trait WhyAreYouMakingThisOnshoreDisclosure
+sealed trait WhyAreYouMakingThisOnshoreDisclosure {
+  def toXml: String = this.toString
+}
 
 object WhyAreYouMakingThisOnshoreDisclosure extends Enumerable.Implicits {
 

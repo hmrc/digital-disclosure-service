@@ -18,6 +18,7 @@ package models.address
 
 import play.api.i18n.Messages
 import play.api.libs.json.{Json, OFormat}
+import scala.xml._
 
 final case class Address(
   line1: String,
@@ -26,12 +27,20 @@ final case class Address(
   line4: Option[String],
   postcode: Option[String],
   country: Country
-)
+) {
+  def toXml: NodeSeq =
+    <address>
+      <line1>{line1}</line1>
+      {line2.map(l2 => <line2>{l2}</line2>).getOrElse(NodeSeq.Empty)}
+      {line3.map(l3 => <line3>{l3}</line3>).getOrElse(NodeSeq.Empty)}
+      {line4.map(l4 => <line4>{l4}</line4>).getOrElse(NodeSeq.Empty)}
+      {postcode.map(pc => <postcode>{pc}</postcode>).getOrElse(NodeSeq.Empty)}
+      <country>{country.code}</country>
+    </address>
+}
 
 object Address {
-
   implicit class AddressOps(private val a: Address) extends AnyVal {
-
     def getAddressLines(implicit messages: Messages): List[String] = {
       val lines =
         List(
