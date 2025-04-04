@@ -453,12 +453,16 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
 
       "an individual self-submission (through disclosureEntity)" in {
         // Given
-        val background = Background(disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))))
+        val background       = Background(disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))))
         val updatedViewModel = viewModel.copy(fullDisclosure =
-          Some(fullDisclosure.copy(personalDetails = pd.copy(
-            background = background,
-            aboutTheIndividual = None
-          )))
+          Some(
+            fullDisclosure.copy(personalDetails =
+              pd.copy(
+                background = background,
+                aboutTheIndividual = None
+              )
+            )
+          )
         )
 
         // When
