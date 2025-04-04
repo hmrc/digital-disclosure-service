@@ -450,6 +450,23 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
         // Then
         view.select("main > p:nth-child(13)").text() shouldEqual "Amount: £230000"
       }
+
+      "an individual self-submission (through disclosureEntity)" in {
+        // Given
+        val background = Background(disclosureEntity = Some(DisclosureEntity(Individual, Some(AreYouTheEntity.YesIAm))))
+        val updatedViewModel = viewModel.copy(fullDisclosure =
+          Some(fullDisclosure.copy(personalDetails = pd.copy(
+            background = background,
+            aboutTheIndividual = None
+          )))
+        )
+
+        // When
+        val view = createView(updatedViewModel)
+
+        // Then
+        view.select("main > h1:nth-child(1)").text() shouldEqual "Your offer"
+      }
     }
   }
 

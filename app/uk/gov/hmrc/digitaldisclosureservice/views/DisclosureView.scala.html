@@ -82,7 +82,10 @@
             <p>@messages("disclosure.trust.p6", viewModel.fullDisclosure.flatMap(_.offerAmount.map(_.toString())).getOrElse("£0"))</p>
         }
 
-        @if(viewModel.fullDisclosure.exists(_.personalDetails.aboutTheIndividual.isDefined)) {
+
+        @if(viewModel.fullDisclosure.exists(fd =>
+            fd.personalDetails.aboutTheIndividual.isDefined ||
+            fd.personalDetails.background.disclosureEntity.exists(_.entity.toString == "Individual"))) {
             <h1>@messages("disclosure.individual.h1")</h1>
             <p>@messages("disclosure.individual.p1", viewModel.totalAmountsList.rows(4).value.content.asHtml.body)</p>
             <h2>@messages("disclosure.individual.h2")</h2>
@@ -107,7 +110,7 @@
             }
             <p>@messages("disclosure.individual.p5")</p>
             <p>@messages("disclosure.individual.p6", viewModel.fullDisclosure.flatMap(_.offerAmount.map(_.toString())).getOrElse("£0"))</p>
-        }
+}
 
         @if(viewModel.fullDisclosure.exists(_.personalDetails.aboutTheCompany.isDefined)) {
             <h1>@messages("disclosure.company.h1")</h1>
