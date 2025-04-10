@@ -55,6 +55,45 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
 
   }
 
+  "+" should {
+    "correctly recalculate the amountDueTotal rather than simply adding pre-calculated values" in {
+
+      val totalA = TotalAmounts(
+        unpaidTaxTotal = BigInt(100),
+        niContributionsTotal = BigInt(50),
+        interestTotal = BigInt(30),
+        penaltyAmountTotal = BigDecimal(20.50),
+        amountDueTotal = BigDecimal(200.50)
+      )
+
+      val totalB = TotalAmounts(
+        unpaidTaxTotal = BigInt(200),
+        niContributionsTotal = BigInt(75),
+        interestTotal = BigInt(45),
+        penaltyAmountTotal = BigDecimal(30.25),
+        amountDueTotal = BigDecimal(350.25)
+      )
+
+      val expectedUnpaidTaxTotal = totalA.unpaidTaxTotal + totalB.unpaidTaxTotal
+      val expectedNiContributionsTotal = totalA.niContributionsTotal + totalB.niContributionsTotal
+      val expectedInterestTotal = totalA.interestTotal + totalB.interestTotal
+      val expectedPenaltyAmountTotal = totalA.penaltyAmountTotal + totalB.penaltyAmountTotal
+
+      val expectedAmountDueTotal = BigDecimal(expectedUnpaidTaxTotal + expectedNiContributionsTotal) +
+        BigDecimal(expectedInterestTotal) +
+        expectedPenaltyAmountTotal
+
+      val result = totalA + totalB
+
+      result.unpaidTaxTotal shouldEqual expectedUnpaidTaxTotal
+      result.niContributionsTotal shouldEqual expectedNiContributionsTotal
+      result.interestTotal shouldEqual expectedInterestTotal
+      result.penaltyAmountTotal shouldEqual expectedPenaltyAmountTotal
+      result.amountDueTotal shouldEqual expectedAmountDueTotal
+
+    }
+  }
+
   "getDirectorLoanTotals" should {
 
     "total up all values for multiple director loan liabilities" in {
