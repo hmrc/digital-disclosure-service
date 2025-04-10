@@ -32,7 +32,11 @@ case class TotalAmounts(
     val niContributionsTotal: BigInt   = this.niContributionsTotal + that.niContributionsTotal
     val interestTotal: BigInt          = this.interestTotal + that.interestTotal
     val penaltyAmountTotal: BigDecimal = this.penaltyAmountTotal + that.penaltyAmountTotal
-    val amountDueTotal: BigDecimal     = this.amountDueTotal + that.amountDueTotal
+
+    val amountDueTotal: BigDecimal = BigDecimal(unpaidTaxTotal + niContributionsTotal) +
+      BigDecimal(interestTotal) +
+      penaltyAmountTotal
+
     TotalAmounts(
       unpaidTaxTotal = unpaidTaxTotal,
       niContributionsTotal = niContributionsTotal,
