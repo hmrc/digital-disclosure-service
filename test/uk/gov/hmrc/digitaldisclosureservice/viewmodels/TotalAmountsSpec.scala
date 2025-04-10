@@ -74,10 +74,10 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
         amountDueTotal = BigDecimal(350.25)
       )
 
-      val expectedUnpaidTaxTotal = totalA.unpaidTaxTotal + totalB.unpaidTaxTotal
+      val expectedUnpaidTaxTotal       = totalA.unpaidTaxTotal + totalB.unpaidTaxTotal
       val expectedNiContributionsTotal = totalA.niContributionsTotal + totalB.niContributionsTotal
-      val expectedInterestTotal = totalA.interestTotal + totalB.interestTotal
-      val expectedPenaltyAmountTotal = totalA.penaltyAmountTotal + totalB.penaltyAmountTotal
+      val expectedInterestTotal        = totalA.interestTotal + totalB.interestTotal
+      val expectedPenaltyAmountTotal   = totalA.penaltyAmountTotal + totalB.penaltyAmountTotal
 
       val expectedAmountDueTotal = BigDecimal(expectedUnpaidTaxTotal + expectedNiContributionsTotal) +
         BigDecimal(expectedInterestTotal) +
@@ -85,11 +85,11 @@ class TotalAmountsSpec extends AnyWordSpec with Matchers with BaseSpec with Scal
 
       val result = totalA + totalB
 
-      result.unpaidTaxTotal shouldEqual expectedUnpaidTaxTotal
+      result.unpaidTaxTotal       shouldEqual expectedUnpaidTaxTotal
       result.niContributionsTotal shouldEqual expectedNiContributionsTotal
-      result.interestTotal shouldEqual expectedInterestTotal
-      result.penaltyAmountTotal shouldEqual expectedPenaltyAmountTotal
-      result.amountDueTotal shouldEqual expectedAmountDueTotal
+      result.interestTotal        shouldEqual expectedInterestTotal
+      result.penaltyAmountTotal   shouldEqual expectedPenaltyAmountTotal
+      result.amountDueTotal       shouldEqual expectedAmountDueTotal
 
     }
   }
