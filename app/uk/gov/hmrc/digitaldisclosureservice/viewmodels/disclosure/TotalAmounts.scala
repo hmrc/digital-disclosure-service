@@ -25,15 +25,17 @@ case class TotalAmounts(
   niContributionsTotal: BigInt,
   interestTotal: BigInt,
   penaltyAmountTotal: BigDecimal,
-  amountDueTotal: BigDecimal
+  amountDueTotal: BigDecimal,
+  correctedAmountDueTotal: Option[BigDecimal] = None
 ) {
   def +(that: TotalAmounts): TotalAmounts = {
     val unpaidTaxTotal: BigInt         = this.unpaidTaxTotal + that.unpaidTaxTotal
     val niContributionsTotal: BigInt   = this.niContributionsTotal + that.niContributionsTotal
     val interestTotal: BigInt          = this.interestTotal + that.interestTotal
     val penaltyAmountTotal: BigDecimal = this.penaltyAmountTotal + that.penaltyAmountTotal
+    val amountDueTotal: BigDecimal     = this.amountDueTotal + that.amountDueTotal
 
-    val amountDueTotal: BigDecimal = BigDecimal(unpaidTaxTotal + niContributionsTotal) +
+    val correctedTotal: BigDecimal = BigDecimal(unpaidTaxTotal + niContributionsTotal) +
       BigDecimal(interestTotal) +
       penaltyAmountTotal
 
@@ -42,9 +44,12 @@ case class TotalAmounts(
       niContributionsTotal = niContributionsTotal,
       interestTotal = interestTotal,
       penaltyAmountTotal = penaltyAmountTotal,
-      amountDueTotal = amountDueTotal
+      amountDueTotal = amountDueTotal,
+      correctedAmountDueTotal = Some(correctedTotal)
     )
   }
+
+  def displayAmountDueTotal: BigDecimal = correctedAmountDueTotal.getOrElse(amountDueTotal)
 }
 
 object TotalAmounts {
@@ -54,7 +59,8 @@ object TotalAmounts {
     niContributionsTotal = BigInt(0),
     interestTotal = BigInt(0),
     penaltyAmountTotal = BigDecimal(0),
-    amountDueTotal = BigDecimal(0)
+    amountDueTotal = BigDecimal(0),
+    correctedAmountDueTotal = None
   )
 
   def apply(fullDisclosure: FullDisclosure): TotalAmounts = {
