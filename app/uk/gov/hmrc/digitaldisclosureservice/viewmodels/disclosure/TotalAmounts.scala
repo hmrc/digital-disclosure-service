@@ -21,19 +21,19 @@ import models.disclosure._
 import scala.math.BigDecimal.RoundingMode
 
 case class TotalAmounts(
-                         unpaidTaxTotal: BigInt,
-                         niContributionsTotal: BigInt,
-                         interestTotal: BigInt,
-                         penaltyAmountTotal: BigDecimal,
-                         amountDueTotal: BigDecimal,
-                         correctedAmountDueTotal: Option[BigDecimal] = None
-                       ) {
+  unpaidTaxTotal: BigInt,
+  niContributionsTotal: BigInt,
+  interestTotal: BigInt,
+  penaltyAmountTotal: BigDecimal,
+  amountDueTotal: BigDecimal,
+  correctedAmountDueTotal: Option[BigDecimal] = None
+) {
   def +(that: TotalAmounts): TotalAmounts = {
     val unpaidTaxTotal: BigInt         = this.unpaidTaxTotal + that.unpaidTaxTotal
     val niContributionsTotal: BigInt   = this.niContributionsTotal + that.niContributionsTotal
     val interestTotal: BigInt          = this.interestTotal + that.interestTotal
     val penaltyAmountTotal: BigDecimal = this.penaltyAmountTotal + that.penaltyAmountTotal
-    val amountDueTotal: BigDecimal = this.amountDueTotal + that.amountDueTotal
+    val amountDueTotal: BigDecimal     = this.amountDueTotal + that.amountDueTotal
 
     val correctedTotal: BigDecimal = BigDecimal(unpaidTaxTotal + niContributionsTotal) +
       BigDecimal(interestTotal) +
@@ -51,7 +51,6 @@ case class TotalAmounts(
 
   def displayAmountDueTotal: BigDecimal = correctedAmountDueTotal.getOrElse(amountDueTotal)
 }
-
 
 object TotalAmounts {
 
@@ -165,6 +164,5 @@ object TotalAmounts {
       amountDueTotal = amountDueTotal
     )
   }
-
 
 }
