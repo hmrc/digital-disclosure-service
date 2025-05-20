@@ -45,7 +45,7 @@
     </head>
 
     <body><div class="width-container ">
-   
+
         <header role="banner">
             <div style="padding-bottom: 0.3em;">
                 <span style="padding-left: 0.5em; display: inline-block; font-size: 16pt; vertical-align: middle;">@messages("service.name")</span>
@@ -91,22 +91,52 @@
             <h2>@messages("disclosure.individual.h2")</h2>
             <p>@messages("disclosure.individual.p2")</p>
             <p>@messages("disclosure.individual.p3")</p>
-            <p>@messages("disclosure.individual.p4", viewModel.fullDisclosure.flatMap(_.personalDetails.aboutTheIndividual.flatMap(_.fullName)).getOrElse(""))</p>
-            <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheIndividual.flatMap(individual => individual.address.map(_.line1)))</p>
-            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheIndividual.exists(individual => individual.address.exists(_.line2.isDefined)))) {
-                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheIndividual.flatMap(individual => individual.address.map(_.line2)))</p>
+            <p>@messages("disclosure.individual.p4", viewModel.fullDisclosure.flatMap(fd =>
+                fd.personalDetails.aboutTheIndividual.flatMap(_.fullName)
+                    .orElse(fd.personalDetails.aboutYou.fullName)
+            ).getOrElse(""))</p>
+            <p>@viewModel.fullDisclosure.flatMap(fd =>
+                fd.personalDetails.aboutTheIndividual.flatMap(individual => individual.address.map(_.line1))
+                    .orElse(fd.personalDetails.aboutYou.address.map(_.line1))
+            )</p>
+            @if(viewModel.fullDisclosure.exists(fd =>
+                fd.personalDetails.aboutTheIndividual.flatMap(individual => individual.address.flatMap(_.line2)).isDefined ||
+                fd.personalDetails.aboutYou.address.flatMap(_.line2).isDefined
+            )) {
+                <p>@viewModel.fullDisclosure.flatMap(fd =>
+                    fd.personalDetails.aboutTheIndividual.flatMap(individual => individual.address.flatMap(_.line2))
+                        .orElse(fd.personalDetails.aboutYou.address.flatMap(_.line2))
+                )</p>
             }
 
-            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheIndividual.exists(individual => individual.address.exists(_.line3.isDefined)))) {
-                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheIndividual.flatMap(individual => individual.address.map(_.line3)))</p>
+            @if(viewModel.fullDisclosure.exists(fd =>
+                fd.personalDetails.aboutTheIndividual.flatMap(individual => individual.address.flatMap(_.line3)).isDefined ||
+                fd.personalDetails.aboutYou.address.flatMap(_.line3).isDefined
+            )) {
+                <p>@viewModel.fullDisclosure.flatMap(fd =>
+                    fd.personalDetails.aboutTheIndividual.flatMap(individual => individual.address.flatMap(_.line3))
+                        .orElse(fd.personalDetails.aboutYou.address.flatMap(_.line3))
+                )</p>
             }
 
-            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheIndividual.exists(individual => individual.address.exists(_.line4.isDefined)))) {
-                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheIndividual.flatMap(individual => individual.address.map(_.line4)))</p>
+            @if(viewModel.fullDisclosure.exists(fd =>
+                fd.personalDetails.aboutTheIndividual.flatMap(individual => individual.address.flatMap(_.line4)).isDefined ||
+                fd.personalDetails.aboutYou.address.flatMap(_.line4).isDefined
+            )) {
+                <p>@viewModel.fullDisclosure.flatMap(fd =>
+                    fd.personalDetails.aboutTheIndividual.flatMap(individual => individual.address.flatMap(_.line4))
+                        .orElse(fd.personalDetails.aboutYou.address.flatMap(_.line4))
+                )</p>
             }
 
-            @if(viewModel.fullDisclosure.exists(fd => fd.personalDetails.aboutTheIndividual.exists(individual => individual.address.exists(_.postcode.isDefined)))) {
-                <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheIndividual.flatMap(individual => individual.address.map(_.postcode)))</p>
+            @if(viewModel.fullDisclosure.exists(fd =>
+                fd.personalDetails.aboutTheIndividual.flatMap(individual => individual.address.flatMap(_.postcode)).isDefined ||
+                fd.personalDetails.aboutYou.address.flatMap(_.postcode).isDefined
+            )) {
+                <p>@viewModel.fullDisclosure.flatMap(fd =>
+                    fd.personalDetails.aboutTheIndividual.flatMap(individual => individual.address.flatMap(_.postcode))
+                        .orElse(fd.personalDetails.aboutYou.address.flatMap(_.postcode))
+                )</p>
             }
             <p>@messages("disclosure.individual.p5")</p>
             <p>@messages("disclosure.individual.p6", viewModel.fullDisclosure.flatMap(_.offerAmount.map(_.toString())).getOrElse("£0"))</p>
@@ -209,7 +239,7 @@
 
         @summarySection(viewModel.aboutYouHeading, viewModel.aboutYouList, "aboutYou")
 
-        @viewModel.onshoreLiabilities.map{ lists => 
+        @viewModel.onshoreLiabilities.map{ lists =>
             @summarySection("disclosure.onshore.heading", lists.summaryList, "onshore")
             @lists.taxYearLists.map { case (year, list) =>
                 @summarySection(messages("disclosure.onshore.year", s"${year+1}"), list, s"onshore-$year")
@@ -224,7 +254,7 @@
             }
         }
 
-        @viewModel.offshoreLiabilities.map{ lists => 
+        @viewModel.offshoreLiabilities.map{ lists =>
             @summarySection("disclosure.offshore.heading", lists.summaryList, "offshore")
             @lists.taxYearLists.map { case (year, list) =>
                 @summarySection(messages("disclosure.offshore.year", s"${year+1}"), list, s"offshore-$year")
@@ -233,7 +263,7 @@
 
         @summarySection("disclosure.totals.heading", viewModel.totalAmountsList, "totals")
 
-        @viewModel.onshoreLiabilities.map{ lists => 
+        @viewModel.onshoreLiabilities.map{ lists =>
             @lists.lettingPropertyLists.map { case (index, list) =>
                 @summarySection(messages("disclosure.onshore.letting.heading", s"${index}"), list, s"property-$index")
             }
@@ -241,7 +271,7 @@
 
         @summarySection("disclosure.otherLiabilities.heading", viewModel.otherLiabilitiesList, "otherLiabilities")
         @summarySection("disclosure.additional.heading", viewModel.additionalList, "additional")
-        
+
         </main>
     </div></body>
 </html>
