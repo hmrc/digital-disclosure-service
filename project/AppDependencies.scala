@@ -14,7 +14,7 @@ object AppDependencies {
     "uk.gov.hmrc"              %%  s"bootstrap-backend-$playV"     % bootstrapVersion,
     "uk.gov.hmrc"              %%  s"internal-auth-client-$playV"  % "4.0.0",
     "uk.gov.hmrc.mongo"        %%  s"hmrc-mongo-$playV"            % "2.6.0",
-    "uk.gov.hmrc"              %%  s"play-frontend-hmrc-$playV"    % "12.6.0",
+    "uk.gov.hmrc"              %%  s"play-frontend-hmrc-$playV"    % "12.7.0",
     "org.apache.pdfbox"        %   "pdfbox"                        % pdfboxVersion,
     "org.apache.pdfbox"        %   "xmpbox"                        % pdfboxVersion,
     "org.apache.xmlgraphics"   %   "batik-transcoder"              % "1.17",
