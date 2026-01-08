@@ -5,16 +5,16 @@ import sbt._
 
 object AppDependencies {
 
-  private val bootstrapVersion = "9.18.0"
+  private val bootstrapVersion = "9.19.0"
   private val pdfboxVersion = "2.0.26"
   private val openHtmlVersion = "1.0.10"
   private val playV = "play-30"
 
   val compile = Seq(
     "uk.gov.hmrc"              %%  s"bootstrap-backend-$playV"     % bootstrapVersion,
-    "uk.gov.hmrc"              %%  s"internal-auth-client-$playV"  % "4.0.0",
-    "uk.gov.hmrc.mongo"        %%  s"hmrc-mongo-$playV"            % "2.6.0",
-    "uk.gov.hmrc"              %%  s"play-frontend-hmrc-$playV"    % "12.7.0",
+    "uk.gov.hmrc"              %%  s"internal-auth-client-$playV"  % "4.3.0",
+    "uk.gov.hmrc.mongo"        %%  s"hmrc-mongo-$playV"            % "2.11.0",
+    "uk.gov.hmrc"              %%  s"play-frontend-hmrc-$playV"    % "12.25.0",
     "org.apache.pdfbox"        %   "pdfbox"                        % pdfboxVersion,
     "org.apache.pdfbox"        %   "xmpbox"                        % pdfboxVersion,
     "org.apache.xmlgraphics"   %   "batik-transcoder"              % "1.17",
