@@ -32,8 +32,8 @@ class SummarySectionSpec extends AnyWordSpec with Matchers with BaseSpec with Su
 
   implicit protected def htmlBodyOf(html: Html): Document = Jsoup.parse(html.toString())
 
-  implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
-  implicit val sut                = app.injector.instanceOf[summarySection]
+  implicit val messages: Messages  = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
+  implicit val sut: summarySection = app.injector.instanceOf[summarySection]
 
   private def createView(headingKey: String, list: SummaryList, id: String = "id"): Html =
     sut.render(headingKey, list, id, messages)

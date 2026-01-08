@@ -28,5 +28,5 @@ final case class MonthYear(month: Int, year: Int) {
 }
 
 object MonthYear {
-  implicit val format = Json.format[MonthYear]
+  implicit val format: Format[MonthYear] = Json.format[MonthYear]
 }

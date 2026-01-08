@@ -34,8 +34,8 @@ class NotificationViewSpec extends AnyWordSpec with Matchers with BaseSpec {
 
   implicit protected def htmlBodyOf(html: Html): Document = Jsoup.parse(html.toString())
 
-  implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
-  implicit val sut                = app.injector.instanceOf[NotificationView]
+  implicit val messages: Messages    = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
+  implicit val sut: NotificationView = app.injector.instanceOf[NotificationView]
 
   private val lang = "en"
 

@@ -28,5 +28,5 @@ case class WhatIsYourReasonableExcuse(excuse: String, years: String) {
 }
 
 object WhatIsYourReasonableExcuse {
-  implicit val format = Json.format[WhatIsYourReasonableExcuse]
+  implicit val format: Format[WhatIsYourReasonableExcuse] = Json.format[WhatIsYourReasonableExcuse]
 }

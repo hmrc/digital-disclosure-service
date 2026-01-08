@@ -38,8 +38,8 @@ class DisclosureViewSpec extends AnyWordSpec with Matchers with BaseSpec {
 
   implicit protected def htmlBodyOf(html: Html): Document = Jsoup.parse(html.toString())
 
-  implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
-  implicit val sut                = app.injector.instanceOf[DisclosureView]
+  implicit val messages: Messages  = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
+  implicit val sut: DisclosureView = app.injector.instanceOf[DisclosureView]
 
   private val lang                                              = "en"
   private def createView(disclosure: DisclosureViewModel): Html = sut.render(disclosure, lang, messages)

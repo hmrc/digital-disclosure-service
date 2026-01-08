@@ -33,7 +33,7 @@ class StylesSpec extends AnyWordSpec with Matchers with BaseSpec with SummaryLis
   implicit protected def htmlBodyOf(html: Html): Document = Jsoup.parse(html.toString())
 
   implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
-  implicit val sut                = app.injector.instanceOf[styles]
+  implicit val sut: styles        = app.injector.instanceOf[styles]
 
   private def createView(): Html = sut.render()
 

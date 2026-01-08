@@ -39,6 +39,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import uk.gov.hmrc.internalauth.client._
 import uk.gov.hmrc.internalauth.client.test.{BackendAuthComponentsStub, StubBehaviour}
 import scala.concurrent.Future
+import play.api.mvc.ControllerComponents
 
 class DisclosurePDFControllerSpec
     extends AnyWordSpec
@@ -47,9 +48,9 @@ class DisclosurePDFControllerSpec
     with DefaultAwaitTimeout
     with MockitoSugar {
 
-  implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
-  implicit val actorSystem        = ActorSystem()
-  implicit val cc                 = Helpers.stubControllerComponents()
+  implicit val messages: Messages       = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
+  implicit val actorSystem: ActorSystem = ActorSystem()
+  implicit val cc: ControllerComponents = Helpers.stubControllerComponents()
 
   val pdfService        = app.injector.instanceOf[SubmissionPdfService]
   val mockPdfService    = mock[SubmissionPdfService]

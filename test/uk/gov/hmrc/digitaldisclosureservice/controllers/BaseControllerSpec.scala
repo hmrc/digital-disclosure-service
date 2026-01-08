@@ -20,7 +20,7 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import play.api.test.{FakeHeaders, FakeRequest, Helpers}
 import scala.concurrent.Future
-import play.api.libs.json.{JsString, Json}
+import play.api.libs.json.{JsString, JsValue, Json}
 import models.{Metadata, Notification}
 import models.notification._
 import org.scalatest.concurrent.ScalaFutures
@@ -36,13 +36,9 @@ class BaseControllerSpec extends AnyWordSpec with Matchers with ScalaFutures {
 
   "withValidJson" should {
     "call f when valid json is passed in" in {
-      implicit val fakeRequest = FakeRequest(
-        method = "GET",
-        uri = "/notification",
-        headers = FakeHeaders(Seq.empty),
-        body = Json.toJson(testNotification)
-      )
-      val result               = TestController.withValidJson[Notification](_ => Future.successful(Ok("Succeeded")))
+      implicit val fakeRequest: FakeRequest[JsValue] = FakeRequest("GET", "/notification").withBody(Json.toJson(testNotification))
+
+      val result                                     = TestController.withValidJson[Notification](_ => Future.successful(Ok("Succeeded")))
       result.futureValue shouldEqual Ok("Succeeded")
     }
 

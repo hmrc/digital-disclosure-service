@@ -17,6 +17,7 @@
 package controllers
 
 import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.stream.Materializer
 import org.apache.pekko.stream.testkit.NoMaterializer
 import org.scalatest.{BeforeAndAfterAll, Suite}
 import play.api.test.Helpers._
@@ -26,8 +27,8 @@ import play.api.test.Helpers._
   */
 trait MaterializerSpec extends BeforeAndAfterAll { this: Suite =>
 
-  implicit lazy val actorSystem  = ActorSystem()
-  implicit lazy val materializer = NoMaterializer
+  implicit lazy val actorSystem: ActorSystem   = ActorSystem()
+  implicit lazy val materializer: Materializer = NoMaterializer
 
   override protected def afterAll(): Unit = {
     super.afterAll()

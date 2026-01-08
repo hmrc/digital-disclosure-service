@@ -16,8 +16,8 @@
 
 package models
 
-import play.api.libs.json.Json
 import scala.xml._
+import play.api.libs.json.{Format, Json}
 
 final case class CountryOfYourOffshoreLiability(alpha3: String, name: String) {
   def toXml: NodeSeq =
@@ -28,5 +28,5 @@ final case class CountryOfYourOffshoreLiability(alpha3: String, name: String) {
 }
 
 object CountryOfYourOffshoreLiability {
-  implicit val format = Json.format[CountryOfYourOffshoreLiability]
+  implicit val format: Format[CountryOfYourOffshoreLiability] = Json.format[CountryOfYourOffshoreLiability]
 }

@@ -38,6 +38,7 @@ import play.api.i18n.DefaultMessagesApi
 import scala.concurrent.ExecutionContext.Implicits.global
 import uk.gov.hmrc.internalauth.client._
 import uk.gov.hmrc.internalauth.client.test.{BackendAuthComponentsStub, StubBehaviour}
+import play.api.mvc.ControllerComponents
 
 class DisclosureSubmissionControllerSpec
     extends AnyWordSpec
@@ -46,7 +47,7 @@ class DisclosureSubmissionControllerSpec
     with BeforeAndAfterEach
     with MaterializerSpec {
 
-  implicit val cc = Helpers.stubControllerComponents()
+  implicit val cc: ControllerComponents = Helpers.stubControllerComponents()
 
   override def beforeEach(): Unit = {
     super.beforeEach()

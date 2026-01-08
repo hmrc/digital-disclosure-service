@@ -40,5 +40,5 @@ case class CorporationTaxLiability(
 }
 
 object CorporationTaxLiability {
-  implicit val format = Json.format[CorporationTaxLiability]
+  implicit val format: Format[CorporationTaxLiability] = Json.format[CorporationTaxLiability]
 }

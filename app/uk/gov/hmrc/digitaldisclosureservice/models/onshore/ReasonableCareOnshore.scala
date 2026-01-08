@@ -28,5 +28,5 @@ case class ReasonableCareOnshore(reasonableCare: String, yearsThisAppliesTo: Str
 }
 
 object ReasonableCareOnshore {
-  implicit val format = Json.format[ReasonableCareOnshore]
+  implicit val format: Format[ReasonableCareOnshore] = Json.format[ReasonableCareOnshore]
 }

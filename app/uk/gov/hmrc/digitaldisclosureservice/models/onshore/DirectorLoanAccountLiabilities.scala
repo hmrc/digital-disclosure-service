@@ -42,5 +42,6 @@ case class DirectorLoanAccountLiabilities(
 }
 
 object DirectorLoanAccountLiabilities {
-  implicit val format = Json.format[DirectorLoanAccountLiabilities]
+
+  implicit val format: Format[DirectorLoanAccountLiabilities] = Json.format[DirectorLoanAccountLiabilities]
 }

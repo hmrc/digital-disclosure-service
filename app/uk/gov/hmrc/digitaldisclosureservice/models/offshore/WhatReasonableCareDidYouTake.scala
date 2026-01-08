@@ -31,5 +31,5 @@ case class WhatReasonableCareDidYouTake(
 }
 
 object WhatReasonableCareDidYouTake {
-  implicit val format = Json.format[WhatReasonableCareDidYouTake]
+  implicit val format: Format[WhatReasonableCareDidYouTake] = Json.format[WhatReasonableCareDidYouTake]
 }
