@@ -36,9 +36,10 @@ class BaseControllerSpec extends AnyWordSpec with Matchers with ScalaFutures {
 
   "withValidJson" should {
     "call f when valid json is passed in" in {
-      implicit val fakeRequest: FakeRequest[JsValue] = FakeRequest("GET", "/notification").withBody(Json.toJson(testNotification))
+      implicit val fakeRequest: FakeRequest[JsValue] =
+        FakeRequest("GET", "/notification").withBody(Json.toJson(testNotification))
 
-      val result                                     = TestController.withValidJson[Notification](_ => Future.successful(Ok("Succeeded")))
+      val result = TestController.withValidJson[Notification](_ => Future.successful(Ok("Succeeded")))
       result.futureValue shouldEqual Ok("Succeeded")
     }
 
