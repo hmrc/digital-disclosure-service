@@ -29,6 +29,7 @@ import models.address._
 import models.address.Address._
 import models.notification._
 import utils.BaseSpec
+import java.time.LocalDateTime
 
 class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec with SummaryListFluency {
 
@@ -457,4 +458,12 @@ class SubmissionViewModelSpec extends AnyWordSpec with Matchers with BaseSpec wi
       text shouldEqual Text(messages("service.unsure"))
     }
   }
+
+  "toPrettyDate" should {
+    "use calendar year (yyyy) for the caseflow journey PDF near year-end submission" in {
+      val dt = LocalDateTime.of(2025, 12, 29, 10, 0)
+      TestSubmissionViewModel.toPrettyDate(dt, caseflowDateFormat = true) shouldEqual "29/12/2025"
+    }
+  }
+
 }
