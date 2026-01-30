@@ -16,8 +16,6 @@
 
 package models
 
-import scala.xml._
-
 sealed trait AreYouTheEntity {
   def toXml: String = this match {
     case AreYouTheEntity.YesIAm                    => "yes"

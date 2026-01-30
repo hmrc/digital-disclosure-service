@@ -16,8 +16,6 @@
 
 package models
 
-import scala.xml._
-
 sealed trait WhyAreYouMakingThisDisclosure {
   def toXml: String = this.toString
 }

@@ -22,7 +22,7 @@ import javax.inject.{Inject, Singleton}
 import play.api.libs.json.JsValue
 import models.FullDisclosure
 import services.SubmissionPdfService
-import play.api.i18n.{I18nSupport, Lang, Langs, MessagesApi}
+import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{ResponseHeader, Result}
 import play.api.http.HttpEntity
 import org.apache.pekko.stream.scaladsl.Source

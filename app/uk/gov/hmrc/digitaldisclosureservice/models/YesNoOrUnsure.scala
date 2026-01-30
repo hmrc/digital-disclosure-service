@@ -17,7 +17,6 @@
 package models
 
 import play.api.libs.json._
-import scala.xml._
 
 sealed trait YesNoOrUnsure {
   def toXml: String = this match {

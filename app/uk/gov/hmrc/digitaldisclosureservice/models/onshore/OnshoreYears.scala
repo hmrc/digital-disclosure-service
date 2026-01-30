@@ -18,7 +18,6 @@ package models
 
 import play.api.libs.json._
 import scala.util.Try
-import scala.xml._
 
 sealed trait OnshoreYears {
   def toXml: String = this.toString

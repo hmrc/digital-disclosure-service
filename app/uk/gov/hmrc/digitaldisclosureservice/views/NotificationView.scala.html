@@ -14,14 +14,11 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.hmrcfrontend.config.AssetsConfig
 @import viewmodels.NotificationViewModel
 
 @this(
-    govukSummaryList: GovukSummaryList,
     summarySection: summarySection,
     styles: styles,
-    assetsConfig: AssetsConfig
 )
 
 @(notification: NotificationViewModel, lang:String)(implicit messages: Messages)

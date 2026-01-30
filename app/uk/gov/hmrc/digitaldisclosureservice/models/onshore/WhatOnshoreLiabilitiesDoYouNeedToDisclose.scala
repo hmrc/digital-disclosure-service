@@ -16,8 +16,6 @@
 
 package models
 
-import scala.xml._
-
 sealed trait WhatOnshoreLiabilitiesDoYouNeedToDisclose {
   def toXml: String = this.toString
 }
