@@ -11,7 +11,7 @@ object AppDependencies {
   private val playV = "play-30"
 
   val compile = Seq(
-    "uk.gov.hmrc"              %%  s"bootstrap-backend-$playV"     % bootstrapVersion,
+    "uk.gov.hmrc"              %%  s"bootstrap-backend-$playV"     % bootstrapVersion exclude("org.apache.commons", "commons-lang3"),
     "uk.gov.hmrc"              %%  s"internal-auth-client-$playV"  % "4.3.0",
     "uk.gov.hmrc.mongo"        %%  s"hmrc-mongo-$playV"            % "2.12.0",
     "uk.gov.hmrc"              %%  s"play-frontend-hmrc-$playV"    % "12.31.0",
@@ -28,7 +28,11 @@ object AppDependencies {
     "org.scala-lang.modules"   %%  "scala-xml"                     % "2.1.0",
     "uk.gov.hmrc"              %%  "tax-year"                      % "6.0.0",
     "org.apache.santuario"     %   "xmlsec"                        % "3.0.3",
-    "commons-io"               %   "commons-io"                    % "2.14.0"
+    "commons-io"               %   "commons-io"                    % "2.14.0",
+    "org.apache.commons"    % "commons-lang3"                          % "3.18.0",
+    "ch.qos.logback"        % "logback-core"                           % "1.5.27",
+    "ch.qos.logback"        % "logback-classic"                        % "1.5.27",
+    "at.yawk.lz4"           %  "lz4-java"                              % "1.10.3"
   )
 
   val test = Seq(
