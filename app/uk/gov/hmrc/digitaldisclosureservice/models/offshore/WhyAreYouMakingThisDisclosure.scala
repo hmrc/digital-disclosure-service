@@ -33,6 +33,9 @@ object WhyAreYouMakingThisDisclosure extends Enumerable.Implicits {
       with WhyAreYouMakingThisDisclosure
   case object DeliberatelyDidNotFile extends WithName("deliberatelyDidNotFile") with WhyAreYouMakingThisDisclosure
 
+  case object DidNotFileNoExcuse extends WithName("didNotFileNoExcuse") with WhyAreYouMakingThisDisclosure
+
+
   val values: Seq[WhyAreYouMakingThisDisclosure] = Seq(
     DidNotNotifyHasExcuse,
     InaccurateReturnWithCare,
@@ -41,7 +44,8 @@ object WhyAreYouMakingThisDisclosure extends Enumerable.Implicits {
     DidNotNotifyNoExcuse,
     DeliberatelyDidNotNotify,
     DeliberateInaccurateReturn,
-    DeliberatelyDidNotFile
+    DeliberatelyDidNotFile,
+    DidNotFileNoExcuse
   )
 
   implicit val enumerable: Enumerable[WhyAreYouMakingThisDisclosure] =
