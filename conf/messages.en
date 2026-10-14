@@ -97,7 +97,7 @@ disclosure.estate.p6 = Amount: £{0}
 #  Payment Terms On Letter
 #===================================================
 paymentTerms.p1 = to be paid on the same date that the disclosure is submitted to HMRC.
-paymentTerms.p2 = If the same full sum has not been paid by that day, interest at the rate which applies for Section 86 Taxes Management Act 1970, which may be varied from time to time, will also be payable ony any unpaid balance from that day. \
+paymentTerms.p2 = If the same full sum has not been paid by that day, interest at the rate which applies for Section 86 Taxes Management Act 1970, which may be varied from time to time, will also be payable on any unpaid balance from that day. \
     This interest will be payable without deduction of tax and shall not be claimed or allowed as a deduction in recording any income, profits or losses for tax purposes.
 
 
