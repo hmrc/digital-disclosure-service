@@ -13,8 +13,8 @@ object AppDependencies {
   val compile = Seq(
     "uk.gov.hmrc"              %%  s"bootstrap-backend-$playV"     % bootstrapVersion exclude("org.apache.commons", "commons-lang3"),
     "uk.gov.hmrc"              %%  s"internal-auth-client-$playV"  % "4.4.0",
-    "uk.gov.hmrc.mongo"        %%  s"hmrc-mongo-$playV"            % "2.13.0",
-    "uk.gov.hmrc"              %%  s"play-frontend-hmrc-$playV"    % "13.13.0",
+    "uk.gov.hmrc.mongo"        %%  s"hmrc-mongo-$playV"            % "2.14.0",
+    "uk.gov.hmrc"              %%  s"play-frontend-hmrc-$playV"    % "13.16.0",
     "org.apache.pdfbox"        %   "pdfbox"                        % pdfboxVersion,
     "org.apache.pdfbox"        %   "xmpbox"                        % pdfboxVersion,
     "org.apache.xmlgraphics"   %   "batik-transcoder"              % "1.17",
