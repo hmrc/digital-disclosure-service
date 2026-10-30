@@ -216,7 +216,7 @@
                 <p>@viewModel.fullDisclosure.flatMap(fd => fd.personalDetails.aboutTheEstate.flatMap(estate => estate.address.map(_.postcode)))</p>
             }
             <p>@messages("disclosure.estate.p5")</p>
-            <p>@messages("disclosure.estate.p6", viewModel.fullDisclosure.flatMap(_.offerAmount.map(_.toString())).getOrElse("£0"))</p>
+            <p>@messages("disclosure.estate.p6", viewModel.fullDisclosure.flatMap(_.offerAmount.map(_.toString())).getOrElse("0"))</p>
         }
 
         <p>@messages("paymentTerms.p1")</p>
